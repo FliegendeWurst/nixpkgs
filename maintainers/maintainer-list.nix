@@ -20109,6 +20109,11 @@
     githubId = 80012;
     name = "Simon Jagoe";
   };
+  sjamaan = {
+    github = "sjamaan";
+    name = "Peter Bex";
+    githubId = 128536;
+  };
   sjau = {
     email = "nixos@sjau.ch";
     github = "sjau";
