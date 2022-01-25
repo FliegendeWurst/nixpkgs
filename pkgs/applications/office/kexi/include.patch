@@ -1,0 +1,698 @@
+diff --git a/src/plugins/reports/CMakeLists.txt b/src/plugins/reports/CMakeLists.txt
+index b59c0a827..52b7ec2e3 100644
+--- a/src/plugins/reports/CMakeLists.txt
++++ b/src/plugins/reports/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ include_directories(
+     ${CMAKE_SOURCE_DIR}/src/core
++    ${CMAKE_SOURCE_DIR}/src/kexiutils/style
+     ${CMAKE_SOURCE_DIR}/src/widget
++    ${CMAKE_SOURCE_DIR}/src/widget/properties
+ )
+ 
+ # the main plugin
+diff --git a/src/plugins/reports/KexiDBReportDataSource.cpp b/src/plugins/reports/KexiDBReportDataSource.cpp
+index 6d3d824a1..0aae1a2c7 100644
+--- a/src/plugins/reports/KexiDBReportDataSource.cpp
++++ b/src/plugins/reports/KexiDBReportDataSource.cpp
+@@ -14,7 +14,7 @@
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+-* License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++* License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
+ #include "KexiDBReportDataSource.h"
+@@ -103,7 +103,7 @@ void KexiDBReportDataSource::addCondition(const QString &field, const QVariant &
+             }
+         }
+     } else {
+-        qDebug() << "Unable to add expresstion to null schema";
++        qWarning() << "Unable to add expresstion to null schema";
+     }
+ }
+ 
+@@ -125,6 +125,7 @@ bool KexiDBReportDataSource::open()
+         {
+             //qDebug() << "Opening cursor.."
+             //         << KDbConnectionAndQuerySchema(d->tempData->connection(), *d->copySchema);
++
+             bool ok;
+             KexiUtils::WaitCursorRemover remover;
+             d->currentParams = KexiQueryParameters::getParameters(0, d->tempData->connection(), d->originalSchema, &ok);
+@@ -138,7 +139,7 @@ bool KexiDBReportDataSource::open()
+ 
+         if ( d->cursor )
+         {
+-            qDebug() << "Moving to first record..";
++            //qDebug() << "Moving to first record..";
+             return d->cursor->moveFirst();
+         }
+         else
+@@ -172,32 +173,33 @@ bool KexiDBReportDataSource::getSchema(const QString& pluginId)
+         if ((pluginId.isEmpty() || pluginId == "org.kexi-project.table")
+                 && (table = d->tempData->connection()->tableSchema(d->objectName)))
+         {
+-            qDebug() << d->objectName <<  "is a table..";
++            //qDebug() << d->objectName <<  "is a table..";
+             d->originalSchema = new KDbQuerySchema(table);
+         }
+         else if ((pluginId.isEmpty() || pluginId == "org.kexi-project.query")
+                  && (query = d->tempData->connection()->querySchema(d->objectName)))
+         {
+-            qDebug() << d->objectName <<  "is a query..";
+-            qDebug() << KDbConnectionAndQuerySchema(d->tempData->connection(), *query);
++            //qDebug() << d->objectName << "is a query..";
++            //qDebug() << KDbConnectionAndQuerySchema(d->tempData->connection(), *query);
+             d->originalSchema = new KDbQuerySchema(*query, d->tempData->connection());
+         }
+ 
+         if (d->originalSchema) {
+             const KDbNativeStatementBuilder builder(d->tempData->connection(), KDb::DriverEscaping);
+             KDbEscapedString sql;
++
+             if (builder.generateSelectStatement(&sql, d->originalSchema, d->currentParams)) {
+-                qDebug() << "Original:" << sql;
++                //qDebug() << "Original:" << sql;
+             } else {
+                 qDebug() << "Original: ERROR";
+                 return false;
+             }
+-            qDebug() << KDbConnectionAndQuerySchema(d->tempData->connection(), *d->originalSchema);
+-
++            //qDebug() << KDbConnectionAndQuerySchema(d->tempData->connection(), *d->originalSchema);
+             d->copySchema = new KDbQuerySchema(*d->originalSchema, d->tempData->connection());
+-            qDebug() << KDbConnectionAndQuerySchema(d->tempData->connection(), *d->copySchema);
++
++            //qDebug() << KDbConnectionAndQuerySchema(d->tempData->connection(), *d->copySchema);
+             if (builder.generateSelectStatement(&d->schemaSql, d->copySchema, d->currentParams)) {
+-                qDebug() << "Copy:" << d->schemaSql;
++                //qDebug() << "Copy:" << d->schemaSql;
+             } else {
+                 qDebug() << "Copy: ERROR";
+                 return false;
+diff --git a/src/plugins/reports/KexiDBReportDataSource.h b/src/plugins/reports/KexiDBReportDataSource.h
+index c8e8885dc..653f89aab 100644
+--- a/src/plugins/reports/KexiDBReportDataSource.h
++++ b/src/plugins/reports/KexiDBReportDataSource.h
+@@ -14,7 +14,7 @@
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+-* License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++* License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
+ #ifndef __KEXIDBREPORTDATA_H__
+@@ -42,29 +42,29 @@ public:
+                            KexiReportPartTempData *data);
+     virtual ~KexiDBReportDataSource();
+ 
+-    virtual QStringList fieldNames() const;
+-    virtual void setSorting(const QList<SortedField>& sorting);
++    virtual QStringList fieldNames() const override;
++    virtual void setSorting(const QList<SortedField>& sorting) override;
+ 
+     //! Adds a condition <field> <relation> <value> to the data source.
+     //! @note Only single-character relation operators such as "=" or ">" are supported now.
+     //! @todo Use KDb parser to support all relation operators such as ">=".
+     virtual void addCondition(const QString &field, const QVariant &value,
+-                              const QString &relation = QLatin1String("="));
++                              const QString &relation = QLatin1String("=")) override;
+ 
+-    virtual QString sourceName() const;
+-    virtual int fieldNumber(const QString &field) const;
+-    virtual QVariant value(int) const;
+-    virtual QVariant value(const QString &field) const;
++    virtual QString sourceName() const override;
++    virtual int fieldNumber(const QString &field) const override;
++    virtual QVariant value(int) const override;
++    virtual QVariant value(const QString &field) const override;
+ 
+-    virtual bool open();
+-    virtual bool close();
+-    virtual bool moveNext();
+-    virtual bool movePrevious();
+-    virtual bool moveFirst();
+-    virtual bool moveLast();
++    virtual bool open() override;
++    virtual bool close() override;
++    virtual bool moveNext() override;
++    virtual bool movePrevious() override;
++    virtual bool moveFirst() override;
++    virtual bool moveLast() override;
+ 
+-    virtual qint64 at() const;
+-    virtual qint64 recordCount() const;
++    virtual qint64 at() const override;
++    virtual qint64 recordCount() const override;
+ 
+     /**
+      * Runs aggregate function @a function on the data source
+@@ -82,8 +82,8 @@ public:
+                                 const QMap<QString, QVariant> &conditions);
+ 
+     //Utility Functions
+-    virtual QStringList dataSourceNames() const;
+-    virtual KReportDataSource* create(const QString& source) const Q_REQUIRED_RESULT;
++    virtual QStringList dataSourceNames() const override;
++    virtual Q_REQUIRED_RESULT KReportDataSource *create(const QString &source) const override;
+ 
+ private:
+     class Private;
+diff --git a/src/plugins/reports/kexi_reportplugin.desktop b/src/plugins/reports/kexi_reportplugin.desktop
+index 618f8bb59..edd08a26e 100644
+--- a/src/plugins/reports/kexi_reportplugin.desktop
++++ b/src/plugins/reports/kexi_reportplugin.desktop
+@@ -4,56 +4,66 @@ Name[ca]=Informe
+ Name[ca@valencia]=Informe
+ Name[cs]=Hlášení
+ Name[de]=Bericht
++Name[el]=Αναφορά
+ Name[en_GB]=Report
+ Name[es]=Informe
++Name[et]=Aruanne
+ Name[fi]=Raportti
+ Name[fr]=Rapport
+ Name[gl]=Informe
++Name[ia]=Reporta
++Name[id]=Laporan
+ Name[it]=Rapporto
+ Name[ja]=レポート
++Name[ko]=보고서
+ Name[nb]=Rapport
+ Name[nl]=Rapport
+ Name[pl]=Raport
+ Name[pt]=Relatório
+ Name[pt_BR]=Relatório
+ Name[sk]=Výkaz
++Name[sl]=Poročilo
+ Name[sv]=Rapport
+ Name[uk]=Звіт
+ Name[x-test]=xxReportxx
+ Name[zh_CN]=报表
+ Comment=Kexi plugin for handling reports
+-Comment[ca]=Connector del Kexi per gestionar informes
+-Comment[ca@valencia]=Connector del Kexi per gestionar informes
++Comment[ca]=Connector del Kexi per a gestionar informes
++Comment[ca@valencia]=Connector del Kexi per a gestionar informes
+ Comment[cs]=Modul Kexi pro provádění hlášení
+ Comment[de]=Kexi-Modul für die Bearbeitung von Berichten
++Comment[el]=Πρόσθετο του Kexi για χειρισμό αναφορών
+ Comment[en_GB]=Kexi plugin for handling reports
+ Comment[es]=Complemento de Kexi para manejar informes
++Comment[et]=Kexi plugin aruannete käitlemiseks
+ Comment[fi]=Kexi-liitännäinen raporttien käsittelyyn
+ Comment[fr]=Module complémentaire Kexi pour gérer les rapports
+ Comment[gl]=Complemento para Kexi de manexo de informes.
++Comment[ia]=Plugin de Kexi per manear reportos
++Comment[id]=Plugin Kexi untuk menangani laporan
+ Comment[it]=Estensione per gestire i rapporti di Kexi
++Comment[ko]=보고서를 처리하는 Kexi 플러그인
+ Comment[nl]=Kexi-plug-in voor behandeling van rapporten
+ Comment[pl]=Wtyczka Kexi do obsługi raportów
+ Comment[pt]='Plugin' do Kexi para lidar com relatórios
+ Comment[pt_BR]=Plugin do Kexi para trabalhar com relatórios
+ Comment[sk]=Kexi plugin na spracovanie správ
++Comment[sl]=Vtičnik Kexi za obdelavo poročil
+ Comment[sv]=Kexi-insticksprogram för att hantera rapporter
+ Comment[uk]=Додаток до Kexi для обробки звітів
+ Comment[x-test]=xxKexi plugin for handling reportsxx
+ Comment[zh_CN]=用于处理报告的 Kexi 插件
+ Type=Service
+ Icon=report
+-Encoding=UTF-8
+ 
+ X-KDE-Library=kexi_reportplugin
+ X-KDE-ServiceTypes=Kexi/Viewer,Kexi/Designer
+-X-KDE-PluginInfo-Author=Kexi Team
++X-KDE-PluginInfo-Author=KEXI Team
+ X-KDE-PluginInfo-Email=kexi@kde.org
+ X-KDE-PluginInfo-Name=org.kexi-project.report
+-X-KDE-PluginInfo-Version=3.2
++X-KDE-PluginInfo-Version=3.3
+ X-KDE-PluginInfo-Website=http://kexi-project.org
+ X-KDE-PluginInfo-Category=
+-X-KDE-PluginInfo-Depends=
+ X-KDE-PluginInfo-License=LGPL
+ X-KDE-PluginInfo-EnabledByDefault=true
+ 
+diff --git a/src/plugins/reports/keximigratereportdata.cpp b/src/plugins/reports/keximigratereportdata.cpp
+index dab5a6b7b..d9eec5c88 100644
+--- a/src/plugins/reports/keximigratereportdata.cpp
++++ b/src/plugins/reports/keximigratereportdata.cpp
+@@ -13,7 +13,7 @@
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+-* License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++* License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
+ #include "keximigratereportdata.h"
+diff --git a/src/plugins/reports/keximigratereportdata.h b/src/plugins/reports/keximigratereportdata.h
+index 720b0ada1..7bd6837ae 100644
+--- a/src/plugins/reports/keximigratereportdata.h
++++ b/src/plugins/reports/keximigratereportdata.h
+@@ -13,7 +13,7 @@
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+-* License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++* License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
+ #ifndef __KEXIMIGRATEREPORTDATA_H__
+diff --git a/src/plugins/reports/kexireportdesignview.cpp b/src/plugins/reports/kexireportdesignview.cpp
+index ca8003c1a..c4c5cd616 100644
+--- a/src/plugins/reports/kexireportdesignview.cpp
++++ b/src/plugins/reports/kexireportdesignview.cpp
+@@ -14,7 +14,7 @@
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+-* License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++* License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
+ #include "kexireportdesignview.h"
+@@ -37,7 +37,7 @@ KexiReportDesignView::KexiReportDesignView(QWidget *parent, KexiSourceSelector *
+         : KexiView(parent)
+ {
+     m_scrollArea = new QScrollArea(this);
+-    layout()->addWidget(m_scrollArea);
++    setViewWidget(m_scrollArea);
+     m_sourceSelector = s;
+ 
+     m_reportDesigner = 0;
+@@ -80,8 +80,28 @@ KPropertySet *KexiReportDesignView::propertySet()
+     return m_reportDesigner->selectedItemPropertySet();
+ }
+ 
++//! Finds or creates property
++static KProperty* findOrCreateProperty(KPropertySet *set, const char *name, const QVariant &value)
++{
++    KProperty *prop;
++    if (set->contains(name)) {
++        prop = &set->property(name);
++        prop->setValue(value);
++    } else {
++        prop = new KProperty(name, value);
++        prop->setVisible(false);
++        set->addProperty(prop);
++    }
++    return prop;
++}
++
+ void KexiReportDesignView::slotDesignerPropertySetChanged()
+ {
++    KPropertySet *set = propertySet();
++    if (set) {
++        KProperty *prop = findOrCreateProperty(set, "this:visibleObjectNameProperty", "name");
++        Q_UNUSED(prop)
++    }
+     propertySetReloaded(true);
+     propertySetSwitched();
+ }
+@@ -95,7 +115,7 @@ KDbObject* KexiReportDesignView::storeNewData(const KDbObject& object,
+         delete s;
+         return 0;
+     }
+-    qDebug() << "new id:" << s->id();
++    //qDebug() << "new id:" << s->id();
+ 
+     if (!storeData()) {
+         //failure: remove object's object data to avoid garbage
+@@ -116,23 +136,24 @@ tristate KexiReportDesignView::storeData(bool dontAsk)
+     QDomElement root = doc.createElement("kexireport");
+     QDomElement conndata = connectionData();
+ 
+-    if (conndata.isNull())
+-        qDebug() << "Null conn data!";
++    if (conndata.isNull()) {
++        //qDebug() << "Null conn data!";
++    }
+ 
+     root.appendChild(m_reportDesigner->document());
+     root.appendChild(conndata);
+     doc.appendChild(root);
+ 
+     QString src  = doc.toString();
+-    qDebug() << src;
++    //qDebug() << src;
+ 
+     if (storeDataBlock(src, "layout")) {
+-        qDebug() << "Saved OK";
++        //qDebug() << "Saved OK";
+         setDirty(false);
+         return true;
+     }
+ 
+-    qDebug() << "NOT Saved OK";
++    //qDebug() << "NOT Saved OK";
+     return false;
+ }
+ 
+@@ -226,7 +247,7 @@ QDomElement KexiReportDesignView::connectionData() const
+     QDomDocument dd;
+     QDomElement conndata = dd.createElement("connection");
+     conndata.setAttribute("type", "internal"); // for backward compatibility, currently always
+-                                               // internal, we used to have "external" in old Kexi
++                                               // internal, we used to have "external" in old KEXI
+     conndata.setAttribute("source", m_sourceSelector->selectedName());
+     conndata.setAttribute("class", m_sourceSelector->selectedPluginId());
+     return conndata;
+diff --git a/src/plugins/reports/kexireportdesignview.h b/src/plugins/reports/kexireportdesignview.h
+index 795b030cd..395f6db32 100644
+--- a/src/plugins/reports/kexireportdesignview.h
++++ b/src/plugins/reports/kexireportdesignview.h
+@@ -14,7 +14,7 @@
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+-* License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++* License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
+ #ifndef KEXIREPORTDESIGNVIEW_H
+@@ -40,8 +40,8 @@ public:
+     KexiReportDesignView(QWidget *parent, KexiSourceSelector*);
+ 
+     ~KexiReportDesignView();
+-    virtual tristate afterSwitchFrom(Kexi::ViewMode mode);
+-    virtual tristate beforeSwitchTo(Kexi::ViewMode mode, bool *dontStore);
++    virtual tristate afterSwitchFrom(Kexi::ViewMode mode) override;
++    virtual tristate beforeSwitchTo(Kexi::ViewMode mode, bool *dontStore) override;
+ 
+     void triggerAction(const QString &);
+ 
+@@ -68,11 +68,11 @@ private:
+     KexiSourceSelector *m_sourceSelector;
+ 
+ protected:
+-    virtual KPropertySet *propertySet();
+-    virtual tristate storeData(bool dontAsk = false);
++    virtual KPropertySet *propertySet() override;
++    virtual tristate storeData(bool dontAsk = false) override;
+     virtual KDbObject* storeNewData(const KDbObject& object,
+                                              KexiView::StoreNewDataOptions options,
+-                                             bool *cancel);
++                                             bool *cancel) override;
+ 
+ private Q_SLOTS:
+     void slotDesignerPropertySetChanged();
+diff --git a/src/plugins/reports/kexireportpart.cpp b/src/plugins/reports/kexireportpart.cpp
+index a47a2a300..9a5e6b770 100644
+--- a/src/plugins/reports/kexireportpart.cpp
++++ b/src/plugins/reports/kexireportpart.cpp
+@@ -14,13 +14,12 @@
+  * Lesser General Public License for more details.
+  *
+  * You should have received a copy of the GNU Lesser General Public
+- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++ * License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+ 
+ #include "kexireportpart.h"
+ 
+-#include <QTabWidget>
+ #include <QDebug>
+ 
+ #include <KDbConnection>
+@@ -32,6 +31,7 @@
+ #include "kexireportview.h"
+ #include "kexireportdesignview.h"
+ #include <core/KexiMainWindowIface.h>
++#include <KexiPropertyPaneWidget.h>
+ #include "kexisourceselector.h"
+ #include <widget/properties/KexiCustomPropertyFactory.h>
+ #include <kexiutils/utils.h>
+@@ -151,7 +151,7 @@ KDbObject* KexiReportPart::loadSchemaObject(
+     }
+     temp->connectionDefinition = root.firstChildElement("connection");
+     if (temp->connectionDefinition.isNull()) {
+-        qWarning() << "no report report:content element found in report" << window->partItem()->name();
++        qWarning() << "no report report:connection element found in report" << window->partItem()->name();
+         return 0;
+     }
+     return KexiPart::Part::loadSchemaObject(window, object, viewMode, ownedByWindow);
+@@ -202,13 +202,12 @@ tristate KexiReportPartTempData::closeListener()
+     return KexiMainWindowIface::global()->closeWindow(window);
+ }
+ 
+-void KexiReportPart::setupCustomPropertyPanelTabs(QTabWidget *tab)
++void KexiReportPart::setupPropertyPane(KexiPropertyPaneWidget *pane)
+ {
+     if (!d->sourceSelector) {
+-        d->sourceSelector = new KexiSourceSelector(KexiMainWindowIface::global()->project(), tab);
++        d->sourceSelector = new KexiSourceSelector(KexiMainWindowIface::global()->project());
+     }
+-    tab->addTab(d->sourceSelector, koIcon("server-database"), QString());
+-    tab->setTabToolTip(tab->indexOf(d->sourceSelector), xi18n("Data Source"));
++    pane->addSection(d->sourceSelector, xi18n("Data source"));
+ }
+ 
+ void KexiReportPart::slotToolboxActionTriggered(bool checked)
+diff --git a/src/plugins/reports/kexireportpart.h b/src/plugins/reports/kexireportpart.h
+index 1cac0ae4a..4f1b445e1 100644
+--- a/src/plugins/reports/kexireportpart.h
++++ b/src/plugins/reports/kexireportpart.h
+@@ -14,7 +14,7 @@
+  * Lesser General Public License for more details.
+  *
+  * You should have received a copy of the GNU Lesser General Public
+- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++ * License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+ #ifndef _KEXIREPORTPART_H_
+@@ -73,25 +73,25 @@ public:
+      */
+     virtual ~KexiReportPart();
+ 
+-    virtual void setupCustomPropertyPanelTabs(QTabWidget *tab);
++    virtual void setupPropertyPane(KexiPropertyPaneWidget *pane) override;
+ 
+     virtual KLocalizedString i18nMessage(const QString& englishMessage,
+-                                         KexiWindow* window) const;
++                                         KexiWindow* window) const override;
+ 
+     QStringList scriptList() const override;
+     QString scriptCode(const QString& script) const override;
+ 
+ protected:
+-    KexiView *createView(QWidget *parent, KexiWindow *win, KexiPart::Item *item,
++    Q_REQUIRED_RESULT KexiView *createView(QWidget *parent, KexiWindow *win, KexiPart::Item *item,
+                          Kexi::ViewMode = Kexi::DataViewMode,
+-                         QMap<QString, QVariant> *staticObjectArgs = nullptr) override Q_REQUIRED_RESULT;
++                         QMap<QString, QVariant> *staticObjectArgs = nullptr) override;
+ 
+-    KexiWindowData* createWindowData(KexiWindow* window) override Q_REQUIRED_RESULT;
++    Q_REQUIRED_RESULT KexiWindowData *createWindowData(KexiWindow* window) override;
+ 
+-    virtual void initPartActions();
++    virtual void initPartActions() override;
+ 
+     virtual KDbObject* loadSchemaObject(KexiWindow *window,
+-            const KDbObject& object, Kexi::ViewMode viewMode, bool *ownedByWindow);
++            const KDbObject& object, Kexi::ViewMode viewMode, bool *ownedByWindow) override;
+ 
+ private Q_SLOTS:
+     void slotToolboxActionTriggered(bool checked);
+diff --git a/src/plugins/reports/kexireports.cpp b/src/plugins/reports/kexireports.cpp
+index c005c2c95..68dd29454 100644
+--- a/src/plugins/reports/kexireports.cpp
++++ b/src/plugins/reports/kexireports.cpp
+@@ -13,7 +13,7 @@
+  * Lesser General Public License for more details.
+  *
+  * You should have received a copy of the GNU Lesser General Public
+- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++ * License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+ #include "kexireportpart.h"
+diff --git a/src/plugins/reports/kexireportview.cpp b/src/plugins/reports/kexireportview.cpp
+index aaee5c4f6..ec1aa3363 100644
+--- a/src/plugins/reports/kexireportview.cpp
++++ b/src/plugins/reports/kexireportview.cpp
+@@ -14,7 +14,7 @@
+  * Lesser General Public License for more details.
+  *
+  * You should have received a copy of the GNU Lesser General Public
+- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++ * License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+ #include "kexireportview.h"
+@@ -26,8 +26,9 @@
+ #include <core/KexiWindow.h>
+ #include <core/KexiMainWindowIface.h>
+ #include <KexiIcon.h>
++#include <KexiStyle.h>
+ 
+-//! @todo KEXI3 #include "../scripting/kexiscripting/kexiscriptadaptor.h"
++//! @todo KEXI3 include "../scripting/kexiscripting/kexiscriptadaptor.h"
+ 
+ #include <KReportPage>
+ #include <KReportRenderObjects>
+@@ -40,14 +41,15 @@
+ #include <KMessageBox>
+ #include <KFileWidget>
+ 
++#include <QAbstractScrollArea>
++#include <QDebug>
++#include <QFileDialog>
++#include <QGraphicsScene>
+ #include <QLayout>
++#include <QMimeDatabase>
+ #include <QPainter>
+ #include <QPrintDialog>
+ #include <QPrinter>
+-#include <QGraphicsScene>
+-#include <QDebug>
+-#include <QFileDialog>
+-#include <QMimeDatabase>
+ 
+ KexiReportView::KexiReportView(QWidget *parent)
+         : KexiView(parent), m_preRenderer(0), m_functions(0) //! @todo KEXI3, m_kexi(0)
+@@ -55,7 +57,8 @@ KexiReportView::KexiReportView(QWidget *parent)
+     setObjectName("KexiReportDesigner_DataView");
+ 
+     m_reportView = new KReportView(this);
+-    layout()->addWidget(m_reportView);
++    setViewWidget(m_reportView);
++    KexiStyle::setupFrame(m_reportView->scrollArea());
+ 
+ #ifndef KEXI_MOBILE
+     m_pageSelector = new KexiRecordNavigator(*m_reportView->scrollArea(), m_reportView);
+@@ -356,6 +359,7 @@ tristate KexiReportView::afterSwitchFrom(Kexi::ViewMode mode)
+         delete m_preRenderer;
+ 
+         //qDebug() << tempData()->reportDefinition.tagName();
++
+         m_preRenderer = new KReportPreRenderer(tempData()->reportDefinition);
+         if (m_preRenderer->isValid()) {
+             KexiDBReportDataSource *reportData = nullptr;
+diff --git a/src/plugins/reports/kexireportview.h b/src/plugins/reports/kexireportview.h
+index ee4e1b168..2f421c7c2 100644
+--- a/src/plugins/reports/kexireportview.h
++++ b/src/plugins/reports/kexireportview.h
+@@ -14,7 +14,7 @@
+  * Lesser General Public License for more details.
+  *
+  * You should have received a copy of the GNU Lesser General Public
+- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++ * License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+ #ifndef KEXIREPORTVIEW_H
+@@ -47,17 +47,17 @@ public:
+ 
+     ~KexiReportView();
+ 
+-    virtual tristate afterSwitchFrom(Kexi::ViewMode mode);
+-    virtual tristate beforeSwitchTo(Kexi::ViewMode mode, bool *dontStore);
++    virtual tristate afterSwitchFrom(Kexi::ViewMode mode) override;
++    virtual tristate beforeSwitchTo(Kexi::ViewMode mode, bool *dontStore) override;
+ 
+-    virtual void addNewRecordRequested();
+-    virtual void moveToFirstRecordRequested();
+-    virtual void moveToLastRecordRequested();
+-    virtual void moveToNextRecordRequested();
+-    virtual void moveToPreviousRecordRequested();
+-    virtual void moveToRecordRequested(int r);
+-    virtual int currentRecord() const;
+-    virtual int recordCount() const;
++    virtual void addNewRecordRequested() override;
++    virtual void moveToFirstRecordRequested() override;
++    virtual void moveToLastRecordRequested() override;
++    virtual void moveToNextRecordRequested() override;
++    virtual void moveToPreviousRecordRequested() override;
++    virtual void moveToRecordRequested(int r) override;
++    virtual int currentRecord() const override;
++    virtual int recordCount() const override;
+ 
+ private:
+     KReportPreRenderer *m_preRenderer;
+diff --git a/src/plugins/reports/kexisourceselector.cpp b/src/plugins/reports/kexisourceselector.cpp
+index cd3c645c6..8365a93d4 100644
+--- a/src/plugins/reports/kexisourceselector.cpp
++++ b/src/plugins/reports/kexisourceselector.cpp
+@@ -14,7 +14,7 @@
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+-* License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++* License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
+ #include "kexisourceselector.h"
+diff --git a/src/plugins/reports/kexisourceselector.h b/src/plugins/reports/kexisourceselector.h
+index 3aa0d27ea..5f5ac2b85 100644
+--- a/src/plugins/reports/kexisourceselector.h
++++ b/src/plugins/reports/kexisourceselector.h
+@@ -14,7 +14,7 @@
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+-* License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++* License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
+ #ifndef KEXISOURCESELECTOR_H
+@@ -33,7 +33,7 @@ class QDomElement;
+ class KexiProject;
+ 
+ //! @todo rename to KexiReportDataSourcePage
+-//! @todo use KexiPropertyPaneViewBase
++//! @todo use KexiPropertyPaneWidget
+ class KexiSourceSelector : public QWidget
+ {
+     Q_OBJECT
+@@ -41,7 +41,7 @@ public:
+     explicit KexiSourceSelector(KexiProject* project, QWidget* parent = 0);
+     ~KexiSourceSelector();
+ 
+-    KReportDataSource* createDataSource() const Q_REQUIRED_RESULT;
++    Q_REQUIRED_RESULT KReportDataSource *createDataSource() const;
+ 
+     QDomElement connectionData();
+ 
+diff --git a/src/plugins/reports/krscriptfunctions.cpp b/src/plugins/reports/krscriptfunctions.cpp
+index b311b7652..ae4a780be 100644
+--- a/src/plugins/reports/krscriptfunctions.cpp
++++ b/src/plugins/reports/krscriptfunctions.cpp
+@@ -14,7 +14,7 @@
+  * Lesser General Public License for more details.
+  *
+  * You should have received a copy of the GNU Lesser General Public
+- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++ * License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+ #include "krscriptfunctions.h"
+diff --git a/src/plugins/reports/krscriptfunctions.h b/src/plugins/reports/krscriptfunctions.h
+index f3af19b85..8931e05ee 100644
+--- a/src/plugins/reports/krscriptfunctions.h
++++ b/src/plugins/reports/krscriptfunctions.h
+@@ -14,7 +14,7 @@
+  * Lesser General Public License for more details.
+  *
+  * You should have received a copy of the GNU Lesser General Public
+- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
++ * License along with this library.  If not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+ #ifndef KRSCRIPTFUNCTIONS_H
+@@ -50,7 +50,7 @@ private:
+     QMap<QString, QVariant> m_groupData;
+ 
+ public Q_SLOTS:
+-    virtual void setGroupData(const QMap<QString, QVariant> &groupData);
++    virtual void setGroupData(const QMap<QString, QVariant> &groupData) override;
+ 
+     qreal sum(const QString &);
+     qreal avg(const QString &);

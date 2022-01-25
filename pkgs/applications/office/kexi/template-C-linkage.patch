@@ -1,0 +1,25 @@
+diff --git a/src/migration/mdb/3rdparty/mdbtools/include/mdbtools.h b/src/migration/mdb/3rdparty/mdbtools/include/mdbtools.h
+index 31f48c171..af1d97cbe 100644
+--- a/src/migration/mdb/3rdparty/mdbtools/include/mdbtools.h
++++ b/src/migration/mdb/3rdparty/mdbtools/include/mdbtools.h
+@@ -18,9 +18,6 @@
+ #ifndef _mdbtools_h_
+ #define _mdbtools_h_
+ 
+-#ifdef __cplusplus
+-  extern "C" {
+-#endif
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <stdarg.h>
+@@ -42,6 +39,10 @@
+ #include <io.h>
+ #endif
+ 
++#ifdef __cplusplus
++  extern "C" {
++#endif
++
+ #define MDB_DEBUG 0
+ 
+ #define MDB_PGSIZE 4096

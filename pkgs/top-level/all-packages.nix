@@ -26655,7 +26655,7 @@ with pkgs;
 
   kermit = callPackage ../tools/misc/kermit { };
 
-  kexi = libsForQt514.callPackage ../applications/office/kexi { };
+  kexi = libsForQt5.callPackage ../applications/office/kexi { };
 
   kgt = callPackage ../development/tools/kgt {
     inherit (skawarePackages) cleanPackaging;
