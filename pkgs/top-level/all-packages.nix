@@ -40619,6 +40619,7 @@ with pkgs;
   aitrack = libsForQt5.callPackage ../applications/misc/aitrack { };
 
   widevine-cdm = callPackage ../applications/networking/browsers/misc/widevine-cdm.nix { };
+<<<<<<< HEAD
 
   alsa-scarlett-gui = callPackage ../applications/audio/alsa-scarlett-gui { };
 
@@ -40657,4 +40658,6 @@ with pkgs;
   tremotesf = libsForQt5.callPackage ../applications/networking/p2p/tremotesf { };
 
   reindeer = callPackage ../development/tools/reindeer { };
+
+  raspi-oled = callPackage ../../raspi-oled.nix { };
 }
