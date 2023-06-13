@@ -357,6 +357,13 @@ with pkgs;
 
   mumps_par = callPackage ../by-name/mu/mumps/package.nix { mpiSupport = true; };
 
+  prism-model-checker-unwrapped = callPackage ../by-name/pr/prism-model-checker-unwrapped/package.nix {
+      java = openjdk17;
+      # makefile hardcodes gcc for darwin
+      stdenv = if stdenv.hostPlatform.isDarwin then gccStdenv else stdenv;
+  };
+  prism-model-checker = callPackage ../by-name/pr/prism-model-checker/package.nix { java = openjdk17; };
+
   prisma-engines = callPackage ../development/tools/database/prisma-engines { };
 
   protoc-gen-dart = callPackage ../development/tools/protoc-gen-dart { };
