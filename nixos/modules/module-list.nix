@@ -6,18 +6,6 @@
   ./config/fonts/fontdir.nix
   ./config/fonts/fonts.nix
   ./config/fonts/ghostscript.nix
-  ./config/xdg/autostart.nix
-  ./config/xdg/icons.nix
-  ./config/xdg/menus.nix
-  ./config/xdg/mime.nix
-  ./config/xdg/xdg-open.nix
-  ./config/xdg/portal.nix
-  ./config/xdg/portals/wlr.nix
-  ./config/xdg/portals/lxqt.nix
-  ./config/appstream.nix
-  ./config/console.nix
-  ./config/xdg/sounds.nix
-  ./config/gtk/gtk-icon-cache.nix
   ./config/gnu.nix
   ./config/gtk/gtk-icon-cache.nix
   ./config/i18n.nix
