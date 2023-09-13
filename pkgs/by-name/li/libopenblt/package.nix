@@ -1,4 +1,10 @@
-{ lib, stdenv, fetchFromGitHub, cmake, libusb1 }:
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  cmake,
+  libusb1,
+}:
 
 let
   pname = "libopenblt";
@@ -11,7 +17,7 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "feaser";
     repo = "openblt";
-    rev = "openblt_v0${lib.replaceStrings ["."] [""] version}"; # will break at version 10.x.x
+    rev = "openblt_v0${lib.replaceStrings [ "." ] [ "" ] version}"; # will break at version 10.x.x
     sparseCheckout = [ "Host/Source/" ];
     hash = "sha256-eO72zVZFFQPoo75pfeqawwYKimoLqUeqnzz/E2YvSYc=";
   };
@@ -23,8 +29,10 @@ stdenv.mkDerivation {
 
   installPhase = ''
     cd $srcDirPwd
+    runHook preInstall
     install -D "Host/libopenblt.so" "$out/lib/libopenblt.so"
     install -D "Host/Source/LibOpenBLT/openblt.h" "$out/include/openblt.h"
+    runHook postInstall
   '';
 
   buildInputs = [ libusb1 ];
