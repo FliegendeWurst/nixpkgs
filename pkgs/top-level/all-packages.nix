@@ -40619,8 +40619,6 @@ with pkgs;
   aitrack = libsForQt5.callPackage ../applications/misc/aitrack { };
 
   widevine-cdm = callPackage ../applications/networking/browsers/misc/widevine-cdm.nix { };
-<<<<<<< HEAD
-<<<<<<< HEAD
 
   alsa-scarlett-gui = callPackage ../applications/audio/alsa-scarlett-gui { };
 
