@@ -1393,6 +1393,8 @@ with pkgs;
     stdenv = clangStdenv;
   };
 
+  zxtune = callPackage ../applications/audio/zxtune { };
+
   honggfuzz = callPackage ../tools/security/honggfuzz {
     clang = clang_12;
     llvm = llvm_12;
