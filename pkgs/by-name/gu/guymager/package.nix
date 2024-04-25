@@ -1,13 +1,14 @@
-{ lib
-, stdenv
-, fetchurl
-, libsForQt5
-, dpkg
-, parted
-, udev
-, libewf-legacy
-, libbfio
-, libguytools
+{
+  lib,
+  stdenv,
+  fetchurl,
+  libsForQt5,
+  dpkg,
+  parted,
+  udev,
+  libewf-legacy,
+  libbfio,
+  libguytools,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -21,8 +22,20 @@ stdenv.mkDerivation (finalAttrs: {
 
   enableParallelBuilding = true;
 
-  nativeBuildInputs = [ dpkg libsForQt5.qmake libsForQt5.qttools libsForQt5.wrapQtAppsHook ];
-  buildInputs = [ libsForQt5.qtbase libewf-legacy libbfio libguytools parted udev ];
+  nativeBuildInputs = [
+    dpkg
+    libsForQt5.qmake
+    libsForQt5.qttools
+    libsForQt5.wrapQtAppsHook
+  ];
+  buildInputs = [
+    libsForQt5.qtbase
+    libewf-legacy
+    libbfio
+    libguytools
+    parted
+    udev
+  ];
 
   postPatch = ''
     patchShebangs compileinfo.sh
@@ -35,7 +48,14 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail "dpkg-parsechangelog" "dpkg-parsechangelog -l changelog"
 
     substituteInPlace threadscan.cpp \
-    --replace-fail '/lib,/usr/lib,/usr/lib64,/usr/local/lib' '${builtins.replaceStrings [":"] [","] (lib.makeLibraryPath [ udev parted ])}'
+    --replace-fail '/lib,/usr/lib,/usr/lib64,/usr/local/lib' '${
+      builtins.replaceStrings [ ":" ] [ "," ] (
+        lib.makeLibraryPath [
+          udev
+          parted
+        ]
+      )
+    }'
 
     substituteInPlace org.freedesktop.guymager.policy guymager.pro main.cpp guymager.cfg \
       --replace-fail /usr $out
@@ -51,13 +71,13 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Forensic imager for media acquisition";
     mainProgram = "guymager";
     homepage = "https://guymager.sourceforge.io";
-    maintainers = with maintainers; [ d3vil0p3r ];
-    platforms = platforms.unix;
-    sourceProvenance = with sourceTypes; [ binaryBytecode ];
-    license = licenses.gpl2Only;
+    maintainers = with lib.maintainers; [ d3vil0p3r ];
+    platforms = lib.platforms.unix;
+    sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];
+    license = lib.licenses.gpl2Only;
   };
 })
