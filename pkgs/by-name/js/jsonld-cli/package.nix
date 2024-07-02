@@ -6,7 +6,7 @@ buildNpmPackage rec {
 
   src = fetchFromGitHub {
     owner = "digitalbazaar";
-    repo = pname;
+    repo = "jsonld-cli";
     rev = "v${version}";
     hash = "sha256-GandTCcRYd0c0SlSdsCAcaTKfwD4g1cwHuoxA62aD74=";
   };
@@ -15,11 +15,11 @@ buildNpmPackage rec {
   npmDepsHash = "sha256-6oQKHeX5P2UsXRFK7ZwmJYasuNT5Ch/bYCIUAXq5zUM=";
   dontNpmBuild = true;
 
-  meta = with lib; {
+  meta = {
     description = "JSON-LD command line interface tool";
     homepage = "https://github.com/digitalbazaar/jsonld-cli";
-    license = licenses.bsd3;
-    maintainers = with maintainers; [ msladecek ];
+    license = lib.licenses.bsd3;
+    maintainers = with lib.maintainers; [ msladecek ];
     mainProgram = "jsonld";
   };
 }
