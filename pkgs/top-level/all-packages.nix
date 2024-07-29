@@ -5567,6 +5567,11 @@ with pkgs;
     trilium-server
     ;
 
+  inherit (callPackage ../applications/office/trilium-next {})
+    trilium-next-desktop
+    trilium-next-server
+    ;
+
   trytond = with python3Packages; toPythonApplication trytond;
 
   ttfautohint = libsForQt5.callPackage ../tools/misc/ttfautohint {
