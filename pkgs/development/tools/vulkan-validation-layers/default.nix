@@ -60,11 +60,6 @@ stdenv.mkDerivation rec {
     "-Wno-dev"
   ];
 
-  postInstall = ''
-    mkdir -p $out/include/vulkan
-    cp -a ../layers/vulkan/generated/*.h $out/include/vulkan
-  '';
-
   # Tests require access to vulkan-compatible GPU, which isn't
   # available in Nix sandbox. Fails with VK_ERROR_INCOMPATIBLE_DRIVER.
   doCheck = false;

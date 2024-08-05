@@ -5,20 +5,20 @@
   writeText,
   meson,
   vulkan-headers,
-  vulkan-validation-layers,
+  vulkan-utility-libraries,
   ninja,
   jq,
 }:
 
 stdenv.mkDerivation rec {
   pname = "vkdevicechooser";
-  version = "1.0";
+  version = "1.1";
 
   src = fetchFromGitHub {
-    owner = "aejsmith";
+    owner = "jiriks74";
     repo = "vkdevicechooser";
     rev = version;
-    hash = "sha256-low5vkuZT4gWta4PeoCaP/jIO1uszACq+LTZopo8BAI=";
+    hash = "sha256-j4hefarOQ3q0sKkB2g/dO2/4bSYzt4oxmCna0nMAjFk=";
   };
 
   nativeBuildInputs = [
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     vulkan-headers
-    vulkan-validation-layers
+    vulkan-utility-libraries
     ninja
   ];
 
@@ -36,8 +36,6 @@ stdenv.mkDerivation rec {
   setupHook = writeText "setup-hook" ''
     addToSearchPath XDG_DATA_DIRS @out@/share
   '';
-
-  mesonFlags = [ "-Dc_args=-I${vulkan-validation-layers}/include" ];
 
   # Include absolute paths to layer libraries in their associated
   # layer definition json files.
