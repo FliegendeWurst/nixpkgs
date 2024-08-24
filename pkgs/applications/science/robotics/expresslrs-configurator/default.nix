@@ -1,23 +1,54 @@
-{ stdenv, fetchzip, autoPatchelfHook, lib, makeWrapper, electron_27, libgcc
-, libstdcxx5, musl, libxc, libxkbcommon, alsaLib, at-spi2-core, gcc, nss, nspr
-, cups, libdrm, gtk3, pango, cairo, xorg, mesa, libglvnd, dbus, libpulseaudio
-, freetype, fontconfig, wayland, wayland-protocols
+{
+  stdenv,
+  fetchzip,
+  autoPatchelfHook,
+  lib,
+  makeWrapper,
+  electron_27,
+  libgcc,
+  libstdcxx5,
+  musl,
+  libxc,
+  libxkbcommon,
+  alsaLib,
+  at-spi2-core,
+  gcc,
+  nss,
+  nspr,
+  cups,
+  libdrm,
+  gtk3,
+  pango,
+  cairo,
+  xorg,
+  mesa,
+  libglvnd,
+  dbus,
+  libpulseaudio,
+  freetype,
+  fontconfig,
+  wayland,
+  wayland-protocols,
 
 }:
 
-let electron = electron_27;
-in stdenv.mkDerivation rec {
+let
+  electron = electron_27;
+in
+stdenv.mkDerivation rec {
   pname = "expresslrs-configurator";
   version = "1.7.2";
 
   src = fetchzip {
-    url =
-      "https://github.com/ExpressLRS/ExpressLRS-Configurator/releases/download/v${version}/expresslrs-configurator-${version}.zip";
+    url = "https://github.com/ExpressLRS/ExpressLRS-Configurator/releases/download/v${version}/expresslrs-configurator-${version}.zip";
     stripRoot = false;
     sha256 = "sha256-pXmJ420HeJaMjAZCzlIriuFrTK5xabxTrSy3PDVisgU=";
   };
 
-  nativeBuildInputs = [ autoPatchelfHook makeWrapper ];
+  nativeBuildInputs = [
+    autoPatchelfHook
+    makeWrapper
+  ];
 
   buildInputs = [
     gcc
@@ -61,8 +92,7 @@ in stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description =
-      "ExpressLRS Configurator is a cross-platform build & configuration tool for the ExpressLRS - open source RC link for RC applications.";
+    description = "ExpressLRS Configurator is a cross-platform build & configuration tool for the ExpressLRS - open source RC link for RC applications.";
     homepage = "https://github.com/ExpressLRS/ExpressLRS-Configurator";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;
