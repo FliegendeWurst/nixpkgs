@@ -6130,6 +6130,8 @@ with pkgs;
   clangStdenv = if stdenv.cc.isClang then stdenv else lowPrio llvmPackages.stdenv;
   libcxxStdenv = if stdenv.hostPlatform.isDarwin then stdenv else lowPrio llvmPackages.libcxxStdenv;
 
+  codd = haskell.lib.compose.justStaticExecutables (haskellPackages.callPackage ../development/tools/database/codd { });
+
   comby = callPackage ../development/tools/comby {
     ocamlPackages = ocaml-ng.ocamlPackages_4_14;
   };
