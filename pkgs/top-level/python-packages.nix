@@ -6734,6 +6734,8 @@ self: super: with self; {
 
   knack = callPackage ../development/python-modules/knack { };
 
+  kneaddata = callPackage ../development/python-modules/kneaddata { };
+
   kneed = callPackage ../development/python-modules/kneed { };
 
   knocki = callPackage ../development/python-modules/knocki { };
