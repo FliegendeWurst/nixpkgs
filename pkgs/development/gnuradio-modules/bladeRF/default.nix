@@ -16,8 +16,8 @@
 }:
 
 mkDerivation {
-  name = "gr-bladeRF";
-  version = "unstable-2023-11-20";
+  pname = "gr-bladeRF";
+  version = "0-unstable-2023-11-20";
 
   src = fetchFromGitHub {
     owner = "Nuand";
@@ -57,7 +57,7 @@ mkDerivation {
   meta = {
     description = "GNU Radio source and sink blocks for bladeRF devices";
     homepage = "https://github.com/Nuand/gr-bladeRF";
-    license = lib.licenses.gpl3;
+    license = lib.licenses.gpl3Plus;
     maintainers = with lib.maintainers; [ wucke13 ];
     platforms = lib.platforms.linux;
   };
