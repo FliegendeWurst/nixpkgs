@@ -42,7 +42,7 @@ mkDerivation {
       python.pkgs.pybind11
     ];
   cmakeFlags = [
-    (if (gnuradio.hasFeature "python-support") then "-DENABLE_PYTHON=ON" else "-DENABLE_PYTHON=OFF")
+    (lib.cmakeBool "ENABLE_PYTHON" (gnuradio.hasFeature "python-support"))
   ];
   nativeBuildInputs =
     [
@@ -54,11 +54,11 @@ mkDerivation {
       python.pkgs.pygccxml
     ];
 
-  meta = with lib; {
+  meta = {
     description = "GNU Radio source and sink blocks for bladeRF devices";
     homepage = "https://github.com/Nuand/gr-bladeRF";
-    license = licenses.gpl3;
-    maintainers = with maintainers; [ wucke13 ];
-    platforms = platforms.linux;
+    license = lib.licenses.gpl3;
+    maintainers = with lib.maintainers; [ wucke13 ];
+    platforms = lib.platforms.linux;
   };
 }
