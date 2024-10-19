@@ -1,25 +1,57 @@
-{ lib, fetchurl, pythonPackages }:
+{
+  lib,
+  fetchFromGitHub,
+  python3Packages,
+  qt6Packages,
+}:
 
-pythonPackages.buildPythonApplication rec {
+python3Packages.buildPythonApplication rec {
   pname = "nagstamon";
-  version = "3.14.0";
+  version = "3.16.2";
 
-  src = fetchurl {
-    url = "https://github.com/HenriWahl/Nagstamon/archive/refs/tags/v${version}.tar.gz";
-    sha256 = "sha256-9RxQ/rfvoyjSUsY4tmAkBdVQqZYi3X6PBzQYFIeenzA=";
+  src = fetchFromGitHub {
+    owner = "HenriWahl";
+    repo = "Nagstamon";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-9w8ux+AeSg0vDhnk28/2eCE2zYLvAjD7mB0pJBMFs2I=";
   };
 
   # Test assumes darwin
   doCheck = false;
 
-  build-system = with pythonPackages; [ setuptools ];
-  dependencies = with pythonPackages; [ configparser pyqt6 psutil requests
-     beautifulsoup4 keyring requests-kerberos lxml dbus-python python-dateutil pysocks ];
+  buildInputs = [
+    qt6Packages.qtmultimedia
+    qt6Packages.qtbase
+    qt6Packages.qtsvg
+  ];
+
+  nativeBuildInputs = [ qt6Packages.wrapQtAppsHook ];
+
+  build-system = with python3Packages; [ setuptools ];
+
+  dependencies = with python3Packages; [
+    arrow
+    configparser
+    pyqt6
+    psutil
+    requests
+    beautifulsoup4
+    keyring
+    requests-kerberos
+    lxml
+    dbus-python
+    python-dateutil
+    pysocks
+  ];
 
   meta = with lib; {
     description = "Status monitor for the desktop";
     homepage = "https://nagstamon.de/";
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ pSub liberodark ];
+    maintainers = with maintainers; [
+      pSub
+      liberodark
+    ];
+    badPlatforms = platforms.darwin;
   };
 }
