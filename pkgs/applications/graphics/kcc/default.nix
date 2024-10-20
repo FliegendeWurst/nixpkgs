@@ -22,6 +22,7 @@ mkDerivationWith python3Packages.buildPythonApplication rec {
     psutil
     python-slugify
     raven
+    distutils
   ];
 
   qtWrapperArgs = lib.optionals archiveSupport [ "--prefix" "PATH" ":" "${ lib.makeBinPath [ p7zip ] }" ];
