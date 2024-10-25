@@ -20515,6 +20515,12 @@
     github = "stasjok";
     githubId = 1353637;
   };
+  stayblue = {
+    name = "StayBlue";
+    email = "blue@spook.rip";
+    github = "StayBlue";
+    githubId = 23127866;
+  };
   steamwalker = {
     email = "steamwalker@xs4all.nl";
     github = "steamwalker";
