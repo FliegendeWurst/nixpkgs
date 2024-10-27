@@ -66,14 +66,14 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "Cross-platform solution to view 3D stereoscopic videos and images.";
+    description = "Viewer for 3D stereoscopic videos and images";
     homepage = "https://www.sview.ru/en/";
     license = with licenses; [
       cc-by-40
       gpl3Only
     ];
     maintainers = with maintainers; [ mx2uller ];
-    mainProgram = "sview";
+    mainProgram = "sView";
     platforms = platforms.linux;
   };
 }
