@@ -14512,7 +14512,7 @@
     email = "mx2uller@proton.me";
     github = "mx2uller";
     githubId = 93703653;
-    name = "Marko Muller";
+    name = "Marko Müller";
   };
   mxkrsv = {
     email = "mxkrsv@disroot.org";
