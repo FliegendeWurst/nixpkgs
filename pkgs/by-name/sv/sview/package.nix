@@ -33,14 +33,17 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    makeWrapper
+    pkg-config
+  ];
+
+  buildInputs = [
     ffmpeg_4
     gtk2
     libconfig
     libGL
     libXpm
-    makeWrapper
     openal
-    pkg-config
   ];
 
   fontsConf = makeFontsConf {
@@ -51,10 +54,12 @@ stdenv.mkDerivation rec {
   };
 
   installPhase = ''
+    runHook preInstall
     make install APP_PREFIX=$out DISABLE_UPDATER=1
     mkdir -p $out/share/sView/fonts
     cp ${droidSansFallback} $out/share/sView/fonts/DroidSansFallbackFull.ttf
     cp '${fontsConf}' $out/share/sView/fonts/fonts.conf
+    runHook postInstall
   '';
 
   postFixup = ''
