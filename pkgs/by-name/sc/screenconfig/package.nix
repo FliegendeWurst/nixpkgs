@@ -10,6 +10,7 @@
 python3Packages.buildPythonPackage rec {
   pname = "screenconfig";
   version = "0.1.0";
+  format = "pyproject";
 
   src = fetchFromGitHub {
     owner = "jceb";
