@@ -31,6 +31,6 @@ python3Packages.buildPythonPackage rec {
     platforms = lib.platforms.linux;
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ jceb ];
-    mainProgram = "dex";
+    mainProgram = "screenconfig";
   };
 }
