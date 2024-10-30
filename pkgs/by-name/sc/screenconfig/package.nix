@@ -18,7 +18,7 @@ python3Packages.buildPythonPackage rec {
     rev = "v${version}";
     hash = "sha256-X1Mz8UbOOW/4LM9IZoG/kbwv2G0EppTsacKapQMChkc=";
   };
-
+  build-system = [ python3.pkgs.setuptools ];
   propagatedBuildInputs = [
     python3Packages.toml
     xrandr
