@@ -20,7 +20,7 @@ python3.pkgs.buildPythonPackage rec {
   };
   build-system = [ python3.pkgs.setuptools ];
   propagatedBuildInputs = [
-    python3Packages.toml
+    python3.pkgs.toml
     xrandr
     srandrd
     feh
