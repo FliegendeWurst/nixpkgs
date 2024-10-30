@@ -7,7 +7,7 @@
   feh,
 }:
 
-python3Packages.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "screenconfig";
   version = "0.1.0";
   pyproject = true;
