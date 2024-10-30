@@ -1,6 +1,6 @@
 {
   lib,
-  python3Packages,
+  python3,
   fetchFromGitHub,
   xrandr,
   srandrd,
