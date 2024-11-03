@@ -48,21 +48,19 @@ stdenv.mkDerivation (finalAttrs: {
     done
   '';
 
+  strictDeps = true;
+
   # `libxml2' provides `xmllint', needed at build-time and run-time.
   # `libxslt' provides `xsltproc', used by `xmlto' at run-time.
   nativeBuildInputs = [
     autoreconfHook
     makeWrapper
-    flex
     getopt
-  ];
-
-  buildInputs = [
-    docbook_xml_dtd_45
-    docbook_xsl
     libxml2
     libxslt
   ];
+
+  buildInputs = [ ];
 
   postInstall = ''
     # `w3m' is needed for HTML to text conversions.
