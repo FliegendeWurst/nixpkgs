@@ -33,6 +33,6 @@ appimageTools.wrapType2 {
     install -m 444 -D ${appimageContents}/usr/share/icons/hicolor/512x512/apps/nosqlbooster4mongo.png \
       $out/share/icons/hicolor/512x512/apps/nosqlbooster4mongo.png
     substituteInPlace $out/share/applications/nosqlbooster4mongo.desktop \
-      --replace 'Exec=AppRun' 'Exec=${pname}'
+      --replace-fail 'Exec=AppRun' 'Exec=${meta.mainProgram}'
   '';
 }
