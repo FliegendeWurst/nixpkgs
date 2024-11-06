@@ -55,8 +55,7 @@ let
       name = "flutter-${version}-unwrapped";
       inherit src patches version;
 
-      buildInputs = [ git ];
-      nativeBuildInputs = [ makeWrapper jq ]
+      nativeBuildInputs = [ makeWrapper jq git ]
         ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.DarwinTools ];
 
       preConfigure = ''
