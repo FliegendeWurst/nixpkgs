@@ -90,6 +90,7 @@ stdenv.mkDerivation rec {
       xmlstarlet
       unzip
       yq
+      llvm.out
     ]
     ++ lib.optionals (lib.versionAtLeast version "9") [
       nodejs

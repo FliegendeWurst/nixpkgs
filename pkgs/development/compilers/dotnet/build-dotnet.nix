@@ -98,10 +98,10 @@ mkCommon type rec {
   nativeBuildInputs =
     [
       makeWrapper
+      xmlstarlet
     ]
     ++ lib.optional stdenv.hostPlatform.isLinux autoPatchelfHook
     ++ lib.optionals (type == "sdk" && stdenv.hostPlatform.isDarwin) [
-      xmlstarlet
       sigtool
     ];
 
