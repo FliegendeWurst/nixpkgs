@@ -26,7 +26,8 @@ stdenv.mkDerivation {
     hash = "sha256-jWyss0krj8MVFqU1LAig+4UbXO5pdcWIT+hCs9DxemM=";
   };
 
-  nativeBuildInputs = [ cmake ];
+  # TODO: remove curl (test with strictDeps = true)
+  nativeBuildInputs = [ cmake curl ];
 
   propagatedBuildInputs = [ curl ];
 
