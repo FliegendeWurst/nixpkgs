@@ -91,6 +91,7 @@ stdenv.mkDerivation (finalAttrs: ({
     ++ lib.optional (postgresql != null) postgresql;
 
   nativeBuildInputs = [ bison flex gperf lndir perl pkg-config which ]
+    ++ lib.optionals (mysqlSupport) [ libmysqlclient ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ xcbuild ];
 
   } // lib.optionalAttrs (stdenv.buildPlatform != stdenv.hostPlatform) {
