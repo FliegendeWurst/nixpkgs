@@ -10,6 +10,8 @@
 }:
 let
   version = "0.2.2";
+
+  canExecute = stdenv.buildPlatform.canExecute stdenv.hostPlatform;
 in
 buildGoModule {
   pname = "ente-cli";
@@ -45,7 +47,10 @@ buildGoModule {
     # > mkdir /homeless-shelter: permission denied
     # > error getting password from keyring: exec: "dbus-launch": executable file not found in $PATH
     # fix by setting ENTE_CLI_CONFIG_PATH to $TMP and ENTE_CLI_SECRETS_PATH to a non existing path
-    + lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
+    # also guarding with `isLinux` because ENTE_CLI_SECRETS_PATH doesn't help on darwin:
+    # > error setting password in keyring: exit status 195
+    #
+    + lib.optionalString (stdenv.buildPlatform.isLinux && canExecute) ''
       export ENTE_CLI_CONFIG_PATH=$TMP
       export ENTE_CLI_SECRETS_PATH=$TMP/secrets
 
@@ -56,15 +61,18 @@ buildGoModule {
     '';
 
   passthru = {
-    tests.version = testers.testVersion {
-      package = ente-cli;
-      command = ''
-        env ENTE_CLI_CONFIG_PATH=$TMP \
-            ENTE_CLI_SECRETS_PATH=$TMP/secrets \
-            ente version
-      '';
-      version = "Version cli-v${ente-cli.version}";
-    };
+    # only works on linux, see comment above about ENTE_CLI_SECRETS_PATH on darwin
+    tests.version = lib.optionalAttrs stdenv.isLinux (
+      testers.testVersion {
+        package = ente-cli;
+        command = ''
+          env ENTE_CLI_CONFIG_PATH=$TMP \
+              ENTE_CLI_SECRETS_PATH=$TMP/secrets \
+              ente version
+        '';
+        version = "Version cli-v${ente-cli.version}";
+      }
+    );
     updateScript = nix-update-script {
       extraArgs = [
         "--version-regex"
