@@ -20,8 +20,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-oz6CeOUN6QWKXxe3WUZljhGDTFArsknjzBuQ4IchGeU=";
   };
 
-  buildInputs = [ kmod ];
-  nativeBuildInputs = kernel.moduleBuildDependencies;
+  nativeBuildInputs = kernel.moduleBuildDependencies ++ [ kmod ];
 
   postPatch = ''
     substituteInPlace src/Makefile \
@@ -40,11 +39,11 @@ stdenv.mkDerivation rec {
     "ko_full=${modDestDir}/yt6801.ko.xz"
   ];
 
-  meta = with lib; {
+  meta = {
     homepage = "https://www.motor-comm.com/product/ethernet-control-chip";
     description = "YT6801 Gigabit PCIe Ethernet controller chip";
-    license = licenses.gpl2;
-    maintainers = with maintainers; [ indexyz ];
-    platforms = platforms.linux;
+    license = lib.licenses.gpl2;
+    maintainers = with lib.maintainers; [ indexyz ];
+    platforms = lib.platforms.linux;
   };
 }
