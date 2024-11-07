@@ -102,7 +102,7 @@ stdenv.mkDerivation {
   passthru = {
     inherit offlineCache;
     tests = nixosTests.actual;
-    passthru.updateScript = nix-update-script { };
+    updateScript = nix-update-script { };
   };
 
   meta = {
