@@ -55,7 +55,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   postInstall = ''
     substituteInPlace $out/${python3Packages.python.sitePackages}/bytesize/bytesize.py \
-      --replace 'CDLL("libbytesize.so.1")' "CDLL('$out/lib/libbytesize.so.1')"
+      --replace-fail 'CDLL("libbytesize.so.1")' "CDLL('$out/lib/libbytesize.so.1')"
   '';
 
   pythonImportsCheck = [ "bytesize" ];

@@ -32,9 +32,9 @@ python3.pkgs.buildPythonApplication rec {
   };
 
   postPatch = ''
-    substituteInPlace blivetgui/gui_utils.py --replace /usr/share $out/share
-    substituteInPlace blivet-gui --replace "pkexec blivet-gui-daemon" "pkexec $out/bin/blivet-gui-daemon"
-    substituteInPlace blivet-gui --replace "pkexec" "${pkexecPath}"
+    substituteInPlace blivetgui/gui_utils.py --replace-fail /usr/share $out/share
+    substituteInPlace blivet-gui --replace-fail "pkexec blivet-gui-daemon" "pkexec $out/bin/blivet-gui-daemon"
+    substituteInPlace blivet-gui --replace-fail "pkexec" "${pkexecPath}"
   '';
 
   nativeBuildInputs = [

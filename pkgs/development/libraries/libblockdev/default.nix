@@ -45,7 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   postPatch = ''
     patchShebangs scripts
     substituteInPlace src/python/gi/overrides/Makefile.am \
-      --replace ''\'''${exec_prefix}' '@PYTHON_EXEC_PREFIX@'
+      --replace-fail ''\'''${exec_prefix}' '@PYTHON_EXEC_PREFIX@'
   '';
 
   configureFlags = [
