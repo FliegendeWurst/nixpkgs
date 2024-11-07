@@ -73,9 +73,12 @@ in stdenv.mkDerivation (finalAttrs: {
     spidermonkey_128
   ];
 
+  strictDeps = true;
+
   nativeCheckInputs = [
     xvfb-run
-  ] ++ testDeps;
+  ];
+  checkInputs = testDeps;
 
   propagatedBuildInputs = [
     glib
