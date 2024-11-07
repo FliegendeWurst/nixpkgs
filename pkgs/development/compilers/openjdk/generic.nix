@@ -253,6 +253,7 @@ stdenv.mkDerivation (finalAttrs: {
     ]
     ++ [
       unzip
+      zip
     ]
     ++ lib.optionals atLeast21 [
       ensureNewerSourcesForZipFilesHook
@@ -264,7 +265,6 @@ stdenv.mkDerivation (finalAttrs: {
       cpio
       file
       which
-      zip
       perl
       zlib
       cups
