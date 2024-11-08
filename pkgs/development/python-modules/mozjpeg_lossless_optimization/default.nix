@@ -1,21 +1,25 @@
 {
   lib,
   python3Packages,
-  fetchPypi,
-  mailman,
-  nixosTests,
+  fetchFromGitHub,
   buildPythonPackage,
   mozjpeg,
+  pytestCheckHook,
+  setuptools,
   cmake,
 }:
 buildPythonPackage rec {
   pname = "mozjpeg_lossless_optimization";
   version = "1.1.3";
+  pyproject = true;
 
-  src = fetchPypi {
-    inherit version;
-    pname = "mozjpeg-lossless-optimization";
-    hash = "sha256-cl2Ydy6UP8oYsIAcuU5kXEd/9S5WrQsnvdt23fCRyj4=";
+  src = fetchFromGitHub {
+    owner = "wanadev";
+    repo = "mozjpeg-lossless-optimization";
+    # https://github.com/NixOS/nixpkgs/issues/26302
+    rev = "refs/tags/v${version}";
+    sha256 = "sha256-OKNt9XtfZ6hhRJN1Asn1T2dVjyXKQAsnFvXKYnrRZ98=";
+    fetchSubmodules = true;
   };
 
   # This package needs cmake, but it is not the default builder
@@ -24,6 +28,14 @@ buildPythonPackage rec {
   buildInputs = [ mozjpeg ];
   nativeBuildInputs = [ cmake ];
   propagatedBuildInputs = [ python3Packages.cffi ];
+
+  # https://github.com/NixOS/nixpkgs/issues/255262
+  preCheck = ''
+    rm -r mozjpeg_lossless_optimization
+  '';
+
+  build-system = [ setuptools ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   meta = with lib; {
     description = "Python library to optimize JPEGs losslessly using MozJPEG";
