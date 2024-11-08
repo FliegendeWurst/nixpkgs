@@ -668,13 +668,6 @@ with pkgs;
 
   buildcatrust = with python3.pkgs; toPythonApplication buildcatrust;
 
-  prism-model-checker-unwrapped = callPackage ../by-name/pr/prism-model-checker-unwrapped/package.nix {
-      java = openjdk17;
-      # makefile hardcodes gcc for darwin
-      stdenv = if stdenv.hostPlatform.isDarwin then gccStdenv else stdenv;
-  };
-  prism-model-checker = callPackage ../by-name/pr/prism-model-checker/package.nix {java = openjdk17;};
-
   probe-rs-tools = callPackage ../by-name/pr/probe-rs-tools/package.nix {
     inherit (darwin.apple_sdk.frameworks) AppKit;
     inherit (darwin) DarwinTools;
@@ -862,7 +855,6 @@ with pkgs;
   dotnet-aspnetcore = dotnetCorePackages.aspnetcore_6_0;
 
   nuget-to-nix = callPackage ../build-support/dotnet/nuget-to-nix { };
-  extract-dotnet-resources = callPackage ../build-support/dotnet/extract-dotnet-resources { };
   inherit (dotnetCorePackages) buildDotnetModule buildDotnetGlobalTool mkNugetSource mkNugetDeps;
 
   fsautocomplete = callPackage ../development/tools/fsautocomplete { };
@@ -1776,8 +1768,6 @@ with pkgs;
 
   headset-charge-indicator = callPackage ../tools/audio/headset-charge-indicator { };
 
-  heh = callPackage ../applications/editors/heh { };
-
   hexdiff = callPackage ../tools/misc/hexdiff { };
 
   hexo-cli = callPackage ../development/tools/hexo-cli { };
@@ -2250,8 +2240,6 @@ with pkgs;
   git-mit = callPackage ../applications/version-management/git-mit { };
 
   git-machete = python3Packages.callPackage ../applications/version-management/git-machete { };
-
-  git-nomad = callPackage ../applications/version-management/git-nomad { };
 
   git-octopus = callPackage ../applications/version-management/git-octopus { };
 
@@ -6124,8 +6112,6 @@ with pkgs;
   };
 
   davix-copy = davix.override { enableThirdPartyCopy = true; };
-
-  cantata = libsForQt5.callPackage ../applications/audio/cantata { };
 
   cantoolz = callPackage ../tools/networking/cantoolz { };
 
@@ -13833,6 +13819,9 @@ with pkgs;
 
   ytfzf = callPackage ../tools/misc/ytfzf { };
 
+  # To expose more packages for Yi, override the extraPackages arg.
+  yi = callPackage ../applications/editors/yi/wrapper.nix { };
+
   yaydl = callPackage ../tools/video/yaydl {
     inherit (darwin.apple_sdk.frameworks) Security;
   };
@@ -13862,10 +13851,6 @@ with pkgs;
   zdelta = callPackage ../tools/compression/zdelta { };
 
   zed = callPackage ../development/tools/zed { };
-
-  zellij = callPackage ../tools/misc/zellij {
-    inherit (darwin.apple_sdk.frameworks) DiskArbitration Foundation;
-  };
 
   zenith = callPackage ../tools/system/zenith {
     inherit (darwin.apple_sdk.frameworks) IOKit;
@@ -15479,7 +15464,6 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) Security;
   };
   cargo-readme = callPackage ../development/tools/rust/cargo-readme { };
-  cargo-risczero = callPackage ../development/tools/rust/cargo-risczero { };
   cargo-run-bin = callPackage ../development/tools/rust/cargo-run-bin {};
   cargo-semver-checks = callPackage ../development/tools/rust/cargo-semver-checks { };
 
@@ -22188,6 +22172,7 @@ with pkgs;
   zunclient = with python311Packages; toPythonApplication python-zunclient;
 
   openvdb = callPackage ../development/libraries/openvdb { };
+  openvdb_11 = callPackage ../development/libraries/openvdb/11.nix { };
 
   openvr = callPackage ../by-name/op/openvr/package.nix {
     inherit (darwin.apple_sdk.frameworks) Foundation AppKit;
@@ -22658,9 +22643,7 @@ with pkgs;
 
   rustc-demangle = callPackage ../development/libraries/rustc-demangle { };
 
-  s2geometry = callPackage ../development/libraries/s2geometry {
-    abseil-cpp = abseil-cpp_202401;
-  };
+  s2geometry = callPackage ../development/libraries/s2geometry { };
 
   safefile = callPackage ../development/libraries/safefile { };
 
@@ -27908,10 +27891,6 @@ with pkgs;
 
   av-98 = callPackage ../applications/networking/browsers/av-98 { };
 
-  avalanchego = callPackage ../applications/networking/avalanchego {
-    inherit (darwin.apple_sdk.frameworks) IOKit;
-  };
-
   avizo = callPackage ../applications/misc/avizo { };
 
   avocode = callPackage ../applications/graphics/avocode { };
@@ -30980,8 +30959,6 @@ with pkgs;
 
   nwg-dock = callPackage ../applications/misc/nwg-dock { };
 
-  nwg-dock-hyprland = callPackage ../applications/misc/nwg-dock-hyprland { };
-
   nwg-launchers = callPackage ../applications/misc/nwg-launchers { };
 
   nwg-look = callPackage ../applications/misc/nwg-look { };
@@ -31653,9 +31630,7 @@ with pkgs;
 
   puremapping = callPackage ../applications/audio/pd-plugins/puremapping { };
 
-  pure-maps = libsForQt5.callPackage ../applications/misc/pure-maps {
-    abseil-cpp = abseil-cpp_202401;
-  };
+  pure-maps = libsForQt5.callPackage ../applications/misc/pure-maps { };
 
   pwdsafety = callPackage ../tools/security/pwdsafety { };
 
@@ -33648,8 +33623,6 @@ with pkgs;
 
   clightning = callPackage ../applications/blockchains/clightning { };
 
-  clilol = callPackage ../applications/networking/clilol { };
-
   besu = callPackage ../applications/blockchains/besu { };
 
   bitcoin-abc  = libsForQt5.callPackage ../applications/blockchains/bitcoin-abc {
@@ -34694,8 +34667,6 @@ with pkgs;
   path-of-building = qt6Packages.callPackage ../games/path-of-building {};
 
   pentobi = libsForQt5.callPackage ../games/pentobi { };
-
-  performous = callPackage ../games/performous { };
 
   pinball = callPackage ../games/pinball { };
 
@@ -38388,5 +38359,7 @@ with pkgs;
     fltk = fltk13;
   };
 
-  dotultimate = recurseIntoAttrs (callPackages ../development/tools/misc/dotultimate {});
+  cantata = callPackage ../by-name/ca/cantata/package.nix {
+    ffmpeg = ffmpeg_6;
+  };
 }
