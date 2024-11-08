@@ -13819,9 +13819,6 @@ with pkgs;
 
   ytfzf = callPackage ../tools/misc/ytfzf { };
 
-  # To expose more packages for Yi, override the extraPackages arg.
-  yi = callPackage ../applications/editors/yi/wrapper.nix { };
-
   yaydl = callPackage ../tools/video/yaydl {
     inherit (darwin.apple_sdk.frameworks) Security;
   };
@@ -20422,8 +20419,6 @@ with pkgs;
 
   libchardet = callPackage ../development/libraries/libchardet { };
 
-  libchewing = callPackage ../development/libraries/libchewing { };
-
   libchipcard = callPackage ../development/libraries/aqbanking/libchipcard.nix { };
 
   libcrafter = callPackage ../development/libraries/libcrafter { };
@@ -22454,8 +22449,6 @@ with pkgs;
 
   quesoglc = callPackage ../development/libraries/quesoglc { };
 
-  quickder = callPackage ../development/libraries/quickder { };
-
   quickmem = callPackage ../development/libraries/quickmem { };
 
   quicksynergy = callPackage ../applications/misc/quicksynergy { };
@@ -23968,11 +23961,6 @@ with pkgs;
   dkimproxy = callPackage ../servers/mail/dkimproxy { };
 
   dmarc-metrics-exporter = callPackage ../servers/monitoring/prometheus/dmarc-metrics-exporter { };
-
-  dmlive = callPackage ../applications/video/dmlive {
-    inherit (darwin) configd;
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
 
   do-agent = callPackage ../servers/monitoring/do-agent { };
 
@@ -30944,6 +30932,8 @@ with pkgs;
   noaa-apt = callPackage ../applications/radio/noaa-apt { };
 
   node-problem-detector = callPackage ../applications/networking/cluster/node-problem-detector { };
+
+  ninja_1_11 = callPackage ../by-name/ni/ninja/package.nix { ninjaRelease = "1.11"; };
 
   ninjas2 = callPackage ../applications/audio/ninjas2 { };
 
