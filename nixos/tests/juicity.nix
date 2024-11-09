@@ -1,5 +1,5 @@
 import ./make-test-python.nix (
-  { lib, pkgs, ... }:
+  { lib, ... }:
   {
 
     name = "juicity";
@@ -11,9 +11,8 @@ import ./make-test-python.nix (
     nodes.machine =
       { pkgs, ... }:
       {
-        services.juicity.instances = [
-          {
-            name = "test";
+        services.juicity.instances = {
+          test = {
             serve = true;
             credentials = [
               "cert:${./nginx-proxyprotocol/_.test.nix.cert.pem}"
@@ -34,8 +33,8 @@ import ./make-test-python.nix (
                 }
               ''
             );
-          }
-        ];
+          };
+        };
       };
 
     testScript = ''

@@ -3073,6 +3073,8 @@ self: super: with self; {
 
   deepmerge = callPackage ../development/python-modules/deepmerge { };
 
+  deepsearch-toolkit = callPackage ../development/python-modules/deepsearch-toolkit { };
+
   deeptoolsintervals = callPackage ../development/python-modules/deeptoolsintervals { };
 
   deepwave = callPackage ../development/python-modules/deepwave { };
@@ -3704,6 +3706,14 @@ self: super: with self; {
   docker-pycreds = callPackage ../development/python-modules/docker-pycreds { };
 
   dockerspawner = callPackage ../development/python-modules/dockerspawner { };
+
+  docling-core = callPackage ../development/python-modules/docling-core { };
+
+  docling-ibm-models = callPackage ../development/python-modules/docling-ibm-models { };
+
+  docling-parse = callPackage ../development/python-modules/docling-parse {
+    loguru-cpp = pkgs.loguru;
+  };
 
   docloud = callPackage ../development/python-modules/docloud { };
 
@@ -7756,6 +7766,8 @@ self: super: with self; {
 
   markdownify  = callPackage ../development/python-modules/markdownify { };
 
+  marko = callPackage ../development/python-modules/marko { };
+
   markupsafe = callPackage ../development/python-modules/markupsafe { };
 
   markuppy = callPackage ../development/python-modules/markuppy { };
@@ -7877,6 +7889,8 @@ self: super: with self; {
   mdutils = callPackage ../development/python-modules/mdutils { };
 
   mdp = callPackage ../development/python-modules/mdp { };
+
+  mean-average-precision = callPackage ../development/python-modules/mean-average-precision { };
 
   measurement = callPackage ../development/python-modules/measurement { };
 
@@ -9314,6 +9328,8 @@ self: super: with self; {
   objax = callPackage ../development/python-modules/objax { };
 
   objexplore = callPackage ../development/python-modules/objexplore { };
+
+  objprint = callPackage ../development/python-modules/objprint { };
 
   objsize = callPackage ../development/python-modules/objsize { };
 
@@ -14302,6 +14318,10 @@ self: super: with self; {
   selenium-wire = callPackage ../development/python-modules/selenium-wire { };
 
   semantic-version = callPackage ../development/python-modules/semantic-version { };
+
+  semgrep = callPackage ../development/python-modules/semgrep {
+    semgrep-core = callPackage ../development/python-modules/semgrep/semgrep-core.nix { };
+  };
 
   semaphore-bot = callPackage ../development/python-modules/semaphore-bot { };
 
