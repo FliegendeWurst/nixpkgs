@@ -34,12 +34,12 @@ stdenv.mkDerivation rec {
     pkg-config
     python3
     python3.pkgs.setuptools
+  ] ++ lib.optionals (!static) [
+    python3.pkgs.twisted
   ];
 
   buildInputs = [
     boost
-  ] ++ lib.optionals (!static) [
-    (python3.withPackages (ps: [ps.twisted]))
   ];
 
   propagatedBuildInputs = [
