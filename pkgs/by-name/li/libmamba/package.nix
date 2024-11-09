@@ -19,12 +19,12 @@
 }:
 stdenv.mkDerivation rec {
   pname = "libmamba";
-  version = "1.5.8";
+  version = "2.0.2";
   src = fetchFromGitHub {
     owner = "mamba-org";
     repo = "mamba";
     rev = "libmamba-${version}";
-    hash = "sha256-sxZDlMFoMLq2EAzwBVO++xvU1C30JoIoZXEX/sqkXS0=";
+    hash = "sha256-gAU7ORlALQly152w5URu5Ra+OYOsa3BzT1v5jBo5/Ao=";
   };
   nativeBuildInputs = [
     cmake
