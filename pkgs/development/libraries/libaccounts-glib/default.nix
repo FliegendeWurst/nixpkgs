@@ -37,6 +37,8 @@ stdenv.mkDerivation rec {
     sqlite
   ];
 
+  strictDeps = false; # TODO
+
   # TODO: send patch upstream to make running tests optional
   postPatch = lib.optionalString (!stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
     substituteInPlace meson.build \
