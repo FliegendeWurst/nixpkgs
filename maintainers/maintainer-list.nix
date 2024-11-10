@@ -12587,6 +12587,12 @@
     githubId = 40217331;
     name = "LizeLive";
   };
+  llakala = {
+    email = "elevenaka11@gmail.com";
+    github = "llakala";
+    githubId = 78693624;
+    name = "llakala";
+  };
   lluchs = {
     email = "lukas.werling@gmail.com";
     github = "lluchs";
@@ -15115,6 +15121,12 @@
     github = "Myrl";
     githubId = 9636071;
     name = "Myrl Hex";
+  };
+  mzabani = {
+    email = "mzabani@gmail.com";
+    github = "mzabani";
+    githubId = 4662691;
+    name = "Marcelo Zabani";
   };
   mzacho = {
     email = "nixpkgs@martinzacho.net";
@@ -21985,6 +21997,12 @@
     github = "Thra11";
     githubId = 1391883;
     name = "Tom Hall";
+  };
+  thtrf = {
+    email = "thtrf@proton.me";
+    github = "thtrf";
+    githubId = 82712122;
+    name = "thtrf";
   };
   Thunderbottom = {
     email = "chinmaydpai@gmail.com";
