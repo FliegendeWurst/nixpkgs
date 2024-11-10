@@ -244,6 +244,10 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs =
     [
       pkg-config
+      cpio
+      file
+      which
+      perl
     ]
     ++ lib.optionals atLeast11 [
       autoconf
@@ -261,11 +265,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs =
     [
-      # TODO: Many of these should likely be in `nativeBuildInputs`.
-      cpio
-      file
-      which
-      perl
       zlib
       cups
       freetype
@@ -311,6 +310,9 @@ stdenv.mkDerivation (finalAttrs: {
       (if atLeast11 then gtk3 else gtk2)
       glib
     ];
+  # TODO: configure fails with
+  # configure: error: C compiler cannot create executables
+  strictDeps = false;
 
   propagatedBuildInputs = lib.optionals (!atLeast11) [ setJavaClassPath ];
 
