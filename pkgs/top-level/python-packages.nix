@@ -7546,6 +7546,8 @@ self: super: with self; {
 
   lockfile = callPackage ../development/python-modules/lockfile { };
 
+  locust = callPackage ../development/python-modules/locust { };
+
   log-symbols = callPackage ../development/python-modules/log-symbols { };
 
   logbook = callPackage ../development/python-modules/logbook { };
