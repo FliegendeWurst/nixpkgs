@@ -19,11 +19,11 @@ appimageTools.wrapType2 rec {
     install -m 444 -D ${appimageContents}/usr/share/icons/hicolor/512x512/apps/${pname}.png \
     $out/share/icons/hicolor/512x512/apps/${pname}.png
     substituteInPlace $out/share/applications/${pname}.desktop \
-    --replace 'Exec=AppRun' 'Exec=${pname} %U'
+    --replace 'Exec=AppRun' 'Exec=edex-ui %U'
   '';
 
   meta = {
-    description = "A cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.";
+    description = "Cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.";
     mainProgram = "edex-ui";
     changelog = "https://github.com/GitSquared/edex-ui/releases/tag${version}";
     homepage = "https://github.com/GitSquared/edex-ui";
