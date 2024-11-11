@@ -1,8 +1,9 @@
 {
+  lib,
   buildPythonPackage,
   fetchFromGitHub,
   pyqt5,
-  setuptools-scm
+  setuptools-scm,
 }:
 buildPythonPackage {
   pname = "qtwidgets";
@@ -16,9 +17,15 @@ buildPythonPackage {
     sha256 = "sha256-cWig3Hfv+v4w1pJQSQoLTOp2zD8U1F/IoMbyuNLtle8=";
   };
 
-  build-inputs = [setuptools-scm];
+  build-inputs = [ setuptools-scm ];
 
-  dependencies = [pyqt5];
+  dependencies = [ pyqt5 ];
 
   doCheck = false;
+
+  meta = {
+    description = "Custom widget library for PyQt5 and PySide2 (Qt for Python). Free to use in your own applications.";
+    homepage = "https://github.com/pythonguis/python-qtwidgets";
+    license = with lib.licenses; [ mit ];
+  };
 }

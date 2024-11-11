@@ -1,4 +1,5 @@
 {
+  lib,
   buildPythonPackage,
   fetchPypi,
   requests,
@@ -18,7 +19,15 @@ buildPythonPackage rec {
     setuptools-scm
   ];
 
-  dependencies = [requests];
+  dependencies = [ requests ];
 
   doCheck = false;
+
+  pythonImportsCheck = [ "easywebdav" ];
+
+  meta = {
+    description = "A straight-forward WebDAV client, implemented using Requests";
+    homepage = "https://github.com/amnong/easywebdav";
+    license = with lib.licenses; [ isc ];
+  };
 }

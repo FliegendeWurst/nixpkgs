@@ -73,6 +73,6 @@ python3Packages.buildPythonApplication rec {
     mainProgram = "dronecan_gui_tool";
     homepage = "https://github.com/dronecan/gui_tool";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [xyven1];
+    maintainers = with lib.maintainers; [ xyven1 ];
   };
 }

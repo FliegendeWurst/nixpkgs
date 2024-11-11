@@ -1,4 +1,5 @@
 {
+  lib,
   buildPythonPackage,
   fetchPypi,
   setuptools-scm,
@@ -20,5 +21,14 @@ buildPythonPackage rec {
     setuptools-scm
   ];
 
-  dependencies = [numpy];
+  dependencies = [ numpy ];
+
+  meta = {
+    description = "Python bindings for Monocypher crypto library";
+    homepage = "https://github.com/jetperch/pymonocypher";
+    license = with lib.licenses; [
+      cc0
+      bsd2
+    ];
+  };
 }
