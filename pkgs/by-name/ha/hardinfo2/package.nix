@@ -46,6 +46,12 @@ stdenv.mkDerivation {
     libsForQt5.wrapQtAppsHook
   ];
 
+  preFixup = ''
+    makeWrapperArgs+=("''${qtWrapperArgs[@]}")
+  '';
+
+  dontWrapQtApps = true;
+
   buildInputs = [
     gtk3
     json-glib
@@ -76,14 +82,14 @@ stdenv.mkDerivation {
 
   meta = {
     homepage = "http://www.hardinfo2.org";
-    description = "System Information and Benchmark for Linux Systems ";
+    description = "System information and benchmarks for Linux systems";
     license = with lib.licenses; [
       gpl2Plus
       gpl3Plus
       lgpl2Plus
     ];
     maintainers = with lib.maintainers; [ sigmanificient ];
-    platforms = lib.platforms.unix;
+    platforms = lib.platforms.linux;
     mainProgram = "hardinfo";
   };
 }
