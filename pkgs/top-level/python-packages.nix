@@ -7036,6 +7036,8 @@ self: super: with self; {
 
   laspy = callPackage ../development/python-modules/laspy { };
 
+  lastversion = callPackage ../development/python-modules/lastversion { };
+
   laszip = callPackage ../development/python-modules/laszip {
     inherit (pkgs) cmake ninja;
     inherit (pkgs.__splicedPackages) laszip;
