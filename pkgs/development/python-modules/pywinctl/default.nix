@@ -39,7 +39,7 @@ buildPythonPackage rec {
   meta = {
     homepage = "https://github.com/Kalmat/PyWinCtl";
     license = lib.licenses.bsd3;
-    description = " Cross-Platform module to get info on and control windows on screen";
+    description = "Cross-Platform module to get info on and control windows on screen";
     maintainers = with lib.maintainers; [ sigmanificient ];
   };
 }
