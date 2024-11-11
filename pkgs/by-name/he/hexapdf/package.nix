@@ -18,10 +18,7 @@ bundlerApp {
     description = "Versatile PDF creation and manipulation library";
     homepage = "https://hexapdf.gettalong.org/";
     changelog = "https://github.com/gettalong/hexapdf/blob/master/CHANGELOG.md";
-    license = with licenses; [
-      agpl3Only
-      unfree
-    ];
+    license = licenses.agpl3Only;
     maintainers = with maintainers; [ bbenno ];
     platforms = platforms.unix;
     mainProgram = "hexapdf";
