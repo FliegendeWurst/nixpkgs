@@ -37,21 +37,25 @@ maven.buildMavenPackage rec {
     zip
   ];
   runtimeDeps = [
-    libGL
     xdg-utils
     zlib
   ];
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out/bin $out/share/PolyGlotLinA
     install -Dm644 --target-directory=$out/share/PolyGlotLinA target/PolyGlotLinA-${version}-jar-with-dependencies.jar
 
     makeWrapper ${jre}/bin/java $out/bin/PolyGlot \
       --add-flags "-Djpackage.app-version=${version}" \
-      --add-flags "-jar $out/share/PolyGlotLinA/PolyGlotLinA-${version}-jar-with-dependencies.jar"
+      --add-flags "-jar $out/share/PolyGlotLinA/PolyGlotLinA-${version}-jar-with-dependencies.jar" \
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ libGL ]}"
+
+    runHook postInstall
   '';
 
   meta = {
-    description = "A conlang construction toolkit";
+    description = "Conlang construction toolkit";
     homepage = "https://draquet.github.io/PolyGlot/readme.html";
     changelog = "https://github.com/DraqueT/PolyGlot/releases/tag/${version}";
     license = lib.licenses.mit;
