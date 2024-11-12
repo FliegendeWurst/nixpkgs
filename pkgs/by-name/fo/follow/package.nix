@@ -12,13 +12,13 @@
 stdenv.mkDerivation rec {
   pname = "follow";
 
-  version = "0.1.1-beta.1";
+  version = "0.2.0-beta.2";
 
   src = fetchFromGitHub {
     owner = "RSSNext";
     repo = "Follow";
     rev = "v${version}";
-    hash = "sha256-ItkghxX/dbwo/oD1UsVIeazG2IY/9FBnX0LRL/Sxz8U=";
+    hash = "sha256-7KSPZj9QG6zksji/eY8jczBDHr/9tStlw26LKVqXTAw=";
   };
 
   nativeBuildInputs = [
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
   pnpmDeps = pnpm.fetchDeps {
     inherit pname version src;
-    hash = "sha256-UKu1kFOniMK3vAj3x6vpQksB/J4JV5yg/4mejnsXJGw=";
+    hash = "sha256-FzMjN0rIjYxexf6tix4qi3mnuPkadjKihhN0Pj5y2nU=";
   };
 
   env = {
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
     # This environment variables inject the production Vite config at build time.
     # Copy from:
-    # 1. https://github.com/RSSNext/Follow/blob/v0.1.1-beta.1/.github/workflows/build.yml#L18
+    # 1. https://github.com/RSSNext/Follow/blob/v0.2.0-beta.2/.github/workflows/build.yml#L18
     # 2. And logs in the corresponding GitHub Actions: https://github.com/RSSNext/Follow/actions/workflows/build.yml
     VITE_WEB_URL = "https://app.follow.is";
     VITE_API_URL = "https://api.follow.is";
