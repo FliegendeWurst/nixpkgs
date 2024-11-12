@@ -3548,6 +3548,12 @@
     github = "scaredmushroom";
     githubId = 45340040;
   };
+  caperren = {
+    name = "Corwin Perren";
+    email = "caperren@gmail.com";
+    github = "caperren";
+    githubId = 4566591;
+  };
   CaptainJawZ = {
     email = "CaptainJawZ@outlook.com";
     name = "Danilo Reyes";
@@ -18891,6 +18897,13 @@
     github = "robgssp";
     githubId = 521306;
     name = "Rob Glossop";
+  };
+  robinkrahl = {
+    email = "nix@ireas.org";
+    github = "robinkrahl";
+    githubId = 165115;
+    keys = [ { fingerprint = "EC7E F0F9 B681 4C24 6236  3842 B755 6972 702A FD45"; } ];
+    name = "Robin Krahl";
   };
   roblabla = {
     email = "robinlambertz+dev@gmail.com";
