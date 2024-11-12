@@ -45,6 +45,6 @@ stdenv.mkDerivation (finalAttrs: {
     maintainers = [ lib.maintainers.Flameopathic ];
     mainProgram = "wl-clicker";
     platforms = lib.platforms.linux;
-    broken = stdenv.isLinux && stdenv.isAarch64;
+    broken = stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isAarch64;
   };
 })
