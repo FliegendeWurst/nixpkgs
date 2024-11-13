@@ -28,15 +28,15 @@
   libXtst,
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAtrs: {
   pname = "hardinfo2";
-  version = "2.1.12-unstable-2024-2024-08-23";
+  version = "2.2.4";
 
   src = fetchFromGitHub {
     owner = "hardinfo2";
     repo = "hardinfo2";
-    rev = "260d4c58520ec38743b8ce6554c89cf622227e90"; # features fixes for nixos
-    hash = "sha256-r29+r3KWvbdlzP3zVa/AcKT3WavanJvMtQmRDUMDVkU=";
+    rev = "refs/tags/release-${finalAtrs.version}"; # features fixes for nixos
+    hash = "sha256-UgVryuUkD9o2SvwA9VbX/kCaAo3+Osf6FxlYyaRX1Ag=";
   };
 
   nativeBuildInputs = [
@@ -92,4 +92,4 @@ stdenv.mkDerivation {
     platforms = lib.platforms.linux;
     mainProgram = "hardinfo";
   };
-}
+})
