@@ -15,24 +15,26 @@
 
 buildPythonPackage rec {
   pname = "nlpo3";
-  version = "1.3.0";
+  version = "1.4.0-unstable-2024-11-11";
   pyproject = true;
-
-  # failing build on python 3.12
-  disabled = pythonAtLeast "3.12";
 
   src = fetchFromGitHub {
     owner = "PyThaiNLP";
     repo = "nlpo3";
-    rev = "refs/tags/nlpo3-python-v${version}";
-    hash = "sha256-A1q6iieoPuRFTnyzg9y3Tp/rMx1c8nbcd1f8aaqonf4=";
+    rev = "280c47b7f98e88319c1a4ac2c7a2e5f273c00621";
+    hash = "sha256-bEN2SaINfqvTIPSROXApR3zoLdjZY0h6bdAzbMHrJdM=";
   };
+
+  postPatch = ''
+    substituteInPlace tests/test_tokenize.py \
+      --replace-fail "data/test_dict.txt" "$src/nlpo3-python/tests/data/test_dict.txt"
+  '';
 
   sourceRoot = "${src.name}/nlpo3-python";
 
   cargoDeps = rustPlatform.fetchCargoTarball {
     inherit src sourceRoot;
-    hash = "sha256-OWXD5t4Jg9/GLgwIvM1j4Ns5oFFaHWlZbGMh3cBsIQw=";
+    hash = "sha256-PDDlG5nLedgA+HFZzkrxtfUjTwwioQhpsk5qlbAe3ws=";
   };
 
   preCheck = ''
@@ -45,7 +47,7 @@ buildPythonPackage rec {
     cargo
   ];
 
-  buildInputs = lib.optionals stdenv.isDarwin [ libiconv ];
+  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [ libiconv ];
 
   build-system = [
     setuptools
