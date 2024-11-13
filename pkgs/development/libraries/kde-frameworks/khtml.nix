@@ -8,7 +8,7 @@
 
 mkDerivation {
   pname = "khtml";
-  nativeBuildInputs = [ extra-cmake-modules perl ];
+  nativeBuildInputs = [ extra-cmake-modules perl gperf ];
   buildInputs = [
     giflib karchive kcodecs kglobalaccel ki18n kiconthemes kio knotifications
     kparts ktextwidgets kwallet kwidgetsaddons kwindowsystem kxmlgui phonon

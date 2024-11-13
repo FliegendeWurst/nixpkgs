@@ -5,6 +5,7 @@
   setuptools-scm,
   cython,
   numpy,
+  pytestCheckHook,
 }:
 buildPythonPackage rec {
   pname = "pymonocypher";
@@ -22,6 +23,9 @@ buildPythonPackage rec {
   ];
 
   dependencies = [ numpy ];
+  
+  doCheck = true;
+  nativeCheckInputs = [ pytestCheckHook ];
 
   meta = {
     description = "Python bindings for Monocypher crypto library";

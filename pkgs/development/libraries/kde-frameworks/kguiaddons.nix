@@ -9,6 +9,7 @@ mkDerivation {
   nativeBuildInputs = [ extra-cmake-modules wayland-scanner ];
   buildInputs = [ qtx11extras wayland plasma-wayland-protocols ];
   propagatedBuildInputs = [ qtbase ];
+  strictDeps = false; # TODO
 
   outputs = [ "out" "dev" ];
 

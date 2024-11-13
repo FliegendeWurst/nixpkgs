@@ -12,7 +12,7 @@
 stdenv.mkDerivation rec {
   pname = "follow";
 
-  version = "0.2.0-beta.2";
+  version = ''0.2.0-beta.2'';
 
   src = fetchFromGitHub {
     owner = "RSSNext";

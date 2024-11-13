@@ -82,6 +82,8 @@ stdenv.mkDerivation rec {
     luajit
   ];
 
+  strictDeps = false; # TODO
+
   # for gegl-4.0.pc
   propagatedBuildInputs = [
     glib

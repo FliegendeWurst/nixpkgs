@@ -9,6 +9,7 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "pg-semver";
   version = "0.40.0";
 
+  nativeBuildInputs = [ postgresql ];
   buildInputs = [ postgresql ];
 
   src = fetchFromGitHub {

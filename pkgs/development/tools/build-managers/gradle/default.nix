@@ -65,6 +65,7 @@ rec {
       nativeBuildInputs = [
         makeWrapper
         unzip
+        java
       ] ++ lib.optionals stdenv.hostPlatform.isLinux [
         autoPatchelfHook
       ];

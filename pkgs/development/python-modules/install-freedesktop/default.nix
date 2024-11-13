@@ -20,6 +20,8 @@ buildPythonPackage rec {
 
   doCheck = false;
 
+  pythonImportsCheck = [ "install_freedesktop" ];
+
   meta = {
     description = "Setuptools extension to install freedesktop.org app icons";
     homepage = "https://github.com/welshjf/install_freedesktop";

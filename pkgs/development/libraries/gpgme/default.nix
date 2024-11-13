@@ -76,6 +76,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = lib.optionals pythonSupport [ python3 ];
 
+  # TODO: figure out why libkleo does not build if this is true
+  strictDeps = false;
+
   propagatedBuildInputs = [
     glib
     libassuan

@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "dev" "man" ];
   separateDebugInfo = true;
 
-  nativeBuildInputs = [ autoreconfHook pkg-config pandoc ];
+  nativeBuildInputs = [ autoreconfHook pkg-config pandoc python ];
   buildInputs = [ cpio zlib zstd bzip2 file libarchive libgcrypt nspr nss db xz python lua sqlite ]
     ++ lib.optional stdenv.cc.isClang llvmPackages.openmp
     ++ lib.optional stdenv.hostPlatform.isLinux libcap

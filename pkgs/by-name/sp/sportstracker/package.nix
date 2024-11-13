@@ -13,7 +13,7 @@
 let
   jdkWithJFX = jdk21.override {
     enableJavaFX = true;
-    openjfx = openjfx21.override { withWebKit = true; };
+    openjfx21 = openjfx21.override { withWebKit = true; };
   };
 in
 maven.buildMavenPackage rec {

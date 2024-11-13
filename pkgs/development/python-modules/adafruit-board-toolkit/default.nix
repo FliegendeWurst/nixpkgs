@@ -12,7 +12,7 @@
 buildPythonPackage rec {
   pname = "adafruit-board-toolkit";
   version = "1.1.1";
-  format = "setuptools";
+  pyproject = true;
 
   disabled = pythonOlder "3.5";
 
@@ -31,6 +31,8 @@ buildPythonPackage rec {
   dependencies = [
     pyserial
   ];
+
+  pythonImportsCheck = [ "adafruit_board_toolkit" ];
 
   meta = with lib; {
     description = "CircuitPython board identification and information";

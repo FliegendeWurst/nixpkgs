@@ -7201,6 +7201,9 @@ with self; {
       hash = "sha256-T0hUH/FaCnQF92rcEPgWJ8M5lvv1bJXCbAlERMCSjXg=";
     };
 
+    nativeBuildInputs = [
+      pkgs.libmysqlclient # for mysql_config
+    ];
     buildInputs = [ pkgs.libmysqlclient DevelChecklib TestDeep TestDistManifest TestPod ];
     propagatedBuildInputs = [ DBI ];
 

@@ -18,11 +18,11 @@ buildPythonPackage rec {
   };
 
   build-system = [
-    numpy
     setuptools
   ];
 
   nativeCheckInputs = [ pytestCheckHook ];
+  checkInputs = [ numpy ];
 
   pythonImportsCheck = [ "tinyarray" ];
 

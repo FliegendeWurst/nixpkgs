@@ -11,6 +11,10 @@ python3Packages.buildPythonPackage rec {
   version = "0.48.4";
   pyproject = true;
 
+  pythonRelaxDeps = [
+    "setuptools"
+  ];
+
   dependencies = with python3.pkgs; [
     poetry-core
     appdirs

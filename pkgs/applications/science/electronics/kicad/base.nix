@@ -141,10 +141,11 @@ stdenv.mkDerivation rec {
     doxygen
     graphviz
     pkg-config
-    libgit2
     libsecret
     libgcrypt
     libgpg-error
+    swig
+    wxGTK
   ]
   ++ optional needsProtobuf protobuf
   # wanted by configuration on linux, doesn't seem to affect performance
@@ -164,8 +165,10 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libgit2
     libGLU
     libGL
+    libsecret
     zlib
     libX11
     wxGTK

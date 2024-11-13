@@ -69,6 +69,8 @@ stdenv.mkDerivation rec {
     nlohmann_json
     openssl
     protobuf
+    gtest
+    gbenchmark
   ];
 
   doInstallCheck = true;

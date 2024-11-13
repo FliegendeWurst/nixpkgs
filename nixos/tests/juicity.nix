@@ -13,6 +13,7 @@ import ./make-test-python.nix (
       {
         services.juicity.instances = {
           test = {
+            enable = true;
             serve = true;
             credentials = [
               "cert:${./nginx-proxyprotocol/_.test.nix.cert.pem}"

@@ -205,7 +205,7 @@ let
 , doInstallCheck ? config.doCheckByDefault or false
 
 , # TODO(@Ericson2314): Make always true and remove / resolve #178468
-  strictDeps ? if config.strictDepsByDefault then true else stdenv.hostPlatform != stdenv.buildPlatform
+  strictDeps ? true
 
 , enableParallelBuilding ? config.enableParallelBuildingByDefault
 

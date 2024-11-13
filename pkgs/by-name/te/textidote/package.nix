@@ -64,9 +64,13 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     ant
-    jdk
+    # jdk
     makeWrapper
     stripJavaArchivesHook
+  ];
+
+  buildInputs = [
+    jdk
   ];
 
   # `javac` encoding only defaults to UTF-8 after Java 18

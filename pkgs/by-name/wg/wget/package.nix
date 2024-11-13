@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
     ++ lib.optional withOpenssl openssl
     ++ lib.optional withLibpsl libpsl
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.CoreServices perlPackages.perl ];
+  strictDeps = false; # TODO
 
   configureFlags = [
     (lib.withFeatureAs withOpenssl "ssl" "openssl")

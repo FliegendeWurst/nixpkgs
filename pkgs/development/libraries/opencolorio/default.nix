@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
       --replace 'OCIO_ADD_TEST(Config, virtual_display_with_active_displays)' 'static void _skip_virtual_display_with_active_displays()'
   '';
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [ cmake python3Packages.python ];
   buildInputs = [
     expat
     yaml-cpp

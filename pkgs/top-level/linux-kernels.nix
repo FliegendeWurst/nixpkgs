@@ -311,6 +311,8 @@ in {
     inherit (pkgs) oci-seccomp-bpf-hook; # added 2022-11
     inherit (pkgs) dpdk; # added 2024-03
 
+    librem-ec-acpi = callPackage ../os-specific/linux/purism/librem-ec-acpi {};
+
     acpi_call = callPackage ../os-specific/linux/acpi-call {};
 
     akvcam = callPackage ../os-specific/linux/akvcam { };

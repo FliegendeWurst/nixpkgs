@@ -89,6 +89,8 @@ mkDerivation rec {
     unliftio
   ];
 
+  testToolDepends = [ haskellPackages.hspec-discover ];
+
   # We only run codd's tests that don't require postgresql nor strace. We need to support unix sockets in codd's test suite
   # before enabling postgresql's tests, and SystemResourcesSpecs might fail on macOS because of the need for strace and parsing
   # libc calls. Not that we really gain much from running SystemResourcesSpecs here anyway.

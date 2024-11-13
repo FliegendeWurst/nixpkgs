@@ -76,11 +76,11 @@ stdenv.mkDerivation rec {
   '';
 
   depsBuildBuild = [ buildPackages.stdenv.cc ];
-  nativeBuildInputs = [ perl ];
+  nativeBuildInputs = [ perl cpio ];
 
   # perl is necessary in buildInputs so that installed perl scripts get patched
   # correctly
-  buildInputs = [ coreutils perl gawk zlib bzip2 cpio ]
+  buildInputs = [ coreutils perl gawk zlib bzip2 ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ ApplicationServices ];
   hardeningDisable = [ "format" ];
 

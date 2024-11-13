@@ -1,6 +1,7 @@
 { lib
 , stdenv
 , systemPlatform
+, bash
 , buildDartApplication
 , runCommand
 , git
@@ -37,6 +38,7 @@ buildDartApplication.override { inherit dart; } rec {
   # It attempts to generate configuration files, and relies on a few external
   # tools.
   nativeBuildInputs = [ git which ];
+  buildInputs = [ bash ];
   preConfigure = ''
     export HOME=.
     export FLUTTER_ROOT="$NIX_BUILD_TOP/source"
@@ -46,6 +48,10 @@ buildDartApplication.override { inherit dart; } rec {
 
   dartEntryPoints."flutter_tools.snapshot" = "bin/flutter_tools.dart";
   dartCompileFlags = [ "--define=NIX_FLUTTER_HOST_PLATFORM=${systemPlatform}" ];
+
+  preFixup = ''
+    patchShebangs bin/tool_backend.sh
+  '';
 
   # The Dart wrapper launchers are useless for the Flutter tool - it is designed
   # to be launched from a snapshot by the SDK.

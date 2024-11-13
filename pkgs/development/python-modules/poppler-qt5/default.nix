@@ -27,13 +27,13 @@ buildPythonPackage rec {
   buildInputs = [
     qtbase.dev
     poppler
-    pyqt-builder
   ];
   nativeBuildInputs = [
     pkg-config
     qmake
     sip
     setuptools
+	pyqt-builder
   ];
   propagatedBuildInputs = [ pyqt5.dev ];
 

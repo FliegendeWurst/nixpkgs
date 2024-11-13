@@ -32,6 +32,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     cmake
+    glslang
   ];
 
   buildInputs = [

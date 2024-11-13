@@ -19,6 +19,7 @@
 , pkg-config
 , readline
 , sqlite
+, bash
 }:
 
 stdenv.mkDerivation rec {
@@ -37,6 +38,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ autoreconfHook pkg-config ];
 
   buildInputs = [
+    bash
     c-ares
     cryptopp
     curl

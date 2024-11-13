@@ -13,7 +13,7 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "981213";
     repo = "mtk_uartboot";
-    rev = "refs/v${version}";
+    rev = "refs/tags/v${version}";
     hash = "sha256-mwwm2TVBfOEqvQIP0Vl4Q2SkcZxX1JP7rShmjaY+pWE=";
   };
 

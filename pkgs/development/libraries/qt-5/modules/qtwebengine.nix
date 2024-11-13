@@ -63,6 +63,8 @@ in
     (lib.getDev pkgsBuildTarget.targetPackages.qt5.qtquickcontrols)
     pkg-config-wrapped-without-prefix
   ] ++ lib.optional stdenv.hostPlatform.isDarwin [ bootstrap_cmds xcbuild ];
+  # TODO: strictDeps = true fails with Project ERROR: Unknown module(s) in QT: qml-private quick-private
+  strictDeps = false;
   doCheck = true;
   outputs = [ "bin" "dev" "out" ];
 

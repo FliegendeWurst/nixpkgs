@@ -22,10 +22,6 @@ stdenv.mkDerivation rec {
     name = "${pname}-${version}.AppImage";
   };
 
-  buildInputs = [
-    asar
-  ];
-
   appimageContents = appimageTools.extractType2 {
     name = "${pname}-${version}";
     inherit src;
@@ -35,7 +31,7 @@ stdenv.mkDerivation rec {
   dontConfigure = true;
   dontBuild = true;
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [ makeWrapper asar ];
 
   installPhase = ''
     runHook preInstall

@@ -31,10 +31,12 @@ stdenv.mkDerivation (finalAttrs: {
     automake
     libtool
     bison
+    pcre
   ];
   buildInputs = [
     pcre
   ];
+  strictDeps = true;
 
   configureFlags = [
     "--without-tcl"

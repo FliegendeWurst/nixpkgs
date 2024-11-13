@@ -252,6 +252,8 @@ qtModule {
     cups
   ];
 
+  strictDeps = false;
+
   requiredSystemFeatures = [ "big-parallel" ];
 
   preConfigure = ''

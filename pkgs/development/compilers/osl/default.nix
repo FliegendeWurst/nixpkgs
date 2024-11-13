@@ -55,6 +55,7 @@ in stdenv.mkDerivation rec {
     clang
     cmake
     flex
+    python3
   ];
 
   buildInputs = [

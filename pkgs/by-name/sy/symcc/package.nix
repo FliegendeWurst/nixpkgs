@@ -7,6 +7,7 @@
   llvm_17,
   clang_17,
   z3,
+  zlib,
   makeWrapper,
 }:
 
@@ -54,6 +55,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    llvm_17
     z3
   ];
 

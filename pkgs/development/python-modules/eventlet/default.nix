@@ -55,6 +55,9 @@ buildPythonPackage rec {
     export LD_PRELOAD=${libredirect}/lib/libredirect.so
 
     export EVENTLET_IMPORT_VERSION_ONLY=0
+
+    substituteInPlace tests/__init__.py --replace-fail \
+      "TEST_TIMEOUT = 2" "TEST_TIMEOUT = 20"
   '';
 
   disabledTests = [

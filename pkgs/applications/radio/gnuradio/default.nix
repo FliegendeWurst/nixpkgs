@@ -121,6 +121,7 @@ let
       ];
       native = [
         python.pkgs.pytest
+        gobject-introspection
       ];
       runtime = [
         gtk3

@@ -1,4 +1,5 @@
 { lib
+, python3
 , python3Packages
 , fetchFromGitLab
 , upscayl-ncnn

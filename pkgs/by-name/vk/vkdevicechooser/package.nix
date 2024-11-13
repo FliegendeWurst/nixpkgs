@@ -23,13 +23,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     meson
+    ninja
     jq
   ];
 
   buildInputs = [
     vulkan-headers
     vulkan-utility-libraries
-    ninja
   ];
 
   # Help vulkan-loader find the validation layers

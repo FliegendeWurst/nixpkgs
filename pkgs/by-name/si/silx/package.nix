@@ -7,13 +7,14 @@
 python3Packages.buildPythonApplication rec {
   pname = "silx";
   version = "2.1.1";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-LfCRWkUrqQb7zxiFTPhy/g9FWhNMXTRbhEgek4tZb5I=";
   };
 
-  nativeBuildInputs = [ python3Packages.cython ];
+  nativeBuildInputs = [ python3Packages.cython python3Packages.setuptools ];
 
   propagatedBuildInputs = with python3Packages; [
     h5py

@@ -95,7 +95,8 @@ stdenv.mkDerivation (finalAttrs: {
     ninja
     python
     pythonImportsCheckHook
-  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ moveBuildTree ];
+  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ moveBuildTree
+  ] ++ lib.optionals stdenv.hostPlatform.isLinux [ python.pkgs.qt6.qtbase ];
 
   buildInputs =
     if stdenv.hostPlatform.isLinux then

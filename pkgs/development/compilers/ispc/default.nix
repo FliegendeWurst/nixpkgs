@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ cmake which m4 bison flex python3 llvmPackages.libllvm.dev tbb ];
 
   buildInputs = with llvmPackages; [
-    libllvm libclang openmp ncurses
+    libllvm libclang openmp ncurses tbb
   ];
 
   postPatch = ''

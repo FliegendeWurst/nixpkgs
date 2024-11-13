@@ -23,6 +23,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ gd ncurses sqlite ];
+  strictDeps = false;
 
   nativeCheckInputs = [ check ];
 

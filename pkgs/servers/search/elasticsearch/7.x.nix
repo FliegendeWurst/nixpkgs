@@ -49,6 +49,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ jre_headless util-linux zlib ];
 
+  strictDeps = false;
+
   runtimeDependencies = [ zlib ];
 
   installPhase = ''

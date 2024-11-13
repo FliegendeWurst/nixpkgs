@@ -1,6 +1,6 @@
 {
   lib,
-  fetchPypi,
+  fetchFromGitHub,
   python3Packages,
   dmenu,
 }:
@@ -11,10 +11,11 @@ python3Packages.buildPythonApplication rec {
   version = "1.2.1";
   pyproject = true;
 
-  src = fetchPypi {
-    pname = "dmenu_extended";
-    inherit version;
-    hash = "sha256-gO+HYs9I+naD4ZBLTnATWym4b7K0yWbFo4zOvvgYpjM=";
+  src = fetchFromGitHub {
+    owner = "MarkHedleyJones";
+    repo = "dmenu-extended";
+    rev = version;
+    hash = "sha256-IYp5S3etgiF2Js94HmQ737QjnWNbvLcA4RzvcDfycq4=";
   };
 
   build-system = with python3Packages; [

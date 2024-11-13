@@ -240,6 +240,7 @@ stdenv.mkDerivation (finalAttrs: {
       llvmPackages.llvm.dev
       makeWrapper
       python3Packages.wrapPython
+      python3
     ]
     ++ lib.optionals cudaSupport [
       addDriverRunpath
@@ -322,6 +323,7 @@ stdenv.mkDerivation (finalAttrs: {
       libxkbcommon
       wayland
       wayland-protocols
+      wayland-scanner
     ]
     ++ lib.optional colladaSupport opencollada
     ++ lib.optional jackaudioSupport libjack2

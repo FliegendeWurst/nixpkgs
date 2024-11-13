@@ -277,6 +277,7 @@ buildStdenv.mkDerivation {
     gnum4
     llvmPackagesBuildBuild.bintools
     makeWrapper
+    nasm
     nodejs
     perl
     pkg-config
@@ -451,7 +452,6 @@ buildStdenv.mkDerivation {
     libstartup_notification
     libvpx
     libwebp
-    nasm
     nspr
     pango
     perl

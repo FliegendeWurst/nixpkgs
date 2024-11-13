@@ -85,7 +85,7 @@ let
     ] ocamlPackages_4_14;
   ocamlNativeBuildInputs = [ ocamlPackages.ocaml ocamlPackages.findlib ]
     ++ lib.optional (coqAtLeast "8.14") ocamlPackages.dune_3;
-  ocamlPropagatedBuildInputs = [ ]
+  ocamlPropagatedBuildInputs = [ ocamlPackages.findlib ]
     ++ lib.optional (!coqAtLeast "8.10") ocamlPackages.camlp5
     ++ lib.optional (!coqAtLeast "8.13") ocamlPackages.num
     ++ lib.optional (coqAtLeast "8.13") ocamlPackages.zarith;

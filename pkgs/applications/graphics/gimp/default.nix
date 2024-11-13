@@ -95,6 +95,9 @@ in stdenv.mkDerivation (finalAttrs: {
     makeWrapper
     gtk-doc
     libxslt
+    glib # AM_GLIB_GNU_GETTEXT
+    gtk2 # AM_PATH_GTK_2_0
+    gegl # Could not find native gegl executable in your PATH.
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
     desktopToDarwinBundle
   ];

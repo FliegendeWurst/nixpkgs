@@ -237,6 +237,7 @@ stdenv.mkDerivation {
   enableParallelBuilding = true;
 
   nativeBuildInputs = [ which boost-build copyPkgconfigItems ]
+    ++ lib.optionals enablePython [ python ]
     ++ lib.optional stdenv.hostPlatform.isDarwin fixDarwinDylibNames;
   buildInputs = [ expat zlib bzip2 libiconv ]
     ++ lib.optional (lib.versionAtLeast version "1.69") zstd

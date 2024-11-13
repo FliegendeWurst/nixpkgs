@@ -32,6 +32,12 @@ stdenv.mkDerivation rec {
     pkg-config
     autoreconfHook
     makeWrapper
+    (python3.withPackages (
+      ps: with ps; [
+        sphinx
+        cython
+      ]
+    ))
   ];
   buildInputs =
     [

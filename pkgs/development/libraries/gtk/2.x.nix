@@ -61,6 +61,8 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ];
 
+  strictDeps = false; # TODO
+
   patches = [
     ./patches/2.0-immodules.cache.patch
     ./patches/gtk2-theme-paths.patch

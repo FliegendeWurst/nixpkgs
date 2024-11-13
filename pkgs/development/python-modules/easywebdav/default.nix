@@ -4,6 +4,7 @@
   fetchPypi,
   requests,
   setuptools-scm,
+  pytestCheckHook,
 }:
 buildPythonPackage rec {
   pname = "easywebdav";
