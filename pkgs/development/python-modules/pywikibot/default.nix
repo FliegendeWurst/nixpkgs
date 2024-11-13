@@ -29,6 +29,8 @@ buildPythonPackage rec {
   # Tests attempt to install a tool using pip, which fails due to the sandbox
   doCheck = false;
 
+  pythonImportsCheck = [ "pywikibot" ];
+
   meta = {
     description = "Python MediaWiki bot framework";
     mainProgram = "pwb";
