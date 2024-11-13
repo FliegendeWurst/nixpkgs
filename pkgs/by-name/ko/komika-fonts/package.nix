@@ -113,7 +113,7 @@ stdenvNoCC.mkDerivation {
     longDescription = ''
       50 fonts, covering everything the comic artist needs when it comes to lettering. 10 text faces, 10 display faces, 10 tiling faces, 10 hand variations, 9 poster faces, and 20 balloons in a font.
     '';
-    license = lib.licenses.free;
+    license = lib.licenses.unfree;
     maintainers = with lib.maintainers; [ pancaek ];
     platforms = lib.platforms.all;
   };
