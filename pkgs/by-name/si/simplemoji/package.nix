@@ -25,17 +25,20 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-NvNNc+V7wloPxM532uNrXoou4vnKLhFK29L2/17eB98=";
 
-  nativeBuildInputs = [ pkg-config ] ++ lib.optionals stdenv.isLinux [ autoPatchelfHook ];
+  nativeBuildInputs = [
+    pkg-config
+  ] ++ lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
 
   buildInputs =
-    lib.optionals stdenv.isDarwin [
+    lib.optionals stdenv.hostPlatform.isDarwin [
+      darwin.apple_sdk.frameworks.Accessibility
       darwin.apple_sdk.frameworks.AppKit
       darwin.apple_sdk.frameworks.CoreFoundation
       darwin.apple_sdk.frameworks.CoreGraphics
       darwin.apple_sdk.frameworks.Foundation
       darwin.apple_sdk.frameworks.OpenGL
     ]
-    ++ lib.optionals stdenv.isLinux [
+    ++ lib.optionals stdenv.hostPlatform.isLinux [
       stdenv.cc.cc.libgcc
       fontconfig.dev
       libxkbcommon.dev
@@ -44,10 +47,13 @@ rustPlatform.buildRustPackage rec {
       xorg.libX11
     ];
 
-  runtimeDependencies = lib.optionals stdenv.isLinux [
+  runtimeDependencies = lib.optionals stdenv.hostPlatform.isLinux [
     wayland
     libxkbcommon
     xorg.libX11
+    xorg.libXcursor
+    xorg.libXrandr
+    xorg.libXi
   ];
 
   meta = {
