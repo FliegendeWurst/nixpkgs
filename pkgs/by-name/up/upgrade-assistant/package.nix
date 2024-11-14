@@ -1,4 +1,4 @@
-{ lib, buildDotnetGlobalTool, ... }:
+{ lib, buildDotnetGlobalTool }:
 buildDotnetGlobalTool {
   pname = "upgrade-assistant";
   version = "0.5.820";

@@ -39,14 +39,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   postPatch = ''
     patchShebangs compileinfo.sh
-
     substituteInPlace manuals/guymager_body.1 config.cpp \
       --replace-fail "/etc/guymager/guymager.cfg" "$out/share/guymager/guymager.cfg"
-
     substituteInPlace compileinfo.sh \
       --replace-fail " debian/changelog" "" \
       --replace-fail "dpkg-parsechangelog" "dpkg-parsechangelog -l changelog"
-
     substituteInPlace threadscan.cpp \
     --replace-fail '/lib,/usr/lib,/usr/lib64,/usr/local/lib' '${
       builtins.replaceStrings [ ":" ] [ "," ] (
@@ -56,7 +53,6 @@ stdenv.mkDerivation (finalAttrs: {
         ]
       )
     }'
-
     substituteInPlace org.freedesktop.guymager.policy guymager.pro main.cpp guymager.cfg \
       --replace-fail /usr $out
   '';
@@ -76,8 +72,8 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "guymager";
     homepage = "https://guymager.sourceforge.io";
     maintainers = with lib.maintainers; [ d3vil0p3r ];
-    platforms = lib.platforms.unix;
-    sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];
+    platforms = lib.platforms.linux;
+    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     license = lib.licenses.gpl2Only;
   };
 })

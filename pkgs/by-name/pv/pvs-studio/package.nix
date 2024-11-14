@@ -1,21 +1,21 @@
-{ lib
-, stdenv
-, fetchurl
+{
+  lib,
+  stdenv,
+  fetchurl,
 
-, makeWrapper
-, perl
-, strace
+  makeWrapper,
+  perl,
+  strace,
 }:
 
 stdenv.mkDerivation rec {
   pname = "pvs-studio";
-  version = "7.30.80678.389";
+  version = "7.33.85330.89";
 
   src =
     let
       system = stdenv.hostPlatform.system;
-      selectSystem = attrs:
-        attrs.${system} or (throw "Unsupported system: ${system}");
+      selectSystem = attrs: attrs.${system} or (throw "Unsupported system: ${system}");
     in
     fetchurl {
       url = selectSystem {
@@ -23,13 +23,16 @@ stdenv.mkDerivation rec {
         x86_64-linux = "https://cdn.pvs-studio.com/pvs-studio-${version}-x86_64.tgz";
       };
       hash = selectSystem {
-        x86_64-darwin = "sha256-KgYE+UFriJ/tEi6FCmj81W36fu+pSLvnCFA7hiDSU8w=";
-        x86_64-linux = "sha256-5HZaROSE+PI88qYeW4li6BGH3OJ/oWymPvy4lK+XN5c=";
+        x86_64-darwin = "sha256-gSqIAK3jy3MnO/1ISrD8K1G2Ltld59Nb1GKuJDE3kwY=";
+        x86_64-linux = "sha256-Tdrlq3cLxhYOTV9qjbdgeO5XR0Wy2+Ijc7bg5KDbYrk=";
       };
     };
 
-  nativeBuildInputs = [
-    makeWrapper
+  nativeBuildInputs = [ makeWrapper ];
+
+  nativeRuntimeInputs = lib.makeBinPath [
+    perl
+    strace
   ];
 
   installPhase = ''
@@ -43,15 +46,18 @@ stdenv.mkDerivation rec {
 
   postFixup = ''
     wrapProgram "$out/bin/pvs-studio-analyzer" \
-      --prefix PATH ":" ${lib.makeBinPath [ perl strace ]}
+      --prefix PATH ":" ${nativeRuntimeInputs}
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Static analyzer for C and C++";
     homepage = "https://pvs-studio.com/en/pvs-studio";
-    license = licenses.unfreeRedistributable;
-    platforms = [ "x86_64-darwin" "x86_64-linux" ];
-    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
-    maintainers = with maintainers; [ paveloom ];
+    license = lib.licenses.unfreeRedistributable;
+    platforms = [
+      "x86_64-darwin"
+      "x86_64-linux"
+    ];
+    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
+    maintainers = with lib.maintainers; [ paveloom ];
   };
 }

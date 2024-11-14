@@ -50,7 +50,7 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "libguytools";
     homepage = "https://libguytools.sourceforge.io";
     maintainers = with lib.maintainers; [ d3vil0p3r ];
-    platforms = lib.platforms.unix;
+    platforms = lib.platforms.linux;
     license = lib.licenses.gpl2Plus;
   };
 })
