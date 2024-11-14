@@ -23,8 +23,8 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  buildInputs = [ gettext fuse openssl tinyxml2 ];
-  nativeBuildInputs = [ cmake pkg-config perl ];
+  buildInputs = [ fuse openssl tinyxml2 ];
+  nativeBuildInputs = [ cmake pkg-config perl gettext ];
 
   cmakeFlags =
     [ "-DUSE_INTERNAL_TINYXML=OFF"
