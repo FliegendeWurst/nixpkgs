@@ -2,22 +2,23 @@
 let
   cfg = config.services.crproxy;
 
-  allowImageListFile =
-    pkgs.writeTextFile {
-      name = "crproxy-allow-image-list";
-      text = lib.strings.concatLines cfg.allowImageList;
-    };
+  allowImageListFile = pkgs.writeTextFile {
+    name = "crproxy-allow-image-list";
+    text = lib.strings.concatLines cfg.allowImageList;
+  };
   useAllowImageList = (lib.length cfg.allowImageList) != 0;
   blockIPListFile = pkgs.writeTextFile {
     name = "crproxy-block-ip-list";
     text = lib.strings.concatLines cfg.blockIPList;
   };
   useBlockIPList = (lib.length cfg.blockIPList) != 0;
-  inherit (lib) mkIf mkEnableOption mkOption types concatStringsSep concatLists optionals literalExpression mkPackageOption;
-in
-{
+  inherit (lib)
+    mkIf mkEnableOption mkOption types concatStringsSep concatLists optionals
+    literalExpression mkPackageOption;
+in {
   options.services.crproxy = {
-    enable = mkEnableOption "CRProxy (Container Registry Proxy) is a generic image proxy";
+    enable = mkEnableOption
+      "CRProxy (Container Registry Proxy) is a generic image proxy";
 
     package = mkPackageOption pkgs "crproxy" { };
 
@@ -27,7 +28,7 @@ in
         ":8080"
       '';
       type = types.str;
-      description = "listen on the address (default \":8080\")";
+      description = ''listen on the address (default ":8080")'';
     };
 
     behindProxy = mkOption {
@@ -87,7 +88,8 @@ in
       example = literalExpression ''
         "docker.io"
       '';
-      description = "default registry used for non full-path docker pull, like:docker.io";
+      description =
+        "default registry used for non full-path docker pull, like:docker.io";
     };
 
     simpleAuth = mkOption {
@@ -125,9 +127,7 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.crproxy = {
-      wantedBy = [
-        "network-online.target"
-      ];
+      wantedBy = [ "network-online.target" ];
       serviceConfig = {
         RestartSec = 5;
         ExecStart = concatStringsSep " " concatLists [
@@ -137,9 +137,12 @@ in
             "--address=${cfg.listenAddress}"
           ]
           (optionals cfg.behindProxy [ "--behind" ])
-          (optionals useAllowImageList [ "--allow-image-list-from-file=${allowImageListFile}" ])
-          (optionals useAllowImageList [ "--block-message=${cfg.blockMessage}" ])
-          (optionals useBlockIPList [ "--block-ip-list-from-file=${blockIPListFile}" ])
+          (optionals useAllowImageList
+            [ "--allow-image-list-from-file=${allowImageListFile}" ])
+          (optionals useAllowImageList
+            [ "--block-message=${cfg.blockMessage}" ])
+          (optionals useBlockIPList
+            [ "--block-ip-list-from-file=${blockIPListFile}" ])
           (optionals cfg.simpleAuth [ "--simple-auth" ])
           (map (e: "--simple-auth-user=${e}") cfg.simpleAuthUser)
           (map (e: "--allow-host-list=${e}") cfg.allowHostList)
