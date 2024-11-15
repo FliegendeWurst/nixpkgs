@@ -1,20 +1,17 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, nixosTests
-, dtkwidget
-, qt5integration
-, qt5platform-plugins
-, cmake
-, qtbase
-, qtsvg
-, qttools
-, qtx11extras
-, pkg-config
-, wrapQtAppsHook
-, libsecret
-, chrpath
-, lxqt
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  nixosTests,
+  dtkwidget,
+  qt5integration,
+  qt5platform-plugins,
+  cmake,
+  libsForQt5,
+  pkg-config,
+  libsecret,
+  chrpath,
+  lxqt,
 }:
 
 stdenv.mkDerivation rec {
@@ -32,19 +29,19 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
-    qttools
+    libsForQt5.qttools
     pkg-config
-    wrapQtAppsHook
+    libsForQt5.wrapQtAppsHook
     lxqt.lxqt-build-tools_0_13
   ];
 
   buildInputs = [
     qt5integration
     qt5platform-plugins
-    qtbase
-    qtsvg
+    libsForQt5.qtbase
+    libsForQt5.qtsvg
     dtkwidget
-    qtx11extras
+    libsForQt5.qtx11extras
     libsecret
     chrpath
   ];

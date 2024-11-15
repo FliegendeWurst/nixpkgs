@@ -2,6 +2,7 @@
 
 let
   release = {
+    "8.20.0+0.20.0".sha256 = "sha256-Mll3m7CVfh52yA5zACDzMZk8lwhOONMMliqQ2l/ObKI=";
     "8.19.0+0.19.3".sha256 = "sha256-QWRXBTcjtAGskZBeLIuX7WDE95KfH6SxV8MJSMx8B2Q=";
     "8.18.0+0.18.3".sha256 = "sha256-3JGZCyn62LYJVpfXiwnSMxvdA2vQNTL7li2ZBPcjF0M=";
     "8.17.0+0.17.3".sha256 = "sha256-XolzpJd8zs4LLyJO4eWvCiAJ0HJSGBJTGVSBClQRGnw=";
@@ -17,10 +18,12 @@ in
 
 (mkCoqDerivation {
   pname = "serapi";
+  owner = "ejgallego";
   repo = "coq-serapi";
   inherit version release;
 
   defaultVersion = lib.switch coq.version [
+      { case = lib.versions.isEq "8.20"; out = "8.20.0+0.20.0"; }
       { case = lib.versions.isEq "8.19"; out = "8.19.0+0.19.3"; }
       { case = lib.versions.isEq "8.18"; out = "8.18.0+0.18.3"; }
       { case = lib.versions.isEq "8.17"; out = "8.17.0+0.17.3"; }
@@ -39,8 +42,6 @@ in
     with coq.ocamlPackages; [
       cmdliner
       findlib # run time dependency of SerAPI
-      ppx_deriving
-      ppx_import
       ppx_sexp_conv
       ppx_hash
       sexplib
@@ -60,6 +61,7 @@ in
   };
 }).overrideAttrs(o:
 if lib.versions.isLe "8.19.0+0.19.3" o.version && o.version != "dev" then
+  let ppx_deriving = coq.ocamlPackages.ppx_deriving.override { version = "5.2.1"; }; in
   let inherit (o) version; in {
   src = fetchzip {
     url =
@@ -70,7 +72,7 @@ if lib.versions.isLe "8.19.0+0.19.3" o.version && o.version != "dev" then
     sha256 = release."${version}".sha256;
   };
 
-  patches =
+  patches = lib.optional (lib.versions.isGe "8.16" version) ./sertop.patch ++ (
     if version == "8.10.0+0.7.2"
     then [
       ./8.10.0+0.7.2.patch
@@ -92,10 +94,16 @@ if lib.versions.isLe "8.19.0+0.19.3" o.version && o.version != "dev" then
       ./janestreet-0.16.patch
     ]
     else [
-    ];
+    ]);
 
     propagatedBuildInputs = o.propagatedBuildInputs
-      ++ (with coq.ocamlPackages; [ ppx_deriving_yojson yojson zarith ])  # zarith needed because of Coq
+      ++ (with coq.ocamlPackages; [
+        ppx_deriving
+        (ppx_deriving_yojson.override { inherit ppx_deriving; })
+        (ppx_import.override { inherit ppx_deriving; })
+        yojson
+        zarith  # zarith needed because of Coq
+      ])
     ; }
 else
   { propagatedBuildInputs = o.propagatedBuildInputs ++ [ coq-lsp ]; }
