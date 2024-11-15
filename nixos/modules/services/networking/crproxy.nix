@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.services.crproxy;
 
@@ -13,12 +18,20 @@ let
   };
   useBlockIPList = (lib.length cfg.blockIPList) != 0;
   inherit (lib)
-    mkIf mkEnableOption mkOption types concatStringsSep concatLists optionals
-    literalExpression mkPackageOption;
-in {
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    concatStringsSep
+    concatLists
+    optionals
+    literalExpression
+    mkPackageOption
+    ;
+in
+{
   options.services.crproxy = {
-    enable = mkEnableOption
-      "CRProxy (Container Registry Proxy) is a generic image proxy";
+    enable = mkEnableOption "CRProxy (Container Registry Proxy) is a generic image proxy";
 
     package = mkPackageOption pkgs "crproxy" { };
 
@@ -88,8 +101,7 @@ in {
       example = literalExpression ''
         "docker.io"
       '';
-      description =
-        "default registry used for non full-path docker pull, like:docker.io";
+      description = "default registry used for non full-path docker pull, like:docker.io";
     };
 
     simpleAuth = mkOption {
@@ -137,12 +149,9 @@ in {
             "--address=${cfg.listenAddress}"
           ]
           (optionals cfg.behindProxy [ "--behind" ])
-          (optionals useAllowImageList
-            [ "--allow-image-list-from-file=${allowImageListFile}" ])
-          (optionals useAllowImageList
-            [ "--block-message=${cfg.blockMessage}" ])
-          (optionals useBlockIPList
-            [ "--block-ip-list-from-file=${blockIPListFile}" ])
+          (optionals useAllowImageList [ "--allow-image-list-from-file=${allowImageListFile}" ])
+          (optionals useAllowImageList [ "--block-message=${cfg.blockMessage}" ])
+          (optionals useBlockIPList [ "--block-ip-list-from-file=${blockIPListFile}" ])
           (optionals cfg.simpleAuth [ "--simple-auth" ])
           (map (e: "--simple-auth-user=${e}") cfg.simpleAuthUser)
           (map (e: "--allow-host-list=${e}") cfg.allowHostList)
