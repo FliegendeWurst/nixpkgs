@@ -1,12 +1,13 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, autoconf
-, pkg-config
-, libz
-, bzip2
-, xz
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  cmake,
+  autoconf,
+  pkg-config,
+  libz,
+  bzip2,
+  xz,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -34,13 +35,15 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/bin
     install -Dm755 ../bin/gappa $out/bin/gappa
+    runHook postInstall
   '';
 
   meta = with lib; {
     homepage = "https://github.com/lczech/gappa";
-    description = "A toolkit for analyzing and visualizing phylogenetic (placement) data";
+    description = "Toolkit for analyzing and visualizing phylogenetic (placement) data";
     longDescription = ''
       gappa is a collection of commands for working with phylogenetic data. Its
       main focus are evolutionary placements of short environmental sequences
