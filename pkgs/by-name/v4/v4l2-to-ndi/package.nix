@@ -11,7 +11,7 @@
 
 stdenv.mkDerivation {
   pname = "v4l2-to-ndi";
-  version = "unstable-2022-09-14";
+  version = "0-unstable-2022-09-14";
 
   nativeBuildInputs = [ autoPatchelfHook ];
 
