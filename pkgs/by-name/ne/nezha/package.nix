@@ -2,20 +2,20 @@
   lib,
   buildGoModule,
   fetchFromGitHub,
-  fetchpatch,
   versionCheckHook,
   dbip-country-lite,
+  nix-update-script,
 }:
 
 buildGoModule rec {
   pname = "nezha";
-  version = "0.20.6";
+  version = "0.20.13";
 
   src = fetchFromGitHub {
     owner = "naiba";
     repo = "nezha";
     rev = "refs/tags/v${version}";
-    hash = "sha256-A/9l8W0fOrVXoh8TA1NFMlCs+8unc+jgmmVMPfFheWI=";
+    hash = "sha256-fJvL2cESQoiW93aj2RHPyZXvP8246Mf8hIRiP/DSRRY=";
   };
 
   postPatch = ''
@@ -29,7 +29,7 @@ buildGoModule rec {
     ./dbip.patch
   ];
 
-  vendorHash = "sha256-IMS9o9f/65r4RClg1/0gAb/zbXvky8NTYrhOfXeDXEo=";
+  vendorHash = "sha256-SYefkgc0CsAEdkL7rxu9fpz7dpBnx1LwabIadUeOKco=";
 
   ldflags = [
     "-s"
@@ -48,6 +48,8 @@ buildGoModule rec {
   ];
   versionCheckProgramArg = [ "--version" ];
   doInstallCheck = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Self-hosted, lightweight server and website monitoring and O&M tool";
