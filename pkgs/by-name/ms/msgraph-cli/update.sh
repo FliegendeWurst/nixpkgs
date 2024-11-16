@@ -1,7 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p curl gnused nixfmt-rfc-style common-updater-scripts
 set -eEuo pipefail
 [ -z "${DEBUG:-}" ] || set -x
 cd "${BASH_SOURCE[0]%/*}"
+# run: nix-shell maintainers/scripts/update.nix --argstr package msgraph-cli
 
 package_file="./package.nix"
 
@@ -18,4 +20,4 @@ fi
 
 cd ../../../..
 update-source-version "${repo}" "$new_version"
-"$(nix-build -A ".#${pname}.fetch-deps" --no-out-link)"
+"$(nix-build -A "${pname}.fetch-deps" --no-out-link)"
