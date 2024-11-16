@@ -29,6 +29,7 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
+    runHook preInstall
     mkdir --parents $out
     cp -r bin/ $out/
     cp -r lib/ $out/
@@ -42,13 +43,14 @@ stdenv.mkDerivation rec {
     cd $out
     ./install.sh
     rm install.sh
+    runHook postInstall
   '';
 
   meta = {
     description = "A Probabalistic Symbolic Model Checker";
 
     homepage = "https://www.prismmodelchecker.org";
-    license = lib.licenses.gpl2;
+    license = lib.licenses.gpl2Plus;
     maintainers = [ lib.maintainers.astrobeastie ];
     platforms = lib.platforms.unix;
   };
