@@ -1,15 +1,15 @@
 {
   lib,
   stdenvNoCC,
-  callPackage,
   fetchFromGitHub,
   buildGoModule,
+  callPackage,
   gnumake,
   pnpm,
   nodejs,
+  ocis,
 }:
 let
-  web = callPackage ./web.nix { };
   idp-assets = stdenvNoCC.mkDerivation {
     pname = "idp-assets";
     version = "0-unstable-2020-10-14";
@@ -56,7 +56,7 @@ buildGoModule rec {
 
   buildPhase = ''
     runHook preBuild
-    cp -r ${web}/share/* services/web/assets/
+    cp -r ${ocis.web}/share/* services/web/assets/
     pnpm -C services/idp build
 
     mkdir -p services/idp/assets/identifier/static
@@ -67,19 +67,19 @@ buildGoModule rec {
   '';
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/bin/
     cp ocis/bin/ocis $out/bin/
+    runHook postInstall
   '';
 
-  passthru = {
-    inherit web;
-  };
+  passthru.web = callPackage ./web.nix { };
 
-  meta = with lib; {
+  meta = {
     homepage = "https://github.com/owncloud/ocis";
     description = "ownCloud Infinite Scale Stack";
     mainProgram = "ocis";
-    license = licenses.asl20;
-    maintainers = with maintainers; [ xinyangli ];
+    license = lib.licenses.asl20;
+    maintainers = with lib.maintainers; [ xinyangli ];
   };
 }

@@ -16,7 +16,10 @@ stdenvNoCC.mkDerivation rec {
     hash = "sha256-hupdtK/V74+X7/eXoDmUjFvSKuhnoOtNQz7o6TLJXG4=";
   };
 
-  nativeBuildInputs = [ nodejs pnpm.configHook ];
+  nativeBuildInputs = [
+    nodejs
+    pnpm.configHook
+  ];
 
   buildPhase = ''
     pnpm build
