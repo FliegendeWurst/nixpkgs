@@ -12,7 +12,7 @@
 
 stdenv.mkDerivation rec {
   pname = "legends-of-equestria";
-  version = "2024.04.01";
+  version = "2024.05.01";
 
   src =
     runCommand "mega-loe"
@@ -22,9 +22,9 @@ stdenv.mkDerivation rec {
           megacmd
           unzip
         ];
-        url = "https://mega.nz/file/sjAlgJhT#1xlFkMychrtjhSpW98Vb25Gqss5604DJGMjsGj73vXk";
+        url = "https://mega.nz/file/NjIwwJoK#MVi3C3FAcSQPd7FRpQc0CoStBG8jSFuPn0jD-pG3zY0";
         outputHashAlgo = "sha256";
-        outputHash = "9Y0YWTCl2LBqAXo1pRK9OLxxYY9ZCA9eCXyFUa2u3nk=";
+        outputHash = "VXBtEB3G5MTrWn9OOvmCG3sDoasjbKkLJruhdQZa4SQ=";
         outputHashMode = "recursive";
       }
       ''
@@ -77,7 +77,7 @@ stdenv.mkDerivation rec {
     maintainers = with lib.maintainers; [ ulysseszhan ];
     mainProgram = "LoE";
     homepage = "https://www.legendsofequestria.com";
-    description = "a free-to-play MMORPG";
+    description = "Free-to-play MMORPG";
     downloadPage = "https://www.legendsofequestria.com/downloads";
   };
 
