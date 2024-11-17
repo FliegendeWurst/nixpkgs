@@ -4308,9 +4308,9 @@ with pkgs;
 
   nixnote2 = libsForQt5.callPackage ../applications/misc/nixnote2 { };
 
-  nodejs = hiPrio nodejs_20;
-  nodejs-slim = nodejs-slim_20;
-  corepack = hiPrio corepack_20;
+  nodejs = hiPrio nodejs_22;
+  nodejs-slim = nodejs-slim_22;
+  corepack = hiPrio corepack_22;
 
   nodejs_18 = callPackage ../development/web/nodejs/v18.nix { };
   nodejs-slim_18 = callPackage ../development/web/nodejs/v18.nix { enableNpm = false; };
@@ -5220,7 +5220,6 @@ with pkgs;
   rosenpass-tools = callPackage ../tools/networking/rosenpass/tools.nix  { };
 
   rpm = callPackage ../tools/package-management/rpm {
-    python = python3;
     lua = lua5_4;
   };
 
@@ -6777,16 +6776,10 @@ with pkgs;
       stdenv.targetPlatform));
   in pkgs.${"llvmPackages_${minSupported}"};
 
-  llvmPackages_12 = recurseIntoAttrs (callPackage ../development/compilers/llvm/12 {
-    inherit (stdenvAdapters) overrideCC;
-    buildLlvmTools = buildPackages.llvmPackages_12.tools;
-    targetLlvmLibraries = targetPackages.llvmPackages_12.libraries or llvmPackages_12.libraries;
-    targetLlvm = targetPackages.llvmPackages_12.llvm or llvmPackages_12.llvm;
-  });
-
   inherit (rec {
     llvmPackagesSet = recurseIntoAttrs (callPackages ../development/compilers/llvm { });
 
+    llvmPackages_12 = llvmPackagesSet."12";
     llvmPackages_13 = llvmPackagesSet."13";
     llvmPackages_14 = llvmPackagesSet."14";
     llvmPackages_15 = llvmPackagesSet."15";
@@ -6805,7 +6798,8 @@ with pkgs;
     lldb_19 = llvmPackages_19.lldb;
     llvm_19 = llvmPackages_19.llvm;
     bolt_19 = llvmPackages_19.bolt;
-  }) llvmPackages_13
+  }) llvmPackages_12
+    llvmPackages_13
     llvmPackages_14
     llvmPackages_15
     llvmPackages_16
@@ -12166,8 +12160,8 @@ with pkgs;
     postgresql_16_jit
     postgresql_17_jit
   ;
-  postgresql = postgresql_16;
-  postgresql_jit = postgresql_16_jit;
+  postgresql = postgresql_17;
+  postgresql_jit = postgresql_17_jit;
   postgresqlPackages = recurseIntoAttrs postgresql.pkgs;
   postgresqlJitPackages = recurseIntoAttrs postgresql_jit.pkgs;
   postgresql13Packages = recurseIntoAttrs postgresql_13.pkgs;
