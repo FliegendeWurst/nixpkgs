@@ -5479,10 +5479,6 @@ with pkgs;
     pythonPackages = python3Packages;
   };
 
-  termscp = callPackage ../tools/networking/termscp {
-    inherit (darwin.apple_sdk.frameworks) AppKit Cocoa Foundation Security;
-  };
-
   texmacs = libsForQt5.callPackage ../applications/editors/texmacs {
     stdenv = if stdenv.hostPlatform.isDarwin then darwin.apple_sdk_11_0.stdenv else stdenv;
     extraFonts = true;
@@ -5661,6 +5657,8 @@ with pkgs;
   openconnectPackages = callPackage ../tools/networking/openconnect { };
 
   inherit (openconnectPackages) openconnect openconnect_openssl;
+
+  globalprotect-openconnect = libsForQt5.callPackage ../tools/networking/globalprotect-openconnect { };
 
   sssd = callPackage ../os-specific/linux/sssd {
     inherit (perlPackages) Po4a;
@@ -12360,11 +12358,6 @@ with pkgs;
     matomo_5
     matomo-beta;
 
-  inherit (callPackages ../servers/unifi { })
-    unifi8;
-
-  unifi = unifi8;
-
   unpackerr = callPackage ../servers/unpackerr {
     inherit (darwin.apple_sdk.frameworks) Cocoa WebKit;
   };
@@ -14145,10 +14138,18 @@ with pkgs;
 
   buildMozillaMach = opts: callPackage (import ../applications/networking/browsers/firefox/common.nix opts) { };
 
-  firefox-unwrapped = callPackage ../applications/networking/browsers/firefox/packages/firefox.nix { };
-  firefox-beta-unwrapped = callPackage ../applications/networking/browsers/firefox/packages/firefox-beta.nix { };
-  firefox-devedition-unwrapped = callPackage ../applications/networking/browsers/firefox/packages/firefox-devedition.nix { };
-  firefox-esr-128-unwrapped = callPackage ../applications/networking/browsers/firefox/packages/firefox-esr-128.nix { };
+  firefox-unwrapped = import ../applications/networking/browsers/firefox/packages/firefox.nix {
+    inherit stdenv lib callPackage fetchurl nixosTests buildMozillaMach;
+  };
+  firefox-beta-unwrapped = import ../applications/networking/browsers/firefox/packages/firefox-beta.nix {
+    inherit stdenv lib callPackage fetchurl nixosTests buildMozillaMach;
+  };
+  firefox-devedition-unwrapped = import ../applications/networking/browsers/firefox/packages/firefox-devedition.nix {
+    inherit stdenv lib callPackage fetchurl nixosTests buildMozillaMach;
+  };
+  firefox-esr-128-unwrapped = import ../applications/networking/browsers/firefox/packages/firefox-esr-128.nix {
+    inherit stdenv lib callPackage fetchurl nixosTests buildMozillaMach;
+  };
   firefox-esr-unwrapped = firefox-esr-128-unwrapped;
 
   firefox = wrapFirefox firefox-unwrapped { };
@@ -14205,7 +14206,9 @@ with pkgs;
     wmClass = "firefox-aurora";
   };
 
-  librewolf-unwrapped = callPackage ../applications/networking/browsers/librewolf { };
+  librewolf-unwrapped = import ../applications/networking/browsers/librewolf {
+    inherit stdenv lib callPackage buildMozillaMach nixosTests;
+  };
 
   librewolf = wrapFirefox librewolf-unwrapped {
     inherit (librewolf-unwrapped) extraPrefsFiles extraPoliciesFiles;
@@ -14214,7 +14217,9 @@ with pkgs;
 
   firefox_decrypt = python3Packages.callPackage ../tools/security/firefox_decrypt { };
 
-  floorp-unwrapped = callPackage ../applications/networking/browsers/floorp { };
+  floorp-unwrapped = import ../applications/networking/browsers/floorp {
+    inherit stdenv lib fetchFromGitHub buildMozillaMach nixosTests;
+  };
 
   floorp = wrapFirefox floorp-unwrapped { };
 
@@ -16019,8 +16024,6 @@ with pkgs;
   termdown = python3Packages.callPackage ../applications/misc/termdown { };
 
   terminaltexteffects = with python3Packages; toPythonApplication terminaltexteffects ;
-
-  texturepacker = qt6.callPackage ../applications/graphics/texturepacker { };
 
   inherit (callPackage ../applications/graphics/tesseract {
     inherit (darwin.apple_sdk.frameworks) Accelerate CoreGraphics CoreVideo;

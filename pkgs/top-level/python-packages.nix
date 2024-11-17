@@ -1579,6 +1579,10 @@ self: super: with self; {
 
   bencoder = callPackage ../development/python-modules/bencoder { };
 
+  bencodetools = callPackage ../development/python-modules/bencodetools {
+    bencodetools = pkgs.bencodetools;
+  };
+
   beniget = callPackage ../development/python-modules/beniget { };
 
   bentoml = callPackage ../development/python-modules/bentoml { };
@@ -3332,6 +3336,8 @@ self: super: with self; {
   djangocms-admin-style = callPackage ../development/python-modules/djangocms-admin-style { };
 
   djangocms-text-ckeditor = callPackage ../development/python-modules/djangocms-text-ckeditor { };
+
+  djangocms-alias = callPackage ../development/python-modules/djangocms-alias { };
 
   django-admin-datta = callPackage ../development/python-modules/django-admin-datta { };
 
@@ -10472,6 +10478,8 @@ self: super: with self; {
   pylance = callPackage ../development/python-modules/pylance {
     inherit (pkgs) protobuf;
   };
+
+  pyldavis = callPackage ../development/python-modules/pyldavis { };
 
   pylddwrap = callPackage ../development/python-modules/pylddwrap { };
 

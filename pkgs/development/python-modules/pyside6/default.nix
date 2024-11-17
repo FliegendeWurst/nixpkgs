@@ -95,19 +95,18 @@ stdenv.mkDerivation (finalAttrs: {
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ moveBuildTree
   ] ++ lib.optionals stdenv.hostPlatform.isLinux [ python.pkgs.qt6.qtbase ];
 
-  buildInputs =
-    python.pkgs.qt6.darwinVersionInputs
-    ++ (
-      if stdenv.hostPlatform.isLinux then
-        # qtwebengine fails under darwin
-        # see https://github.com/NixOS/nixpkgs/pull/312987
-        packages ++ [ python.pkgs.qt6.qtwebengine ]
-      else
-        [
-          qt_linked
-          cups
-        ]
-    );
+  buildInputs = (
+    if stdenv.hostPlatform.isLinux then
+      # qtwebengine fails under darwin
+      # see https://github.com/NixOS/nixpkgs/pull/312987
+      packages ++ [ python.pkgs.qt6.qtwebengine ]
+    else
+      python.pkgs.qt6.darwinVersionInputs
+      ++ [
+        qt_linked
+        cups
+      ]
+  );
 
   propagatedBuildInputs = [ shiboken6 ];
 
