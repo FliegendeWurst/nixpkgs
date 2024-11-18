@@ -33,10 +33,9 @@ stdenv.mkDerivation rec {
   ];
 
   cmakeFlags = [
-    "-DUSE_SYSTEM_NCNN=1"
-    "-DUSE_SYSTEM_WEBP=1"
-
-    "-DGLSLANG_TARGET_DIR=${glslang}/lib/cmake"
+    (lib.cmakeBool "USE_SYSTEM_NCNN" true)
+    (lib.cmakeBool "USE_SYSTEM_WEBP" true)
+    (lib.cmakeFeature "GLSLANG_TARGET_DIR" "${glslang}/lib/cmake")
   ];
 
   nativeBuildInputs = [ cmake ];
@@ -53,10 +52,12 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/bin $out/share
     cp realcugan-ncnn-vulkan $out/bin/
 
     cp -r ${models}/models-{nose,pro,se} $out/share
+    runHook postInstall
   '';
 
   meta = with lib; {
