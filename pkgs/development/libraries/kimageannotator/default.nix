@@ -13,7 +13,7 @@ in stdenv.mkDerivation rec {
     hash = "sha256-LFou8gTF/XDBLNQbA4uurYJHQl7yOTKe2OGklUsmPrg=";
   };
 
-  nativeBuildInputs = [ cmake qttools ];
+  nativeBuildInputs = [ cmake qttools qtsvg ];
   buildInputs = [ qtbase qtsvg ];
   propagatedBuildInputs = [ kcolorpicker ];
 
