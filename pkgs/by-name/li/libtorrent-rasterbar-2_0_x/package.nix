@@ -20,7 +20,7 @@ in stdenv.mkDerivation {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [ cmake python3 ];
 
   buildInputs = [ boostPython openssl zlib python3 ncurses ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.SystemConfiguration ];
