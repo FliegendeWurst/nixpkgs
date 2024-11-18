@@ -26,6 +26,12 @@ let
       rev = "4ca8688093228c599432a87d7bd945804c573d51";
       sha256 = "sha256-0WiG8aot8mc0h1BKPgC924UKQrgunZvKKBy9bD7nhoQ=";
     };
+    mindforger-repository = {
+      owner = "dvorka";
+      repo = "mindforger-repository";
+      rev = "ec81a27e5de6408bbcd3f6d7733a7c6f3b52e433";
+      sha256 = "sha256-JGTP1He7G2Obmsav64Lf7BLHp8OTvPtg38VHsrEC36o=";
+    };
   };
 in stdenv.mkDerivation {
   pname = "mindforger";
@@ -37,8 +43,14 @@ in stdenv.mkDerivation {
   buildInputs = [ curl hunspell qtbase qtwebengine ];
 
   # Disable the cmake hook (so we don't try to build MindForger with it), and
-  # build MindForger's internal fork of cmark-gfm ahead of MindForger itself:
-  postUnpack = "cp -TR ${srcs.cmark-gfm} $sourceRoot/deps/cmark-gfm";
+  # build MindForger's internal fork of cmark-gfm ahead of MindForger itself.
+  #
+  # Moreover unpack the docs that are needed for the MacOS build.
+  postUnpack = ''
+    cp -TR ${srcs.cmark-gfm} $sourceRoot/deps/cmark-gfm
+  '' + lib.optionalString stdenv.hostPlatform.isDarwin ''
+    cp -TR ${srcs.mindforger-repository} $sourceRoot/doc
+  '';
   dontUseCmakeConfigure = true;
   preBuild = ''(
       mkdir deps/cmark-gfm/build &&
