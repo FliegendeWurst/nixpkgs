@@ -94,6 +94,7 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     pkg-config
     wrapGAppsHook3
+    wxGTK-override'
   ];
 
   buildInputs = [
