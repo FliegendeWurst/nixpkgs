@@ -189,6 +189,7 @@ stdenv.mkDerivation (finalAttrs: {
     systemd
     taglib
     xcbutilkeysyms
+    wayland-scanner
     zlib
   ]
   ++ optionals (!stdenv.hostPlatform.isAarch && !onlyLibVLC) [ live555 ]
