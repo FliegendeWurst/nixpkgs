@@ -37,6 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [ sqlite libtiff curl nlohmann_json ];
 
   nativeCheckInputs = [ cacert gtest ];
+  checkInputs = [ gtest ];
 
   cmakeFlags = [
     "-DUSE_EXTERNAL_GTEST=ON"
