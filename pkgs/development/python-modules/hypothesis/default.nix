@@ -9,6 +9,7 @@
   pexpect,
   doCheck ? true,
   pytestCheckHook,
+  pytest-timeout,
   pytest-xdist,
   python,
   sortedcontainers,
@@ -59,6 +60,7 @@ buildPythonPackage rec {
 
   nativeCheckInputs = [
     pexpect
+    pytest-timeout
     pytest-xdist
     pytestCheckHook
   ] ++ lib.optionals isPyPy [ tzdata ];
@@ -70,7 +72,7 @@ buildPythonPackage rec {
     rm tox.ini
   '';
 
-  pytestFlagsArray = [ "tests/cover" ];
+  pytestFlagsArray = [ "--timeout=0" "tests/cover" ];
 
   disabledTests =
     [
