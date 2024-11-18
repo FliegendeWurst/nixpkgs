@@ -56,6 +56,8 @@ stdenv.mkDerivation (finalAttrs: {
 
   doCheck = !stdenv.hostPlatform.isi686 && !stdenv.hostPlatform.isAarch32; # test_unit_LPC_inv_pred_gain fails
 
+  mesonCheckFlags = [ "--timeout-multiplier" "0" ];
+
   passthru = {
     updateScript = gitUpdater {
       url = "https://gitlab.xiph.org/xiph/opus.git";
