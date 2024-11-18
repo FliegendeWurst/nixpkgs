@@ -4,6 +4,7 @@
   unzip,
   buildNpmPackage,
   fetchurl,
+  fetchFromGitHub,
   makeBinaryWrapper,
   alsa-lib,
   electron,
@@ -16,17 +17,19 @@
   wrapGAppsHook3,
   metaCommon,
   version,
+  dpkg,
+  fakeroot,
 }:
 
 let
   pname = "trilium-next-desktop";
   inherit version;
 
-  linuxSource.url = "https://github.com/TriliumNext/Notes/releases/download/v${version}/TriliumNextNotes-v${version}-linux-x64.zip";
-  linuxSource.sha256 = "sha256-QbUtWTju4vScedGzEvI1ab8U6V9rgClEIXkxmQ4VKlE=";
+  linuxSource.url = "https://github.com/TriliumNext/Notes/releases/download/v${version}/trilium-linux-x64-${version}.tar.xz";
+  linuxSource.sha256 = "034cqj0g33kkyprkh1gzk0ba4h8j8lw2l4l0jbhv4z9gr21d3va6";
 
-  darwinSource.url = "https://github.com/TriliumNext/Notes/releases/download/v${version}/TriliumNextNotes-v${version}-macos-x64.zip";
-  darwinSource.sha256 = "1n0zjbm21ab13ij1rpi6fp854vis78cw3j8zhz39kcbidb5k4dd";
+  darwinSource.url = "https://github.com/TriliumNext/Notes/releases/download/v${version}/trilium-mac-x64-${version}.zip";
+  darwinSource.sha256 = "1n0zjbm21ab13ij1rpi6fp854vis78cw3j8zhz39kcbidb5k429d";
 
   meta = metaCommon // {
     mainProgram = "trilium";
@@ -36,16 +39,29 @@ let
     ];
   };
 
-  linux = stdenv.mkDerivation rec {
+  linux = buildNpmPackage rec {
     inherit pname version meta;
 
-    src = fetchurl linuxSource;
+    src = fetchFromGitHub {
+      owner = "TriliumNext";
+      repo = "Notes";
+      rev = "refs/tags/v${version}";
+      hash = "sha256-SiU0+BX/CmiiCqve12kglh6Qa2TtTYIYENGFwyGiMsU=";
+    };
+
+    postPatch = ''
+      substituteInPlace package.json \
+        --replace-fail "cross-env node" "node" \
+        --replace-fail "npm run" "npm run --loglevel=verbose"
+    '';
+
+    npmDepsHash = "sha256-TumJ1d696FpaeOrD3aZuP1PrVExlXHY4o1z4agyDXBU=";
 
     nativeBuildInputs = [
-      unzip
       makeBinaryWrapper
       wrapGAppsHook3
       copyDesktopItems
+      dpkg fakeroot
     ];
 
     buildInputs = [
@@ -55,6 +71,13 @@ let
       #nspr
       #systemd
     ];
+
+    env.ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
+
+    npmInstallFlags = [ "--loglevel=verbose" ];
+    npmBuildFlags = [ "--loglevel=verbose" ];
+    npmBuildScript = "make-electron";
+    #npmBuildScript = "webpack";
 
     desktopItems = [
       (makeDesktopItem {
@@ -67,11 +90,6 @@ let
         startupWMClass = "trilium notes next";
       })
     ];
-
-    # Remove trilium-portable.sh, so trilium knows it is packaged making it stop auto generating a desktop item on launch
-    postPatch = ''
-      rm ./trilium-portable.sh
-    '';
 
     installPhase = ''
       runHook preInstall
