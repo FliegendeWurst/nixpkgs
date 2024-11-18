@@ -30,15 +30,15 @@ let
 in
 buildGoModule rec {
   pname = "ocis";
-  version = "v5.0.7";
+  version = "5.0.9";
 
   vendorHash = null;
 
   src = fetchFromGitHub {
     owner = "owncloud";
     repo = "ocis";
-    rev = version;
-    hash = "sha256-vCEr7UCGEPm0x04U8DpsUNz9c64ZSEIK4SDcitCIDCw=";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-TsMrQx+P1F2t66e0tGG0VvRi4W7+pCpDHd0aNsacOsI=";
   };
 
   nativeBuildInputs = [
@@ -73,12 +73,14 @@ buildGoModule rec {
     runHook postInstall
   '';
 
-  passthru.web = callPackage ./web.nix { };
+  passthru = {
+    web = callPackage ./web.nix { };
+    updateScript = ./update.sh;
+  };
 
   meta = {
-    homepage = "https://github.com/owncloud/ocis";
-    description = "ownCloud Infinite Scale Stack";
-    mainProgram = "ocis";
+    homepage = "https://github.com/owncloud/web";
+    description = "Next generation frontend for ownCloud Infinite Scale ";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ xinyangli ];
   };
