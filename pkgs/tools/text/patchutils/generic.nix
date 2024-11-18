@@ -15,6 +15,8 @@ stdenv.mkDerivation rec {
   buildInputs = [ perl ] ++ extraBuildInputs;
   hardeningDisable = [ "format" ];
 
+  nativeCheckInputs = [ perl ];
+
   # tests fail when building in parallel
   enableParallelBuilding = false;
 
