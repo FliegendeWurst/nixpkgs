@@ -28,6 +28,7 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = with xorg; [ libX11 libXi xkeyboard_config libxml2 libICE glib libxkbfile isocodes ];
 
   nativeBuildInputs = [ autoreconfHook pkg-config gtk-doc docbook_xsl gobject-introspection ];
+  buildInputs = [ gtk-doc ];
 
   preAutoreconf = ''
     export NOCONFIGURE=1
