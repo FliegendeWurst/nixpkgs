@@ -1285,6 +1285,8 @@ self: super: with self; {
 
   azure-mgmt-msi = callPackage ../development/python-modules/azure-mgmt-msi { };
 
+  azure-mgmt-mysqlflexibleservers = callPackage ../development/python-modules/azure-mgmt-mysqlflexibleservers { };
+
   azure-mgmt-netapp = callPackage ../development/python-modules/azure-mgmt-netapp { };
 
   azure-mgmt-network = callPackage ../development/python-modules/azure-mgmt-network { };
@@ -1294,6 +1296,8 @@ self: super: with self; {
   azure-mgmt-nspkg = callPackage ../development/python-modules/azure-mgmt-nspkg { };
 
   azure-mgmt-policyinsights = callPackage ../development/python-modules/azure-mgmt-policyinsights { };
+
+  azure-mgmt-postgresqlflexibleservers = callPackage ../development/python-modules/azure-mgmt-postgresqlflexibleservers { };
 
   azure-mgmt-powerbiembedded = callPackage ../development/python-modules/azure-mgmt-powerbiembedded { };
 
@@ -1457,6 +1461,8 @@ self: super: with self; {
   bacpypes = callPackage ../development/python-modules/bacpypes { };
 
   bagit = callPackage ../development/python-modules/bagit { };
+
+  baize = callPackage ../development/python-modules/baize { };
 
   banal = callPackage ../development/python-modules/banal { };
 

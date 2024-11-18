@@ -55,5 +55,6 @@ stdenv.mkDerivation (finalAttrs: {
       gpl2Plus
     ];
     maintainers = with lib.maintainers; [ snaki ];
+    platforms = lib.platforms.x86_64;
   };
 })
