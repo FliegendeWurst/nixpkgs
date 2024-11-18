@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
     ++ lib.optional (bluetoothSupport && advancedBluetoothCodecs) wrapGAppsHook3;
 
   propagatedBuildInputs =
-    lib.optionals stdenv.hostPlatform.isLinux [ libcap ];
+    lib.optionals stdenv.hostPlatform.isLinux [ glib libcap ];
 
   buildInputs =
     [ libtool libsndfile soxr speexdsp fftwFloat check ]
