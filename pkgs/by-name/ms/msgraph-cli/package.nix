@@ -1,4 +1,10 @@
-{ lib, buildDotnetModule, dotnetCorePackages, fetchFromGitHub, libsecret }:
+{
+  lib,
+  buildDotnetModule,
+  dotnetCorePackages,
+  fetchFromGitHub,
+  libsecret,
+}:
 buildDotnetModule rec {
   pname = "msgraph-cli";
   version = "v1.9.0";
@@ -25,7 +31,11 @@ buildDotnetModule rec {
     description = "Microsoft Graph CLI";
     homepage = "https://github.com/microsoftgraph/msgraph-cli";
     license = licenses.mit;
-    maintainers = with maintainers; [ ];
-    platforms = [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
+    maintainers = with maintainers; [ nazarewk ];
+    platforms = [
+      "aarch64-darwin"
+      "x86_64-darwin"
+      "x86_64-linux"
+    ];
   };
 }
