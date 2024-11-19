@@ -6,17 +6,7 @@
   wrapGAppsHook3,
   gtk3,
   gobject-introspection,
-  gnome,
 }:
-
-let
-  inherit (python3Packages)
-    dbus-python
-    pygobject3
-    fuzzywuzzy
-    levenshtein
-    ;
-in
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "gnome-pass-search-provider";
@@ -35,18 +25,18 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   propagatedBuildInputs = [
-    dbus-python
-    pygobject3
-    fuzzywuzzy
-    levenshtein
+    python3Packages.dbus-python
+    python3Packages.pygobject3
+    python3Packages.fuzzywuzzy
+    python3Packages.levenshtein
 
     gtk3
     gobject-introspection
   ];
 
   env = {
-    LIBDIR = builtins.placeholder "out" + "/lib";
-    DATADIR = builtins.placeholder "out" + "/share";
+    LIBDIR = placeholder "out" + "/lib";
+    DATADIR = placeholder "out" + "/share";
   };
 
   postPatch = ''
@@ -70,7 +60,7 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Pass password manager search provider for gnome-shell";
     homepage = "https://github.com/jle64/gnome-pass-search-provider";
-    license = lib.licenses.gpl3;
+    license = lib.licenses.gpl3Plus;
     maintainers = with lib.maintainers; [ lelgenio ];
     platforms = lib.platforms.linux;
   };
