@@ -702,6 +702,8 @@ self: super: with self; {
 
   aplpy = callPackage ../development/python-modules/aplpy { };
 
+  apollo-fpga = callPackage ../development/python-modules/apollo-fpga { };
+
   app-model = callPackage ../development/python-modules/app-model { };
 
   appdirs = callPackage ../development/python-modules/appdirs { };
@@ -1442,21 +1444,13 @@ self: super: with self; {
 
   backoff = callPackage ../development/python-modules/backoff { };
 
-  backports-cached-property = callPackage ../development/python-modules/backports-cached-property { };
-
   backports-datetime-fromisoformat = callPackage ../development/python-modules/backports-datetime-fromisoformat { };
 
   backports-entry-points-selectable = callPackage ../development/python-modules/backports-entry-points-selectable { };
 
-  backports-shutil-get-terminal-size = callPackage ../development/python-modules/backports-shutil-get-terminal-size { };
-
-  backports-shutil-which = callPackage ../development/python-modules/backports-shutil-which { };
-
   backports-strenum = callPackage ../development/python-modules/backports-strenum { };
 
   backports-tarfile = callPackage ../development/python-modules/backports-tarfile { };
-
-  backports-zoneinfo = callPackage ../development/python-modules/backports-zoneinfo { };
 
   bacpypes = callPackage ../development/python-modules/bacpypes { };
 
@@ -2847,6 +2841,8 @@ self: super: with self; {
   cymem = callPackage ../development/python-modules/cymem { };
 
   cymruwhois = callPackage ../development/python-modules/cymruwhois { };
+
+  cynthion = callPackage ../development/python-modules/cynthion { };
 
   cypari2 = callPackage ../development/python-modules/cypari2 { };
 
@@ -6858,6 +6854,8 @@ self: super: with self; {
 
   kaleido = callPackage ../development/python-modules/kaleido { };
 
+  kalshi-python = callPackage ../development/python-modules/kalshi-python {};
+
   kanidm = callPackage ../development/python-modules/kanidm { };
 
   kaptan = callPackage ../development/python-modules/kaptan { };
@@ -7679,6 +7677,10 @@ self: super: with self; {
   luhn = callPackage ../development/python-modules/luhn { };
 
   lunarcalendar = callPackage ../development/python-modules/lunarcalendar { };
+
+  luna-soc = callPackage ../development/python-modules/luna-soc { };
+
+  luna-usb = callPackage ../development/python-modules/luna-usb { };
 
   luqum = callPackage ../development/python-modules/luqum { };
 
@@ -17451,6 +17453,8 @@ self: super: with self; {
   usb-devices = callPackage ../development/python-modules/usb-devices { };
 
   usb-monitor = callPackage ../development/python-modules/usb-monitor { };
+
+  usb-protocol = callPackage ../development/python-modules/usb-protocol { };
 
   usbrelay-py = callPackage ../os-specific/linux/usbrelay/python.nix { };
 
