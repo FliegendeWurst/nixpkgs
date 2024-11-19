@@ -325,6 +325,7 @@ let
         "test-fs-watch-recursive-sync-write"
         "test-fs-watch-recursive-update-file"
         "test-fs-watchfile"
+        "test-perf-hooks"
         "test-runner-run"
         "test-runner-watch-mode"
         "test-watch-mode-files_watcher"
