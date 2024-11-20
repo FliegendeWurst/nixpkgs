@@ -1,22 +1,27 @@
 {
-  lib,
   buildPythonPackage,
-  fetchPypi,
-  vulkan-loader,
-  pysdl2,
-  jinja2,
-  inflection,
-  xmltodict,
   cffi,
+  fetchFromGitHub,
+  inflection,
+  jinja2,
+  lib,
+  pysdl2,
+  setuptools,
+  vulkan-loader,
+  wheel,
+  xmltodict,
 }:
 
 buildPythonPackage rec {
   pname = "vulkan";
   version = "1.3.275.1";
+  pyproject = true;
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-XPeWHLSk5g0GPrgVFHwiiSRFdbdaRRIInMboqVm5ltI=";
+  src = fetchFromGitHub {
+    owner = "realitix";
+    repo = "vulkan";
+    rev = "refs/tags/${version}";
+    hash = "sha256-b1jHNKdHF7pIC6H4O2yxy36Ppb60J0uN2P0WaCw51Gc=";
   };
 
   postPatch = ''
@@ -24,23 +29,35 @@ buildPythonPackage rec {
       --replace-fail 'lib = ffi.dlopen(name)' 'lib = ffi.dlopen("${vulkan-loader}/lib/" + name)'
   '';
 
+  buildInputs = [
+    vulkan-loader
+  ];
+
+  build-system = [
+    setuptools
+    wheel
+  ];
+
   dependencies = [
-    pysdl2
-    jinja2
     inflection
+    jinja2
+    pysdl2
     xmltodict
     cffi
   ];
 
-  # Not needed as we already patched pysdl2 with our SDL path
-  pythonRemoveDeps = [ "pysdl2-dll" ];
-
-  pythonImportsCheck = [ "vulkan" ];
+  pythonImportsCheck = [
+    "vulkan"
+  ];
 
   meta = {
     description = "Ultimate Python binding for Vulkan API";
     homepage = "https://github.com/realitix/vulkan";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [ aleksana ];
+    platforms = lib.platforms.linux;
+    maintainers = with lib.maintainers; [
+      grimmauld
+      getchoo
+    ];
   };
 }

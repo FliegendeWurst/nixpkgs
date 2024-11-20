@@ -1,49 +1,54 @@
-{ lib
-, python3
-, python3Packages
-, fetchFromGitLab
-, upscayl-ncnn
-, meson
-, ninja
-, pkg-config
-, gobject-introspection
-, blueprint-compiler
-, wrapGAppsHook4
-, desktop-file-utils
-, libadwaita
+{
+  lib,
+  fetchFromGitLab,
+  glib,
+  gtk4,
+  meson,
+  ninja,
+  gitUpdater,
+  desktop-file-utils,
+  appstream,
+  blueprint-compiler,
+  python3Packages,
+  pkg-config,
+  libadwaita,
+  wrapGAppsHook4,
+  upscayl-ncnn,
 }:
 
 python3Packages.buildPythonApplication rec {
   pname = "upscaler";
   version = "1.4.0";
-  # built with meson, not a python format
-  pyproject = false;
+
+  pyproject = false; # meson instead of pyproject
 
   src = fetchFromGitLab {
     domain = "gitlab.gnome.org";
     owner = "World";
     repo = "Upscaler";
-    rev = "refs/tags/${version}";
+    rev = version;
     hash = "sha256-Dy8tykIbK5o0XulurG+TxORZZSxfRe5Kjh6aGpsh+0Y=";
   };
+
+  passthru.updateScript = gitUpdater { };
 
   postPatch = ''
     substituteInPlace upscaler/window.py \
       --replace-fail '"upscayl-bin",' '"${lib.getExe upscayl-ncnn}",'
   '';
 
+  strictDeps = true;
+
   nativeBuildInputs = [
+    wrapGAppsHook4
     meson
     ninja
-    pkg-config
-    gobject-introspection
-    blueprint-compiler
-    wrapGAppsHook4
     desktop-file-utils
-  ];
-
-  buildInputs = [
-    libadwaita
+    appstream
+    blueprint-compiler
+    pkg-config
+    gtk4
+    glib
   ];
 
   dependencies = with python3Packages; [
@@ -52,18 +57,36 @@ python3Packages.buildPythonApplication rec {
     vulkan
   ];
 
-  dontWrapGApps = true;
+  buildInputs = [
+    libadwaita
+    upscayl-ncnn
+  ];
 
-  preFixup = ''
-    makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
+  mesonFlags = [
+    (lib.mesonBool "network_tests" false)
+  ];
+
+  # NOTE: `postCheck` is intentionally not used here, as the entire checkPhase
+  # is skipped by `buildPythonApplication`
+  # https://github.com/NixOS/nixpkgs/blob/9d4343b7b27a3e6f08fc22ead568233ff24bbbde/pkgs/development/interpreters/python/mk-python-derivation.nix#L296
+  postInstallCheck = ''
+    mesonCheckPhase
   '';
 
+  dontWrapGApps = true;
+
+  makeWrapperArgs = [ "\${gappsWrapperArgs[@]}" ];
+
   meta = {
-    description = "GTK4+libadwaita application that allows you to upscale and enhance a given image";
+    description = "Upscale and enhance images";
     homepage = "https://tesk.page/upscaler";
-    license = with lib.licenses; [ gpl3Plus ];
+    license = lib.licenses.gpl3Only;
+    maintainers = with lib.maintainers; [
+      grimmauld
+      getchoo
+      aleksana
+    ];
     mainProgram = "upscaler";
-    maintainers = with lib.maintainers; [ aleksana ];
     platforms = lib.platforms.linux;
   };
 }
