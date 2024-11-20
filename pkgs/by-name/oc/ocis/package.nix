@@ -80,7 +80,7 @@ buildGoModule rec {
 
   meta = {
     homepage = "https://github.com/owncloud/web";
-    description = "Next generation frontend for ownCloud Infinite Scale ";
+    description = "Next generation frontend for ownCloud Infinite Scale";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ xinyangli ];
   };

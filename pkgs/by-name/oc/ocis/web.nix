@@ -22,12 +22,16 @@ stdenvNoCC.mkDerivation rec {
   ];
 
   buildPhase = ''
+    runHook preBuild
     pnpm build
+    runHook postBuild
   '';
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/share
     cp -r dist/* $out/share/
+    runHook postInstall
   '';
 
   pnpmDeps = pnpm.fetchDeps {
@@ -40,6 +44,6 @@ stdenvNoCC.mkDerivation rec {
     description = "ownCloud Infinite Scale Stack";
     mainProgram = "ocis";
     maintainers = with lib.maintainers; [ xinyangli ];
-    license = [ lib.licenses.agpl3Only ];
+    license = lib.licenses.agpl3Only;
   };
 }
