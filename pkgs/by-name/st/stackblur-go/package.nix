@@ -1,6 +1,7 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
 }:
 
 buildGoModule rec {
@@ -20,10 +21,13 @@ buildGoModule rec {
     mv $out/bin/cmd $out/bin/stackblur
   '';
 
-  ldflags = [ "-s" "-w" ];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   meta = {
-    description = "A fast, almost Gaussian Blur implementation in Go";
+    description = "Fast, almost Gaussian Blur implementation in Go";
     homepage = "https://github.com/esimov/stackblur-go";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ sodiboo ];
