@@ -38,6 +38,8 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [ numpy ];
 
+  env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
+
   nativeCheckInputs = [ pytestCheckHook ];
 
   # Fix a ModuleNotFoundError. Investigated at:
