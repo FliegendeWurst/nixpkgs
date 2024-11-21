@@ -37,6 +37,8 @@ buildPythonPackage rec {
     libtool
   ];
 
+  env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
+
   propagatedBuildInputs = [ lxml ];
 
   nativeCheckInputs = [
