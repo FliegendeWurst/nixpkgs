@@ -7207,6 +7207,8 @@ with self; {
     buildInputs = [ pkgs.libmysqlclient DevelChecklib TestDeep TestDistManifest TestPod ];
     propagatedBuildInputs = [ DBI ];
 
+    env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
+
     doCheck = false;
 
   #  makeMakerFlags = "MYSQL_HOME=${mysql}";
