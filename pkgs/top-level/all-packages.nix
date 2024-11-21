@@ -362,7 +362,7 @@ with pkgs;
       # makefile hardcodes gcc for darwin
       stdenv = if stdenv.hostPlatform.isDarwin then gccStdenv else stdenv;
   };
-  prism-model-checker = callPackage ../by-name/pr/prism-model-checker/package.nix {java = openjdk17;};
+  prism-model-checker = callPackage ../by-name/pr/prism-model-checker/package.nix { java = openjdk17; };
 
   prisma-engines = callPackage ../development/tools/database/prisma-engines { };
 
