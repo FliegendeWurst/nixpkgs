@@ -21,7 +21,10 @@ let
     nativeBuildInputs = [ pkg-config cpio python3 python3.pkgs.setuptools ];
     buildInputs = [ elfutils gettext python3 ];
     enableParallelBuilding = true;
-    env.NIX_CFLAGS_COMPILE = toString [ "-Wno-error=deprecated-declarations" ]; # Needed with GCC 12
+    env.NIX_CFLAGS_COMPILE = toString [
+      "-Wno-error=deprecated-declarations" # GCC 12
+      "-Wno-error=calloc-transposed-args" # GCC 14
+    ];
   };
 
   ## symlink farm for --sysroot flag
