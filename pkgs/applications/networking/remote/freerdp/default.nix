@@ -191,6 +191,9 @@ stdenv.mkDerivation rec {
     "-include AudioToolbox/AudioToolbox.h"
   ] ++ lib.optionals stdenv.cc.isClang [
     "-Wno-error=incompatible-function-pointer-types"
+  ] ++ [
+    "-Wno-error=incompatible-pointer-types"
+    "-Wno-error=int-conversion"
   ]);
 
   NIX_LDFLAGS = lib.optionals stdenv.hostPlatform.isDarwin [
