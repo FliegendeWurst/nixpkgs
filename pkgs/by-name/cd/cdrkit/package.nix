@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
     "-D__THROW="
   ] ++ lib.optionals stdenv.cc.isClang [
     "-Wno-error=int-conversion"
+  ] ++ [
     "-Wno-error=implicit-function-declaration"
   ]);
 
