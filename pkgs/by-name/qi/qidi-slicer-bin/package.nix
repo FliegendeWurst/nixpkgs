@@ -1,17 +1,18 @@
 {
   appimageTools,
   fetchurl,
-  webkitgtk_4_0,
+  webkitgtk_4_1,
+  libsoup_3,
   lib,
   hicolor-icon-theme,
 }:
 let
   pname = "qidi-slicer";
-  version = "1.1.7";
+  version = "1.2.0";
 
   src = fetchurl {
-    url = "https://github.com/QIDITECH/QIDISlicer/releases/download/V${version}/QIDISlicer_${version}_Linux.AppImage";
-    hash = "sha256-+KO9r5TJjivveF1/81SzX59NO1YI+rZLd9VDuUdgbFs=";
+    url = "https://github.com/QIDITECH/QIDISlicer/releases/download/V${version}/QIDISlicer_${version}_Linux_x64_newer.AppImage";
+    hash = "sha256-WMurkt9VJTlFnx66ByQq+WVtx37q5P4mA4cxF/UzC50=";
   };
 
   appimageContents = appimageTools.extract {
@@ -20,7 +21,10 @@ let
 in
 appimageTools.wrapType2 {
   inherit pname version src;
-  extraPkgs = pkgs: [ webkitgtk_4_0 ];
+  extraPkgs = pkgs: [
+    webkitgtk_4_1
+    libsoup_3
+  ];
 
   extraInstallCommands = ''
     ln -s "$out/bin/qidi-slicer" "$out/bin/qidi-gcodeviewer"
