@@ -299,6 +299,10 @@ let
       "FLAKY_TESTS=skip"
       # Skip some tests that are not passing in this context
       "CI_SKIP_TESTS=${lib.concatStringsSep "," ([
+        # Test depends on performance of builder
+        # https://github.com/nodejs/node/pull/47316
+        "test-http-remove-connection-header-persists-connection"
+        # Tests don't work in sandbox.
         "test-os"
         "test-child-process-exec-env"
         "test-child-process-uid-gid"
