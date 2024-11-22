@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }:
 
-stdenvNoCC.mkDerivation (finalAttrs: {
+stdenvNoCC.mkDerivation {
   pname = "aleo-fonts";
   version = "2.0.0-unstable-2023-06-03";
 
@@ -24,10 +24,10 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   '';
 
   meta = {
-    homepage = "https://github.com/AlessioLaiso/aleo";
     description = "Slab serif typeface designed by Alessio Laiso";
-    platforms = lib.platforms.all;
-    maintainers = with lib.maintainers; [ donovanglover ];
+    homepage = "https://github.com/AlessioLaiso/aleo";
     license = lib.licenses.ofl;
+    maintainers = with lib.maintainers; [ donovanglover ];
+    platforms = lib.platforms.all;
   };
-})
+}

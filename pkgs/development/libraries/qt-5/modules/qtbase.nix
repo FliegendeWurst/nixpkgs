@@ -57,7 +57,7 @@ stdenv.mkDerivation (finalAttrs: ({
     libxml2 libxslt openssl sqlite zlib
 
     # Text rendering
-    harfbuzz icu
+    freetype harfbuzz icu
 
     # Image formats
     libjpeg libpng
@@ -67,7 +67,7 @@ stdenv.mkDerivation (finalAttrs: ({
       dbus glib udev
 
       # Text rendering
-      fontconfig freetype
+      fontconfig
 
       libdrm
 
@@ -324,6 +324,7 @@ stdenv.mkDerivation (finalAttrs: ({
     "-system-sqlite"
     ''-${if mysqlSupport then "plugin" else "no"}-sql-mysql''
     ''-${if postgresql != null then "plugin" else "no"}-sql-psql''
+    "-system-libpng"
 
     "-make libs"
     "-make tools"
@@ -333,8 +334,6 @@ stdenv.mkDerivation (finalAttrs: ({
     ++ (
       if stdenv.hostPlatform.isDarwin then [
       "-no-fontconfig"
-      "-qt-freetype"
-      "-qt-libpng"
       "-no-framework"
       "-no-rpath"
     ] else [
@@ -352,8 +351,6 @@ stdenv.mkDerivation (finalAttrs: ({
       ''-${lib.optionalString (cups == null) "no-"}cups''
       "-dbus-linked"
       "-glib"
-    ] ++ [
-      "-system-libpng"
     ] ++ lib.optional withGtk3 "-gtk"
       ++ lib.optional withLibinput "-libinput"
       ++ [

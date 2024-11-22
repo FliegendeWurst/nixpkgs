@@ -38,6 +38,7 @@
   languagetool,
   llvmPackages,
   meson,
+  notmuch,
   neovim-unwrapped,
   nim1,
   nodePackages,
@@ -752,31 +753,6 @@ in
     nvimRequireCheck = "competitest";
   };
 
-  compe-conjure = super.compe-conjure.overrideAttrs {
-    dependencies = [ self.conjure ];
-  };
-
-  compe-latex-symbols = super.compe-latex-symbols.overrideAttrs {
-    dependencies = [ self.nvim-compe ];
-  };
-
-  compe-tabnine = super.compe-tabnine.overrideAttrs {
-    dependencies = [ self.nvim-compe ];
-    buildInputs = [ tabnine ];
-
-    postFixup = ''
-      mkdir -p $target/binaries/${tabnine.version}
-      ln -s ${tabnine}/bin/ $target/binaries/${tabnine.version}/${tabnine.passthru.platform}
-    '';
-  };
-
-  compe-zsh = super.compe-zsh.overrideAttrs {
-    dependencies = with self; [
-      nvim-compe
-      plenary-nvim
-    ];
-  };
-
   compiler-explorer-nvim = super.compiler-explorer-nvim.overrideAttrs {
     dependencies = with self; [ plenary-nvim ];
     nvimRequireCheck = "compiler-explorer";
@@ -1432,6 +1408,11 @@ in
     nvimRequireCheck = "lsp-progress";
   };
 
+  lspecho-nvim = super.lspecho-nvim.overrideAttrs {
+    meta.license = lib.licenses.mit;
+    nvimRequireCheck = "lspecho";
+  };
+
   lualine-lsp-progress = super.lualine-lsp-progress.overrideAttrs {
     dependencies = with self; [ lualine-nvim ];
   };
@@ -1780,6 +1761,8 @@ in
     nvimRequireCheck = "null-ls";
   };
 
+  notmuch-vim = notmuch.vim;
+
   NotebookNavigator-nvim = super.NotebookNavigator-nvim.overrideAttrs {
     nvimRequireCheck = "notebook-navigator";
   };
@@ -1991,6 +1974,14 @@ in
     nvimRequireCheck = "ufo";
   };
 
+  nvzone-menu = super.nvzone-menu.overrideAttrs {
+    dependencies = with self; [ nvzone-volt ];
+  };
+
+  nvzone-minty = super.nvzone-minty.overrideAttrs {
+    dependencies = with self; [ nvzone-volt ];
+  };
+
   obsidian-nvim = super.obsidian-nvim.overrideAttrs {
     dependencies = with self; [ plenary-nvim ];
     nvimRequireCheck = "obsidian";
@@ -2011,6 +2002,12 @@ in
 
   onehalf = super.onehalf.overrideAttrs {
     configurePhase = "cd vim";
+  };
+
+  one-nvim = super.one-nvim.overrideAttrs {
+    # E5108: /lua/one-nvim.lua:14: Unknown option 't_Co'
+    # https://github.com/Th3Whit3Wolf/one-nvim/issues/23
+    meta.broken = true;
   };
 
   # The plugin depends on either skim-vim or fzf-vim, but we don't want to force the user so we
@@ -2604,7 +2601,8 @@ in
   };
 
   tmux-complete-vim = super.tmux-complete-vim.overrideAttrs {
-    dependencies = with self; [ nvim-compe ];
+    # Vim plugin with optional nvim-compe lua module
+    doCheck = false;
   };
 
   todo-comments-nvim = super.todo-comments-nvim.overrideAttrs {

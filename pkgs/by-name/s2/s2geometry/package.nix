@@ -1,5 +1,16 @@
-{ stdenv, lib, fetchFromGitHub, cmake, pkg-config, openssl, gtest, abseil-cpp }:
+{
+  abseil-cpp,
+  cmake,
+  fetchFromGitHub,
+  stdenv,
+  lib,
+  pkg-config,
+  openssl,
+}:
 
+let
+  cxxStandard = "17";
+in
 stdenv.mkDerivation (finalAttrs: {
   pname = "s2geometry";
   version = "0.11.1";
@@ -7,23 +18,35 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "google";
     repo = "s2geometry";
-    rev = "v${finalAttrs.version}";
-    hash = "sha256-VjgGcGgQlKmjUq+JU0JpyhOZ9pqwPcBUFEPGV9XoHc0=";
+    rev = "refs/tags/v${finalAttrs.version}";
+    sha256 = "sha256-VjgGcGgQlKmjUq+JU0JpyhOZ9pqwPcBUFEPGV9XoHc0=";
   };
 
-  nativeBuildInputs = [ cmake pkg-config ];
-  buildInputs = [ openssl gtest (abseil-cpp.override { cxxStandard = "14"; }) ];
-
-  cmakeFlags = [
-    (lib.cmakeBool "BUILD_TESTS" finalAttrs.finalPackage.doCheck)
-    (lib.cmakeFeature "GOOGLETEST_ROOT" "${gtest.src}")
+  nativeBuildInputs = [
+    cmake
+    pkg-config
   ];
 
-  meta = {
+  cmakeFlags = [
+    (lib.cmakeFeature "CMAKE_CXX_STANDARD" cxxStandard)
+    # incompatible with our version of gtest
+    (lib.cmakeBool "BUILD_TESTS" false)
+  ];
+
+  buildInputs = [
+    openssl
+  ];
+
+  propagatedBuildInputs = [
+    (abseil-cpp.override { inherit cxxStandard; })
+  ];
+
+  meta = with lib; {
+    changelog = "https://github.com/google/s2geometry/releases/tag/${lib.removePrefix "refs/tags/" finalAttrs.src.rev}";
     description = "Computational geometry and spatial indexing on the sphere";
     homepage = "http://s2geometry.io/";
-    license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [ Thra11 ];
-    platforms = lib.platforms.unix;
+    license = licenses.asl20;
+    maintainers = [ maintainers.Thra11 ];
+    platforms = platforms.linux;
   };
 })
