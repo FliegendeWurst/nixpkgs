@@ -1,7 +1,7 @@
-{ stdenv, lib, fetchurl, writeScript, cdrtools, dvdauthor, ffmpeg, imagemagick, lame, mjpegtools, sox, transcode, vorbis-tools, runtimeShell }:
+{ stdenv, lib, fetchurl, writeScript, cdrtools, dvdauthor, ffmpeg, imagemagick, lame, mjpegtools, sox, vorbis-tools, runtimeShell }:
 
 let
-  binPath = lib.makeBinPath [ cdrtools dvdauthor ffmpeg imagemagick lame mjpegtools sox transcode vorbis-tools ];
+  binPath = lib.makeBinPath [ cdrtools dvdauthor ffmpeg imagemagick lame mjpegtools sox vorbis-tools ];
 
   wrapper = writeScript "dvd-slideshow.sh" ''
       #!${runtimeShell}
