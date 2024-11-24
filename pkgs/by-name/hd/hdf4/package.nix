@@ -165,5 +165,6 @@ stdenv.mkDerivation (finalAttrs: {
     maintainers = with maintainers; [ knedlsepp ];
     platforms = platforms.unix;
     license = licenses.bsdOriginal;
+    broken = true; # TODO
   };
 })

@@ -11928,14 +11928,16 @@ with pkgs;
 
   tomcat-native = callPackage ../servers/http/tomcat/tomcat-native.nix { };
 
-  libmysqlclient = libmysqlclient_3_3;
+  libmysqlclient = libmysqlclient_3_4;
   libmysqlclient_3_1 = mariadb-connector-c_3_1;
   libmysqlclient_3_2 = mariadb-connector-c_3_2;
   libmysqlclient_3_3 = mariadb-connector-c_3_3;
-  mariadb-connector-c = mariadb-connector-c_3_3;
+  libmysqlclient_3_4 = mariadb-connector-c_3_4;
+  mariadb-connector-c = mariadb-connector-c_3_4;
   mariadb-connector-c_3_1 = callPackage ../servers/sql/mariadb/connector-c/3_1.nix { };
   mariadb-connector-c_3_2 = callPackage ../servers/sql/mariadb/connector-c/3_2.nix { };
   mariadb-connector-c_3_3 = callPackage ../servers/sql/mariadb/connector-c/3_3.nix { };
+  mariadb-connector-c_3_4 = callPackage ../servers/sql/mariadb/connector-c/3_4.nix { };
 
   inherit (import ../servers/sql/mariadb pkgs)
     mariadb_105

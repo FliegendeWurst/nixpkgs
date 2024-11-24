@@ -52,6 +52,8 @@ in stdenv.mkDerivation {
   propagatedBuildInputs = [ curl openssl zlib ] ++ lib.optional isVer33 zstd;
   buildInputs = [ libiconv ];
 
+  env.NIX_CFLAGS_COMPILE = "-Wno-error=format-extra-args"; # caused by our substitute above
+
   postInstall = ''
     moveToOutput bin/mariadb_config "$dev"
   '';

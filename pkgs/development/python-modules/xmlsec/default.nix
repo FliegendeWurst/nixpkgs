@@ -1,6 +1,7 @@
 {
   lib,
   fetchPypi,
+  fetchpatch,
   buildPythonPackage,
   pytestCheckHook,
   libxslt,
@@ -24,6 +25,14 @@ buildPythonPackage rec {
     hash = "sha256-k0+ATy+JW824bx6u4ja2YQE1YO5p7BCNKc3W5fKSotk=";
   };
 
+  patches = [
+    # fixes build error with GCC 14
+    (fetchpatch {
+      url = "https://github.com/xmlsec/python-xmlsec/commit/67cd4ac73e4fceac4b4eb6a320067cad33f79213.patch";
+      hash = "sha256-zU34a2x3S48Hwvo/oDe5mfkZ3jBwdajIrKwKhTRSsko=";
+    })
+  ];
+
   nativeBuildInputs = [
     pkg-config
     pkgconfig
@@ -36,8 +45,6 @@ buildPythonPackage rec {
     libxml2
     libtool
   ];
-
-  env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
 
   propagatedBuildInputs = [ lxml ];
 

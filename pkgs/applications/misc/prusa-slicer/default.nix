@@ -90,6 +90,13 @@ stdenv.mkDerivation (finalAttrs: {
     rev = "version_${finalAttrs.version}";
   };
 
+  postPatch = ''
+    substituteInPlace src/libslic3r/Arrange/Core/DataStoreTraits.hpp \
+      --replace-fail \
+      "WritableDataStoreTraits<ArrItem>::template set" \
+      "WritableDataStoreTraits<ArrItem>::set"
+  '';
+
   nativeBuildInputs = [
     cmake
     pkg-config

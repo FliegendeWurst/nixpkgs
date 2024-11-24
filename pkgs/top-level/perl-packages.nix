@@ -7194,20 +7194,20 @@ with self; {
 
   DBDmysql = buildPerlPackage {
     pname = "DBD-mysql";
-    version = "4.050";
+    version = "5.010";
 
     src = fetchurl {
-      url = "mirror://cpan/authors/id/D/DV/DVEEDEN/DBD-mysql-4.050.tar.gz";
-      hash = "sha256-T0hUH/FaCnQF92rcEPgWJ8M5lvv1bJXCbAlERMCSjXg=";
+      url = "mirror://cpan/authors/id/D/DV/DVEEDEN/DBD-mysql-5.010.tar.gz";
+      hash = "sha256-LKL/Odk+idT3RG5fD68DgF6RZ+6bigS6fLJG4stG7uc=";
     };
 
     nativeBuildInputs = [
-      pkgs.libmysqlclient # for mysql_config
+      pkgs.libmysqlconnectorcpp # for mysql_config
     ];
-    buildInputs = [ pkgs.libmysqlclient DevelChecklib TestDeep TestDistManifest TestPod ];
+    buildInputs = [ pkgs.libmysqlconnectorcpp DevelChecklib TestDeep TestDistManifest TestPod ];
     propagatedBuildInputs = [ DBI ];
 
-    env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
+    # env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
 
     doCheck = false;
 

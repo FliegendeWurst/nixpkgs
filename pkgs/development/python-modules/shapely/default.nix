@@ -3,6 +3,7 @@
   stdenv,
   buildPythonPackage,
   fetchPypi,
+  fetchpatch,
   pytestCheckHook,
   pythonOlder,
 
@@ -26,6 +27,14 @@ buildPythonPackage rec {
     hash = "sha256-mX9hWbFIQFnsI5ysqlNGf9i1Vk2r4YbNhKwpRGY7C/Y=";
   };
 
+  patches = [
+    # fixes build error with GCC 14
+    (fetchpatch {
+      url = "https://github.com/shapely/shapely/commit/05455886750680728dc751dc5888cd02086d908e.patch";
+      hash = "sha256-YnmiWFfjHHFZCxrmabBINM4phqfLQ+6xEc30EoV5d98=";
+    })
+  ];
+
   nativeBuildInputs = [
     cython_0
     geos # for geos-config
@@ -37,8 +46,6 @@ buildPythonPackage rec {
   buildInputs = [ geos ];
 
   propagatedBuildInputs = [ numpy ];
-
-  env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
 
   nativeCheckInputs = [ pytestCheckHook ];
 

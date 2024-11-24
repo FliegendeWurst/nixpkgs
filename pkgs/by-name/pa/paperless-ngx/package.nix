@@ -22,6 +22,7 @@
 , pkg-config
 , nltk-data
 , xorg
+, nodejs_20
 }:
 
 let
@@ -96,6 +97,8 @@ let
     postPatch = ''
       cd src-ui
     '';
+
+    nodejs = nodejs_20;
 
     npmDepsHash = "sha256-pBCWcdCTQh0N4pRLBWLZXybuhpiat030xvPZ5z7CUJ0=";
 

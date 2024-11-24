@@ -20,6 +20,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-IeSGscgz51IndX6Xbu8Kw8GcJ9MLXXFhV+4LvnVkrLE=";
   };
 
+  patches = [
+    ./fix-configure.patch
+  ];
+
   nativeBuildInputs = [
     autoreconfHook
     validatePkgConfig
