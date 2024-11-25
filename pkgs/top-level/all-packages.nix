@@ -2178,6 +2178,10 @@ with pkgs;
 
   clingo = callPackage ../applications/science/logic/potassco/clingo.nix { };
 
+  zip = callPackage ../by-name/zi/zip/package.nix {
+    stdenv = gcc13Stdenv;
+  };
+
   clingcon = callPackage ../applications/science/logic/potassco/clingcon.nix { };
 
   clprover = callPackage ../applications/science/logic/clprover/clprover.nix { };

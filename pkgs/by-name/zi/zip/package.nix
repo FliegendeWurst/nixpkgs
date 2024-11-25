@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, enableNLS ? false, libnatspec ? null, libiconv }:
+{ lib, stdenv, fetchurl, enableNLS ? false, libnatspec ? null, libiconv, fetchpatch }:
 
 assert enableNLS -> libnatspec != null;
 
@@ -13,11 +13,11 @@ stdenv.mkDerivation rec {
     ];
     sha256 = "0sb3h3067pzf3a7mlxn1hikpcjrsvycjcnj9hl9b1c3ykcgvps7h";
   };
-  prePatch = ''
-    substituteInPlace unix/Makefile --replace 'CC = cc' ""
-  '';
 
-  hardeningDisable = [ "format" ];
+  postPatch = ''
+    substituteInPlace unix/Makefile --replace 'CC = cc' ""
+    substituteInPlace unix/configure --replace-fail "O3" "O2"
+  '';
 
   makefile = "unix/Makefile";
   buildFlags = if stdenv.hostPlatform.isCygwin then [ "cygwin" ] else [ "generic" ];
@@ -38,6 +38,26 @@ stdenv.mkDerivation rec {
     ./buffer-overflow-on-utf8-rh-bug-2165653.patch
     # Fixes forward declaration errors with timezone.c
     ./fix-time.h-not-included.patch
+    (fetchpatch {
+      url = "https://gitweb.gentoo.org/repo/gentoo.git/plain/app-arch/zip/files/zip-3.0-pic.patch";
+      hash = "sha256-OXgC9KqiOpH/o/bSabt3LqtoT/xifqfkvpLLPfPz+1c=";
+    })
+    (fetchpatch {
+      url = "https://gitweb.gentoo.org/repo/gentoo.git/plain/app-arch/zip/files/zip-3.0-no-crypt.patch";
+      hash = "sha256-9bwV+uKST828PcRVbICs8xwz9jcIPk26gxLBbiEeta4=";
+    })
+    (fetchpatch {
+      url = "https://gitweb.gentoo.org/repo/gentoo.git/plain/app-arch/zip/files/zip-3.0-format-security.patch";
+      hash = "sha256-YmGKivZ0iFCFmPjVYuOv9D8Y0xG2QnWOpas8gMgoQ3M=";
+    })
+    (fetchpatch {
+      url = "https://gitweb.gentoo.org/repo/gentoo.git/plain/app-arch/zip/files/zip-3.0-exec-stack.patch";
+      hash = "sha256-akJFY+zGijPWCwaAL/xxCN4wQpVFBHkLMo2HowrSn/M=";
+    })
+    (fetchpatch {
+      url = "https://gitweb.gentoo.org/repo/gentoo.git/plain/app-arch/zip/files/zip-3.0-build.patch";
+      hash = "sha256-MiupD7W+sxiRTsB5viKAiI4QeqtZC6VttfJktdt1ucI=";
+    })
   ] ++ lib.optionals (enableNLS && !stdenv.hostPlatform.isCygwin) [ ./natspec-gentoo.patch.bz2 ];
 
   buildInputs = lib.optional enableNLS libnatspec
@@ -50,5 +70,7 @@ stdenv.mkDerivation rec {
     platforms = platforms.all;
     maintainers = with maintainers; [ RossComputerGuy ];
     mainProgram = "zip";
+    # GCC 14 miscompiles this package
+    broken = stdenv.cc.isGNU && lib.versionAtLeast stdenv.cc.version "14";
   };
 }
