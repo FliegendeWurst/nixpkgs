@@ -17,6 +17,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    mysql80
   ];
 
   buildInputs = [
