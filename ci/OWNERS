@@ -14,7 +14,7 @@
 # Processing of this file is implemented in workflows/codeowners-v2.yml
 
 # CI
-/.github/workflows @NixOS/Security @Mic92 @zowoq
+/.github/workflows @NixOS/Security @Mic92 @zowoq @infinisil @azuwis
 /.github/workflows/check-nix-format.yml @infinisil
 /.github/workflows/nixpkgs-vet.yml @infinisil @philiptaron
 /.github/workflows/codeowners-v2.yml @infinisil
@@ -105,6 +105,11 @@ nixos/modules/installer/tools/nix-fallback-paths.nix  @NixOS/nix-team @raitobeza
 /nixos/modules/system/activation/bootspec.nix         @grahamc @cole-h @raitobezarius
 /nixos/modules/system/activation/bootspec.cue         @grahamc @cole-h @raitobezarius
 
+# NixOS Render Docs
+/pkgs/by-name/ni/nixos-render-docs @fricklerhandwerk @GetPsyched @hsjobeki
+/doc/redirects.json                @fricklerhandwerk @GetPsyched @hsjobeki
+/nixos/doc/manual/redirects.json   @fricklerhandwerk @GetPsyched @hsjobeki
+
 # NixOS integration test driver
 /nixos/lib/test-driver  @tfc
 
@@ -138,6 +143,8 @@ nixos/modules/installer/tools/nix-fallback-paths.nix  @NixOS/nix-team @raitobeza
 /nixos/tests/amazon-ssm-agent.nix                 @arianvp
 /nixos/modules/system/boot/grow-partition.nix     @arianvp
 
+# nixos-rebuild-ng
+/pkgs/by-name/ni/nixos-rebuild-ng                 @thiagokokada
 
 
 # Updaters
@@ -175,6 +182,7 @@ nixos/modules/installer/tools/nix-fallback-paths.nix  @NixOS/nix-team @raitobeza
 # Rust
 /pkgs/development/compilers/rust @alyssais @Mic92 @zowoq @winterqt @figsoda
 /pkgs/build-support/rust @zowoq @winterqt @figsoda
+/pkgs/build-support/rust/fetch-cargo-vendor* @TomaSajt
 /doc/languages-frameworks/rust.section.md @zowoq @winterqt @figsoda
 
 # Tcl
@@ -210,6 +218,7 @@ pkgs/development/python-modules/buildcatrust/ @ajs124 @lukegb @mweinelt
 /doc/languages-frameworks/java.section.md @NixOS/java
 /doc/languages-frameworks/gradle.section.md @NixOS/java
 /doc/languages-frameworks/maven.section.md @NixOS/java
+/nixos/modules/programs/java.nix @NixOS/java
 /pkgs/top-level/java-packages.nix @NixOS/java
 
 # Jetbrains
@@ -233,6 +242,7 @@ pkgs/development/python-modules/buildcatrust/ @ajs124 @lukegb @mweinelt
 
 # PostgreSQL and related stuff
 /pkgs/servers/sql/postgresql @NixOS/postgres
+/pkgs/development/tools/rust/cargo-pgrx @NixOS/postgres
 /nixos/modules/services/databases/postgresql.md @NixOS/postgres
 /nixos/modules/services/databases/postgresql.nix @NixOS/postgres
 /nixos/tests/postgresql @NixOS/postgres

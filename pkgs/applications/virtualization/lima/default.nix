@@ -39,8 +39,13 @@ buildGoModule rec {
 
   buildPhase = ''
     runHook preBuild
-    make "VERSION=v${version}" binaries
+    make "VERSION=v${version}" "CC=${stdenv.cc.targetPrefix}cc" binaries
     runHook postBuild
+  '';
+
+  preCheck = ''
+    # Workaround for: could not create "/homeless-shelter/.lima/_config" directory: mkdir /homeless-shelter: permission denied
+    export LIMA_HOME="$(mktemp -d)"
   '';
 
   installPhase = ''
@@ -49,10 +54,12 @@ buildGoModule rec {
     cp -r _output/* $out
     wrapProgram $out/bin/limactl \
       --prefix PATH : ${lib.makeBinPath [ qemu ]}
+  '' + lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
     installShellCompletion --cmd limactl \
       --bash <($out/bin/limactl completion bash) \
       --fish <($out/bin/limactl completion fish) \
       --zsh <($out/bin/limactl completion zsh)
+  '' + ''
     runHook postInstall
   '';
 
