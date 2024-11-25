@@ -1520,10 +1520,6 @@ with pkgs;
     inherit (darwin) autoSignDarwinBinariesHook;
   };
 
-  saunafs = callPackage ../by-name/sa/saunafs/package.nix {
-    boost = boost185;
-  };
-
   vifm-full = vifm.override {
     mediaSupport = true;
     inherit lib udisks2 python3;
@@ -4781,7 +4777,6 @@ with pkgs;
   };
 
   osl = libsForQt5.callPackage ../development/compilers/osl {
-    boost = boost179;
     libclang = llvmPackages_15.libclang;
     clang = clang_15;
     llvm = llvm_15;
@@ -8864,8 +8859,6 @@ with pkgs;
     boost181
     boost182
     boost183
-    boost184
-    boost185
     boost186
   ;
 
@@ -9580,10 +9573,7 @@ with pkgs;
     autoreconfHook = buildPackages.autoreconfHook269;
   };
 
-  hpx = callPackage ../development/libraries/hpx {
-    boost = boost179;
-    asio = asio.override { boost = boost179; };
-  };
+  hpx = callPackage ../development/libraries/hpx { };
 
   hspell = callPackage ../development/libraries/hspell { };
 
@@ -17385,8 +17375,6 @@ with pkgs;
     name = "prio-wrapped";
     appls = [ prio ];
   };
-
-  cinnamon = recurseIntoAttrs (callPackage ../desktops/cinnamon { });
 
   deepin = recurseIntoAttrs (callPackage ../desktops/deepin { });
 
