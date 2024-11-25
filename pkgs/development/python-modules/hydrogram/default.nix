@@ -1,13 +1,14 @@
-{ lib
-, aiosqlite
-, buildPythonPackage
-, fetchFromGitHub
-, hatchling
-, pyaes
-, pysocks
-, pytest-asyncio
-, pytestCheckHook
-, pythonOlder
+{
+  lib,
+  aiosqlite,
+  buildPythonPackage,
+  fetchFromGitHub,
+  hatchling,
+  pyaes,
+  pysocks,
+  pytest-asyncio,
+  pytestCheckHook,
+  pythonOlder,
 }:
 
 buildPythonPackage rec {

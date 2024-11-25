@@ -15813,7 +15813,7 @@ self: super: with self; {
 
   tensorflow-probability = callPackage ../development/python-modules/tensorflow-probability { };
 
-  tensorflow = self.tensorflow-build;
+  tensorflow = self.tensorflow-bin;
 
   tensorflowWithCuda = self.tensorflow.override {
     cudaSupport = true;
@@ -15870,6 +15870,8 @@ self: super: with self; {
   testfixtures = callPackage ../development/python-modules/testfixtures { };
 
   texsoup = callPackage ../development/python-modules/texsoup { };
+
+  textblob = callPackage ../development/python-modules/textblob { };
 
   textfsm = callPackage ../development/python-modules/textfsm { };
 
@@ -17364,7 +17366,7 @@ self: super: with self; {
   unicode-slugify = callPackage ../development/python-modules/unicode-slugify { };
 
   unicorn = callPackage ../development/python-modules/unicorn {
-    unicorn-emu = pkgs.unicorn;
+    inherit (pkgs) unicorn;
   };
 
   unicurses = callPackage ../development/python-modules/unicurses { };

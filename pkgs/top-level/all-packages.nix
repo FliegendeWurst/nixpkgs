@@ -1756,8 +1756,6 @@ with pkgs;
     python3Packages = python311Packages;
   };
 
-  bisq-desktop = callPackage ../applications/blockchains/bisq-desktop { };
-
   inherit (callPackages ../tools/security/bitwarden-directory-connector { }) bitwarden-directory-connector-cli bitwarden-directory-connector;
 
   bitwarden-menu = python3Packages.callPackage ../applications/misc/bitwarden-menu { };
@@ -2064,7 +2062,7 @@ with pkgs;
 
   tensor = libsForQt5.callPackage ../applications/networking/instant-messengers/tensor { };
 
-  libtensorflow = python3.pkgs.tensorflow.libtensorflow;
+  libtensorflow = python3.pkgs.tensorflow-build.libtensorflow;
 
   libtorch-bin = callPackage ../development/libraries/science/math/libtorch/bin.nix { };
 
@@ -2320,7 +2318,6 @@ with pkgs;
 
   element-desktop = callPackage ../applications/networking/instant-messengers/element/element-desktop.nix {
     inherit (darwin.apple_sdk.frameworks) Security AppKit CoreServices;
-    electron = electron_32;
   };
   element-desktop-wayland = writeScriptBin "element-desktop" ''
     #!/bin/sh
@@ -3236,9 +3233,7 @@ with pkgs;
 
   kramdown-asciidoc = callPackage ../tools/typesetting/kramdown-asciidoc { };
 
-  lychee = callPackage ../tools/networking/lychee {
-    inherit (darwin.apple_sdk.frameworks) Security SystemConfiguration;
-  };
+  lychee = callPackage ../tools/networking/lychee { };
 
   mozwire = callPackage ../tools/networking/mozwire {
     inherit (darwin.apple_sdk.frameworks) CoreServices Security;
@@ -3930,7 +3925,6 @@ with pkgs;
   angryipscanner = ipscan;
 
   isl = isl_0_20;
-  isl_0_17 = callPackage ../development/libraries/isl/0.17.1.nix { };
   isl_0_20 = callPackage ../development/libraries/isl/0.20.0.nix { };
   isl_0_24 = callPackage ../development/libraries/isl/0.24.0.nix { };
 
@@ -4669,11 +4663,6 @@ with pkgs;
 
   ome_zarr = with python3Packages; toPythonApplication ome-zarr;
 
-  onefetch = callPackage ../tools/misc/onefetch {
-    inherit (darwin) libresolv;
-    inherit (darwin.apple_sdk.frameworks) CoreFoundation Security;
-  };
-
   onlykey = callPackage ../tools/security/onlykey { node_webkit = nwjs; };
 
   openapi-generator-cli = callPackage ../tools/networking/openapi-generator-cli { jre = pkgs.jre_headless; };
@@ -5260,8 +5249,6 @@ with pkgs;
 
   sigil = libsForQt5.callPackage ../applications/editors/sigil { };
 
-  inherit (callPackage ../applications/networking/instant-messengers/signal-desktop {}) signal-desktop;
-
   slither-analyzer = with python3Packages; toPythonApplication slither-analyzer;
 
   # aka., pgp-tools
@@ -5317,11 +5304,6 @@ with pkgs;
   spire-server = spire.server;
 
   spoof-mac = python3Packages.callPackage ../tools/networking/spoof-mac { };
-
-  suricata = callPackage ../applications/networking/ids/suricata {
-    python = python3;
-    libbpf = libbpf_0;
-  };
 
   softhsm = callPackage ../tools/security/softhsm {
     inherit (darwin) libobjc;
@@ -6106,9 +6088,7 @@ with pkgs;
   flutter324 = flutterPackages.v3_24;
   flutter319 = flutterPackages.v3_19;
 
-  fnm = callPackage ../development/tools/fnm {
-    inherit (darwin.apple_sdk.frameworks) DiskArbitration Foundation Security;
-  };
+  fnm = callPackage ../development/tools/fnm { };
 
   fpc = callPackage ../development/compilers/fpc { };
 
@@ -6147,8 +6127,6 @@ with pkgs;
       extraBuildInputs = lib.optional stdenv.hostPlatform.isDarwin clang.cc;
     };
 
-  gcc7Stdenv = overrideCC gccStdenv buildPackages.gcc7;
-  gcc8Stdenv = overrideCC gccStdenv buildPackages.gcc8;
   gcc9Stdenv = overrideCC gccStdenv buildPackages.gcc9;
   gcc10Stdenv = overrideCC gccStdenv buildPackages.gcc10;
   gcc11Stdenv = overrideCC gccStdenv buildPackages.gcc11;
@@ -6240,7 +6218,7 @@ with pkgs;
   };
 
   inherit (callPackage ../development/compilers/gcc/all.nix { inherit noSysDirs; })
-    gcc7 gcc8 gcc9 gcc10 gcc11 gcc12 gcc13 gcc14;
+    gcc9 gcc10 gcc11 gcc12 gcc13 gcc14;
 
   gcc_latest = gcc14;
 
@@ -6954,6 +6932,7 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) CoreFoundation CoreServices Security SystemConfiguration;
   };
   inherit (callPackages ../development/tools/rust/cargo-pgrx { })
+    cargo-pgrx_0_12_0_alpha_1
     cargo-pgrx_0_12_5
     cargo-pgrx_0_12_6
     ;
@@ -7433,7 +7412,7 @@ with pkgs;
   # PHP interpreters, packages and extensions.
   #
   # Set default PHP interpreter, extensions and packages
-  php = php82;
+  php = php83;
   phpExtensions = php.extensions;
   phpPackages = php.packages;
 
@@ -12150,7 +12129,6 @@ with pkgs;
   qremotecontrol-server = libsForQt5.callPackage ../servers/misc/qremotecontrol-server { };
 
   rabbitmq-server = callPackage ../servers/amqp/rabbitmq-server {
-    inherit (darwin.apple_sdk.frameworks) AppKit Carbon Cocoa;
     erlang = erlang_26;
   };
 
@@ -15751,10 +15729,6 @@ with pkgs;
 
   super-slicer-latest = super-slicer.latest;
 
-  bambu-studio = callPackage ../applications/misc/bambu-studio { };
-
-  orca-slicer = callPackage ../applications/misc/bambu-studio/orca-slicer.nix {};
-
   skrooge = libsForQt5.callPackage ../applications/office/skrooge { };
 
   smartdeblur = libsForQt5.callPackage ../applications/graphics/smartdeblur { };
@@ -16238,10 +16212,6 @@ with pkgs;
 
   whispers = with python3Packages; toPythonApplication whispers;
 
-  warp = callPackage ../applications/networking/warp {
-    inherit (darwin.apple_sdk.frameworks) Security Foundation;
-  };
-
   warp-plus = callPackage ../by-name/wa/warp-plus/package.nix {
     buildGoModule = buildGo122Module;
   };
@@ -16616,12 +16586,6 @@ with pkgs;
   };
 
   ledger-agent = with python3Packages; toPythonApplication ledger-agent;
-
-  litecoin  = libsForQt5.callPackage ../applications/blockchains/litecoin {
-    inherit (darwin.apple_sdk.frameworks) AppKit;
-    boost = pkgs.boost177;
-  };
-  litecoind = litecoin.override { withGui = false; };
 
   monero-cli = callPackage ../applications/blockchains/monero-cli {
     inherit (darwin.apple_sdk.frameworks) CoreData IOKit;

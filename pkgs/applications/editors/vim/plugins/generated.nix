@@ -9078,6 +9078,18 @@ final: prev:
     meta.homepage = "https://github.com/mfussenegger/nvim-lint/";
   };
 
+  nvim-lsp-file-operations = buildVimPlugin {
+    pname = "nvim-lsp-file-operations";
+    version = "2024-10-24";
+    src = fetchFromGitHub {
+      owner = "antosha417";
+      repo = "nvim-lsp-file-operations";
+      rev = "9744b738183a5adca0f916527922078a965515ed";
+      sha256 = "0xmcvg5ks9n44aldk6aywvx4jshsdwxrsq44y0wph0wd9v88v7kk";
+    };
+    meta.homepage = "https://github.com/antosha417/nvim-lsp-file-operations/";
+  };
+
   nvim-lsp-notify = buildVimPlugin {
     pname = "nvim-lsp-notify";
     version = "2023-12-07";
@@ -12821,6 +12833,18 @@ final: prev:
       sha256 = "1fwscqdqcza46zhbm76bfhfmz5x92cpl1hl5myfm8zkqax9kxk3l";
     };
     meta.homepage = "https://github.com/folke/ts-comments.nvim/";
+  };
+
+  tsc-nvim = buildVimPlugin {
+    pname = "tsc.nvim";
+    version = "2024-08-14";
+    src = fetchFromGitHub {
+      owner = "dmmulroy";
+      repo = "tsc.nvim";
+      rev = "82c37ebfe45d30763db6f45b54e18f1e485bb52c";
+      sha256 = "14fa5w73bxpvwy3jm25mmx08l2v6c1w35ca8gc61mayxja55d4ls";
+    };
+    meta.homepage = "https://github.com/dmmulroy/tsc.nvim/";
   };
 
   tslime-vim = buildVimPlugin {
