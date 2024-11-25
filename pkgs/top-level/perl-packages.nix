@@ -7202,14 +7202,21 @@ with self; {
     };
 
     nativeBuildInputs = [
-      pkgs.libmysqlconnectorcpp # for mysql_config
+      pkgs.mysql80 # for mysql_config
     ];
-    buildInputs = [ pkgs.libmysqlconnectorcpp DevelChecklib TestDeep TestDistManifest TestPod ];
+    buildInputs = [
+      DevelChecklib
+      TestDeep
+      TestDistManifest
+      TestPod
+      pkgs.libmysqlconnectorcpp
+      pkgs.libxcrypt
+      pkgs.openssl
+      pkgs.zstd
+    ];
     propagatedBuildInputs = [ DBI ];
 
-    # env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
-
-    doCheck = false;
+    doCheck = false; # require running database
 
   #  makeMakerFlags = "MYSQL_HOME=${mysql}";
     meta = {
