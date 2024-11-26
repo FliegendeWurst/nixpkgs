@@ -299,11 +299,7 @@ let
       "FLAKY_TESTS=skip"
       # Skip some tests that are not passing in this context
       "CI_SKIP_TESTS=${lib.concatStringsSep "," ([
-        # Test depends on performance of builder
-        # https://github.com/nodejs/node/pull/47316
-        "test-http-remove-connection-header-persists-connection"
         # Tests don't work in sandbox.
-        "test-os"
         "test-child-process-exec-env"
         "test-child-process-uid-gid"
         "test-fs-write-stream-eagain"
@@ -329,7 +325,6 @@ let
         "test-fs-watch-recursive-sync-write"
         "test-fs-watch-recursive-update-file"
         "test-fs-watchfile"
-        "test-perf-hooks"
         "test-runner-run"
         "test-runner-watch-mode"
         "test-watch-mode-files_watcher"
@@ -338,6 +333,7 @@ let
       ] ++ lib.optionals stdenv.buildPlatform.isDarwin [
         # Disable tests that don’t work under macOS sandbox.
         "test-macos-app-sandbox"
+        "test-os"
         "test-os-process-priority"
       ] ++ lib.optionals (stdenv.buildPlatform.isDarwin && stdenv.buildPlatform.isx86_64) [
         # These tests fail on x86_64-darwin (even without sandbox).
