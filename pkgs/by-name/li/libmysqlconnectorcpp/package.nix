@@ -26,6 +26,8 @@ stdenv.mkDerivation rec {
     mysql80
   ];
 
+  strictDeps = true;
+
   cmakeFlags = [
     # libmysqlclient is shared library
     "-DMYSQLCLIENT_STATIC_LINKING=false"

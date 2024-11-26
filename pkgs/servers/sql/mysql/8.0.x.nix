@@ -34,6 +34,8 @@ stdenv.mkDerivation (finalAttrs: {
     cctools CoreServices developer_cmds DarwinTools
   ];
 
+  strictDeps = true;
+
   outputs = [ "out" "static" ];
 
   cmakeFlags = [

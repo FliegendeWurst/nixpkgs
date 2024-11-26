@@ -61,6 +61,7 @@ stdenv.mkDerivation rec {
     systemd
     util-linuxMinimal # for libmount
   ];
+  strictDeps = true;
 
   makeFlags = [
     "LIB=lib"

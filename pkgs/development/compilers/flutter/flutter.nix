@@ -57,6 +57,7 @@ let
 
       nativeBuildInputs = [ makeWrapper jq git ]
         ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.DarwinTools ];
+      strictDeps = true;
 
       preConfigure = ''
         if [ "$(< bin/internal/engine.version)" != '${engineVersion}' ]; then

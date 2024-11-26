@@ -42,6 +42,8 @@ stdenv.mkDerivation rec {
     boost
   ];
 
+  strictDeps = true;
+
   propagatedBuildInputs = [
     libevent
     openssl
