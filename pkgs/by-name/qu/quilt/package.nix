@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-/owJ3gPBBuhbNzfI8DreFHyVa3ntevSFocijhY2zhCY=";
   };
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [ makeWrapper perl ];
 
   buildInputs = [
     bash
@@ -37,16 +37,11 @@ stdenv.mkDerivation rec {
     gnugrep
     gnused
     patch
-    perl
     unixtools.column
     unixtools.getopt
   ];
 
-  configureFlags = [
-    # configure only looks in $PATH by default,
-    # which does not include buildInputs if strictDeps is true
-    "--with-perl=${lib.getExe perl}"
-  ];
+  strictDeps = true;
 
   postInstall = ''
     wrapProgram $out/bin/quilt --prefix PATH : ${lib.makeBinPath buildInputs}
