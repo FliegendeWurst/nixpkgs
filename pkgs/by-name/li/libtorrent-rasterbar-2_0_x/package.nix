@@ -1,12 +1,12 @@
 { lib, stdenv, fetchFromGitHub, cmake
-, zlib, boost185, openssl, python3, ncurses, darwin
+, zlib, boost, openssl, python3, ncurses, darwin
 }:
 
 let
   version = "2.0.10";
 
   # Make sure we override python, so the correct version is chosen
-  boostPython = boost185.override { enablePython = true; python = python3; };
+  boostPython = boost.override { enablePython = true; python = python3; };
 
 in stdenv.mkDerivation {
   pname = "libtorrent-rasterbar";
@@ -20,10 +20,12 @@ in stdenv.mkDerivation {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [ cmake python3 ];
 
-  buildInputs = [ boostPython openssl zlib python3 ncurses ]
+  buildInputs = [ boostPython openssl zlib ncurses ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.SystemConfiguration ];
+
+  strictDeps = true;
 
   patches = [
     # provide distutils alternative for python 3.12
