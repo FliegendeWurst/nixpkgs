@@ -15,6 +15,7 @@ in
 flutter.buildFlutterApplication rec {
   pname = "cwtch-ui";
   version = "1.15.1";
+  # This Gitea instance has archive downloads disabled, so: fetchgit
   src = fetchgit {
     url = "https://git.openprivacy.ca/cwtch.im/cwtch-ui";
     rev = "v${version}";
@@ -45,16 +46,17 @@ flutter.buildFlutterApplication rec {
 
   postInstall = ''
     mkdir -p $out/share/applications
-    sed "s|PREFIX|$out|" linux/cwtch.template.desktop >$out/share/applications/cwtch.desktop
+    substitute linux/cwtch.template.desktop "$out/share/applications/cwtch.desktop" \
+      --replace-fail PREFIX "$out"
   '';
 
   meta = {
-    description = "A decentralized, privacy-preserving, multi-party messaging app";
+    description = "Messaging app built on the cwtch decentralized, privacy-preserving, multi-party messaging protocol";
     homepage = "https://cwtch.im/";
-    changelog = "https://cwtch.im/changelog/";
+    changelog = "https://docs.cwtch.im/changelog";
     license = lib.licenses.mit;
     mainProgram = "cwtch";
-    platforms = lib.intersectLists lib.platforms.linux lib.platforms.x86;
+    platforms = [ "x86_64-linux" ];
     maintainers = [ lib.maintainers.gmacon ];
   };
 }

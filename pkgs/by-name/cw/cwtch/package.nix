@@ -6,6 +6,7 @@
 buildGoModule rec {
   pname = "libcwtch";
   version = "0.1.3";
+  # This Gitea instance has archive downloads disabled, so: fetchgit
   src = fetchgit {
     url = "https://git.openprivacy.ca/cwtch.im/autobindings.git";
     rev = "v${version}";
@@ -33,20 +34,17 @@ buildGoModule rec {
     runHook postBuild
   '';
 
-  doCheck = false;
-
   installPhase = ''
     runHook preInstall
-    mkdir -p $out/lib $out/include
-    cp build/linux/libCwtch.h $out/include/libCwtch.h
-    cp build/linux/libCwtch.*.so $out/lib/libCwtch.so
+    install -D build/linux/libCwtch.h -t $out/include
+    install -D build/linux/libCwtch.*.so $out/lib/libCwtch.so
     runHook postInstall
   '';
 
   meta = {
-    description = "A decentralized, privacy-preserving, multi-party messaging protocol";
+    description = "Decentralized, privacy-preserving, multi-party messaging protocol";
     homepage = "https://cwtch.im/";
-    changelog = "https://cwtch.im/changelog/";
+    changelog = "https://docs.cwtch.im/changelog";
     license = lib.licenses.mit;
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.gmacon ];
