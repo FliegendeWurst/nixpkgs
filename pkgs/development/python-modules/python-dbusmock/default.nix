@@ -71,6 +71,11 @@ buildPythonPackage rec {
     pytestCheckHook
   ];
 
+  preCheck = ''
+    # tests do not expect colors
+    export TERM=dumb
+  '';
+
   disabledTests = [
     # wants to call upower, which is a reverse-dependency
     "test_dbusmock_test_template"
