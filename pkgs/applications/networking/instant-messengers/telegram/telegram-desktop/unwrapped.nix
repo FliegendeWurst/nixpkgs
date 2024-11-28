@@ -35,6 +35,7 @@
   libicns,
   apple-sdk_15,
   nix-update-script,
+  fetchpatch,
 }:
 
 # Main reference:
@@ -55,6 +56,15 @@ stdenv.mkDerivation (finalAttrs: {
     fetchSubmodules = true;
     hash = "sha256-zgvyxhQDF1JcGe/fpputvPrAFh1Z+EGaynSXHDk9k/8=";
   };
+
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/desktop-app/lib_webview/commit/93af01974107d3037b5194b635473201164c112e.patch";
+      hash = "sha256-R/hSbFu4YHcX0+MM9Xxt7RGgxucJchCidelOWPtg8us=";
+      extraPrefix = "Telegram/lib_webview/";
+      stripLen = 1;
+    })
+  ];
 
   postPatch = lib.optionalString stdenv.hostPlatform.isLinux ''
     substituteInPlace Telegram/ThirdParty/libtgvoip/os/linux/AudioInputALSA.cpp \
