@@ -4,7 +4,7 @@
   fetchPypi,
   setuptools,
   numpy,
-  pyyaml
+  pyyaml,
 }:
 
 buildPythonPackage rec {
@@ -27,7 +27,7 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "hebi" ];
 
   meta = {
-    description = "A Python library for the Hebi Robotics API";
+    description = "Python library for the Hebi Robotics API";
     homepage = "https://docs.hebi.us/";
     license = lib.licenses.unfree;
     maintainers = with lib.maintainers; [ pandapip1 ];
