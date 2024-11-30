@@ -8,7 +8,7 @@
 }:
 stdenv.mkDerivation {
   pname = "misc-gitology";
-  version = "unstable-2024-08-26";
+  version = "0-unstable-2024-08-26";
 
   src = fetchFromGitHub {
     owner = "da-x";
@@ -26,12 +26,14 @@ stdenv.mkDerivation {
   ];
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/bin
     find . \
       -type f \
       -executable \
       -maxdepth 1 \
       -exec install --target-directory=$out/bin/ {} +
+    runHook postInstall
   '';
 
   meta = with lib; {
