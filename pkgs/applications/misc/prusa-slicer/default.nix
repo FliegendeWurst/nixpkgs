@@ -90,6 +90,7 @@ stdenv.mkDerivation (finalAttrs: {
     rev = "version_${finalAttrs.version}";
   };
 
+  # required for GCC 14
   postPatch = ''
     substituteInPlace src/libslic3r/Arrange/Core/DataStoreTraits.hpp \
       --replace-fail \
@@ -139,6 +140,8 @@ stdenv.mkDerivation (finalAttrs: {
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
     darwin.apple_sdk_11_0.frameworks.CoreWLAN
   ];
+
+  strictDeps = true;
 
   separateDebugInfo = true;
 
