@@ -39,8 +39,6 @@ stdenv.mkDerivation (finalAttrs: {
     lcms2
   ];
 
-  strictDeps = false; # TODO
-
   mesonFlags = [
     "-Dprefix-dev=${placeholder "dev"}"
   ] ++ lib.optionals (stdenv.buildPlatform != stdenv.hostPlatform) [

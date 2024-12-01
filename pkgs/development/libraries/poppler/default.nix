@@ -109,8 +109,6 @@ stdenv.mkDerivation (finalAttrs: rec {
       poppler_data
     ];
 
-  strictDeps = false; # TODO
-
   # TODO: reduce propagation to necessary libs
   propagatedBuildInputs =
     [
