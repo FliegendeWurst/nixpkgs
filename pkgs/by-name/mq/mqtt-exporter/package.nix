@@ -1,44 +1,43 @@
 {
   lib,
+  python3,
   fetchFromGitHub,
-  python3Packages,
 }:
 
-python3Packages.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication rec {
   pname = "mqtt-exporter";
-  version = "1.4.2";
+  version = "1.5.0";
   pyproject = true;
-
-  disabled = python3Packages.pythonOlder "3.9";
 
   src = fetchFromGitHub {
     owner = "kpetremann";
     repo = "mqtt-exporter";
-    rev = "v${version}";
-    hash = "sha256-DjvFm6Om2+iU6/UuLsv/vkssjIB3ZR6Ayz0lfW1Izd4=";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-3gUAiujfBXJpVailx8cMmSJS7l69XpE4UGK/aebcQqY=";
   };
 
-  nativeBuildInputs = with python3Packages; [ setuptools ];
+  pythonRelaxDeps = [ "prometheus-client" ];
 
-  propagatedBuildInputs = with python3Packages; [
+  build-system = with python3.pkgs; [ setuptools ];
+
+  dependencies = with python3.pkgs; [
     paho-mqtt_2
     prometheus-client
   ];
 
-  pythonImportsCheck = [ "mqtt_exporter" ];
-
-  nativeCheckInputs = with python3Packages; [
-    pytestCheckHook
+  nativeCheckInputs = with python3.pkgs; [
     pytest-mock
-    pytest-asyncio
+    pytestCheckHook
   ];
 
+  pythonImportsCheck = [ "mqtt_exporter" ];
+
   meta = {
-    description = "Simple generic MQTT Prometheus exporter for IoT working out of the box";
+    description = "Generic MQTT Prometheus exporter for IoT";
     homepage = "https://github.com/kpetremann/mqtt-exporter";
     changelog = "https://github.com/kpetremann/mqtt-exporter/releases/tag/v${version}";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ christoph-heiss ];
+    maintainers = with lib.maintainers; [ fab ];
     mainProgram = "mqtt-exporter";
   };
 }

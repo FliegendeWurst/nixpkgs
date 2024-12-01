@@ -19,16 +19,13 @@ rustPlatform.buildRustPackage {
   };
 
   nativeBuildInputs = [ cmake ];
+  doCheck = false; # no tests
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "tree-sitter-query-0.4.0" = "sha256-snr0ze1VCaAf448mHkrB9qbWTMvjSlPdVl2VtesMIHI=";
-    };
-  };
+  useFetchCargoVendor = true;
+  cargoHash = "sha256-CgX8lPOX3ZvoSD4SuKR8MTpKvLrhIbzrXqlKrvY0xzE=";
 
   meta = {
-    description = "An LSP implementation for Tree-sitter's query files";
+    description = "LSP implementation for Tree-sitter's query files";
     homepage = "https://github.com/ribru17/ts_query_ls";
     changelog = "https://github.com/ribru17/ts_query_ls/releases/tag/v${version}";
     license = lib.licenses.mit;

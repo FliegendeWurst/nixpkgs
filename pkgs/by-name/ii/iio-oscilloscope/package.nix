@@ -33,7 +33,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   postPatch = ''
     # error: 'idx' may be used uninitialized
-    substituteInPlace plugins/lidar.c --replace-warn "int i, j, idx;" "int i, j, idx = 0;"
+    substituteInPlace plugins/lidar.c --replace-fail "int i, j, idx;" "int i, j, idx = 0;"
   '';
 
   nativeBuildInputs = [
