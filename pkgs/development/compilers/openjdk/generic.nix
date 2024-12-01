@@ -447,6 +447,11 @@ stdenv.mkDerivation (finalAttrs: {
               "-Wno-error=int-conversion"
               "-Wno-error=incompatible-pointer-types"
             ]
+            ++ [
+              # error by default in GCC 14
+              "-Wno-error=int-conversion"
+              "-Wno-error=incompatible-pointer-types"
+            ]
           );
 
       NIX_LDFLAGS = lib.concatStringsSep " " (
