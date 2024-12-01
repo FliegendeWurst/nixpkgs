@@ -16,42 +16,52 @@ python3Packages.buildPythonApplication rec {
     hash = "sha256-9w8ux+AeSg0vDhnk28/2eCE2zYLvAjD7mB0pJBMFs2I=";
   };
 
-  # Test assumes darwin
-  doCheck = false;
-
-  buildInputs = [
-    qt6Packages.qtmultimedia
-    qt6Packages.qtbase
-    qt6Packages.qtsvg
-  ];
+  build-system = with python3Packages; [ setuptools ];
 
   nativeBuildInputs = [ qt6Packages.wrapQtAppsHook ];
 
-  build-system = with python3Packages; [ setuptools ];
+  buildInputs = [
+    qt6Packages.qtmultimedia
+    qt6Packages.qtsvg
+  ];
+
+  dontWrapQtApps = true;
+
+  preFixup = ''
+    makeWrapperArgs+=("''${qtWrapperArgs[@]}")
+  '';
 
   dependencies = with python3Packages; [
     arrow
-    configparser
-    pyqt6
-    psutil
-    requests
     beautifulsoup4
-    keyring
-    requests-kerberos
-    lxml
+    configparser
     dbus-python
-    python-dateutil
+    keyring
+    lxml
+    psutil
+    pyqt6
     pysocks
+    python-dateutil
+    requests
+    requests-kerberos
   ];
 
-  meta = with lib; {
+  nativeCheckInputs = with python3Packages; [
+    pylint
+    pytestCheckHook
+  ];
+
+  meta = {
     description = "Status monitor for the desktop";
     homepage = "https://nagstamon.de/";
-    license = licenses.gpl2Plus;
-    maintainers = with maintainers; [
+    changelog = "https://github.com/HenriWahl/Nagstamon/releases/tag/v${version}";
+    license = lib.licenses.gpl2Plus;
+    maintainers = with lib.maintainers; [
       pSub
       liberodark
     ];
-    badPlatforms = platforms.darwin;
+    mainProgram = "nagstamon.py";
+    # NameError: name 'bdist_rpm_options' is not defined. Did you mean: 'bdist_mac_options'?
+    badPlatforms = [ lib.systems.inspect.patterns.isDarwin ];
   };
 }

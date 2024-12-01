@@ -153,6 +153,8 @@ self: super: with self; {
 
   aio-pika = callPackage ../development/python-modules/aio-pika { };
 
+  aioacaia = callPackage ../development/python-modules/aioacaia { };
+
   aioairzone = callPackage ../development/python-modules/aioairzone { };
 
   aioairzone-cloud = callPackage ../development/python-modules/aioairzone-cloud { };
@@ -470,6 +472,8 @@ self: super: with self; {
   aioweenect = callPackage ../development/python-modules/aioweenect { };
 
   aiowebostv = callPackage ../development/python-modules/aiowebostv { };
+
+  aiowmi = callPackage ../development/python-modules/aiowmi { };
 
   aiowinreg = callPackage ../development/python-modules/aiowinreg { };
 
@@ -1178,6 +1182,10 @@ self: super: with self; {
   azure-keyvault-nspkg = callPackage ../development/python-modules/azure-keyvault-nspkg { };
 
   azure-keyvault-secrets = callPackage ../development/python-modules/azure-keyvault-secrets { };
+
+  azure-kusto-data = callPackage ../development/python-modules/azure-kusto-data { };
+
+  azure-kusto-ingest = callPackage ../development/python-modules/azure-kusto-ingest { };
 
   azure-loganalytics = callPackage ../development/python-modules/azure-loganalytics { };
 
@@ -3362,6 +3370,8 @@ self: super: with self; {
 
   django-app-helper = callPackage ../development/python-modules/django-app-helper { };
 
+  django-apscheduler = callPackage ../development/python-modules/django-apscheduler { };
+
   django-auditlog = callPackage ../development/python-modules/django-auditlog { };
 
   django-auth-ldap = callPackage ../development/python-modules/django-auth-ldap { };
@@ -4744,6 +4754,8 @@ self: super: with self; {
   flatdict = callPackage ../development/python-modules/flatdict { };
 
   flatten-dict = callPackage ../development/python-modules/flatten-dict { };
+
+  flatten-json = callPackage ../development/python-modules/flatten-json { };
 
   flax = callPackage ../development/python-modules/flax { };
 
@@ -6597,6 +6609,8 @@ self: super: with self; {
 
   jenkins-job-builder = callPackage ../development/python-modules/jenkins-job-builder { };
 
+  jh2 = callPackage ../development/python-modules/jh2 { };
+
   jianpu-ly = callPackage ../development/python-modules/jianpu-ly { };
 
   jieba = callPackage ../development/python-modules/jieba { };
@@ -7399,6 +7413,8 @@ self: super: with self; {
     inherit (pkgs) libusbsio;
   };
 
+  libuuu = callPackage ../development/python-modules/libuuu { };
+
   libversion = callPackage ../development/python-modules/libversion {
     inherit (pkgs) libversion;
   };
@@ -7506,6 +7522,8 @@ self: super: with self; {
   livereload = callPackage ../development/python-modules/livereload { };
 
   lizard = callPackage ../development/python-modules/lizard { };
+
+  llama-cpp-python = callPackage ../development/python-modules/llama-cpp-python { };
 
   llama-cloud = callPackage ../development/python-modules/llama-cloud { };
 
@@ -7640,7 +7658,9 @@ self: super: with self; {
 
   logical-unification = callPackage ../development/python-modules/logical-unification { };
 
-  logilab-common = callPackage ../development/python-modules/logilab/common.nix { };
+  logilab-common = callPackage ../development/python-modules/logilab/common.nix {
+    pytestCheckHook = pytest7CheckHook;
+  };
 
   logilab-constraint = callPackage ../development/python-modules/logilab/constraint.nix { };
 
@@ -11627,6 +11647,8 @@ self: super: with self; {
 
   pyflume = callPackage ../development/python-modules/pyflume { };
 
+  pyflipper = callPackage ../development/python-modules/pyflipper { };
+
   pyfma = callPackage ../development/python-modules/pyfma { };
 
   pyfribidi = callPackage ../development/python-modules/pyfribidi { };
@@ -12176,6 +12198,8 @@ self: super: with self; {
     enablePython = true;
     inherit python;
   });
+
+  pypalazzetti = callPackage ../development/python-modules/pypalazzetti { };
 
   pypandoc = callPackage ../development/python-modules/pypandoc { };
 
@@ -13302,6 +13326,8 @@ self: super: with self; {
 
   pyinfra = callPackage ../development/python-modules/pyinfra { };
 
+  pymodes = callPackage ../development/python-modules/pymodes { };
+
   pytibber = callPackage ../development/python-modules/pytibber { };
 
   pytile = callPackage ../development/python-modules/pytile { };
@@ -13736,6 +13762,8 @@ self: super: with self; {
   raven = callPackage ../development/python-modules/raven { };
 
   rawkit = callPackage ../development/python-modules/rawkit { };
+
+  rawpy = callPackage ../development/python-modules/rawpy { };
 
   ray = callPackage ../development/python-modules/ray { };
 
@@ -16391,6 +16419,8 @@ self: super: with self; {
   tubeup = callPackage ../development/python-modules/tubeup { };
 
   turnt = callPackage ../development/python-modules/turnt { };
+
+  turrishw = callPackage ../development/python-modules/turrishw { };
 
   tuya-device-sharing-sdk = callPackage ../development/python-modules/tuya-device-sharing-sdk { };
 

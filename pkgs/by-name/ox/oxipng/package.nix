@@ -1,7 +1,7 @@
 { lib, stdenv, fetchFromGitHub, rustPlatform }:
 
 rustPlatform.buildRustPackage rec {
-  version = "9.1.2";
+  version = "9.1.3";
   pname = "oxipng";
 
   # do not use fetchCrate (only repository includes tests)
@@ -9,10 +9,10 @@ rustPlatform.buildRustPackage rec {
     owner = "shssoichiro";
     repo = "oxipng";
     rev = "refs/tags/v${version}";
-    hash = "sha256-0yOdvqleOjlhVADrwnT90bUTa+aLJfsfUvVaS9s3eKE=";
+    hash = "sha256-0yOdvqleOjlhVADrwnT90bUTa+aLJfsfUvVaS9s3eKK=";
   };
 
-  cargoHash = "sha256-LZ3YIosDpjDYVACWQsr/0XhgX4fyo8CyZG58WfLSzCs=";
+  cargoHash = "sha256-4PCLtBJliK3uteL8EVKLBVR2YZW1gwQOiSLQok+rrug=";
 
   doCheck = true;
 

@@ -23,8 +23,8 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   makeFlags = [
-    "PREFIX=$(out)"
-    "MANPREFIX=$(out)"
+    "PREFIX=${placeholder "out"}"
+    "MANPREFIX=${placeholder "out"}"
   ];
 
   meta = {
@@ -32,5 +32,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Automatic keyboard repeat rate configuration for new keyboards";
     license = lib.licenses.gpl3Only;
     maintainers = with lib.maintainers; [ jceb ];
+    mainProgram = "xautocfg";
+    platforms = lib.platforms.linux;
   };
 })

@@ -1325,7 +1325,6 @@
     name = "Wroclaw";
   };
   amuckstot30 = {
-    email = "amuckstot30@tutanota.com";
     github = "amuckstot30";
     githubId = 157274630;
     name = "amuckstot30";
@@ -1636,6 +1635,12 @@
     github = "antonxy";
     githubId = 4194320;
     name = "Anton Schirg";
+  };
+  anugrahn1 = {
+    email = "pnanugrah@gmail.com";
+    github = "anugrahn1";
+    githubId = 117428605;
+    name = "Anugrah Naranatt";
   };
   anytimetraveler = {
     email = "simon@simonscode.org";
@@ -3844,6 +3849,12 @@
     name = "ChaosAttractor";
     keys = [ { fingerprint = "A137 4415 DB7C 6439 10EA  5BF1 0FEE 4E47 5940 E125"; } ];
   };
+  charB66 = {
+    email = "nix.disparate221@passinbox.com";
+    github = "charB66";
+    githubId = 59340663;
+    name = "Bryan F.";
+  };
   charlesbaynham = {
     email = "charlesbaynham@gmail.com";
     github = "charlesbaynham";
@@ -4831,6 +4842,12 @@
     githubId = 16063713;
     name = "Dov Alperin";
     keys = [ { fingerprint = "4EED 5096 B925 86FA 1101  6673 7F2C 07B9 1B52 BB61"; } ];
+  };
+  damhiya = {
+    name = "SoonWon Moon";
+    email = "damhiya@gmail.com";
+    github = "damhiya";
+    githubId = 13533446;
   };
   DamienCassou = {
     email = "damien@cassou.me";
@@ -13860,7 +13877,6 @@
     github = "matthewpi";
     githubId = 26559841;
     name = "Matthew Penner";
-    keys = [ { fingerprint = "5118 F1CC B7B0 6C17 4DD1  5267 3131 1906 AD4C F6D6"; } ];
   };
   matthiasbenaets = {
     email = "matthias.benaets@gmail.com";
@@ -16947,6 +16963,11 @@
     github = "phiadaarr";
     githubId = 33826198;
     name = "Philipp Arras";
+  };
+  parth = {
+    github = "parth";
+    githubId = 821972;
+    name = "Parth Mehrotra";
   };
   pashashocky = {
     email = "pashashocky@gmail.com";
@@ -21386,12 +21407,6 @@
     githubId = 1694705;
     name = "Sam Stites";
   };
-  stnley = {
-    email = "michael@stnley.io";
-    github = "stnley";
-    githubId = 64174376;
-    name = "Michael Stanley";
-  };
   strager = {
     email = "strager.nds@gmail.com";
     github = "strager";
@@ -23563,6 +23578,13 @@
     githubId = 19562240;
     name = "Vinicius Bernardino";
     keys = [ { fingerprint = "F0D3 920C 722A 541F 0CCD  66E3 A7BA BA05 3D78 E7CA"; } ];
+  };
+  vog = {
+    email = "v@njh.eu";
+    github = "vog";
+    githubId = 412749;
+    name = "Volker Diels-Grabsch";
+    keys = [ { fingerprint = "A7E6 9C4F 69DC 5D6C FC84  EE34 A29F BD51 5F89 90AF"; } ];
   };
   voidless = {
     email = "julius.schmitt@yahoo.de";

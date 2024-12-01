@@ -411,18 +411,6 @@ final: prev:
     meta.homepage = "https://github.com/jaredgorski/SpaceCamp/";
   };
 
-  SpaceVim = buildVimPlugin {
-    pname = "SpaceVim";
-    version = "2024-11-05";
-    src = fetchFromGitHub {
-      owner = "SpaceVim";
-      repo = "SpaceVim";
-      rev = "08719ccab2073b4c12f2c6b318eba63b87e35180";
-      sha256 = "0fr7vhs5gi054nn9z3hqcgf4y3w7nx00d94f7nd9g2jg7x2zzfyp";
-    };
-    meta.homepage = "https://github.com/SpaceVim/SpaceVim/";
-  };
-
   SudoEdit-vim = buildVimPlugin {
     pname = "SudoEdit.vim";
     version = "2023-04-25";
@@ -2910,6 +2898,18 @@ final: prev:
     meta.homepage = "https://github.com/chrisbra/csv.vim/";
   };
 
+  csvview-nvim = buildVimPlugin {
+    pname = "csvview.nvim";
+    version = "2024-11-18";
+    src = fetchFromGitHub {
+      owner = "hat0uma";
+      repo = "csvview.nvim";
+      rev = "63b6585fc22bba2060e6dd4600bd2dd0b77dd446";
+      sha256 = "0615vjdiwij5j6qxa5hfvylq9swp0z6lm5xc38yk6yxhjrkcdvyg";
+    };
+    meta.homepage = "https://github.com/hat0uma/csvview.nvim/";
+  };
+
   ctrlp-cmatcher = buildVimPlugin {
     pname = "ctrlp-cmatcher";
     version = "2015-10-15";
@@ -4101,18 +4101,6 @@ final: prev:
       sha256 = "045r066jbgiri41qbfq77m0kmkjn6z6a2yq30b6z5gw6dfiya3hw";
     };
     meta.homepage = "https://github.com/liangxianzhe/floating-input.nvim/";
-  };
-
-  floating-nvim = buildVimPlugin {
-    pname = "floating.nvim";
-    version = "2021-07-19";
-    src = fetchFromGitHub {
-      owner = "fhill2";
-      repo = "floating.nvim";
-      rev = "11e75c2a201b9d73f03bd3c2db1fc94021c231eb";
-      sha256 = "172ak3macqmkz4jvic1xcnfpp6wafq33afyvcx4za170qh30sydj";
-    };
-    meta.homepage = "https://github.com/fhill2/floating.nvim/";
   };
 
   floobits-neovim = buildVimPlugin {
@@ -11480,18 +11468,6 @@ final: prev:
       sha256 = "1p2j6yygqsmxbvxns4ssiyspsnpbz12pq29s9vs3n5x2ddxrrwjn";
     };
     meta.homepage = "https://github.com/FireIsGood/spaceman.nvim/";
-  };
-
-  spacevim = buildVimPlugin {
-    pname = "spacevim";
-    version = "2018-03-29";
-    src = fetchFromGitHub {
-      owner = "ctjhoa";
-      repo = "spacevim";
-      rev = "30142a518ba77feb22791b5cb2387d88b70c58f2";
-      sha256 = "0m389cnpg17ca8s7vb9yrs40sxb56zg32lcpilnd63zfi7awgscg";
-    };
-    meta.homepage = "https://github.com/ctjhoa/spacevim/";
   };
 
   sparkup = buildVimPlugin {

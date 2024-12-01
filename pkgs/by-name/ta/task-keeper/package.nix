@@ -24,11 +24,11 @@ rustPlatform.buildRustPackage rec {
   # tests depend on many packages (java, node, python, sbt, ...) - which I'm not currently willing to set up 😅
   doCheck = false;
 
-  meta = with lib; {
+  meta = {
     homepage = "https://github.com/linux-china/task-keeper";
     description = "CLI to manage tasks from different task runners or package managers";
-    license = licenses.asl20;
-    maintainers = with maintainers; [ tennox ];
+    license = lib.licenses.asl20;
+    maintainers = with lib.maintainers; [ tennox ];
     mainProgram = "tk";
   };
 }
