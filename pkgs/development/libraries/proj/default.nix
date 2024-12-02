@@ -36,7 +36,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [ sqlite libtiff curl nlohmann_json ];
 
-  nativeCheckInputs = [ cacert gtest ];
+  strictDeps = true;
+
+  nativeCheckInputs = [ cacert gtest sqlite ];
   checkInputs = [ gtest ];
 
   cmakeFlags = [
