@@ -5817,6 +5817,8 @@ self: super: with self; {
 
   hebi = callPackage ../development/python-modules/hebi { };
 
+  hebg = callPackage ../development/python-modules/hebg { };
+
   help2man = callPackage ../development/python-modules/help2man { };
 
   helpdev = callPackage ../development/python-modules/helpdev { };
