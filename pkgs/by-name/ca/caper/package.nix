@@ -17,10 +17,12 @@ stdenv.mkDerivation rec {
     hash = "sha256-TSryjz0NrGdkc+6vmfBqsuVpV3N9FvteTFsVqpUcm0w=";
   };
 
-  nativeBuildInputs = [ ocaml ];
+  nativeBuildInputs = [
+    ocaml
+    ocamlPackages.ocamlbuild
+  ];
 
   buildInputs = [
-    ocamlPackages.ocamlbuild
     ocamlPackages.findlib
     ocamlPackages.menhir
     ocamlPackages.angstrom
