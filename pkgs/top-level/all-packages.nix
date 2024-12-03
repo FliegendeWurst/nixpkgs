@@ -418,14 +418,17 @@ with pkgs;
   dotnet-sdk_6 = dotnetCorePackages.sdk_6_0;
   dotnet-sdk_7 = dotnetCorePackages.sdk_7_0;
   dotnet-sdk_8 = dotnetCorePackages.sdk_8_0;
+  dotnet-sdk_9 = dotnetCorePackages.sdk_9_0;
 
   dotnet-runtime_6 = dotnetCorePackages.runtime_6_0;
   dotnet-runtime_7 = dotnetCorePackages.runtime_7_0;
   dotnet-runtime_8 = dotnetCorePackages.runtime_8_0;
+  dotnet-runtime_9 = dotnetCorePackages.runtime_9_0;
 
   dotnet-aspnetcore_6 = dotnetCorePackages.aspnetcore_6_0;
   dotnet-aspnetcore_7 = dotnetCorePackages.aspnetcore_7_0;
   dotnet-aspnetcore_8 = dotnetCorePackages.aspnetcore_8_0;
+  dotnet-aspnetcore_9 = dotnetCorePackages.aspnetcore_9_0;
 
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
   dotnet-runtime = dotnetCorePackages.runtime_8_0;
@@ -2859,8 +2862,9 @@ with pkgs;
     citrix_workspace_23_11_0
     citrix_workspace_24_02_0
     citrix_workspace_24_05_0
+    citrix_workspace_24_08_0
   ;
-  citrix_workspace = citrix_workspace_24_05_0;
+  citrix_workspace = citrix_workspace_24_08_0;
 
   cmst = libsForQt5.callPackage ../tools/networking/cmst { };
 
@@ -3006,7 +3010,7 @@ with pkgs;
 
   bluetooth_battery = python3Packages.callPackage ../applications/misc/bluetooth_battery { };
 
-  calyx-vpn = libsForQt5.callPackage ../tools/networking/bitmask-vpn {
+  calyx-vpn = qt6Packages.callPackage ../tools/networking/bitmask-vpn {
     provider = "calyx";
     inherit (darwin.apple_sdk.frameworks) CoreFoundation Security;
   };
@@ -4928,10 +4932,6 @@ with pkgs;
   pnpm = pnpm_9;
 
   po4a = perlPackages.Po4a;
-
-  poac = callPackage ../development/tools/poac {
-    inherit (llvmPackages_14) stdenv;
-  };
 
   podman-compose = python3Packages.callPackage ../applications/virtualization/podman-compose { };
 
@@ -6965,9 +6965,6 @@ with pkgs;
   cargo-rdme = callPackage ../by-name/ca/cargo-rdme/package.nix {
     inherit (darwin.apple_sdk.frameworks) Security;
   };
-  cargo-spellcheck = callPackage ../development/tools/rust/cargo-spellcheck {
-    inherit (darwin.apple_sdk.frameworks) Security SystemConfiguration;
-  };
   cargo-udeps = callPackage ../development/tools/rust/cargo-udeps {
     inherit (darwin.apple_sdk.frameworks) CoreServices Security SystemConfiguration;
   };
@@ -7240,8 +7237,7 @@ with pkgs;
   };
 
   inherit (callPackage ../applications/editors/jupyter-kernels/xeus-cling { })
-    cpp11-kernel cpp14-kernel cpp17-kernel cpp2a-kernel;
-  xeus-cling = callPackage ../applications/editors/jupyter-kernels/xeus-cling/xeus-cling.nix { };
+    cpp11-kernel cpp14-kernel cpp17-kernel cpp2a-kernel xeus-cling;
 
   clojure = callPackage ../development/interpreters/clojure {
     # set this to an LTS version of java
@@ -12312,12 +12308,7 @@ with pkgs;
       overrideCC stdenv buildPackages.llvmPackages.clangNoLibcxx
     else stdenv;
   };
-  busybox-sandbox-shell = callPackage ../os-specific/linux/busybox/sandbox-shell.nix {
-    # musl roadmap has RISC-V support projected for 1.1.20
-    busybox = if !stdenv.hostPlatform.isRiscV && !stdenv.hostPlatform.isLoongArch64 && stdenv.hostPlatform.libc != "bionic"
-              then pkgsStatic.busybox
-              else busybox;
-  };
+  busybox-sandbox-shell = callPackage ../os-specific/linux/busybox/sandbox-shell.nix { };
 
   cm-rgb = python3Packages.callPackage ../tools/system/cm-rgb { };
 
@@ -17852,7 +17843,7 @@ with pkgs;
 
   kicadAddons = recurseIntoAttrs (callPackage ../applications/science/electronics/kicad/addons {});
 
-  librepcb = libsForQt5.callPackage ../applications/science/electronics/librepcb { };
+  librepcb = qt6Packages.callPackage ../applications/science/electronics/librepcb { };
 
   ngspice = libngspice.override {
     withNgshared = false;
@@ -18923,8 +18914,6 @@ with pkgs;
   ldid = callPackage ../development/tools/ldid {
     inherit (darwin.apple_sdk.frameworks) CoreFoundation Security;
   };
-
-  zram-generator = callPackage ../tools/system/zram-generator { };
 
   zrythm = callPackage ../applications/audio/zrythm {
     inherit (plasma5Packages) breeze-icons;

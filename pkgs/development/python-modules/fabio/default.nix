@@ -38,7 +38,7 @@ buildPythonPackage rec {
     patchShebangs --build version.py
   '';
 
-  propagatedBuildInputs = [
+  dependencies = [
     numpy
     lxml
     h5py

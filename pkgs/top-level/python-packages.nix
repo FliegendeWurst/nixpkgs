@@ -247,6 +247,8 @@ self: super: with self; {
 
   aiohasupervisor = callPackage ../development/python-modules/aiohasupervisor { };
 
+  aiohomeconnect = callPackage ../development/python-modules/aiohomeconnect { };
+
   aiohomekit = callPackage ../development/python-modules/aiohomekit { };
 
   aiohttp = callPackage ../development/python-modules/aiohttp { };
@@ -2853,6 +2855,8 @@ self: super: with self; {
 
   cyclopts = callPackage ../development/python-modules/cyclopts { };
 
+  cyipopt = callPackage ../development/python-modules/cyipopt { };
+
   cymem = callPackage ../development/python-modules/cymem { };
 
   cymruwhois = callPackage ../development/python-modules/cymruwhois { };
@@ -3469,6 +3473,8 @@ self: super: with self; {
   django-formtools = callPackage ../development/python-modules/django-formtools { };
 
   django-formset-js-improved = callPackage ../development/python-modules/django-formset-js-improved { };
+
+  django-fsm = callPackage ../development/python-modules/django-fsm { };
 
   django-graphiql-debug-toolbar = callPackage ../development/python-modules/django-graphiql-debug-toolbar { };
 
@@ -4935,6 +4941,8 @@ self: super: with self; {
   frilouz = callPackage ../development/python-modules/frilouz { };
 
   fritzconnection = callPackage ../development/python-modules/fritzconnection { };
+
+  froide = toPythonModule (pkgs.froide.override { python3Packages = self; });
 
   frozendict = callPackage ../development/python-modules/frozendict { };
 
@@ -8034,6 +8042,8 @@ self: super: with self; {
 
   medpy = callPackage ../development/python-modules/medpy { };
 
+  medvol = callPackage ../development/python-modules/medvol { };
+
   meeko = callPackage ../development/python-modules/meeko { };
 
   meep = callPackage ../development/python-modules/meep { };
@@ -9028,6 +9038,8 @@ self: super: with self; {
   };
 
   napari-console = callPackage ../development/python-modules/napari-console { };
+
+  napari-nifti = callPackage ../development/python-modules/napari-nifti { };
 
   napari-npe2 = callPackage ../development/python-modules/napari-npe2 { };
 
@@ -10649,6 +10661,8 @@ self: super: with self; {
 
   pysuez = callPackage ../development/python-modules/pysuez { };
 
+  pysuezv2 = callPackage ../development/python-modules/pysuezv2 { };
+
   pysqlitecipher = callPackage ../development/python-modules/pysqlitecipher { };
 
   pysyncthru = callPackage ../development/python-modules/pysyncthru { };
@@ -10936,6 +10950,8 @@ self: super: with self; {
   potr = callPackage ../development/python-modules/potr { };
 
   power = callPackage ../development/python-modules/power { };
+
+  powerapi = callPackage ../development/python-modules/powerapi { };
 
   powerline = callPackage ../development/python-modules/powerline { };
 
@@ -12684,8 +12700,6 @@ self: super: with self; {
   pytabix = callPackage ../development/python-modules/pytabix { };
 
   pytablewriter = callPackage ../development/python-modules/pytablewriter { };
-
-  pytado = callPackage ../development/python-modules/pytado { };
 
   pytaglib = callPackage ../development/python-modules/pytaglib { };
 

@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, fetchFromGitLab
+, fetchurl
 , fetchpatch
 , meson
 , ninja
@@ -43,12 +43,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   outputs = [ "out" "dev" "devdoc" ];
 
-  src = fetchFromGitLab {
-    domain = "gitlab.gnome.org";
-    owner = "GNOME/Incubator";
-    repo = "papers";
-    rev = finalAttrs.version;
-    hash = "sha256-kUPp79fv9jsFjViEWAAfE2oyEza++0wRhmWIB54ME7g=";
+  src = fetchurl {
+    url = "mirror://gnome/sources/papers/${lib.versions.major finalAttrs.version}/papers-${finalAttrs.version}.tar.xz";
+    hash = "sha256-z2nrCjcX/jVAEWFuL2Ajg4FP9Xt6nqzzBsZ25k2PZmY=";
   };
 
   # FIXME: remove in next version
@@ -63,8 +60,7 @@ stdenv.mkDerivation (finalAttrs: {
   cargoRoot = "shell-rs";
 
   cargoDeps = rustPlatform.fetchCargoTarball {
-    inherit (finalAttrs) src pname version;
-    sourceRoot = "${finalAttrs.src.name}/${finalAttrs.cargoRoot}";
+    inherit (finalAttrs) src pname version cargoRoot;
     hash = "sha256-/5IySNEUkwiQezLx4n4jlPJdqJhlcgt5bXIelUFftZI=";
   };
 

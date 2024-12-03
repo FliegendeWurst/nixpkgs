@@ -24,6 +24,8 @@ mkDerivation rec {
   };
 
   patches = [
+    # Fix: chmod in the Makefile fails randomly
+    # Move it to preFixup instead
     ./fix-configure.patch
   ];
 
