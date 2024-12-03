@@ -49,6 +49,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     mainProgram = "starc";
     license = lib.licenses.unfree;
     maintainers = with lib.maintainers; [ pancaek ];
-    platforms = lib.platforms.unix;
+    platforms = [ "x86_64-linux" ];
   };
 })
