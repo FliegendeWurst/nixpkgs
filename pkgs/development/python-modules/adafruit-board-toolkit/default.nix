@@ -31,14 +31,12 @@ buildPythonPackage rec {
   dependencies = [
     pyserial
   ];
-
   pythonImportsCheck = [ "adafruit_board_toolkit" ];
-
-  meta = with lib; {
+  meta = {
     description = "CircuitPython board identification and information";
     homepage = "https://github.com/adafruit/Adafruit_Board_Toolkit";
     changelog = "https://github.com/adafruit/Adafruit_Board_Toolkit/releases/tag/${version}";
-    license = with licenses; [ mit ];
-    maintainers = with maintainers; [ talhaHavadar ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ talhaHavadar ];
   };
 }

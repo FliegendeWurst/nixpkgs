@@ -13,6 +13,7 @@
   dpkg,
 
   # qemu deps
+  # (it's not possible to de-vendor the qemu binary since it relies on proprietary cpu extensions)
   glib,
   libgcc,
   libcxx,
@@ -30,6 +31,12 @@
   numactl,
   cyrus_sasl,
   SDL2,
+  # aarch64-only?
+  dtc,
+  capstone_4,
+  libjpeg8,
+  mesa,
+  curlWithGnuTls,
 }:
 
 let
@@ -70,26 +77,34 @@ stdenv.mkDerivation {
     asar
   ];
 
-  buildInputs = [
-    # QEMU deps (runtime):
-    glib
-    libgcc
-    libcxx
-    zlib
-    libepoxy
-    libpng
-    libaio
-    xorg.libX11
-    libvterm
-    vte
-    gsasl
-    numactl
-    cyrus_sasl
-    gtk3
-    cairo
-    gdk-pixbuf
-    SDL2
-  ];
+  buildInputs =
+    [
+      # QEMU deps (runtime):
+      glib
+      libgcc
+      libcxx
+      zlib
+      libepoxy
+      libpng
+      libaio
+      xorg.libX11
+      libvterm
+      vte
+      gsasl
+      numactl
+      cyrus_sasl
+      gtk3
+      cairo
+      gdk-pixbuf
+      SDL2
+    ]
+    ++ lib.optionals (stdenv.hostPlatform.system == "aarch64-linux") [
+      libjpeg8
+      dtc
+      capstone_4
+      mesa
+      curlWithGnuTls
+    ];
 
   dontBuild = true;
 
@@ -114,15 +129,8 @@ stdenv.mkDerivation {
       $out/opt/simulator/simulator \
       $out/opt/simulator/resources/firmware/setup_for_linux.sh
 
-    # De-vendor the qemu binary
-    # XXX: DO NOT DO THIS
-    # As stated by @silver.zepp, it's modified and proprietary
-    # ===
-    # rm -r $out/opt/simulator/resources/firmware/qemu_linux/lib/
-    # ln -sf bin/qemu-system-arm $out/opt/simulator/resources/firmware/qemu_linux/qemu-system-arm
-
     # Use system electron
-    makeWrapper ${electron}/bin/electron $out/bin/simulator \
+    makeWrapper ${lib.getExe electron} $out/bin/simulator \
       --add-flags "--no-sandbox" \
       --add-flags $out/opt/simulator/resources/app.asar \
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}" \
