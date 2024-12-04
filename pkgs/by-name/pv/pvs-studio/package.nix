@@ -1,11 +1,14 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchzip,
 
   makeWrapper,
   perl,
   strace,
+
+  testers,
+  pvs-studio,
 }:
 
 stdenv.mkDerivation rec {
@@ -17,14 +20,14 @@ stdenv.mkDerivation rec {
       system = stdenv.hostPlatform.system;
       selectSystem = attrs: attrs.${system} or (throw "Unsupported system: ${system}");
     in
-    fetchurl {
+    fetchzip {
       url = selectSystem {
-        x86_64-darwin = "https://cdn.pvs-studio.com/pvs-studio-${version}-macos.tgz";
-        x86_64-linux = "https://cdn.pvs-studio.com/pvs-studio-${version}-x86_64.tgz";
+        x86_64-darwin = "https://web.archive.org/web/20241115155106/https://cdn.pvs-studio.com/pvs-studio-7.33.85330.89-macos.tgz";
+        x86_64-linux = "https://web.archive.org/web/20241115155538/https://cdn.pvs-studio.com/pvs-studio-7.33.85330.89-x86_64.tgz";
       };
       hash = selectSystem {
-        x86_64-darwin = "sha256-gSqIAK3jy3MnO/1ISrD8K1G2Ltld59Nb1GKuJDE3kwY=";
-        x86_64-linux = "sha256-Tdrlq3cLxhYOTV9qjbdgeO5XR0Wy2+Ijc7bg5KDbYrk=";
+        x86_64-darwin = "sha256-jhfW+uBexzYzzf3JVqRYqtDjE5+OoT3RcuRPJEOEs18=";
+        x86_64-linux = "sha256-rJQc8B2B7J0bcEI00auwIO/4PH2YMkuzSK/OyAnhdBA=";
       };
     };
 
@@ -48,6 +51,10 @@ stdenv.mkDerivation rec {
     wrapProgram "$out/bin/pvs-studio-analyzer" \
       --prefix PATH ":" ${nativeRuntimeInputs}
   '';
+
+  passthru = {
+    tests.version = testers.testVersion { package = pvs-studio; };
+  };
 
   meta = {
     description = "Static analyzer for C and C++";
