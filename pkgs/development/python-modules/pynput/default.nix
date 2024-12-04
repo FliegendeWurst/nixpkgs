@@ -23,7 +23,7 @@
 buildPythonPackage rec {
   pname = "pynput";
   version = "1.7.7";
-  format = "pyproject";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "moses-palmer";
