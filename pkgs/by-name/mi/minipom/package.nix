@@ -90,6 +90,8 @@ rustPlatform.buildRustPackage rec {
       ]
     );
 
+  doCheck = false; # no tests
+
   meta = {
     homepage = "https://github.com/tfkhdyt/minipom";
     description = "Minimalistic Pomodoro Timer GUI App";
