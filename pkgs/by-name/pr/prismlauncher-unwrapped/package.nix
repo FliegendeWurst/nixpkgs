@@ -4,7 +4,7 @@
   fetchFromGitHub,
   cmake,
   cmark,
-  darwin,
+  apple-sdk_11,
   extra-cmake-modules,
   gamemode,
   ghc_filesystem,
@@ -35,13 +35,13 @@ assert lib.assertMsg (
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "prismlauncher-unwrapped";
-  version = "9.0";
+  version = "9.1";
 
   src = fetchFromGitHub {
     owner = "PrismLauncher";
     repo = "PrismLauncher";
     rev = "refs/tags/${finalAttrs.version}";
-    hash = "sha256-EFpZ3V8wm7q7iwUJg0kKdZzOviWKsCji0jgYrrrKSI0=";
+    hash = "sha256-LVrWFBsI4+BOY5hlevfzqfRXQM6AFd5bMnXbBqTrxzA=";
   };
 
   postUnpack = ''
@@ -67,7 +67,7 @@ stdenv.mkDerivation (finalAttrs: {
       tomlplusplus
       zlib
     ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.Cocoa ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [ apple-sdk_11 ]
     ++ lib.optional gamemodeSupport gamemode;
 
   hardeningEnable = lib.optionals stdenv.hostPlatform.isLinux [ "pie" ];

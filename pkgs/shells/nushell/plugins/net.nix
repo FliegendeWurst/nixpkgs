@@ -5,7 +5,7 @@
   stdenv,
   IOKit,
   CoreFoundation,
-  unstableGitUpdater,
+  nix-update-script,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -19,7 +19,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-nKcB919M9FkDloulh9IusWYPhf8vlhUmKVs6Gd6w3Bw=";
   };
 
-  cargoHash = "sha256-3FMalpgKYZ4xM2fHXTFOVu5I8yS06K1bDiKg4we7jF4=";
+  cargoHash = "sha256-bsrpdQS0wA3T0jZTG476sSkMRngEAOjgr4wX7svyMP4=";
 
   nativeBuildInputs = [ rustPlatform.bindgenHook ];
 
@@ -28,7 +28,7 @@ rustPlatform.buildRustPackage rec {
     IOKit
   ];
 
-  passthru.updateScript = unstableGitUpdater { };
+  passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
     description = "Nushell plugin to list system network interfaces";
