@@ -18197,6 +18197,12 @@
     githubId = 5636;
     name = "Steve Purcell";
   };
+  purpole = {
+    email = "mail@purpole.io";
+    github = "purpole";
+    githubId = 101905225;
+    name = "David Schneider";
+  };
   purrpurrn = {
     email = "scrcpynovideoaudiocodecraw+nixpkgs@gmail.com";
     github = "purrpurrn";
@@ -18863,7 +18869,7 @@
   };
   returntoreality = {
     email = "linus@lotz.li";
-    github = "retuntoreality";
+    github = "returntoreality";
     githubId = 255667;
     name = "Linus Karl";
   };

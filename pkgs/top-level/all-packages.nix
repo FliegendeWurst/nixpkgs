@@ -4205,10 +4205,6 @@ with pkgs;
 
   nanoemoji = with python3Packages; toPythonApplication nanoemoji;
 
-  nbtscanner = callPackage ../tools/security/nbtscanner {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
-
   netexec = python3Packages.callPackage ../tools/security/netexec { };
 
   netdata = callPackage ../tools/system/netdata {
@@ -5156,10 +5152,6 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) Security;
   };
 
-  rustcat = callPackage ../tools/networking/rustcat {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
-
   rustscan = callPackage ../tools/security/rustscan {
     inherit (darwin.apple_sdk.frameworks) Security;
   };
@@ -5228,10 +5220,6 @@ with pkgs;
 
   sks = callPackage ../servers/sks {
     ocamlPackages = ocaml-ng.ocamlPackages_4_12;
-  };
-
-  slowlorust = callPackage ../tools/networking/slowlorust {
-    inherit (darwin.apple_sdk.frameworks) Security;
   };
 
   slstatus = callPackage ../applications/misc/slstatus {
@@ -6801,12 +6789,12 @@ with pkgs;
 
   inherit (ocaml-ng.ocamlPackages_4_14)
     ocamlformat_0_19_0 ocamlformat_0_20_0 ocamlformat_0_20_1 ocamlformat_0_21_0
-    ocamlformat_0_22_4;
+    ocamlformat_0_22_4 ocamlformat_0_23_0 ocamlformat_0_24_1 ocamlformat_0_25_1
+    ocamlformat_0_26_0 ocamlformat_0_26_1;
 
   inherit (ocamlPackages)
     ocamlformat # latest version
-    ocamlformat_0_23_0 ocamlformat_0_24_1 ocamlformat_0_25_1 ocamlformat_0_26_0
-    ocamlformat_0_26_1 ocamlformat_0_26_2;
+    ocamlformat_0_26_2;
 
   inherit (ocamlPackages) odig;
 
@@ -8931,10 +8919,6 @@ with pkgs;
 
   cogl = callPackage ../development/libraries/cogl {
     inherit (darwin.apple_sdk.frameworks) OpenGL;
-  };
-
-  coinlive = callPackage ../tools/misc/coinlive {
-    inherit (darwin.apple_sdk.frameworks) Security;
   };
 
   inherit (cosmopolitan) cosmocc;
@@ -16546,6 +16530,8 @@ with pkgs;
 
   bean-add = callPackage ../applications/office/beancount/bean-add.nix { };
 
+  beanquery = with python3.pkgs; toPythonApplication beanquery;
+
   bench =
     # TODO: Erroneous references to GHC on aarch64-darwin: https://github.com/NixOS/nixpkgs/issues/318013
     (if stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isAarch64 then lib.id else haskell.lib.compose.justStaticExecutables)
@@ -18114,10 +18100,6 @@ with pkgs;
     binutils-arm-embedded = pkgsCross.arm-embedded.buildPackages.binutils;
   };
 
-  gotestwaf = callPackage ../tools/security/gotestwaf {
-    buildGoModule = buildGo123Module;
-  };
-
   gotrue = callPackage ../tools/security/gotrue { };
 
   gotrue-supabase = callPackage ../tools/security/gotrue/supabase.nix { };
@@ -18135,10 +18117,6 @@ with pkgs;
   hplipWithPlugin = hplip.override { withPlugin = true; };
 
   hyperfine = callPackage ../tools/misc/hyperfine {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
-
-  websocat = callPackage ../tools/misc/websocat {
     inherit (darwin.apple_sdk.frameworks) Security;
   };
 
@@ -18473,10 +18451,6 @@ with pkgs;
   qtrvsim = libsForQt5.callPackage ../applications/science/computer-architecture/qtrvsim { };
 
   qzdl = libsForQt5.callPackage ../games/qzdl { };
-
-  rates = callPackage ../tools/misc/rates {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
 
   rbspy = darwin.apple_sdk_11_0.callPackage ../development/tools/rbspy { };
 
