@@ -7,7 +7,7 @@
   ninja,
   testers,
   aws-lc,
-  useSharedLibraries ? !stdenv.targetPlatform.isStatic,
+  useSharedLibraries ? !stdenv.hostPlatform.isStatic,
 }:
 let
   awsStdenv = if stdenv.hostPlatform.isDarwin then overrideSDK stdenv "11.0" else stdenv;
@@ -87,7 +87,7 @@ awsStdenv.mkDerivation (finalAttrs: {
       lib.licenses.isc
     ];
     maintainers = [ lib.maintainers.theoparis ];
-    platforms = lib.platforms.all;
+    platforms = lib.platforms.unix;
     mainProgram = "bssl";
   };
 })
