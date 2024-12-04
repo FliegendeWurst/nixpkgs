@@ -38,9 +38,11 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-hUhGU2w4ndmU7KpFr+E4tTWkvpI8PuglPXRkyf1Q2Ys=";
   };
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-  };
+  cargoRoot = "src-tauri";
+  buildAndTestSubdir = cargoRoot;
+
+  sourceRoot = src.name;
+  cargoHash = "sha256-n1D4ihzngY5LtEDT4GlkUaalbDWlm27EKFSo9/ekSU4=";
 
   pnpmDeps = pnpm_9.fetchDeps {
     inherit pname version src;
@@ -87,9 +89,6 @@ rustPlatform.buildRustPackage rec {
         WebKit
       ]
     );
-
-  cargoRoot = "src-tauri";
-  buildAndTestSubdir = cargoRoot;
 
   meta = {
     homepage = "https://github.com/tfkhdyt/minipom";
