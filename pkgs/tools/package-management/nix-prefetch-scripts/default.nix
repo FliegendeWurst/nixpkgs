@@ -1,5 +1,5 @@
 { lib, stdenv, makeWrapper, buildEnv
-, breezy, coreutils, cvs, findutils, gawk, git, git-lfs, gnused, mercurial, nix, subversion
+, bash, breezy, coreutils, cvs, findutils, gawk, git, git-lfs, gnused, mercurial, nix, subversion
 }:
 
 let mkPrefetchScript = tool: src: deps:
@@ -7,6 +7,7 @@ let mkPrefetchScript = tool: src: deps:
     name = "nix-prefetch-${tool}";
 
     nativeBuildInputs = [ makeWrapper ];
+    buildInputs = [ bash ];
 
     dontUnpack = true;
 
