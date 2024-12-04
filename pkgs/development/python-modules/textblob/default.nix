@@ -9,27 +9,29 @@
 
 buildPythonPackage rec {
   pname = "textblob";
-  version = "0.18.0";
+  version = "0.18.0.post0";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-61B7Yr8ig6cfVr7T4PxO7H04jvdrA2mc+ZQWZXKo2vM=";
+    hash = "sha256-gTHFLGMLzfYdBMNZ+TnJjVuDagH7oiTZ564i/CdODMs=";
   };
 
   build-system = [ flit-core ];
 
   dependencies = [ nltk ];
 
-  doCheck = true;
-
   pythonImportsCheck = [ "textblob" ];
 
-  meta = with lib; {
+  # Test process requires network access to download wordnet
+  # Error: 'wordnet not found' 'Attempted to load corpora/wordnet'
+  # nativeCheckInputs = [ pytestCheckHook ];
+
+  meta = {
     changelog = "https://github.com/sloria/TextBlob/releases/tag/${version}";
     description = "Simplified Text processing";
     homepage = "https://textblob.readthedocs.io/";
-    license = licenses.mit;
-    maintainers = with maintainers; [ idlip ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ idlip ];
   };
 }
