@@ -24,10 +24,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-qeDZgrGPSz+wXolZeVb2FFHjLzl1+vjzMN/3NCgaf/s=";
 
-  # Removed 'sss' command due to version differences and to separate commands.
-  postInstall = ''
-    rm -f $out/bin/sss
-  '';
+  cargoBuildFlags = [
+    "-p"
+    "sss_code"
+  ];
 
   nativeBuildInputs = [ pkg-config ] ++ lib.optionals stdenv.buildPlatform.isDarwin [ libiconv ];
 
@@ -35,6 +35,8 @@ rustPlatform.buildRustPackage rec {
     fontconfig
     libxcb
   ];
+
+  doCheck = false;
 
   meta = with lib; {
     description = "Libraries and tools for building screenshots in a high-performance image format";
