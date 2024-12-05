@@ -84,7 +84,7 @@ in
           # Substitute the configFile from Envvars read from EnvironmentFile
           old_umask=$(umask)
           umask 0177
-          ${pkgs.envsubst}/bin/envsubst \
+          ${lib.getExe pkgs.envsubst} \
             -i ${configuration} \
             -o ${configFilePath}
           umask $old_umask
