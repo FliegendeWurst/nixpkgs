@@ -11,6 +11,7 @@
 , Xaw3d
 , acl
 , alsa-lib
+, apple-sdk
 , autoreconfHook
 , cairo
 , dbus
@@ -51,7 +52,7 @@
 , recurseIntoAttrs
 , sigtool
 , sqlite
-, substituteAll
+, replaceVars
 , systemd
 , tree-sitter
 , texinfo
@@ -148,12 +149,12 @@ mkDerivation (finalAttrs: {
   inherit src;
 
   patches = patches fetchpatch ++ lib.optionals withNativeCompilation [
-    (substituteAll {
-      src = if lib.versionOlder finalAttrs.version "29"
+    (replaceVars (if lib.versionOlder finalAttrs.version "29"
             then ./native-comp-driver-options-28.patch
             else if lib.versionOlder finalAttrs.version "30"
             then ./native-comp-driver-options.patch
-            else ./native-comp-driver-options-30.patch;
+            else ./native-comp-driver-options-30.patch) {
+
       backendPath = (lib.concatStringsSep " "
         (builtins.map (x: ''"-B${x}"'') ([
           # Paths necessary so the JIT compiler finds its libraries:
@@ -163,6 +164,9 @@ mkDerivation (finalAttrs: {
           "${lib.getBin stdenv.cc.cc}/bin"
           "${lib.getBin stdenv.cc.bintools}/bin"
           "${lib.getBin stdenv.cc.bintools.bintools}/bin"
+        ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
+          # The linker needs to know where to find libSystem on Darwin.
+          "${apple-sdk.sdkroot}/usr/lib"
         ])));
     })
   ];
