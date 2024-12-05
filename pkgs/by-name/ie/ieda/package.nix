@@ -39,6 +39,11 @@ let
       ./remove-subprojects-from-cmake.patch
     ];
 
+    postPatch = ''
+      substituteInPlace CMakeLists.txt \
+        --replace-fail 'set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")' 'set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O2")'
+    '';
+
     dontBuild = true;
     dontFixup = true;
     installPhase = ''
@@ -60,7 +65,8 @@ stdenv.mkDerivation {
     ninja
     flex
     bison
-    zlib
+    python3
+    tcl
   ];
 
   cmakeFlags = [
@@ -80,7 +86,6 @@ stdenv.mkDerivation {
     rustpkgs.vcd_parser
     rustpkgs.verilog-parser
     rustpkgs.liberty-parser
-    tcl
     gtest
     glog
     gflags
@@ -91,7 +96,7 @@ stdenv.mkDerivation {
     libunwind
     metis
     gmp
-    python3
+    zlib
   ];
 
   postInstall = ''
