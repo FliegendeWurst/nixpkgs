@@ -8,14 +8,13 @@
   wayland,
   libGL,
 }:
-
 rustPlatform.buildRustPackage rec {
   pname = "enkei";
   version = "0.9.3";
 
   src = fetchFromGitHub {
-    owner = "jwuensche";
-    repo = pname;
+    owner = "fia0";
+    repo = "enkei";
     rev = "v${version}";
     sha256 = "sha256-COU2JtiJcPRA3Jno0qLEIVgimYBWfn5Pgc1OMImsJtI=";
   };
@@ -32,6 +31,8 @@ rustPlatform.buildRustPackage rec {
     glib
     cairo
   ];
+
+  doCheck = false; # no tests
 
   meta = with lib; {
     description = "Wallpaper daemon and control tool for Wayland";
