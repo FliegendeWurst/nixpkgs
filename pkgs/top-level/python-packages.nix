@@ -3262,6 +3262,8 @@ self: super: with self; {
 
   dirigera = callPackage ../development/python-modules/dirigera { };
 
+  dirsearch = callPackage ../development/python-modules/dirsearch { };
+
   dirty-equals = callPackage ../development/python-modules/dirty-equals { };
 
   dirtyjson = callPackage ../development/python-modules/dirtyjson { };
