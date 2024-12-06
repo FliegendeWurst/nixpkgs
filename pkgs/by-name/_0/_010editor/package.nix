@@ -13,18 +13,18 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "010editor";
-  version = "15.0";
+  version = "15.0.1";
 
   src =
-    if stdenv.isLinux then
+    if stdenv.hostPlatform.isLinux then
       fetchzip {
         url = "https://download.sweetscape.com/010EditorLinux64Installer${finalAttrs.version}.tar.gz";
-        hash = "sha256-mn7H0VDrBsuUYiBO3wWoCPWF/VxcdwAW6K5Yq1jCWzY=";
+        hash = "sha256-/Bfm/fPX3Szla23U9+qoq99E2v8jC3f9pgkJMTxNFUk=";
       }
     else
       fetchurl {
         url = "https://download.sweetscape.com/010EditorMac64Installer${finalAttrs.version}.dmg";
-        hash = "sha256-4DvTtQu1jHc7XKwCWSvSRkitvEbGTwlpVmD1UvhG0NQ=";
+        hash = "sha256-hpDhcX1xS4Nry2HOIrFwqYK45JOmy66lPq6dJr9pkQg=";
       };
 
   sourceRoot = ".";
@@ -34,15 +34,14 @@ stdenv.mkDerivation (finalAttrs: {
   dontConfigure = true;
 
   nativeBuildInputs =
-    lib.optionals stdenv.isLinux [
+    lib.optionals stdenv.hostPlatform.isLinux [
       autoPatchelfHook
       makeWrapper
       qt5.wrapQtAppsHook
-      stdenv.cc.cc
     ]
-    ++ lib.optionals stdenv.isDarwin [ undmg ];
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [ undmg ];
 
-  buildInputs = lib.optionals stdenv.isLinux [
+  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [
     cups
     qt5.qtbase
     qt5.qtwayland
@@ -50,14 +49,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   installPhase =
     let
-      darwinInstall = "install -Dt $out/Applications *.app";
+      darwinInstall = ''
+        mkdir -p $out/Applications
+        cp -R *.app $out/Applications
+      '';
       linuxInstall = ''
         mkdir -p $out/opt && cp -ar source/* $out/opt
-
-        # Patch executable runtime
-        patchelf \
-          --set-rpath ${stdenv.cc.cc.lib}/lib:${stdenv.cc.cc.lib}/lib64 \
-          $out/opt/010editor
 
         # Unset wrapped QT plugins since they're already included in the package,
         # else the program crashes because of the conflict
@@ -65,16 +62,16 @@ stdenv.mkDerivation (finalAttrs: {
           --unset QT_PLUGIN_PATH
 
         # Copy the icon and generated desktop file
-        install -D $out/opt/010_icon_128x128.png -t $out/share/icons/hicolor/128x128/apps/
+        install -D $out/opt/010_icon_128x128.png $out/share/icons/hicolor/128x128/apps/010.png
         install -D $desktopItem/share/applications/* -t $out/share/applications/
       '';
     in
     ''
       runHook preInstall
       ${
-        if stdenv.isDarwin then
+        if stdenv.hostPlatform.isDarwin then
           darwinInstall
-        else if stdenv.isLinux then
+        else if stdenv.hostPlatform.isLinux then
           linuxInstall
         else
           "echo 'Unsupported Platform' && exit 1"
@@ -85,7 +82,7 @@ stdenv.mkDerivation (finalAttrs: {
   desktopItem = makeDesktopItem {
     name = "010editor";
     exec = "010editor %f";
-    icon = "010_icon_128x128";
+    icon = "010";
     desktopName = "010 Editor";
     genericName = "Text and hex edtior";
     categories = [ "Development" ];
@@ -99,7 +96,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   meta = {
-    description = "Professional text and hex editor";
+    description = "Text and hex editor";
     homepage = "https://www.sweetscape.com/010editor/";
     license = lib.licenses.unfree;
     maintainers = with lib.maintainers; [ eljamm ];
