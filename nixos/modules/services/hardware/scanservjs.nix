@@ -10,7 +10,7 @@ let
   settings = {
     scanimage = "${config.hardware.sane.backends-package}/bin/scanimage";
     convert = "${pkgs.imagemagick}/bin/convert";
-    tesseract = "${pkgs.tesseract}/bin/tesseract";
+    tesseract = lib.getExe pkgs.tesseract;
     # it defaults to config/devices.json, but "config" dir doesn't exist by default and scanservjs doesn't create it
     devicesPath = "devices.json";
   } // cfg.settings;
@@ -144,7 +144,7 @@ in
         LD_LIBRARY_PATH = "/etc/sane-libs";
       };
       serviceConfig = {
-        ExecStart = "${package}/bin/scanservjs";
+        ExecStart = lib.getExe package;
         Restart = "always";
         User = "scanservjs";
         Group = "scanservjs";
