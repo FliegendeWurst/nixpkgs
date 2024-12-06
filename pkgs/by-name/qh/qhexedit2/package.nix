@@ -9,23 +9,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "qhexedit2";
-  version = "0.8.9-unstable-2024-10-05";
+  version = "0.8.9";
 
-  # Use unstable because of some significant improvements to the program
   src = fetchFromGitHub {
     owner = "Simsys";
     repo = "qhexedit2";
-    rev = "3a468e4ae52d929eb7e96a3918ab8f8e7d55fc58";
-    hash = "sha256-7c5bihdLe5+wsl0GGv4fcQeU6qQvnTPNrJmhYAFeLaI=";
+    rev = "refs/tags/v${finalAttrs.version}";
+    hash = "sha256-qg8dyXwAsTVSx85Ad7UYhr4d1aTRG9QbvC0uyOMcY8g=";
   };
-
-  patches = [
-    # Adds support for the version flag
-    (fetchpatch {
-      url = "https://github.com/Simsys/qhexedit2/commit/85a6732fe1e8b829b2b34519909514a62ad91099.patch";
-      hash = "sha256-m8OBcuKiFoiAR7/f/JxCfiY8v2KwLogHfbqHSO5QPyw=";
-    })
-  ];
 
   postPatch = ''
     # Replace QPallete::Background with QPallete::Window in all files, since QPallete::Background was removed in Qt 6
@@ -59,7 +50,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru = {
     updateScript = nix-update-script { };
-    # I would use testers.testVersion except for some reason it fails
+    # I would use testers.testVersion except for some reason it fails, even with my patches that add a --version flag
     # TODO: Debug why testVersion reports a non-zero status code in the nix sandbox
   };
 
