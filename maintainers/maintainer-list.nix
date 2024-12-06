@@ -8565,6 +8565,12 @@
     githubId = 6578603;
     name = "Jonas Rembser";
   };
+  gurjaka = {
+    name = "Gurami Esartia";
+    email = "esartia.gurika@gmail.com";
+    github = "Gurjaka";
+    githubId = 143032436;
+  };
   guserav = {
     github = "guserav";
     githubId = 28863828;
@@ -21175,6 +21181,12 @@
     email = "nixpkgs@stasjok.ru";
     github = "stasjok";
     githubId = 1353637;
+  };
+  StayBlue = {
+    name = "StayBlue";
+    email = "blue@spook.rip";
+    github = "StayBlue";
+    githubId = 23127866;
   };
   steamwalker = {
     email = "steamwalker@xs4all.nl";

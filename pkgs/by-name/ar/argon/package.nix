@@ -6,7 +6,6 @@
   udev,
   zstd,
   stdenv,
-  darwin,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "argon";
@@ -15,7 +14,7 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "argon-rbx";
     repo = "argon";
-    rev = version;
+    rev = "refs/tags/${version}";
     hash = "sha256-msKrPLB+38PU7LEw92xEqFy6JxwMjttBaobIOhU7eWw=";
   };
 
@@ -40,7 +39,7 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/argon-rbx/argon";
     changelog = "https://github.com/argon-rbx/argon/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [ stayblue ];
+    maintainers = with lib.maintainers; [ StayBlue ];
     mainProgram = "argon";
   };
 }
