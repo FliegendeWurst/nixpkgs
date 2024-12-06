@@ -49,17 +49,21 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-pk4ask944MHmJYZNxi1q7DWMm9yNdvNi7FGXGtXewk8=";
   };
 
-  nativeBuildInputs = [
-    cargo-tauri.hook
+  nativeBuildInputs =
+    [
+      cargo-tauri.hook
 
-    nodejs_22
-    pnpm_9.configHook
+      nodejs_22
+      pnpm_9.configHook
 
-    pkg-config
-    wrapGAppsHook3
+      pkg-config
+      wrapGAppsHook3
 
-    gobject-introspection
-  ];
+      gobject-introspection
+    ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [
+      rustPlatform.bindgenHook
+    ];
 
   buildInputs =
     [ openssl ]
