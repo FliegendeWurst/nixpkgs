@@ -1,7 +1,7 @@
-From 53cca427a5a64ee3496348007b3e58f0d1a5031f Mon Sep 17 00:00:00 2001
+From 7e7d03d09990cf8e17091572258f12b77a661d74 Mon Sep 17 00:00:00 2001
 From: Pavel Sobolev <contact@paveloom.dev>
-Date: Sun, 4 Aug 2024 21:07:04 +0300
-Subject: [PATCH] Don't set `RPATH` in `eddie-tray`.
+Date: Fri, 6 Dec 2024 22:42:40 +0300
+Subject: [PATCH 2/2] Don't set `RPATH` in `eddie-tray`.
 
 ---
  src/App.Forms.Linux.Tray/build.sh | 1 -
@@ -12,13 +12,13 @@ index 771b2c7..bc1093c 100755
 --- a/src/App.Forms.Linux.Tray/build.sh
 +++ b/src/App.Forms.Linux.Tray/build.sh
 @@ -35,7 +35,6 @@ g++ "$BASEPATH/main.cpp" -fPIC -o "$BASEPATH/bin/eddie-tray" `pkg-config --cflag
-
- strip -S --strip-unneeded "$BASEPATH/bin/eddie-tray"
+ 
+ strip -S --strip-unneeded "$BASEPATH/bin/eddie-tray" 
  chmod a+x "$BASEPATH/bin/eddie-tray"
 -patchelf --set-rpath '$ORIGIN' "$BASEPATH/bin/eddie-tray"
-
+ 
  echo "Building eddie-tray - Done"
  exit 0
---
-2.45.2
+-- 
+2.47.0
 

@@ -28,15 +28,15 @@
 
 buildDotnetModule rec {
   pname = "eddie";
-  version = "2.24.2";
+  version = "2.24.4";
 
   src = fetchFromGitHub {
     owner = "AirVPN";
     repo = "Eddie";
     # Upstream uses the summaries of commits for
     # specifying the versions of experimental builds
-    rev = "c201d5605664e3a22db4af1b2b038aaba9a50211";
-    hash = "sha256-5UUi7N/+bUPKJcGk+viAmOvCLPZxvNrN1Qouc6Ecynw=";
+    rev = "aeaa7e594d71610dd2c231a8dc5c5aaddc89a7c1";
+    hash = "sha256-AlnWqrKoZb4s4MfPClxlEqzKIOwWL/frA+dx2kCNwW4=";
   };
 
   patches = [
@@ -44,11 +44,11 @@ buildDotnetModule rec {
     ./remove-the-postbuild-from-the-project-file.patch
   ];
 
-  projectFile = [ "src/App.CLI.Linux/App.CLI.Linux.net7.csproj" ];
+  projectFile = [ "src/App.CLI.Linux/App.CLI.Linux.net8.csproj" ];
   nugetDeps = ./deps.nix;
 
-  dotnet-sdk = dotnetCorePackages.sdk_7_0;
-  dotnet-runtime = dotnetCorePackages.runtime_7_0;
+  dotnet-sdk = dotnetCorePackages.sdk_8_0;
+  dotnet-runtime = dotnetCorePackages.runtime_8_0;
 
   nativeBuildInputs = [
     gcc
@@ -133,12 +133,12 @@ buildDotnetModule rec {
     };
   };
 
-  meta = with lib; {
+  meta = {
     description = "AirVPN's OpenVPN and WireGuard wrapper";
     homepage = "https://eddie.website";
-    license = licenses.gpl3Plus;
+    license = lib.licenses.gpl3Plus;
     mainProgram = "eddie-ui";
-    maintainers = with maintainers; [ paveloom ];
-    platforms = platforms.linux;
+    maintainers = with lib.maintainers; [ paveloom ];
+    platforms = lib.platforms.linux;
   };
 }
