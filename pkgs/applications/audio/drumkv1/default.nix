@@ -1,14 +1,16 @@
 {
-  stdenv, lib, pkg-config
-,  fetchurl
-,  cmake
-,  libjack2
-,  alsa-lib
-,  libsndfile
-,  liblo
-,  lv2
-,  qt6
-,  xorg
+  stdenv,
+  lib,
+  pkg-config,
+  fetchurl,
+  cmake,
+  libjack2,
+  alsa-lib,
+  libsndfile,
+  liblo,
+  lv2,
+  qt6,
+  xorg,
 }:
 
 stdenv.mkDerivation rec {
@@ -32,7 +34,11 @@ stdenv.mkDerivation rec {
     qt6.qtsvg
   ];
 
-  nativeBuildInputs = [ pkg-config cmake qt6.wrapQtAppsHook ];
+  nativeBuildInputs = [
+    pkg-config
+    cmake
+    qt6.wrapQtAppsHook
+  ];
 
   cmakeFlags = [
     # disable experimental feature "LV2 port change request"
@@ -50,4 +56,3 @@ stdenv.mkDerivation rec {
     maintainers = [ maintainers.theredstonedev ];
   };
 }
-
