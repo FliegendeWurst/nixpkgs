@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
 
   outputs = [ "out" "man" "doc" ];
 
+  strictDeps = true;
   nativeBuildInputs = [ makeWrapper perl ];
   buildInputs = [ perl procps ];
 
