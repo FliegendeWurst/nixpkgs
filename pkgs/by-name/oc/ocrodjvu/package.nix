@@ -18,54 +18,45 @@
   ocrad,
 }:
 
-python3Packages.buildPythonPackage rec {
+python3Packages.buildPythonApplication rec {
   pname = "ocrodjvu";
-  version = "0.13.1";
+  version = "0.13.2";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "FriedrichFroebel";
     repo = "ocrodjvu";
     rev = version;
-    hash = "sha256-e1EwhJc65ghHKtvnpPONGtYPrch5Io1pXXmt6e8K67Y=";
+    hash = "sha256-EiMCrRFUAJbu9QLgKpFIKqigCZ77lpTDD6AvZuMbyhA=";
   };
 
-  build-system = with python3Packages; [
-    setuptools
-    wheel
-  ];
-
-  nativeBuildInputs = with python3Packages; [
+  build-system =
+    with python3Packages;
+    [
       cython
       djvulibre
+      docbook-xsl-ns
       glibcLocales
+      html5lib
       libxml2
       libxml2Python
+      libxslt
       packaging
+      pillow
       pkg-config
+      pyicu
+      setuptools
       tesseract5
+      wheel
     ]
-    ++ lib.optionals withCuneiform cuneiform
-    ++ lib.optionals withGocr gocr
-    ++ lib.optionals withOcrad ocrad;
+    ++ lib.optional withCuneiform cuneiform
+    ++ lib.optional withGocr gocr
+    ++ lib.optional withOcrad ocrad;
 
-  propagatedBuildInputs = with python3Packages; [
+  dependencies = with python3Packages; [
     lxml
     python-djvulibre
   ];
-
-  buildInputs = with python3Packages;
-    [
-      docbook-xsl-ns
-      html5lib
-      libxslt
-      pillow
-      pyicu
-      tesseract5
-    ]
-    ++ lib.optionals withCuneiform cuneiform
-    ++ lib.optionals withGocr gocr
-    ++ lib.optionals withOcrad ocrad;
 
   nativeCheckInputs = [ python3Packages.unittestCheckHook ];
 
@@ -79,6 +70,8 @@ python3Packages.buildPythonPackage rec {
     homepage = "https://github.com/FriedrichFroebel/ocrodjvu";
     changelog = "https://github.com/FriedrichFroebel/ocrodjvu/blob/${version}/doc/changelog";
     license = licenses.gpl2Only;
+    platforms = platforms.linux;
     maintainers = with maintainers; [ dansbandit ];
+    mainProgram = "ocrodjvu";
   };
 }
