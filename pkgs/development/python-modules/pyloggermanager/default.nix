@@ -28,7 +28,7 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "pyloggermanager" ];
 
   meta = {
-    description = "vital logging framework for Python applications";
+    description = "Logging framework for Python applications";
     homepage = "https://github.com/coldsofttech/pyloggermanager";
     changelog = "https://github.com/coldsofttech/pyloggermanager/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.mit;

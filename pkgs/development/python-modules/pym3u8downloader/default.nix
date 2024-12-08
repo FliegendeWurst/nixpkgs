@@ -34,7 +34,6 @@ buildPythonPackage rec {
 
   passthru = {
     tests = {
-      # TODO(@ShamrockLee): Migrate to checkArgs after #272177 gets merged.
       pytest = pym3u8downloader.overridePythonAttrs (previousPythonAttrs: {
         TEST_SERVER_PORT = "8000";
 

@@ -1,4 +1,8 @@
-{ writeTextFile, mesa }:
+{
+  lib,
+  writeTextFile,
+  mesa,
+}:
 writeTextFile {
   name = "dri-pkgconfig-stub";
 
@@ -11,4 +15,6 @@ writeTextFile {
   '';
 
   destination = "/lib/pkgconfig/dri.pc";
+
+  meta.badPlatforms = lib.platforms.darwin;
 }
