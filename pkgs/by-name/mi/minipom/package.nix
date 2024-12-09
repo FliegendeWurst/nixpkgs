@@ -29,24 +29,24 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "minipom";
-  version = "0.9.3";
+  version = "0.9.4";
 
   src = fetchFromGitHub {
     owner = "tfkhdyt";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-hUhGU2w4ndmU7KpFr+E4tTWkvpI8PuglPXRkyf1Q2Ys=";
+    hash = "sha256-/Xn0kndmxq2p+PgLDUMISemTwgEqQrqv7CiMErlBDng=";
   };
 
   cargoRoot = "src-tauri";
   buildAndTestSubdir = cargoRoot;
 
   sourceRoot = src.name;
-  cargoHash = "sha256-n1D4ihzngY5LtEDT4GlkUaalbDWlm27EKFSo9/ekSU4=";
+  cargoHash = "sha256-w2Rw3oakZ46NaYG/mkjpO1t6MqSeF1is24sB4RbDAOc=";
 
   pnpmDeps = pnpm_9.fetchDeps {
     inherit pname version src;
-    hash = "sha256-pk4ask944MHmJYZNxi1q7DWMm9yNdvNi7FGXGtXewk8=";
+    hash = "sha256-E1dfaEezU1EOGEqH+bURxgDx7mEUseKGQcVnhvoED7k=";
   };
 
   nativeBuildInputs =
