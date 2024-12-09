@@ -24,16 +24,19 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     libsForQt5.qmake
-    qt5.wrapQtAppsHook
     makeWrapper
+    qt5.qtwebsockets
+    qt5.wrapQtAppsHook
   ];
 
   buildInputs = [
-    qt5.qtbase
-    qt5.qtwebsockets
     mpv
     qhttpengine
+    qt5.qtbase
+    qt5.qtwebsockets
   ];
+
+  strictDeps = true;
 
   patches = [ ./change-install-path.patch ];
 
@@ -88,5 +91,7 @@ stdenv.mkDerivation rec {
     description = "More than a Full-Featured Danmu Player";
     homepage = "https://kikoplay.fun";
     license = lib.licenses.gpl3Only;
+    # See https://github.com/NixOS/nixpkgs/pull/354929
+    broken = stdenv.isDarwin;
   };
 }
