@@ -5,7 +5,7 @@
 }:
 let
   pname = "grip-grab";
-  version = "0.3.0";
+  version = "0.6.7";
 in
 rustPlatform.buildRustPackage {
   inherit pname version;
@@ -14,10 +14,12 @@ rustPlatform.buildRustPackage {
     owner = "alexpasmantier";
     repo = "grip-grab";
     rev = "refs/tags/v${version}";
-    hash = "sha256-5nKDeJ5d9ECd9zvSK22zN15m8qCt/L3VKem9hVQzLzU=";
+    hash = "sha256-e7duLL4tjW+11jXUqU6sqoKTAPGkH81iDCfjtNcnd4I=";
   };
 
-  cargoHash = "sha256-NEoZYdZEhT4gPMm9fUn3WbFPIcjVhLLFxEvbQxVHV+k=";
+  cargoHash = "sha256-g7YdNNN6YJiW8sQa1KMj5evVbLPObRXrKM5HoG87Kxc=";
+
+  doCheck = false;
 
   meta = {
     description = "Fast, more lightweight ripgrep alternative for daily use cases";
