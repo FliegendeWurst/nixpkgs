@@ -96,6 +96,7 @@ stdenv.mkDerivation {
     libunwind
     metis
     gmp
+    tcl
     zlib
   ];
 
