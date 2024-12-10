@@ -20,14 +20,16 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     ocaml
     ocamlPackages.ocamlbuild
+    ocamlPackages.findlib
+    ocamlPackages.menhir
+    gnum4
   ];
 
   buildInputs = [
-    ocamlPackages.findlib
-    ocamlPackages.menhir
     ocamlPackages.angstrom
-    gnum4
   ];
+
+  strictDeps = true;
 
   buildPhase = ''
     runHook preBuild
