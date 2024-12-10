@@ -4,7 +4,6 @@
   fetchFromGitHub,
   meson,
   ninja,
-  cmake,
   vala,
   pkg-config,
   makeBinaryWrapper,
@@ -17,6 +16,8 @@
   mangohud,
   mesa-demos,
   vulkan-tools,
+
+  nix-update-script,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "mangojuice";
@@ -32,7 +33,7 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     meson
     ninja
-    cmake
+    glib # For glib-compile-schemas
     vala
     pkg-config
     makeBinaryWrapper
@@ -42,9 +43,10 @@ stdenv.mkDerivation (finalAttrs: {
     gtk4
     libadwaita
     glib
-    mangohud
     libgee
   ];
+
+  strictDeps = true;
 
   postFixup =
     let
@@ -59,11 +61,16 @@ stdenv.mkDerivation (finalAttrs: {
         --prefix PATH : ${path}
     '';
 
+  passthru.updateScript = nix-update-script { };
+
   meta = {
     description = "Convenient alternative to GOverlay for setting up MangoHud";
     homepage = "https://github.com/radiolamp/mangojuice";
     license = with lib.licenses; [ gpl3Only ];
     platforms = lib.platforms.linux;
-    maintainers = with lib.maintainers; [ pluiedev ];
+    maintainers = with lib.maintainers; [
+      pluiedev
+      getchoo
+    ];
   };
 })

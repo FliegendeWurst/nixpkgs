@@ -6,6 +6,7 @@ let mkPrefetchScript = tool: src: deps:
   stdenv.mkDerivation {
     name = "nix-prefetch-${tool}";
 
+    strictDeps = true;
     nativeBuildInputs = [ makeWrapper ];
     buildInputs = [ bash ];
 

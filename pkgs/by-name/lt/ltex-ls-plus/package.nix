@@ -8,11 +8,11 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "ltex-ls-plus";
-  version = "17.0.1";
+  version = "18.3.0";
 
   src = fetchurl {
-    url = "https://github.com/ltex-plus/${pname}/releases/download/${version}/${pname}-${version}.tar.gz";
-    sha256 = "sha256-S4d9yL4hgpdhqp6Vx87FUFqdUyj3k97QsJsGFyrDVDg=";
+    url = "https://github.com/ltex-plus/ltex-ls-plus/releases/download/${version}/ltex-ls-plus-${version}.tar.gz";
+    sha256 = "sha256-TV8z8nYz2lFsL86yxpIWDh3hDEZn/7P0kax498oicls=";
   };
 
   nativeBuildInputs = [ makeBinaryWrapper ];
@@ -23,17 +23,23 @@ stdenvNoCC.mkDerivation rec {
     mkdir -p $out
     cp -rfv bin/ lib/ $out
     rm -fv $out/bin/.lsp-cli.json $out/bin/*.bat
-    wrapProgram $out/bin/ltex-ls-plus --set JAVA_HOME "${jre_headless}"
-    wrapProgram $out/bin/ltex-cli-plus --set JAVA_HOME "${jre_headless}"
+    for file in $out/bin/{ltex-ls-plus,ltex-cli-plus}; do
+      wrapProgram $file --set JAVA_HOME "${jre_headless}"
+    done
 
     runHook postInstall
   '';
 
-  meta = with lib; {
-    homepage = "https://ltex-plus.github.io/ltex-plus/";
-    description = "Grammar/Spell Checker Using LanguageTool with Support for LaTeX, Markdown, and Others";
-    license = licenses.mpl20;
-    maintainers = with maintainers; [ pwoelfel ];
-    platforms = jre_headless.meta.platforms;
-  };
+  meta =
+    let
+      inherit (lib) licenses maintainers;
+    in
+    {
+      homepage = "https://ltex-plus.github.io/ltex-plus/";
+      description = "LSP language server for LanguageTool";
+      license = licenses.mpl20;
+      mainProgram = "ltex-cli-plus";
+      maintainers = [ maintainers.FirelightFlagboy ];
+      platforms = jre_headless.meta.platforms;
+    };
 }

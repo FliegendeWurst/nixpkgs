@@ -8579,6 +8579,10 @@ self: super: with self; {
 
   muscima = callPackage ../development/python-modules/muscima { };
 
+  music-assistant-client = callPackage ../development/python-modules/music-assistant-client { };
+
+  music-assistant-models = callPackage ../development/python-modules/music-assistant-models { };
+
   musicbrainzngs = callPackage ../development/python-modules/musicbrainzngs { };
 
   music-tag = callPackage ../development/python-modules/music-tag { };
@@ -9231,6 +9235,10 @@ self: super: with self; {
   nibe = callPackage ../development/python-modules/nibe { };
 
   nice-go = callPackage ../development/python-modules/nice-go { };
+
+  nicegui = callPackage ../development/python-modules/nicegui { };
+
+  nicegui-highcharts = callPackage ../development/python-modules/nicegui-highcharts { };
 
   nidaqmx = callPackage ../development/python-modules/nidaqmx { };
 
@@ -11619,6 +11627,8 @@ self: super: with self; {
 
   pyebus = callPackage ../development/python-modules/pyebus { };
 
+  pyecharts = callPackage ../development/python-modules/pyecharts { };
+
   pyechonest = callPackage ../development/python-modules/pyechonest { };
 
   pyeclib = callPackage ../development/python-modules/pyeclib { };
@@ -11848,6 +11858,8 @@ self: super: with self; {
   pyi2cflash = callPackage ../development/python-modules/pyi2cflash { };
 
   pyialarm = callPackage ../development/python-modules/pyialarm { };
+
+  pyiceberg = callPackage ../development/python-modules/pyiceberg { };
 
   pyicloud = callPackage ../development/python-modules/pyicloud { };
 
@@ -12974,6 +12986,8 @@ self: super: with self; {
 
   pytest-responses = callPackage ../development/python-modules/pytest-responses { };
 
+  pytest-selenium = callPackage ../development/python-modules/pytest-selenium { };
+
   pytest-server-fixtures = callPackage ../development/python-modules/pytest-server-fixtures { };
 
   pytest-services = callPackage ../development/python-modules/pytest-services { };
@@ -13021,6 +13035,8 @@ self: super: with self; {
   pytest-twisted = callPackage ../development/python-modules/pytest-twisted { };
 
   pytest-unordered = callPackage ../development/python-modules/pytest-unordered { };
+
+  pytest-variables = callPackage ../development/python-modules/pytest-variables { };
 
   pytest-vcr = callPackage ../development/python-modules/pytest-vcr { };
 
@@ -14817,6 +14833,8 @@ self: super: with self; {
   simpful = callPackage ../development/python-modules/simpful { };
 
   simpy = callPackage ../development/python-modules/simpy { };
+
+  simsimd = callPackage ../development/python-modules/simsimd { };
 
   single-source = callPackage ../development/python-modules/single-source { };
 
@@ -17666,6 +17684,8 @@ self: super: with self; {
 
   vat-moss = callPackage ../development/python-modules/vat-moss { };
 
+  vbuild = callPackage ../development/python-modules/vbuild { };
+
   vcard = callPackage ../development/python-modules/vcard { };
 
   vcrpy = callPackage ../development/python-modules/vcrpy { };
@@ -18431,6 +18451,8 @@ self: super: with self; {
   zeitgeist = (toPythonModule (pkgs.zeitgeist.override {
     python3 = python;
   })).py;
+
+  zenoh = callPackage ../development/python-modules/zenoh { };
 
   zephyr-python-api = callPackage ../development/python-modules/zephyr-python-api { };
 
