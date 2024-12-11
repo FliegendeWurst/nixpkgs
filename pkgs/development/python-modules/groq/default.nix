@@ -1,56 +1,38 @@
 {
   lib,
+  anyio,
   buildPythonPackage,
-  pytestCheckHook,
-  pytest-asyncio,
   dirty-equals,
-  fetchPypi,
+  distro,
+  fetchFromGitHub,
   hatch-fancy-pypi-readme,
   hatchling,
-  cached-property,
-  distro,
   httpx,
+  nest-asyncio,
   pydantic,
+  pytest-asyncio,
+  pytestCheckHook,
+  respx,
   sniffio,
-  anyio,
   typing-extensions,
 }:
 
 buildPythonPackage rec {
   pname = "groq";
-  version = "0.11.0";
+  version = "0.13.0";
   pyproject = true;
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-27mu/t84jd1IAex78+un9e22eUj+wM0oKdlyRAWfQqc=";
+  src = fetchFromGitHub {
+    owner = "groq";
+    repo = "groq-python";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-EkEXXHca4DJtY1joM1E4IXzaQzJL+QC+aYaTe46EWlE=";
   };
 
   build-system = [
     hatch-fancy-pypi-readme
     hatchling
   ];
-
-  nativeCheckInputs = [
-    pytestCheckHook
-    pytest-asyncio
-    dirty-equals
-  ];
-
-  # Needed network access!
-  disabledTestPaths = [
-    "tests/test_client.py"
-    "tests/api_resources"
-  ];
-
-  disabledTests = [
-    "test_response"
-  ];
-
-  pytestFlagsArray = [
-    "-Wignore::DeprecationWarning"
-  ];
-
 
   dependencies = [
     anyio
@@ -61,15 +43,29 @@ buildPythonPackage rec {
     typing-extensions
   ];
 
-  pythonImportsCheck = [
-    "groq"
+  nativeCheckInputs = [
+    dirty-equals
+    nest-asyncio
+    pytest-asyncio
+    pytestCheckHook
+    respx
+  ];
+
+  pythonImportsCheck = [ "groq" ];
+
+  disabledTests = [
+    # Tests require network access
+    "test_method"
+    "test_streaming"
+    "test_raw_response"
+    "test_copy_build_request"
   ];
 
   meta = {
-    description = "Official Python library for the groq API";
-    homepage = "https://github.com/groq/groq-python/";
-    changelog = "https://github.com/groq/groq-python/blob/v${version}/CHANGELOG.md";
+    description = "Library for the Groq API";
+    homepage = "https://github.com/groq/groq-python";
+    changelog = "https://github.com/groq/groq-python/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [ giuliococconi ];
+    maintainers = with lib.maintainers; [ fab ];
   };
 }
