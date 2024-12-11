@@ -79,12 +79,12 @@ stdenv.mkDerivation {
         outputHashMode = "recursive";
       }
       ''
-        export HOME=$TMPDIR
-        dest="$TMPDIR/mega-loe"
-        mkdir -p "$dest"
-        mega-get "$url" "$dest"
-        mkdir -p "$out"
-        unzip -d "$out" "$dest/$(ls "$dest")"
+        export HOME=$(mktemp -d)
+        dest=$HOME/mega-loe
+        mkdir -p $dest
+        mega-get "$url" $dest
+        mkdir -p $out
+        unzip -d $out $dest/*.zip
       '';
 
   dontBuild = true;
@@ -98,17 +98,20 @@ stdenv.mkDerivation {
   ];
 
   installPhase = ''
-    mkdir -p $out/libexec
-    cp -r LoE $out/libexec
+    runHook preInstall
 
-    mkdir -p $out/bin
-    chmod +x $out/libexec/LoE/LoE.x86_64
-    makeWrapper $out/libexec/LoE/LoE.x86_64 $out/bin/LoE \
+    loeHome=$out/lib/${pname}
+    mkdir -p $loeHome
+    cp -r LoE/* $loeHome
+
+    makeWrapper $loeHome/LoE.x86_64 $out/bin/LoE \
       --suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeDeps}"
 
-    mkdir -p $out/share/icons/hicolor/128x128/apps
-    ln -s $out/libexec/LoE/LoE_Data/Resources/UnityPlayer.png \
-      $out/share/icons/hicolor/128x128/apps/legends-of-equestria.png
+    icon=$out/share/icons/hicolor/128x128/apps/legends-of-equestria.png
+    mkdir -p $(dirname $icon)
+    ln -s $loeHome/LoE_Data/Resources/UnityPlayer.png $icon
+
+    runHook postInstall
   '';
 
   passthru.updateScript = ./update.sh;
