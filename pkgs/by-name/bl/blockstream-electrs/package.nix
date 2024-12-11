@@ -1,6 +1,5 @@
 {
   bitcoind,
-  darwin,
   electrum,
   fetchFromGitHub,
   lib,
@@ -9,40 +8,23 @@
   stdenv,
 }:
 
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage rec {
   pname = "blockstream-electrs";
-  version = "0.4.1-unstable-2024-09-30";
+  version = "0.4.1-unstable-2024-11-25";
 
   src = fetchFromGitHub {
     owner = "Blockstream";
     repo = "electrs";
-    rev = "dca8c5996a4b69e1544a481e1809d0deaf54c771";
-    hash = "sha256-HAgdJZArFsoX28Ijn+VxjAUwLV9wUW/DLZYyjSiB4TQ=";
+    rev = "680eacaa8360d5f46eaae9611a3097ba183795c6";
+    hash = "sha256-oDM4arH3aplgcS49t/hy5Rqt36glrVufd3F4tw3j1zo=";
   };
 
-  patches = [
-    # Support bitcoind v28's new default blocksxor flag
-    # Upstream PR: <https://github.com/Blockstream/electrs/pull/130>
-    ./bitcoind-v28.patch
-  ];
-
-  # Vendor the Cargo.lock in nixpkgs as there are git dependencies
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "electrum-client-0.8.0" = "sha256-HDRdGS7CwWsPXkA1HdurwrVu4lhEx0Ay8vHi08urjZ0=";
-      "electrumd-0.1.0" = "sha256-QsoMD2uVDEITuYmYItfP6BJCq7ApoRztOCs7kdeRL9Y=";
-      "jsonrpc-0.12.0" = "sha256-lSNkkQttb8LnJej4Vfe7MrjiNPOuJ5A6w5iLstl9O1k=";
-    };
-  };
+  useFetchCargoVendor = true;
+  cargoHash = "sha256-X2C69ui3XiYP1cg9FgfBbJlLLMq1SCw+oAL20B1Fs30=";
 
   nativeBuildInputs = [
     # Needed for librocksdb-sys
     rustPlatform.bindgenHook
-  ];
-
-  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
-    darwin.apple_sdk.frameworks.Security
   ];
 
   env = {
@@ -71,8 +53,8 @@ rustPlatform.buildRustPackage {
   # Build tests in debug mode to reduce build time
   checkType = "debug";
 
-  # Integration tests require us to pass in some external deps via env
-  preCheck = ''
+  # Integration tests require us to pass in some external deps via env.
+  preCheck = lib.optionalString doCheck ''
     export BITCOIND_EXE=${bitcoind}/bin/bitcoind
     export ELECTRUMD_EXE=${electrum}/bin/electrum
   '';
