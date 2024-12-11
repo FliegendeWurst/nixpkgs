@@ -1,14 +1,15 @@
-{ dbus
-, fetchFromGitLab
-, gobject-introspection
-, lib
-, libadwaita
-, meson
-, ninja
-, python3
-, stdenv
-, testers
-, xvfb-run
+{
+  dbus,
+  fetchFromGitLab,
+  gobject-introspection,
+  lib,
+  libadwaita,
+  meson,
+  ninja,
+  python3,
+  stdenv,
+  testers,
+  xvfb-run,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "blueprint-compiler";
@@ -25,9 +26,6 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     meson
     ninja
-    (python3.withPackages (ps: with ps; [
-      pygobject3
-    ]))
   ];
 
   buildInputs = [
@@ -46,8 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   # requires xvfb-run
-  doCheck = !stdenv.hostPlatform.isDarwin
-  && false;  # tests time out
+  doCheck = !stdenv.hostPlatform.isDarwin && false; # tests time out
 
   checkPhase = ''
     runHook preCheck
@@ -68,7 +65,10 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "blueprint-compiler";
     homepage = "https://gitlab.gnome.org/jwestman/blueprint-compiler";
     license = licenses.lgpl3Plus;
-    maintainers = with maintainers; [ benediktbroich ranfdev ];
+    maintainers = with maintainers; [
+      benediktbroich
+      ranfdev
+    ];
     platforms = platforms.unix;
   };
 })

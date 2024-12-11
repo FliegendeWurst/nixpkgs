@@ -1,27 +1,27 @@
-{ stdenvNoCC
-, fetchurl
-, lib
-, makeWrapper
-, autoPatchelfHook
-, dpkg
-, alsa-lib
-, at-spi2-atk
-, cairo
-, cups
-, dbus
-, expat
-, ffmpeg
-, glib
-, gtk3
-, libdrm
-, libudev0-shim
-, libxkbcommon
-, libgbm
-, nspr
-, nss
-, pango
-, writeScript
-, xorg
+{
+  stdenvNoCC,
+  fetchurl,
+  lib,
+  makeWrapper,
+  autoPatchelfHook,
+  dpkg,
+  alsa-lib,
+  at-spi2-atk,
+  cairo,
+  cups,
+  dbus,
+  expat,
+  ffmpeg,
+  glib,
+  gtk3,
+  libdrm,
+  libudev0-shim,
+  libxkbcommon,
+  libgbm,
+  nspr,
+  nss,
+  pango,
+  xorg,
 }:
 let
   id = "203624820";
@@ -86,30 +86,11 @@ stdenvNoCC.mkDerivation rec {
 
     makeWrapper "$out/share/multiviewer-for-f1/MultiViewer for F1" $out/bin/multiviewer-for-f1 \
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform=wayland --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ libudev0-shim ]}:\"$out/share/Multiviewer for F1\""
+      --prefix LD_LIBRARY_PATH : "${
+        lib.makeLibraryPath [ libudev0-shim ]
+      }:\"$out/share/Multiviewer for F1\""
 
     runHook postInstall
-  '';
-
-  passthru.updateScript = writeScript "update-multiviewer-for-f1" ''
-    #!/usr/bin/env nix-shell
-    #!nix-shell -i bash -p curl common-updater-scripts
-    set -eu -o pipefail
-
-    # Get latest API for packages, store so we only make one request
-    latest=$(curl -s "https://api.multiviewer.app/api/v1/releases/latest/")
-
-    # From the downloaded JSON extract the url, version and id
-    link=$(echo $latest | jq -r '.downloads[] | select(.platform=="linux_deb").url')
-    id=$(echo $latest | jq -r '.downloads[] | select(.platform=="linux_deb").id')
-    version=$(echo $latest | jq -r '.version')
-
-    # Pre-calculate package hash
-    hash=$(nix-prefetch-url --type sha256 $link)
-
-    # Update ID and version in source
-    update-source-version ${pname} "$id" --version-key=id
-    update-source-version ${pname} "$version" "$hash" --system=x86_64-linux
   '';
 
   meta = with lib; {

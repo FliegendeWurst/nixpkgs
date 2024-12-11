@@ -13173,6 +13173,12 @@
     githubId = 4368690;
     name = "Ratko Mladic";
   };
+  NiklasVousten = {
+    name = "Niklas Vousten";
+    email = "nixpkgs@vousten.dev";
+    github = "NiklasVousten";
+    githubId = 24965952;
+  };
   nikstur = {
     email = "nikstur@outlook.com";
     name = "nikstur";

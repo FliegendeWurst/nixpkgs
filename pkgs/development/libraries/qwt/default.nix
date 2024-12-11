@@ -1,17 +1,33 @@
-{ lib, stdenv, fetchurl, qtbase, qtsvg, qttools, qmake, fixDarwinDylibNames }:
+{
+  lib,
+  stdenv,
+  fetchurl,
+  qtbase,
+  qtsvg,
+  qttools,
+  qmake,
+  fixDarwinDylibNames,
+}:
 
 stdenv.mkDerivation rec {
   pname = "qwt";
   version = "6.3.0";
 
-  outputs = [ "out" "dev" ];
+  outputs = [
+    "out"
+    "dev"
+  ];
 
   src = fetchurl {
     url = "mirror://sourceforge/qwt/qwt-${version}.tar.bz2";
     sha256 = "sha256-3LCFiWwoquxVGMvAjA7itOYK2nrJKdgmOfYYmFGmEpo=";
   };
 
-  propagatedBuildInputs = [ qtbase qtsvg qttools ];
+  propagatedBuildInputs = [
+    qtbase
+    qtsvg
+    qttools
+  ];
   nativeBuildInputs = [ qmake ] ++ lib.optional stdenv.hostPlatform.isDarwin fixDarwinDylibNames;
   # TODO: figure out why strictDeps = true results in build error:
   # qwt_symbol.cpp:20:10: fatal error: qsvgrenderer.h: No such file or directory

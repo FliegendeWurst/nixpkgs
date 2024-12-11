@@ -1,9 +1,23 @@
-{ mkDerivation, extra-cmake-modules, qtbase, qttools, gperf, cmake }:
+{
+  mkDerivation,
+  extra-cmake-modules,
+  qtbase,
+  qttools,
+  gperf,
+}:
 
 mkDerivation {
   pname = "kcodecs";
-  nativeBuildInputs = [ gperf extra-cmake-modules ];
-  buildInputs = [ qttools ];
+  nativeBuildInputs = [
+    extra-cmake-modules
+    gperf
+  ];
+  buildInputs = [
+    qttools
+  ];
   propagatedBuildInputs = [ qtbase ];
-  outputs = [ "out" "dev" ];
+  outputs = [
+    "out"
+    "dev"
+  ];
 }

@@ -1,4 +1,9 @@
-{ lib, stdenv, fetchFromGitHub, rustPlatform }:
+{
+  lib,
+  stdenv,
+  fetchFormGitHub,
+  rustPlatform,
+}:
 
 rustPlatform.buildRustPackage rec {
   version = "9.1.3";

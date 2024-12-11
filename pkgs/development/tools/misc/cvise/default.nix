@@ -1,15 +1,18 @@
-{ lib
-, buildPythonApplication
-, fetchFromGitHub
-, cmake
-, colordiff
-, flex
-, llvmPackages
-, unifdef
-, chardet
-, pebble
-, psutil
-, pytestCheckHook
+{
+  lib,
+  buildPythonApplication,
+  fetchFromGitHub,
+  clang-tools,
+  cmake,
+  colordiff,
+  flex,
+  libclang,
+  llvm,
+  unifdef,
+  chardet,
+  pebble,
+  psutil,
+  pytestCheckHook,
 }:
 
 buildPythonApplication rec {
@@ -43,12 +46,13 @@ buildPythonApplication rec {
   nativeBuildInputs = [
     cmake
     flex
+    llvm.dev
   ];
 
   buildInputs = [
-    llvmPackages.clang-unwrapped
-    llvmPackages.libclang
-    llvmPackages.llvm
+    libclang
+    llvm
+    llvm.dev
     unifdef
   ];
 
@@ -66,7 +70,7 @@ buildPythonApplication rec {
   cmakeFlags = [
     # By default `cvise` looks it up in `llvm` bin directory. But
     # `nixpkgs` moves it into a separate derivation.
-    "-DCLANG_FORMAT_PATH=${llvmPackages.clang-tools}/bin/clang-format"
+    "-DCLANG_FORMAT_PATH=${clang-tools}/bin/clang-format"
   ];
 
   disabledTests = [

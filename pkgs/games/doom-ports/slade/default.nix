@@ -20,14 +20,19 @@
 
 stdenv.mkDerivation rec {
   pname = "slade";
-  version = "3.2.6";
+  version = "3.2.5";
 
   src = fetchFromGitHub {
     owner = "sirjuddington";
     repo = "SLADE";
     rev = version;
-    hash = "sha256-pcWmv1fnH18X/S8ljfHxaL1PjApo5jyM8W+WYn+/7zI=";
+    sha256 = "sha256-FBpf1YApwVpWSpUfa2LOrkS1Ef34sKCIZ6ic+Pczs14=";
   };
+
+  postPatch = ''
+    substituteInPlace dist/CMakeLists.txt \
+      --replace "PK3_OUTPUT" "PK3_DESTINATION"
+  '';
 
   nativeBuildInputs = [
     cmake
@@ -52,6 +57,7 @@ stdenv.mkDerivation rec {
 
   cmakeFlags = [
     "-DwxWidgets_LIBRARIES=${wxGTK}/lib"
+    "-DBUILD_PK3=ON"
   ];
 
   env.NIX_CFLAGS_COMPILE = "-Wno-narrowing";
@@ -65,7 +71,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Doom editor";
     homepage = "http://slade.mancubus.net/";
-    license = licenses.gpl2Only;
+    license = licenses.gpl2Plus;
     platforms = platforms.linux;
     maintainers = with maintainers; [ abbradar ];
   };

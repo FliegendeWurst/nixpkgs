@@ -1,4 +1,10 @@
-{ lib, stdenv, fetchurl, bison, ncurses }:
+{
+  lib,
+  stdenv,
+  fetchurl,
+  bison,
+  ncurses,
+}:
 
 stdenv.mkDerivation rec {
   pname = "ispell";
@@ -11,6 +17,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ bison ];
   buildInputs = [ ncurses ];
+  strictDeps = true;
 
   postPatch = ''
     cat >> local.h <<EOF

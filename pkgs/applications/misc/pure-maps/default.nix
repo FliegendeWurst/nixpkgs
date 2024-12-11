@@ -1,7 +1,18 @@
-{ lib, mkDerivation, fetchFromGitHub, fetchpatch
-, cmake, qttools, kirigami2, qtquickcontrols2, qtlocation, qtsensors
-, nemo-qml-plugin-dbus, mapbox-gl-qml, s2geometry, abseil-cpp
-, python3, pyotherside
+{
+  lib,
+  mkDerivation,
+  fetchFromGitHub,
+  cmake,
+  qttools,
+  kirigami2,
+  qtquickcontrols2,
+  qtlocation,
+  qtsensors,
+  nemo-qml-plugin-dbus,
+  mapbox-gl-qml,
+  s2geometry,
+  python3,
+  pyotherside,
 }:
 
 mkDerivation rec {
@@ -16,25 +27,25 @@ mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  patches = [
-    # Fix build failure with s2geometry 0.11.1
-    (fetchpatch {
-      url = "https://github.com/rinigus/pure-maps/commit/9f1e3124cf876ca5ab26d717a34e8d925834b044.patch";
-      hash = "sha256-N2FxxJ9qFTRi2cGXl85IySrmc9p6fR3ak9J9QsVzprQ=";
-    })
-  ];
-
   nativeBuildInputs = [
-    cmake python3 qttools python3.pkgs.wrapPython
+    cmake
+    python3
+    qttools
+    python3.pkgs.wrapPython
   ];
 
   buildInputs = [
-    kirigami2 qtquickcontrols2 qtlocation qtsensors
-    nemo-qml-plugin-dbus pyotherside mapbox-gl-qml s2geometry
-    (abseil-cpp.override { cxxStandard = "14"; })
+    kirigami2
+    qtquickcontrols2
+    qtlocation
+    qtsensors
+    nemo-qml-plugin-dbus
+    pyotherside
+    mapbox-gl-qml
+    s2geometry
   ];
 
-  cmakeFlags = [ "-DFLAVOR=kirigami" "-DCMAKE_CXX_STANDARD=14" ];
+  cmakeFlags = [ "-DFLAVOR=kirigami" ];
 
   pythonPath = with python3.pkgs; [ gpxpy ];
 
