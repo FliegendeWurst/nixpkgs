@@ -2540,6 +2540,9 @@ self: super: {
   ekg-core = assert super.ekg-core.version == "0.1.1.7"; doJailbreak super.ekg-core;
   hasura-ekg-core = doJailbreak super.hasura-ekg-core;
 
+  # This package can't be cross-compiled. See https://github.com/NixOS/nixpkgs/issues/248979
+  vty = overrideCabal (drv: { broken = pkgs.stdenv.hostPlatform != pkgs.stdenv.buildPlatform; }) super.vty;
+
   # Test suite doesn't support hspec 2.8
   # https://github.com/zellige/hs-geojson/issues/29
   geojson = dontCheck super.geojson;
