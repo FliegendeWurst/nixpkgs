@@ -4,7 +4,6 @@
   buildGoModule,
   fetchFromGitHub,
   go-task,
-  darwin,
 }:
 
 buildGoModule rec {
@@ -17,14 +16,6 @@ buildGoModule rec {
     rev = "${version}";
     hash = "sha256-TWyjF/2F3ub+sGFOTWc3kv2w6SRrvDaBSztOki32oxc=";
   };
-
-  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin (
-    with darwin.apple_sdk.frameworks;
-    [
-      AppKit
-      Cocoa
-    ]
-  );
 
   patches = [
     ./updater.patch
