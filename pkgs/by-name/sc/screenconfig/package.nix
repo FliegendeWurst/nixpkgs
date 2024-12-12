@@ -7,20 +7,23 @@
   feh,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonApplication rec {
   pname = "screenconfig";
   version = "0.1.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jceb";
-    repo = pname;
-    rev = "v${version}";
+    repo = "screenconfig";
+    tag = "v${version}";
     hash = "sha256-X1Mz8UbOOW/4LM9IZoG/kbwv2G0EppTsacKapQMChkc=";
   };
   build-system = [ python3.pkgs.setuptools ];
-  propagatedBuildInputs = [
-    python3.pkgs.toml
+  dependencies = with python3.pkgs; [
+    toml
+  ];
+
+  buildInputs = [
     xrandr
     srandrd
     feh
