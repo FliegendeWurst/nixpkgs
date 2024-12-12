@@ -2,11 +2,10 @@
   lib,
   buildGoModule,
   fetchFromGitLab,
-  unstableGitUpdater,
 }:
 buildGoModule {
   pname = "webtunnel";
-  version = "unstable-2024-07-06"; # package is not versioned upstream
+  version = "0-unstable-2024-07-06"; # package is not versioned upstream
   src = fetchFromGitLab {
     domain = "gitlab.torproject.org";
     group = "tpo";
@@ -17,16 +16,13 @@ buildGoModule {
   };
 
   vendorHash = "sha256-3AAPySLAoMimXUOiy8Ctl+ghG5q+3dWRNGXHpl9nfG0=";
-  passthru.updateScript = unstableGitUpdater {
-    url = "https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel";
-  };
 
-  meta = with lib; {
+  meta = {
     description = "Pluggable Transport based on HTTP Upgrade(HTTPT)";
     homepage = "https://community.torproject.org/relay/setup/webtunnel/";
-    maintainers = with maintainers; [ gbtb ];
-    license = licenses.mit;
-    platforms = platforms.linux;
+    maintainers = [ lib.maintainers.gbtb ];
+    license = lib.licenses.mit;
+    platforms = lib.platforms.linux;
   };
 
 }
