@@ -67,12 +67,15 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [ bison flex pkg-config ]
     ++ lib.optionals withMakeWrapper [ makeWrapper ]
     ++ lib.optionals withDNSTAP [ protobufc ]
-    ++ lib.optionals withPythonModule [ swig ];
+    ++ lib.optionals withPythonModule [ python swig ];
 
   buildInputs = [ openssl nettle expat libevent ]
     ++ lib.optionals withSystemd [ systemd ]
     ++ lib.optionals withDoH [ libnghttp2 ]
+    ++ lib.optionals withDNSTAP [ protobufc ]
     ++ lib.optionals withPythonModule [ python ];
+
+  strictDeps = true;
 
   enableParallelBuilding = true;
 
