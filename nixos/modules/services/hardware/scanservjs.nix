@@ -8,8 +8,8 @@
 let
   cfg = config.services.scanservjs;
   settings = {
-    scanimage = "${config.hardware.sane.backends-package}/bin/scanimage";
-    convert = "${pkgs.imagemagick}/bin/convert";
+    scanimage = lib.getExe' config.hardware.sane.backends-package "scanimage";
+    convert = lib.getExe' pkgs.imagemagick "convert";
     tesseract = lib.getExe pkgs.tesseract;
     # it defaults to config/devices.json, but "config" dir doesn't exist by default and scanservjs doesn't create it
     devicesPath = "devices.json";
@@ -62,24 +62,24 @@ in
       type = lib.types.str;
       default = "/var/lib/scanservjs";
       description = ''
-        State directory for scanservjs
+        State directory for scanservjs.
       '';
     };
     settings = lib.mkOption {
       default = { };
       description = ''
-        Config to set in config.local.js's `afterConfig`
+        Config to set in config.local.js's `afterConfig`.
       '';
       type = lib.types.submodule {
         freeformType = settingsFormat.type;
         options.host = lib.mkOption {
           type = lib.types.str;
-          description = "The IP to listen on";
+          description = "The IP to listen on.";
           default = "127.0.0.1";
         };
         options.port = lib.mkOption {
           type = lib.types.port;
-          description = "The port to listen on";
+          description = "The port to listen on.";
           default = 8080;
         };
       };
@@ -88,27 +88,27 @@ in
       default = "";
       type = lib.types.lines;
       description = ''
-        Extra code to add to config.local.js's `afterConfig`
+        Extra code to add to config.local.js's `afterConfig`.
       '';
     };
     extraDevicesConfig = lib.mkOption {
       default = "";
       type = lib.types.lines;
       description = ''
-        Extra code to add to config.local.js's `afterDevices`
+        Extra code to add to config.local.js's `afterDevices`.
       '';
     };
     runAfterScan = lib.mkOption {
       default = "";
       type = lib.types.lines;
       description = ''
-        Extra code to add to config.local.js's `afterScan`
+        Extra code to add to config.local.js's `afterScan`.
       '';
     };
     extraActions = lib.mkOption {
       default = [ ];
       type = lib.types.listOf lib.types.lines;
-      description = "Actions to add to config.local.js's `actions`";
+      description = "Actions to add to config.local.js's `actions`.";
     };
   };
 

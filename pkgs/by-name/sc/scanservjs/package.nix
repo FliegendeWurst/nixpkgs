@@ -76,17 +76,18 @@ buildNpmPackage {
 
   postInstall = ''
     mkdir -p $out/bin
-    makeWrapper ${nodejs}/bin/node $out/bin/scanservjs \
+    makeWrapper ${lib.getExe nodejs} $out/bin/scanservjs \
       --set NODE_ENV production \
       --add-flags "'$out/lib/node_modules/scanservjs-api/src/server.js'"
   '';
 
-  meta = with lib; {
+  meta = {
     description = "SANE scanner nodejs web ui";
     longDescription = "scanservjs is a simple web-based UI for SANE which allows you to share a scanner on a network without the need for drivers or complicated installation.";
     homepage = "https://github.com/sbs20/scanservjs";
-    license = licenses.gpl2Only;
+    license = lib.licenses.gpl2Only;
     mainProgram = "scanservjs";
-    maintainers = with maintainers; [ chayleaf ];
+    maintainers = with lib.maintainers; [ chayleaf ];
+    platforms = lib.platforms.linux;
   };
 }
