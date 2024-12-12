@@ -153,6 +153,8 @@ self: super: with self; {
 
   aio-pika = callPackage ../development/python-modules/aio-pika { };
 
+  aioairctrl = callPackage ../development/python-modules/aioairctrl { };
+
   aioacaia = callPackage ../development/python-modules/aioacaia { };
 
   aioairzone = callPackage ../development/python-modules/aioairzone { };
@@ -4891,6 +4893,8 @@ self: super: with self; {
   glyphslib = callPackage ../development/python-modules/glyphslib { };
 
   glyphtools = callPackage ../development/python-modules/glyphtools { };
+
+  fnllm = callPackage ../development/python-modules/fnllm { };
 
   foobot-async = callPackage ../development/python-modules/foobot-async { };
 
@@ -10598,6 +10602,8 @@ self: super: with self; {
   pyiskra = callPackage ../development/python-modules/pyiskra { };
 
   pyisy = callPackage ../development/python-modules/pyisy { };
+
+  pyituran = callPackage ../development/python-modules/pyituran { };
 
   pyixapi = callPackage ../development/python-modules/pyixapi { };
 

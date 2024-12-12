@@ -23,7 +23,7 @@ python3.pkgs.buildPythonApplication rec {
     toml
   ];
 
-  buildInputs = [
+  propagatedBuildInputs = [
     xrandr
     srandrd
     feh

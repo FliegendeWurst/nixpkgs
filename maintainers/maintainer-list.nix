@@ -1400,6 +1400,13 @@
     githubId = 638836;
     name = "Andreas Rammhold";
   };
+  andre4ik3 = {
+    name = "andre4ik3";
+    email = "andre4ik3@fastmail.com";
+    matrix = "@andre4ik3:matrix.org";
+    github = "andre4ik3";
+    githubId = 62390580;
+  };
   andreasfelix = {
     email = "fandreas@physik.hu-berlin.de";
     github = "felix-andreas";
@@ -11300,6 +11307,12 @@
     githubId = 31776703;
     name = "Ariel Ebersberger";
   };
+  justdeeevin = {
+    email = "devin.droddy@gmail.com";
+    github = "justdeeevin";
+    githubId = 90054389;
+    name = "Devin Droddy";
+  };
   justinas = {
     email = "justinas@justinas.org";
     github = "justinas";
@@ -19840,6 +19853,12 @@
     github = "svanderburg";
     githubId = 1153271;
     name = "Sander van der Burg";
+  };
+  sandptel = {
+    email = "sandppatel15@gmail.com";
+    github = "sandptel";
+    githubId = 96694484;
+    name = "Sandeep Patel";
   };
   Sanskarzz = {
     email = "sanskar.gur@gmail.com";
