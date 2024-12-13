@@ -16,7 +16,8 @@ stdenv.mkDerivation rec {
     hash = "sha256-a1peHhku+OaGvPyChvLdh6/7zT+v8OHNwt60QUq7VvU=";
   };
 
-  buildInputs = [ squashfsTools ];
+  nativeBuildInputs = [ squashfsTools ];
+  strictDeps = true;
 
   unpackPhase = ''
     unsquashfs -dest . $src
