@@ -14,19 +14,19 @@
 
   libsForQt5,
 
-  withUnrar ? false,
+  withUnrar ? true,
   unrar, # has an unfree license
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "limo";
-  version = "1.0.6";
+  version = "1.0.8.2";
 
   src = fetchFromGitHub {
     owner = "limo-app";
     repo = "limo";
     rev = "refs/tags/v${finalAttrs.version}";
-    hash = "sha256-eYX6CxkSnTWbltrhp1QLwnlghy7V+1lzyvcwfWoQFB8=";
+    hash = "sha256-6rv1IjWb/nrymd57CtrlAjX2KfMYlYNnfiodiRAJ1Ok=";
   };
 
   patches = lib.optionals (!withUnrar) [
@@ -58,16 +58,15 @@ stdenv.mkDerivation (finalAttrs: {
       unrar
     ];
 
-  cmakeFlags = lib.optionals withUnrar [
-    (lib.cmakeFeature "LIBUNRAR_INCLUDE_DIR" "${lib.getDev unrar}/include/unrar")
-    (lib.cmakeFeature "LIBUNRAR_PATH" "unrar")
-  ];
-
-  postInstall = ''
-    install -Dm644 ../flatpak/io.github.limo_app.limo.png -t $out/share/icons/hicolor/512x512/apps
-    install -Dm644 ../flatpak/io.github.limo_app.limo.desktop -t $out/share/applications
-    install -Dm644 ../flatpak/io.github.limo_app.limo.metainfo.xml -t $out/share/metainfo
-  '';
+  cmakeFlags =
+    [
+      (lib.cmakeFeature "LIMO_INSTALL_PREFIX" (placeholder "out"))
+      (lib.cmakeBool "USE_SYSTEM_LIBUNRAR" true)
+    ]
+    ++ lib.optionals (!withUnrar) [
+      (lib.cmakeFeature "LIBUNRAR_PATH" "")
+      (lib.cmakeFeature "LIBUNRAR_INCLUDE_DIR" "")
+    ];
 
   meta = {
     description = "General purpose mod manager with support for the NexusMods API and LOOT";
