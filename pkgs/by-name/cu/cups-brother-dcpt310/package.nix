@@ -16,11 +16,12 @@
   pkgsi686Linux,
 }:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "cups-brother-dcpt310";
   version = "1.0.1";
+
   src = fetchurl {
-    url = "https://download.brother.com/welcome/dlf103618/dcpt310pdrv-${version}-0.i386.deb";
+    url = "https://download.brother.com/welcome/dlf103618/dcpt310pdrv-${finalAttrs.version}-0.i386.deb";
     sha256 = "0g9hylmpgmzd6k9lxjy32c7pxbzj6gr9sfaahxj3xzqyar05amdx";
   };
 
@@ -37,7 +38,13 @@ stdenvNoCC.mkDerivation rec {
     pkgsi686Linux.stdenv.cc.cc.lib
   ];
 
-  unpackPhase = "dpkg-deb -x $src .";
+  unpackPhase = ''
+    runHook preUnpack
+
+    dpkg-deb -x $src .
+
+    runHook postUnpack
+  '';
 
   installPhase = ''
     runHook preInstall
@@ -124,17 +131,17 @@ stdenvNoCC.mkDerivation rec {
       --replace \"\$"@"\" \"\$"@\" | LD_PRELOAD= ${gnused}/bin/sed -E '/^(function list :|resource file :).*/{s#/opt#$out/opt#}'"
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Brother DCP-T310 printer driver";
-    license = with licenses; [
+    license = with lib.licenses; [
       unfree
       gpl2Plus
     ];
-    sourceProvenance = with sourceTypes; [
+    sourceProvenance = with lib.sourceTypes; [
       binaryNativeCode
       fromSource
     ];
-    maintainers = with maintainers; [ inexcode ];
+    maintainers = with lib.maintainers; [ inexcode ];
     platforms = [
       "x86_64-linux"
       "i686-linux"
@@ -142,4 +149,4 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://www.brother.com/";
     downloadPage = "https://support.brother.com/g/b/downloadhowto.aspx?c=us_ot&lang=en&prod=dcpt310_all&os=128&dlid=dlf103618_000&flang=4&type3=10283";
   };
-}
+})
