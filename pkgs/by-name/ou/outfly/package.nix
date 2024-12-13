@@ -1,5 +1,4 @@
 {
-  stdenvNoCC,
   lib,
   fetchFromGitea,
   rustPlatform,
@@ -18,21 +17,14 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "outfly";
-  version = "0.13.0";
+  version = "0.14.0";
   src = fetchFromGitea {
     domain = "codeberg.org";
     owner = "outfly";
     repo = "outfly";
-    rev = "v${version}";
-    hash = "sha256-A43lLG5K9mEhRsv+paQa1so4Cyk75vyocAyU3k6wDiQ=";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-FRvu3FgbT3i5888ll573nhb7naYx04Oi8nrcfgEHxUo=";
   };
-
-  buildNoDefaultFeatures = true;
-  buildFeatures = [
-    "embed_assets"
-    "x11"
-    "wayland"
-  ];
 
   runtimeInputs = [
     libxkbcommon
@@ -50,14 +42,14 @@ rustPlatform.buildRustPackage rec {
   ];
 
   nativeBuildInputs = [ pkg-config ];
-  doCheck = false;
+  doCheck = false; # no meaningful tests
 
   postFixup = ''
     patchelf $out/bin/outfly \
     --add-rpath ${lib.makeLibraryPath runtimeInputs}
   '';
 
-  cargoHash = "sha256-6qd52F5ub1aFxJHeFEysy6ZOOuqmcsCiGHJNPp6pwhA=";
+  cargoHash = "sha256-Hs7IxDildYzDYMUjv7fN1cUArKNehX2al++g/DoZ7rk=";
 
   desktopItems = [
     (makeDesktopItem {
@@ -68,7 +60,7 @@ rustPlatform.buildRustPackage rec {
     })
   ];
   meta = {
-    description = "A breathtaking 3D space game in the rings of Jupiter";
+    description = "Breathtaking 3D space game in the rings of Jupiter";
     homepage = "https://yunicode.itch.io/outfly";
     downloadPage = "https://codeberg.org/outfly/outfly/releases";
     changelog = "https://codeberg.org/outfly/outfly/releases/tag/v${version}";

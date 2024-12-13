@@ -158,6 +158,11 @@
     github = "sledgehammervampire";
     githubId = 47207223;
   };
+  _13621 = {
+    name = "13621";
+    github = "13621";
+    githubId = 109436855;
+  };
   _13r0ck = {
     name = "Brock Szuszczewicz";
     email = "bnr@tuta.io";
@@ -261,6 +266,11 @@
     github = "6AA4FD";
     githubId = 12578560;
     name = "Quinn Bohner";
+  };
+  _71rd = {
+    name = "71rd";
+    github = "71rd";
+    githubId = 69214273;
   };
   _71zenith = {
     email = "71zenith@proton.me";
@@ -16543,6 +16553,11 @@
     githubId = 7249506;
     name = "oida";
   };
+  oidro = {
+    github = "oidro";
+    githubId = 31112680;
+    name = "oidro";
+  };
   ok-nick = {
     email = "nick.libraries@gmail.com";
     github = "ok-nick";
@@ -17016,6 +17031,12 @@
     github = "parth";
     githubId = 821972;
     name = "Parth Mehrotra";
+  };
+  paschoal = {
+    email = "paschoal@gmail.com";
+    github = "paschoal";
+    githubId = 64602;
+    name = "Matheus Paschoal";
   };
   pashashocky = {
     email = "pashashocky@gmail.com";
