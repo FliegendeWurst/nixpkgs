@@ -1,6 +1,7 @@
 {
   lib,
   fetchFromGitHub,
+  fetchpatch,
   stdenv,
   replaceVars,
   makeWrapper,
@@ -33,12 +34,7 @@ rustPlatform.buildRustPackage rec {
 
   buildAndTestSubdir = "gui/src-tauri";
 
-  # `hyper-tls` and `rustls-pemfile` aren't in the upstream lockfile, but are in
-  # Tauri's. This lock file is the upstream one with both of those added.
-  # `hper-tls` and `rustls-pemfile` are optional dependencies of `reqwest`.
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-  };
+  cargoHash = "sha256-jvt5x2Jr185XVSFjob4cusP/zYJklJ/eqZe47qUg58s=";
 
   pnpmDeps = pnpm_9.fetchDeps {
     pname = "${pname}-pnpm-deps";
@@ -57,38 +53,51 @@ rustPlatform.buildRustPackage rec {
 
   buildInputs =
     [
-      openssl.dev
+      openssl
       gst_all_1.gstreamer
       gst_all_1.gst-plugins-base
       gst_all_1.gst-plugins-good
       gst_all_1.gst-plugins-bad
     ]
-    ++ lib.optionals stdenv.isLinux [
+    ++ lib.optionals stdenv.hostPlatform.isLinux [
       glib-networking
       libayatana-appindicator
       webkitgtk_4_1
     ];
 
   patches = [
-    # Upstream code uses Git to find the program version
+    # Upstream code uses Git to find the program version.
     (replaceVars ./gui-no-git.patch {
       inherit version;
     })
   ];
 
+  cargoPatches = [
+    # Fix Tauri dependencies issue.
+    # FIXME: Remove with next package update.
+    (fetchpatch {
+      name = "enable-rustls-feature.patch";
+      url = "https://github.com/SlimeVR/SlimeVR-Server/commit/2708b5a15b7c1b8af3e86d942c5e842d83cf078f.patch";
+      hash = "sha256-UDVztPGPaKp2Hld3bMDuPMAu5s1OhvKEsTiXoDRK7cU=";
+    })
+  ];
+
   postPatch =
     ''
-      rm Cargo.lock
-      cp --no-preserve=mode ${./Cargo.lock} Cargo.lock
-
       # Tauri bundler expects slimevr.jar to exist.
       mkdir -p server/desktop/build/libs
       touch server/desktop/build/libs/slimevr.jar
     ''
     + lib.optionalString stdenv.hostPlatform.isLinux ''
       # Both libappindicator-rs and SlimeVR need to know where Nix's appindicator lib is.
-      substituteInPlace $cargoDepsCopy/libappindicator-sys-*/src/lib.rs \
+      pushd $cargoDepsCopy/libappindicator-sys
+      oldHash=$(sha256sum src/lib.rs | cut -d " " -f 1)
+      substituteInPlace src/lib.rs \
         --replace-fail "libayatana-appindicator3.so.1" "${libayatana-appindicator}/lib/libayatana-appindicator3.so.1"
+      # Cargo doesn't like it when vendored dependencies are edited.
+      substituteInPlace .cargo-checksum.json \
+        --replace-warn $oldHash $(sha256sum src/lib.rs | cut -d " " -f 1)
+      popd
       substituteInPlace gui/src-tauri/src/tray.rs \
         --replace-fail "libayatana-appindicator3.so.1" "${libayatana-appindicator}/lib/libayatana-appindicator3.so.1"
     '';
@@ -98,6 +107,8 @@ rustPlatform.buildRustPackage rec {
   preBuild = ''
     pnpm --filter solarxr-protocol install
   '';
+
+  doCheck = false; # No tests
 
   # Get rid of placeholder slimevr.jar
   postInstall = ''
