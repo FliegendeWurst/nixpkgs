@@ -30,24 +30,12 @@ python3Packages.buildPythonApplication rec {
     hash = "sha256-EiMCrRFUAJbu9QLgKpFIKqigCZ77lpTDD6AvZuMbyhA=";
   };
 
-  build-system =
-    with python3Packages;
+  build-system = with python3Packages; [
+    setuptools
+  ];
+
+  propagatedBuildInputs =
     [
-      cython
-      djvulibre
-      docbook-xsl-ns
-      glibcLocales
-      html5lib
-      libxml2
-      libxml2Python
-      libxslt
-      packaging
-      pillow
-      pkg-config
-      pyicu
-      setuptools
-      tesseract5
-      wheel
     ]
     ++ lib.optional withCuneiform cuneiform
     ++ lib.optional withGocr gocr
@@ -56,9 +44,19 @@ python3Packages.buildPythonApplication rec {
   dependencies = with python3Packages; [
     lxml
     python-djvulibre
+    pyicu
+    html5lib
   ];
 
-  nativeCheckInputs = [ python3Packages.unittestCheckHook ];
+  nativeCheckInputs = [
+    python3Packages.unittestCheckHook
+    python3Packages.pillow
+    djvulibre
+    glibcLocales
+    libxml2
+    libxml2Python
+    tesseract5
+  ];
 
   unittestFlagsArray = [
     "tests"
