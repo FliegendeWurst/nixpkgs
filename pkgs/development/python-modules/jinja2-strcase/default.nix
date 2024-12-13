@@ -29,7 +29,7 @@ buildPythonPackage rec {
 
   pythonImportsCheck = [ "jinja2_strcase" ];
 
-  doCheck = false;
+  doCheck = false; # no tests
 
   meta = with lib; {
     homepage = "https://github.com/marchmiel/jinja2-strcase";
