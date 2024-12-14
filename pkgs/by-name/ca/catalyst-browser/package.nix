@@ -23,8 +23,7 @@ stdenv.mkDerivation rec {
   };
 
   appimageContents = appimageTools.extractType2 {
-    name = "catalyst-${version}";
-    inherit src;
+    inherit pname src version;
   };
 
   dontUnpack = true;
