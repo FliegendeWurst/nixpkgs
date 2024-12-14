@@ -102,12 +102,12 @@ stdenv.mkDerivation {
   passthru = {
     inherit offlineCache;
     tests = nixosTests.actual;
-    updateScript = nix-update-script { };
+    passthru.updateScript = nix-update-script { };
   };
 
   meta = {
-    changelog = "https://github.com/firefly-iii/firefly-iii/releases/tag/v${version}";
-    description = "A super fast privacy-focused app for managing your finances";
+    changelog = "https://actualbudget.org/docs/releases";
+    description = "Super fast privacy-focused app for managing your finances";
     homepage = "https://actualbudget.org/";
     mainProgram = "actual-server";
     license = lib.licenses.mit;
