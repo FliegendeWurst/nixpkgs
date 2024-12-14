@@ -457,6 +457,7 @@ with lib.maintainers;
       aleksana
       dawidd6
       getchoo
+      michaelgrahamevans
     ];
     scope = "Maintain GNOME Circle applications.";
     shortName = "GNOME Circle";
@@ -535,6 +536,16 @@ with lib.maintainers;
     shortName = "Java";
     scope = "Maintainers of the Nixpkgs Java ecosystem (JDK, JVM, Java, Gradle, Maven, Ant, and adjacent projects)";
     enableFeatureFreezePing = true;
+  };
+
+  jetbrains = {
+    members = [
+      edwtjo
+      leona
+      theCapypara
+    ];
+    shortName = "Jetbrains";
+    scope = "Maintainers of the Jetbrains IDEs in nixpkgs";
   };
 
   jitsi = {

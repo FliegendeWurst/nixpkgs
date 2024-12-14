@@ -4,7 +4,7 @@
   fetchurl,
 }:
 stdenv.mkDerivation (finalAttrs: {
-  name = "ttaenc";
+  pname = "ttaenc";
   version = "3.4.1";
 
   src = fetchurl {
@@ -26,8 +26,8 @@ stdenv.mkDerivation (finalAttrs: {
 
   postInstall = ''
     # Copy docs
-    install -dm755 "$out/share/doc/${finalAttrs.name}"
-    install -m644 "ChangeLog-${finalAttrs.version}" README "$out/share/doc/${finalAttrs.name}"
+    install -dm755 "$out/share/doc/${finalAttrs.pname}"
+    install -m644 "ChangeLog-${finalAttrs.version}" README "$out/share/doc/${finalAttrs.pname}"
   '';
 
   meta = {
@@ -37,7 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
       gpl3Only
       lgpl3Only
     ];
-    platforms = lib.platforms.all;
+    platforms = lib.platforms.unix;
     mainProgram = "ttaenc";
     maintainers = with lib.maintainers; [ natsukagami ];
   };
