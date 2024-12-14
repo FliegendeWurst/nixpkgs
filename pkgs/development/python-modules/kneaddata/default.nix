@@ -2,6 +2,7 @@
   lib,
   buildPythonPackage,
   fetchFromGitHub,
+  unittestCheckHook,
   setuptools,
 }:
 
@@ -18,6 +19,12 @@ buildPythonPackage rec {
     rev = "refs/tags/${version}";
     hash = "sha256-8pXabwMGNZETEXP0A31SInj37pvogyKpJAaAY7aTyns=";
   };
+
+  nativeCheckInputs = [ unittestCheckHook ];
+
+  unittestFlagsArray = [ "kneaddata/tests/ '*.py'" ];
+
+  pythonImportsCheck = [ "kneaddata" ];
 
   meta = {
     description = "Quality control tool for metagenomic and metatranscriptomic sequencing data";
