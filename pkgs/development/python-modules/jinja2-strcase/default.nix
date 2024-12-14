@@ -29,12 +29,12 @@ buildPythonPackage rec {
 
   pythonImportsCheck = [ "jinja2_strcase" ];
 
-  doCheck = false;
+  doCheck = false; # no tests
 
-  meta = with lib; {
+  meta = {
     homepage = "https://github.com/marchmiel/jinja2-strcase";
-    description = "A package for converting string case in Jinja2 templates";
-    license = licenses.mit;
-    maintainers = with maintainers; [ crimeminister ];
+    description = "Library for converting string case in Jinja2 templates";
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ crimeminister ];
   };
 }
