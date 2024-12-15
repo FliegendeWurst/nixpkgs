@@ -72,18 +72,19 @@ stdenv.mkDerivation (finalAttrs: {
     runHook preInstall
 
     # Link the application in $out/bin away from contents of `preInstall`
-    ln -s "$out/opt/Nextcloud Talk-linux-x64" $out/bin/nextcloud-talk-desktop
+    ln -s "$out/opt/Nextcloud Talk-linux-x64/Nextcloud Talk" $out/bin/nextcloud-talk-desktop
 
     runHook postInstall
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Nextcloud Talk Desktop Client";
     homepage = "https://github.com/nextcloud/talk-desktop";
     changelog = "https://github.com/nextcloud/talk-desktop/blob/${finalAttrs.version}/CHANGELOG.md";
-    license = licenses.agpl3Only;
-    maintainers = with maintainers; [ kashw2 ];
+    license = lib.licenses.agpl3Only;
+    maintainers = with lib.maintainers; [ kashw2 ];
     mainProgram = "nextcloud-talk-desktop";
     sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
+    platforms = [ "x86_64-linux" ];
   };
 })
