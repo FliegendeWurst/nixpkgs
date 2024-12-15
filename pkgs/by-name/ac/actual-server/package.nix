@@ -6,7 +6,7 @@
   makeWrapper,
   cacert,
   gitMinimal,
-  nodejs_18,
+  nodejs_20,
   yarn,
   nixosTests,
   nix-update-script,
@@ -16,11 +16,11 @@ let
   src = fetchFromGitHub {
     owner = "actualbudget";
     repo = "actual-server";
-    rev = "v${version}";
+    tag = "v${version}";
     hash = "sha256-qCATfpYjDlR2LaalkF0/b5tD4HDE4aNDrLvTC4g0ctY=";
   };
 
-  yarn_18 = yarn.override { nodejs = nodejs_18; };
+  yarn_20 = yarn.override { nodejs = nodejs_20; };
 
   # We cannot use fetchYarnDeps because that doesn't support yarn2/berry
   # lockfiles (see https://github.com/NixOS/nixpkgs/issues/254369)
@@ -31,7 +31,7 @@ let
     nativeBuildInputs = [
       cacert # needed for git
       gitMinimal # needed to download git dependencies
-      yarn_18
+      yarn_20
     ];
 
     SUPPORTED_ARCHITECTURES = builtins.toJSON {
@@ -75,7 +75,7 @@ let
 
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
-    outputHash = "sha256-W9cQVsceNcHNBPPlkqN9tkGQYhgwwZQwKLUAoMgNbeo=";
+    outputHash = "sha256-Rz+iKw4JDWtZOrCjs9sbHVw/bErAEY4TfoG+QfGKY94=";
   };
 in
 stdenv.mkDerivation {
@@ -84,7 +84,7 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     makeWrapper
-    yarn_18
+    yarn_20
   ];
 
   installPhase = ''
@@ -94,7 +94,7 @@ stdenv.mkDerivation {
     cp -r ${offlineCache}/node_modules/ $out/lib/actual
     cp -r ./ $out/lib/actual
 
-    makeWrapper ${lib.getExe nodejs_18} "$out/bin/actual-server" \
+    makeWrapper ${lib.getExe nodejs_20} "$out/bin/actual-server" \
       --add-flags "$out/lib/actual/app.js" \
       --set NODE_PATH "$out/node_modules"
 
