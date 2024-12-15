@@ -22448,6 +22448,11 @@
     github = "thilobillerbeck";
     githubId = 7442383;
   };
+  thinnerthinker = {
+    name = "thinnerthinker";
+    github = "thinnerthinker";
+    githubId = 144260188;
+  };
   thled = {
     name = "Thomas Le Duc";
     email = "dev@tleduc.de";
