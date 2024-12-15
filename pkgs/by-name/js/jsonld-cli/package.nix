@@ -22,6 +22,7 @@ buildNpmPackage rec {
   meta = {
     description = "JSON-LD command line interface tool";
     homepage = "https://github.com/digitalbazaar/jsonld-cli";
+    changelog = "https://github.com/digitalbazaar/jsonld-cli/blob/main/CHANGELOG.md";
     license = lib.licenses.bsd3;
     maintainers = with lib.maintainers; [ msladecek ];
     mainProgram = "jsonld";
