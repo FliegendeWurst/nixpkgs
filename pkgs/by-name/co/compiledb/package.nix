@@ -39,9 +39,6 @@ python3Packages.buildPythonApplication rec {
     mainProgram = "compiledb";
     license = lib.licenses.gpl3;
     homepage = "https://github.com/nickdiego/compiledb";
-    maintainers = with lib.maintainers; [
-      sigmanificient
-      multun
-    ];
+    maintainers = with lib.maintainers; [ sigmanificient ];
   };
 }
