@@ -7,7 +7,6 @@
   llvm_17,
   clang_17,
   z3,
-  zlib,
   makeWrapper,
 }:
 
@@ -64,6 +63,7 @@ stdenv.mkDerivation {
     homepage = "https://www.s3.eurecom.fr/tools/symbolic_execution/symcc.html";
     license = lib.licenses.gpl3Plus;
     maintainers = [ lib.maintainers.dump_stack ];
+    platforms = lib.platforms.linux;
     mainProgram = "symcc";
   };
 }
