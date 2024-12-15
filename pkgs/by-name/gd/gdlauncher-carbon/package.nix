@@ -47,7 +47,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     xorg.libxcb
+    stdenv.cc.cc.lib
   ];
+
+  strictDeps = true;
 
   installPhase = ''
     runHook preInstall
