@@ -12,12 +12,12 @@ buildPythonPackage rec {
 
   src = fetchFromGitHub {
     owner = "mondeja";
-    repo = pname;
+    repo = "pre-commit-po-hooks";
     rev = "v${version}";
     hash = "sha256-wTmcV8KkoQLuK4EWDt0pbp+EQJRatxnQYeBfikK+vlA=";
   };
 
-  nativeBuildInputs = [ pytestCheckHook ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   build-system = [ setuptools ];
 
