@@ -3599,7 +3599,7 @@ self: super: with self; {
 
   django-pwa = callPackage ../development/python-modules/django-pwa { };
 
-  django-q = callPackage ../development/python-modules/django-q { };
+  django-q2 = callPackage ../development/python-modules/django-q2 { };
 
   django-scheduler = callPackage ../development/python-modules/django-scheduler { };
 
@@ -14847,6 +14847,8 @@ self: super: with self; {
 
   simple-websocket-server = callPackage ../development/python-modules/simple-websocket-server { };
 
+  simplification = callPackage ../development/python-modules/simplification { };
+
   simplisafe-python = callPackage ../development/python-modules/simplisafe-python { };
 
   simpful = callPackage ../development/python-modules/simpful { };
@@ -16268,6 +16270,8 @@ self: super: with self; {
   toolz = callPackage ../development/python-modules/toolz { };
 
   toonapi = callPackage ../development/python-modules/toonapi { };
+
+  topojson =  callPackage ../development/python-modules/topojson { };
 
   toposort = callPackage ../development/python-modules/toposort { };
 
