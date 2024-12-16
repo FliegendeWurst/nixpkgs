@@ -92,7 +92,7 @@ stdenv.mkDerivation (finalAttrs: {
       luajit
     ];
 
-  strictDeps = false; # TODO
+  strictDeps = false;
 
   # for gegl-4.0.pc
   propagatedBuildInputs = [

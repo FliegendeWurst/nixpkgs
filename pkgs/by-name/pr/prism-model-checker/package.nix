@@ -1,44 +1,101 @@
 {
   lib,
   stdenv,
-  prism-model-checker-unwrapped,
-  java,
-  symlinkJoin,
+  gccStdenv,
+  coreutils,
+  fetchFromGitHub,
+  openjdk,
+  jre,
+  cctools,
+  copyDesktopItems,
+  makeDesktopItem,
   makeWrapper,
-  writeText,
 }:
 let
-  desktopEntry = writeText "prism-model-checker-xprism.desktop" ''
-    [Desktop Entry]
-    Type=Application
-    Icon=prism-model-checker
-    Terminal=false
-    Categories=Science;Math
-    Comment=Probabalistic Symbolic Model Checker
-    Name=XPrism
-    Version=${prism-model-checker-unwrapped.version}
-    Exec=xprism
-  '';
+  stdenv' = if stdenv.hostPlatform.isDarwin then gccStdenv else stdenv;
 in
-symlinkJoin {
-  name = "prism-model-checker-${prism-model-checker-unwrapped.version}";
-  nativeBuildInputs = [ makeWrapper ];
-  paths = [
-    prism-model-checker-unwrapped
-    java
+stdenv'.mkDerivation (finalAttrs: {
+  pname = "prism-model-checker";
+  version = "4.8.1";
+
+  src = fetchFromGitHub {
+    owner = "prismmodelchecker";
+    repo = "prism";
+    rev = "v${finalAttrs.version}";
+    hash = "sha256-igFRIjPfx0BFpQjaW/vgMEnH2HLC06aL3IMHh+ELB6U=";
+  };
+
+  nativeBuildInputs = [
+    openjdk
+    copyDesktopItems
+    makeWrapper
+  ] ++ lib.optionals stdenv'.hostPlatform.isDarwin [ cctools ];
+
+  desktopItems = [
+    (makeDesktopItem {
+      name = "prism-model-checker-xprism";
+      desktopName = "XPrism";
+      type = "Application";
+      icon = "prism-model-checker";
+      terminal = false;
+      categories = [
+        "Science"
+        "Math"
+      ];
+      exec = "xprism";
+      comment = "Probabalistic Symbolic Model Checker";
+    })
   ];
 
-  postBuild = ''
-    rm -rf $out/bin
-    mkdir --parents $out/bin
-    for f in $(ls ${prism-model-checker-unwrapped}/bin); do
-      makeWrapper "${prism-model-checker-unwrapped}/bin/$f" "$out/bin/$f" \
-          --set JAVA_HOME ${java.home} \
-          --set PRISM_JAVA ${java.home}/bin/java \
-          --prefix PATH: ${lib.makeBinPath [ java ]}
-    done
-    mkdir --parents $out/share/applications
-    cp ${desktopEntry} $out/share/applications/prism-model-checker-xprism.desktop
+  postPatch = ''
+    substituteInPlace prism/install.sh --replace-fail "/bin/mv" "mv"
   '';
-  meta = prism-model-checker-unwrapped.meta;
-}
+
+  makeFlags = [
+    "JAVA_DIR=${openjdk}"
+    "release_config"
+    "clean_all"
+    "all"
+    "binary"
+  ];
+  preBuild = ''
+    cd prism
+  '';
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir --parents $out/share/
+    cp -r bin/ $out/
+    cp -r lib/ $out/
+    cp -r etc/{scripts,syntax-highlighters,prism{.css,.tex,-eclipse-formatter.xml}} -t $out/share
+    for size in 16 24 32 48 64 128 256; do
+        mkdir --parents $out/share/icons/hicolor/''${size}x''${size}/apps
+        cp etc/icons/p''${size}.png $out/share/icons/hicolor/''${size}x''${size}/apps/prism-model-checker.png
+    done
+
+    mv install.sh $out/
+    cd $out
+    ./install.sh
+    rm install.sh
+
+    for f in $out/bin/*; do
+      wrapProgram $f \
+          --set JAVA_HOME ${jre.home} \
+          --set PRISM_JAVA ${lib.getExe jre} \
+          --prefix PATH: ${lib.makeBinPath [ jre ]}
+    done
+
+    runHook postInstall
+  '';
+
+  meta = {
+    description = "Probabalistic Symbolic Model Checker";
+
+    homepage = "https://www.prismmodelchecker.org";
+    license = lib.licenses.gpl2Plus;
+    maintainers = [ lib.maintainers.astrobeastie ];
+    platforms = lib.platforms.unix;
+    mainProgram = "prism";
+  };
+})

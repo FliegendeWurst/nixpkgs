@@ -27,7 +27,7 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "rclone_python" ];
 
   meta = {
-    description = "A python wrapper for rclone that makes rclone's functionality usable in python.";
+    description = "Python wrapper for rclone";
     homepage = "https://github.com/Johannes11833/rclone_python";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ CaptainJawZ ];
