@@ -1,5 +1,6 @@
 {
   lib,
+  stdenv,
   buildPythonPackage,
   fetchPypi,
 
@@ -69,5 +70,7 @@ buildPythonPackage rec {
     homepage = "https://hcipy.org/";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ BarrOff ];
+    # seems to be broken on arm, see: https://github.com/NixOS/nixpkgs/pull/341906
+    broken = stdenv.isAarch64;
   };
 }
