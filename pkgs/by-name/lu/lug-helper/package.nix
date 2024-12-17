@@ -12,12 +12,12 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   name = "lug-helper";
-  version = "2.18";
+  version = "3.5";
   src = fetchFromGitHub {
     owner = "starcitizen-lug";
     repo = "lug-helper";
     rev = "refs/tags/v${finalAttrs.version}";
-    hash = "sha256-x6o9hNXadlZrww5+a9xZtNfRwxKuTO/O9M9iYvhMIYc=";
+    hash = "sha256-yaYSm2vft55koZeB32Gta7RCjFTEec481LhrVHGGMm4=";
   };
 
   buildInputs = [
@@ -45,7 +45,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   postInstall = ''
     install -Dm755 lug-helper.sh $out/bin/lug-helper
-    install -Dm644 lug-logo.png $out/share/pixmaps/lug-logo.png
+    install -Dm644 lug-logo.png $out/share/icons/hicolor/256x256/apps/lug-logo.png
+    install -Dm644 rsi-launcher.png $out/share/icons/hicolor/256x256/apps/rsi-launcher.png
     install -Dm644 lib/* -t $out/share/lug-helper
 
     wrapProgram $out/bin/lug-helper \
@@ -62,6 +63,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   meta = {
     description = "Script to manage and optimize Star Citizen on Linux";
     homepage = "https://github.com/starcitizen-lug/lug-helper";
+    changelog = "https://github.com/starcitizen-lug/lug-helper/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.gpl3Only;
     maintainers = with lib.maintainers; [ fuzen ];
     platforms = lib.platforms.linux;

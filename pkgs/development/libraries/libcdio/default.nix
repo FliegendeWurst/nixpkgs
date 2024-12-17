@@ -1,4 +1,16 @@
-{ lib, stdenv, fetchurl, fetchpatch, libcddb, pkg-config, ncurses, help2man, libiconv, Carbon, IOKit }:
+{
+  lib,
+  stdenv,
+  fetchurl,
+  fetchpatch,
+  libcddb,
+  pkg-config,
+  ncurses,
+  help2man,
+  libiconv,
+  Carbon,
+  IOKit,
+}:
 
 stdenv.mkDerivation rec {
   pname = "libcdio";
@@ -29,11 +41,26 @@ stdenv.mkDerivation rec {
     patchShebangs .
   '';
 
-  nativeBuildInputs = [ pkg-config help2man ];
-  buildInputs = [ libcddb libiconv ncurses ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [ Carbon IOKit ];
+  nativeBuildInputs = [
+    pkg-config
+    help2man
+  ];
+  buildInputs =
+    [
+      libcddb
+      libiconv
+      ncurses
+    ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [
+      Carbon
+      IOKit
+    ];
 
   enableParallelBuilding = true;
+
+  env = lib.optionalAttrs stdenv.cc.isGNU {
+    NIX_CFLAGS_COMPILE = "-Wno-error=implicit-function-declaration";
+  };
 
   doCheck = !stdenv.hostPlatform.isDarwin;
 

@@ -10,7 +10,6 @@
 
   # dependencies
   anyio,
-  cached-property,
   distro,
   httpx,
   jiter,
@@ -27,6 +26,7 @@
   pytestCheckHook,
   dirty-equals,
   inline-snapshot,
+  nest-asyncio,
   pytest-asyncio,
   pytest-mock,
   respx,
@@ -35,16 +35,16 @@
 
 buildPythonPackage rec {
   pname = "openai";
-  version = "1.51.0";
+  version = "1.57.4";
   pyproject = true;
 
-  disabled = pythonOlder "3.7.1";
+  disabled = pythonOlder "3.8";
 
   src = fetchFromGitHub {
     owner = "openai";
     repo = "openai-python";
     rev = "refs/tags/v${version}";
-    hash = "sha256-VwsW7wVNSVlZg+RJoQ3C9AuqHL5dFO+f9pyfUbRbrSM=";
+    hash = "sha256-djYvHEIieJPak8EY7c5hhMhTzxm/Prc4RSfrFjzHqI4=";
   };
 
   build-system = [
@@ -61,7 +61,7 @@ buildPythonPackage rec {
     sniffio
     tqdm
     typing-extensions
-  ] ++ lib.optionals (pythonOlder "3.8") [ cached-property ];
+  ];
 
   optional-dependencies = {
     datalib = [
@@ -77,6 +77,7 @@ buildPythonPackage rec {
     pytestCheckHook
     dirty-equals
     inline-snapshot
+    nest-asyncio
     pytest-asyncio
     pytest-mock
     respx

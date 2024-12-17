@@ -52,7 +52,7 @@
 
 buildPythonPackage rec {
   pname = "chromadb";
-  version = "0.5.7";
+  version = "0.5.20";
   pyproject = true;
 
   disabled = pythonOlder "3.9";
@@ -61,13 +61,13 @@ buildPythonPackage rec {
     owner = "chroma-core";
     repo = "chroma";
     rev = "refs/tags/${version}";
-    hash = "sha256-+wRauCRrTQsGTadA6Ps0fXcpAl6ajsJRjcVEhP2+2ss=";
+    hash = "sha256-DQHkgCHtrn9xi7Kp7TZ5NP1EtFtTH5QOvne9PUvxsWc=";
   };
 
   cargoDeps = rustPlatform.fetchCargoTarball {
     inherit src;
     name = "${pname}-${version}";
-    hash = "sha256-Y2mkWGgS77sGOOL+S/pw/UmrKDRyO+ZbN2Msj35sIl8=";
+    hash = "sha256-vHH7Uq4Jf8/5Vc8oZ5nvAeq/dFVWywsQYbp7yJkfX7Q=";
   };
 
   pythonRelaxDeps = [
@@ -149,6 +149,8 @@ buildPythonPackage rec {
     # Tests are laky / timing sensitive
     "test_fastapi_server_token_authn_allows_when_it_should_allow"
     "test_fastapi_server_token_authn_rejects_when_it_should_reject"
+    # Issue with event loop
+    "test_http_client_bw_compatibility"
   ];
 
   disabledTestPaths = [

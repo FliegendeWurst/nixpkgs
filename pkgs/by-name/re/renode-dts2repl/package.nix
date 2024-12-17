@@ -1,19 +1,20 @@
-{ lib
-, python3
-, fetchFromGitHub
-, unstableGitUpdater
+{
+  lib,
+  python3,
+  fetchFromGitHub,
+  unstableGitUpdater,
 }:
 
 python3.pkgs.buildPythonApplication {
   pname = "renode-dts2repl";
-  version = "0-unstable-2024-09-27";
+  version = "0-unstable-2024-12-12";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "antmicro";
     repo = "dts2repl";
-    rev = "9963f8eb0ef9d356b2d1bfa031c2e136ce4a5509";
-    hash = "sha256-RrKnLSBCtXUfdC9PNXddIAFFBbT39ZYxJJqYwKHYLP0=";
+    rev = "7030a464003fedd3960f3a9d7810dc9c27d8f11a";
+    hash = "sha256-saRVU7PPrceoro/vYNRDpfdmghDCWQn2CAukHT5aQcc=";
   };
 
   nativeBuildInputs = [

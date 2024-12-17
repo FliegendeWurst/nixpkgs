@@ -1,6 +1,5 @@
 {
   lib,
-  stdenv,
   linkFarm,
   fetchurl,
   buildPythonPackage,
@@ -8,23 +7,21 @@
   python,
 
   # nativeBuildInputs
-  pkg-config,
-  setuptools-rust,
-  rustPlatform,
   cargo,
+  pkg-config,
+  rustPlatform,
   rustc,
+  setuptools-rust,
 
   # buildInputs
   openssl,
-  libiconv,
-  Security,
 
   # dependencies
   huggingface-hub,
-  numpy,
 
   # tests
   datasets,
+  numpy,
   pytestCheckHook,
   requests,
   tiktoken,
@@ -52,7 +49,7 @@ let
     };
     "big.txt" = fetchurl {
       url = "https://norvig.com/big.txt";
-      sha256 = "sha256-+gZsfUDw8gGsQUTmUqpiQw5YprOAXscGUPZ42lgE6Hs=";
+      hash = "sha256-+gZsfUDw8gGsQUTmUqpiQw5YprOAXscGUPZ42lgE6Hs=";
     };
     "bert-wiki.json" = fetchurl {
       url = "https://s3.amazonaws.com/models.huggingface.co/bert/anthony/doc-pipeline/tokenizer.json";
@@ -74,44 +71,49 @@ let
 in
 buildPythonPackage rec {
   pname = "tokenizers";
-  version = "0.20.0";
+  version = "0.21.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "huggingface";
     repo = "tokenizers";
-    rev = "refs/tags/v${version}";
-    hash = "sha256-uuSHsdyx77YQjf1aiz7EJ/X+6RaOgfmjGqHSlMaCWDI=";
+    tag = "v${version}";
+    hash = "sha256-G65XiVlvJXOC9zqcVr9vWamUnpC0aa4kyYkE2v1K2iY=";
   };
 
-  cargoDeps = rustPlatform.importCargoLock { lockFile = ./Cargo.lock; };
+  cargoDeps = rustPlatform.fetchCargoTarball {
+    inherit
+      pname
+      version
+      src
+      sourceRoot
+      ;
+    hash = "sha256-5cw63ydyhpMup2tOe/hpG2W6YZ+cvT75MJBkE5Wap4s=";
+  };
 
   sourceRoot = "${src.name}/bindings/python";
   maturinBuildFlags = [ "--interpreter ${python.executable}" ];
 
   nativeBuildInputs = [
+    cargo
     pkg-config
-    setuptools-rust
     rustPlatform.cargoSetupHook
     rustPlatform.maturinBuildHook
-    cargo
     rustc
+    setuptools-rust
   ];
 
-  buildInputs =
-    [ openssl ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      libiconv
-      Security
-    ];
+  buildInputs = [
+    openssl
+  ];
 
   dependencies = [
     huggingface-hub
-    numpy
   ];
 
   nativeCheckInputs = [
     datasets
+    numpy
     pytestCheckHook
     requests
     tiktoken
@@ -149,6 +151,7 @@ buildPythonPackage rec {
   meta = {
     description = "Fast State-of-the-Art Tokenizers optimized for Research and Production";
     homepage = "https://github.com/huggingface/tokenizers";
+    changelog = "https://github.com/huggingface/tokenizers/releases/tag/v${version}";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ GaetanLepage ];
     platforms = lib.platforms.unix;

@@ -12,7 +12,7 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "snapcraft";
-  version = "8.4.1";
+  version = "8.5.0";
 
   pyproject = true;
 
@@ -20,7 +20,7 @@ python3Packages.buildPythonApplication rec {
     owner = "canonical";
     repo = "snapcraft";
     rev = "refs/tags/${version}";
-    hash = "sha256-34LtQ0CV5Ov0RJvN2eNFYEvtccHebpqjaYlhExE/z4c=";
+    hash = "sha256-u5LO29LnAJrU8fafa1EA4ii5g8sO8REfuf/7lzI7x5k=";
   };
 
   patches = [
@@ -82,7 +82,7 @@ python3Packages.buildPythonApplication rec {
     craft-platforms
     craft-providers
     craft-store
-    debian
+    python-debian
     docutils
     jsonschema
     launchpadlib
@@ -103,7 +103,7 @@ python3Packages.buildPythonApplication rec {
     pyyaml
     raven
     requests-toolbelt
-    requests-unixsocket
+    requests-unixsocket2
     simplejson
     snap-helpers
     tabulate
@@ -160,6 +160,7 @@ python3Packages.buildPythonApplication rec {
     "test_get_base_configuration_snap_channel"
     "test_get_base_configuration_snap_instance_name_default"
     "test_get_base_configuration_snap_instance_name_not_running_as_snap"
+    "test_get_build_commands"
     "test_get_extensions_data_dir"
     "test_get_os_platform_alternative_formats"
     "test_get_os_platform_linux"

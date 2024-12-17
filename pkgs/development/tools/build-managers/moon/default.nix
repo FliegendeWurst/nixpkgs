@@ -1,35 +1,37 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, darwin
-, stdenv
-, openssl
-, pkg-config
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  darwin,
+  stdenv,
+  openssl,
+  pkg-config,
 }:
 
 rustPlatform.buildRustPackage rec {
   pname = "moon";
-  version = "1.28.3";
+  version = "1.30.5";
 
   src = fetchFromGitHub {
     owner = "moonrepo";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-X7O5F/gIkj0EOTMat6koKmCba2V/UiIUq0O46gNiCp8=";
+    hash = "sha256-yH/NK5i0RL71TPgPkpLJuqx7YBdFVVGTEc5Hb1uBcak=";
   };
 
-  cargoHash = "sha256-I4QLlvN1F4Ptq43A0KpRCnSIxavsvLGnkbJzbiTxjm4=";
+  cargoHash = "sha256-wQ7JFccDCE7riMTsqlYI2CHMHEZVuRLgB5EwvNV4QsM=";
 
   env = {
     RUSTFLAGS = "-C strip=symbols";
     OPENSSL_NO_VENDOR = 1;
   };
 
-  buildInputs = [ openssl ] ++
-    lib.optionals stdenv.hostPlatform.isDarwin [
+  buildInputs =
+    [ openssl ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [
       darwin.apple_sdk.frameworks.Security
       darwin.apple_sdk.frameworks.SystemConfiguration
-  ];
+    ];
   nativeBuildInputs = [ pkg-config ];
 
   # Some tests fail, because test using internet connection and install NodeJS by example

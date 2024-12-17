@@ -53,7 +53,7 @@ let
   stdenv' = if stdenv.hostPlatform.isDarwin then overrideSDK stdenv "11.0" else stdenv;
 in
 stdenv'.mkDerivation (finalAttrs: {
-  version = "1.47.1";
+  version = "1.47.5";
   pname = "netdata";
 
   src = fetchFromGitHub {
@@ -62,10 +62,10 @@ stdenv'.mkDerivation (finalAttrs: {
     rev = "v${finalAttrs.version}";
     hash =
       if withCloudUi then
-        "sha256-/iXmIjWpZ0s/LELZM7rYYQ9cjLNdfdisyOvDyLddSY4="
+        "sha256-+cPYwjxg/+A5bNa517zg9xKEjUa8uPM9WD67tToPH5o="
       # we delete the v2 GUI after fetching
       else
-        "sha256-pAqxxsWYgqbmF6wFBfTCYYc3x/Ufyz2Xs4bwB1ToHjo=";
+        "sha256-0aiBUkDymmdIT/u1y2PG30QYAvb8Zc4i8ZgjOtlzt+A=";
     fetchSubmodules = true;
 
     # Remove v2 dashboard distributed under NCUL1. Make sure an empty
@@ -242,7 +242,7 @@ stdenv'.mkDerivation (finalAttrs: {
     rm -rf $out/{var,usr,etc}
   '';
 
-  enableParallelBuild = true;
+  enableParallelBuilding = true;
 
   passthru = rec {
     netdata-go-modules =

@@ -1,5 +1,6 @@
 { lib
 , stdenv
+, curl
 , expat
 , fetchFromGitHub
 , gst_all_1
@@ -22,7 +23,7 @@
 , unicode ? true
 , withMesa ? !stdenv.hostPlatform.isDarwin
 , withWebKit ? true
-, webkitgtk
+, webkitgtk_4_0
 , setfile
 , AGL
 , Carbon
@@ -50,13 +51,13 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "wxwidgets";
-  version = "3.2.5";
+  version = "3.2.6";
 
   src = fetchFromGitHub {
     owner = "wxWidgets";
     repo = "wxWidgets";
     rev = "v${version}";
-    hash = "sha256-ibkXs693xO+z3JuMvlG4b/+A8f4Lf5TYqdDa67fb9ck=";
+    hash = "sha256-7dc7NGiKSonFFaWp3UxLYqDc1Cc6no1Eba0QmtzX5mM=";
   };
 
   nativeBuildInputs = [ pkg-config ];
@@ -70,6 +71,7 @@ stdenv.mkDerivation rec {
     zlib
     pcre2
   ] ++ lib.optionals stdenv.hostPlatform.isLinux [
+    curl
     gtk3
     libSM
     libXinerama
@@ -78,7 +80,7 @@ stdenv.mkDerivation rec {
     xorgproto
   ]
   ++ lib.optional withMesa libGLU
-  ++ lib.optional (withWebKit && stdenv.hostPlatform.isLinux) webkitgtk
+  ++ lib.optional (withWebKit && stdenv.hostPlatform.isLinux) webkitgtk_4_0
   ++ lib.optional (withWebKit && stdenv.hostPlatform.isDarwin) WebKit
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
     expat
@@ -102,6 +104,7 @@ stdenv.mkDerivation rec {
     "--with-nanosvg"
     "--disable-rpath"
     "--enable-repro-build"
+    "--enable-webrequest"
     (if compat28 then "--enable-compat28" else "--disable-compat28")
     (if compat30 then "--enable-compat30" else "--disable-compat30")
   ] ++ lib.optional unicode "--enable-unicode"
@@ -109,6 +112,9 @@ stdenv.mkDerivation rec {
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
     "--with-osx_cocoa"
     "--with-libiconv"
+    "--with-urlsession" # for wxWebRequest
+  ] ++ lib.optionals (!stdenv.hostPlatform.isDarwin) [
+    "--with-libcurl" # for wxWebRequest
   ] ++ lib.optionals withWebKit [
     "--enable-webview"
     "--enable-webviewwebkit"

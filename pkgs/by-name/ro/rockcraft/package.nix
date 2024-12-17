@@ -8,7 +8,7 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "rockcraft";
-  version = "1.5.3";
+  version = "1.6.0";
 
   src = fetchFromGitHub {
     owner = "canonical";
@@ -42,6 +42,7 @@ python3Packages.buildPythonApplication rec {
       pytest-mock
       pytest-subprocess
       pytestCheckHook
+      tabulate
     ]
     ++ [ dpkg ];
 

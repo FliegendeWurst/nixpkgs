@@ -1,25 +1,26 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, dbus
-, fpc
-, getopt
-, glib
-, lazarus
-, libX11
-, libqt5pas
-, wrapQtAppsHook
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  dbus,
+  fpc,
+  getopt,
+  glib,
+  lazarus,
+  libX11,
+  libqt5pas,
+  wrapQtAppsHook,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "doublecmd";
-  version = "1.1.18";
+  version = "1.1.21";
 
   src = fetchFromGitHub {
     owner = "doublecmd";
     repo = "doublecmd";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-1lmDmtvkLMLxvF6ZTOShr5fsYN++Jm6+ngzgFyNjFn4=";
+    hash = "sha256-NsjsjCSPbo7zwejmOjFRuQpcMyGZEY67hyStjtMrIGk=";
   };
 
   nativeBuildInputs = [

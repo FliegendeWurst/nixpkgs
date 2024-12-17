@@ -1,32 +1,51 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, autoreconfHook
-, alsa-lib
-, python3
-, SDL2
-, libXext
-, Cocoa
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  autoreconfHook,
+  alsa-lib,
+  perl,
+  pkg-config,
+  SDL2,
+  libXext,
+  Cocoa,
 }:
 
 stdenv.mkDerivation rec {
   pname = "schismtracker";
-  version = "20240328";
+  version = "20240809";
 
   src = fetchFromGitHub {
     owner = pname;
     repo = pname;
     rev = version;
-    sha256 = "sha256-hoP/14lbqsuQ37oJDErPoQWWk04UshImmApCFrf5wno=";
+    sha256 = "sha256-J4al7XU+vvehDnp2fRrVesWyUN4i63g5btUkjarpXbk=";
   };
 
-  configureFlags = [ "--enable-dependency-tracking" ]
-    ++ lib.optional stdenv.hostPlatform.isDarwin "--disable-sdltest";
+  # If we let it try to get the version from git, it will fail and fall back
+  # on running `date`, which will output the epoch, which is considered invalid
+  # in this assert: https://github.com/schismtracker/schismtracker/blob/a106b57e0f809b95d9e8bcf5a3975d27e0681b5a/schism/version.c#L112
+  postPatch = ''
+    substituteInPlace configure.ac \
+      --replace-fail 'git log' 'echo ${version} #'
+  '';
 
-  nativeBuildInputs = [ autoreconfHook python3 ];
+  configureFlags = [
+    "--enable-dependency-tracking"
+  ] ++ lib.optional stdenv.hostPlatform.isDarwin "--disable-sdltest";
 
-  buildInputs = [ SDL2 ]
-    ++ lib.optionals stdenv.hostPlatform.isLinux [ alsa-lib libXext ]
+  nativeBuildInputs = [
+    autoreconfHook
+    perl
+    pkg-config
+  ];
+
+  buildInputs =
+    [ SDL2 ]
+    ++ lib.optionals stdenv.hostPlatform.isLinux [
+      alsa-lib
+      libXext
+    ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ Cocoa ];
 
   enableParallelBuilding = true;

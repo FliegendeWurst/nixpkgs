@@ -18,16 +18,16 @@
 
 buildPythonPackage rec {
   pname = "hishel";
-  version = "0.0.32";
+  version = "0.1.1";
   pyproject = true;
 
-  disabled = pythonOlder "3.8";
+  disabled = pythonOlder "3.9";
 
   src = fetchFromGitHub {
     owner = "karpetrosyan";
     repo = "hishel";
     rev = "refs/tags/${version}";
-    hash = "sha256-EbvEu8pb64gj5buahpjR2dS/hjR9tRzhToQ41eRqYpw=";
+    hash = "sha256-V8QiBnOz5l/vjTFf9gKjxth4YsGCYuADlbwiWc7VFds=";
   };
 
   build-system = [

@@ -1,6 +1,6 @@
 {
   lib,
-  stdenv,
+  gcc14Stdenv,
   fetchFromGitHub,
   cmake,
   pkg-config,
@@ -9,6 +9,8 @@
   hyprlang,
   hyprutils,
   pam,
+  sdbus-cpp_2,
+  systemdLibs,
   wayland,
   wayland-protocols,
   wayland-scanner,
@@ -22,15 +24,15 @@
   nix-update-script,
 }:
 
-stdenv.mkDerivation (finalAttrs: {
+gcc14Stdenv.mkDerivation (finalAttrs: {
   pname = "hyprlock";
-  version = "0.4.1";
+  version = "0.5.0";
 
   src = fetchFromGitHub {
     owner = "hyprwm";
     repo = "hyprlock";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-w+AyYuqlZ/uWEimiptlHjtDFECm/JlUOD2ciCw8/+/8=";
+    hash = "sha256-sUIsjWpZLplSJXWyJcDZdvDweksXLH5r9GSkwg0kgBw=";
   };
 
   strictDeps = true;
@@ -54,6 +56,8 @@ stdenv.mkDerivation (finalAttrs: {
     mesa
     pam
     pango
+    sdbus-cpp_2
+    systemdLibs
     wayland
     wayland-protocols
   ];

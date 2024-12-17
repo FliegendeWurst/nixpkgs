@@ -9,7 +9,7 @@
 , installShellFiles
 , jq
 , libayatana-appindicator
-, libsoup
+, libsoup_2_4
 , makeDesktopItem
 , mkYarnPackage
 , openssl
@@ -18,7 +18,7 @@
 , rustPlatform
 , stdenv
 , testers
-, webkitgtk
+, webkitgtk_4_0
 }:
 
 let
@@ -141,12 +141,12 @@ rec {
       ];
 
       buildInputs = [
-        libsoup
+        libsoup_2_4
         openssl
       ] ++ lib.optionals stdenv.hostPlatform.isLinux [
         gtk3
         libayatana-appindicator
-        webkitgtk
+        webkitgtk_4_0
       ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
         darwin.apple_sdk.frameworks.Carbon
         darwin.apple_sdk.frameworks.Cocoa

@@ -55,6 +55,7 @@
   jackSupport ? true,
   mpdSupport ? true,
   mprisSupport ? stdenv.hostPlatform.isLinux,
+  niriSupport ? true,
   nlSupport ? true,
   pipewireSupport ? true,
   pulseSupport ? true,
@@ -78,8 +79,8 @@ let
   libcava.src = fetchFromGitHub {
     owner = "LukashonakV";
     repo = "cava";
-    rev = "0.10.2";
-    hash = "sha256-jU7RQV2txruu/nUUl0TzjK4nai7G38J1rcTjO7UXumY=";
+    rev = "0.10.3";
+    hash = "sha256-ZDFbI69ECsUTjbhlw2kHRufZbQMu+FQSMmncCJ5pagg=";
   };
 in
 stdenv.mkDerivation (finalAttrs: {
@@ -112,13 +113,16 @@ stdenv.mkDerivation (finalAttrs: {
     popd
   '';
 
-  nativeBuildInputs = [
-    meson
-    ninja
-    pkg-config
-    wayland-scanner
-    wrapGAppsHook3
-  ] ++ lib.optional withMediaPlayer gobject-introspection ++ lib.optional enableManpages scdoc;
+  nativeBuildInputs =
+    [
+      meson
+      ninja
+      pkg-config
+      wayland-scanner
+      wrapGAppsHook3
+    ]
+    ++ lib.optional withMediaPlayer gobject-introspection
+    ++ lib.optional enableManpages scdoc;
 
   propagatedBuildInputs = lib.optionals withMediaPlayer [
     glib
@@ -187,7 +191,10 @@ stdenv.mkDerivation (finalAttrs: {
       "upower_glib" = upowerSupport;
       "wireplumber" = wireplumberSupport;
     })
-    ++ lib.optional experimentalPatches (lib.mesonBool "experimental" true);
+    ++ (lib.mapAttrsToList lib.mesonBool {
+      "experimental" = experimentalPatches;
+      "niri" = niriSupport;
+    });
 
   env = lib.optionalAttrs systemdSupport {
     PKG_CONFIG_SYSTEMD_SYSTEMDUSERUNITDIR = "${placeholder "out"}/lib/systemd/user";

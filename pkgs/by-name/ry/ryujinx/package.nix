@@ -1,7 +1,7 @@
 { lib
 , buildDotnetModule
 , dotnetCorePackages
-, fetchFromGitHub
+, fetchzip
 , libX11
 , libgdiplus
 , ffmpeg
@@ -27,10 +27,8 @@ buildDotnetModule rec {
   pname = "ryujinx";
   version = "1.1.1401"; # Based off of the official github actions builds: https://github.com/Ryujinx/Ryujinx/actions/workflows/release.yml
 
-  src = fetchFromGitHub {
-    owner = "Ryujinx";
-    repo = "Ryujinx";
-    rev = "5dbba07e33e83c9047dcbb701c9655edbbe89086";
+  src = fetchzip {
+    url = "https://archive.org/download/ryujinx-5dbba-07e-33e-83c-9047dcbb-701c-9655edbbe-89086.tar/Ryujinx-5dbba07e33e83c9047dcbb701c9655edbbe89086.tar.gz";
     hash = "sha256-UeJ3KE5e5H9crqroAxjmxYTf/Z4cbj41a6/1HW2nLcA=";
   };
 
@@ -99,9 +97,6 @@ buildDotnetModule rec {
     install -D ./Ryujinx.sh $out/bin/Ryujinx.sh
     install -D ./mime/Ryujinx.xml $out/share/mime/packages/Ryujinx.xml
     install -D ../misc/Logo.svg $out/share/icons/hicolor/scalable/apps/Ryujinx.svg
-
-    substituteInPlace $out/share/applications/Ryujinx.desktop \
-      --replace "Ryujinx.sh %f" "$out/bin/Ryujinx.sh %f"
 
     ln -s $out/bin/Ryujinx $out/bin/ryujinx
 
