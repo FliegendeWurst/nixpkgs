@@ -12,13 +12,14 @@ stdenv.mkDerivation rec {
   pname = "pcsc-safenet";
   version = "10.8.1050";
 
-  debName = "safenetauthenticationclient_${version}_amd64.deb";
+  debName = "Installation/Standard/Ubuntu-2204/safenetauthenticationclient_${version}_amd64.deb";
 
   # extract debian package from larger zip file
   src = fetchzip {
-      url = "https://www.globalsign.com/en/safenet-drivers/USB/10.8/GlobalSign-SAC-Ubuntu-2204.zip";
-      hash = "sha256-16X4057exahpHGUk2rVxQkkXILuP4bTLdtEcdkmarxo=";
-    };
+    # URL version name is different that the version name of the .deb file inside
+    url = "https://www.digicert.com/StaticFiles/Linux_SAC_10_8_R1_GA.zip";
+    hash = "sha256-Wh2Ax4ZVFKqn0yDwZmwvtUqwQNYyBng08IPfemHzZC0=";
+  };
 
   dontBuild = true;
   dontConfigure = true;
