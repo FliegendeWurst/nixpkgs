@@ -6,6 +6,7 @@
   fetchFromGitHub,
   pkg-config,
   openssl,
+  nixosTests,
 }:
 
 let
@@ -37,7 +38,10 @@ rustPlatform.buildRustPackage {
     openssl
   ];
 
-  doCheck = false; # TODO: can't find libcrypto
+  preCheck = ''
+    # tests dlopen libcrypto.so.3
+    export LD_LIBRARY_PATH=${lib.makeLibraryPath [ openssl ]}
+  '';
 
   # rustls-libssl normally wants to be swapped in for libssl, and reuses
   # libcrypto. Here, we accomplish something similar by symlinking most of
@@ -71,9 +75,12 @@ rustPlatform.buildRustPackage {
       $dev/lib/pkgconfig/*.pc
   '';
 
+  passthru.tests = nixosTests.rustls-libssl;
+
   meta = {
     description = "Partial reimplementation of the OpenSSL 3 libssl ABI using rustls";
     homepage = "https://github.com/rustls/rustls-openssl-compat";
+    changelog = "https://github.com/rustls/rustls-openssl-compat/releases";
     license = lib.licenses.asl20;
     platforms = lib.platforms.linux;
     maintainers = with lib.maintainers; [
