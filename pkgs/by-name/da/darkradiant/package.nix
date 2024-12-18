@@ -42,6 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     asciidoctor
     wrapGAppsHook3
+    wxGTK32
     installShellFiles
   ];
 
@@ -68,8 +69,7 @@ stdenv.mkDerivation (finalAttrs: {
       apple-sdk_11
     ];
 
-  # Tests source files are using an undefined reference to the openGL library
-  doCheck = false;
+  doCheck = true;
 
   cmakeFlags = [
     # Disabling dynamic rpath, otherwise it will not found the needed libraries within $out/lib/darkradiant
