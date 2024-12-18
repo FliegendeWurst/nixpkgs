@@ -8,6 +8,7 @@
 python3Packages.buildPythonApplication rec {
   pname = "compiledb";
   version = "0.10.1";
+  pyproject = true;
 
   build-system = [ python3Packages.setuptools ];
 
@@ -37,7 +38,7 @@ python3Packages.buildPythonApplication rec {
   meta = {
     description = "Tool for generating Clang's JSON Compilation Database files";
     mainProgram = "compiledb";
-    license = lib.licenses.gpl3;
+    license = lib.licenses.gpl3Plus;
     homepage = "https://github.com/nickdiego/compiledb";
     maintainers = with lib.maintainers; [ sigmanificient ];
   };
