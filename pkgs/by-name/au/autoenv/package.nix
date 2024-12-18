@@ -6,7 +6,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "autoenv";
-  version = "unstable-2024-10-16";
+  version = "0-unstable-2024-10-16";
 
   src = fetchFromGitHub {
     owner = "hyperupcall";
@@ -18,13 +18,15 @@ stdenv.mkDerivation (finalAttrs: {
   dontBuild = true;
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/share
     cp -R $src $out/share/autoenv
     chmod +x $out/share/autoenv
+    runHook postInstall
   '';
 
   meta = {
-    description = "Magic per-project shell environments.";
+    description = "Per-directory shell environments sourced from .env file";
     homepage = "https://github.com/hyperupcall/autoenv";
     license = lib.licenses.mit;
     mainProgram = "autoenv";
