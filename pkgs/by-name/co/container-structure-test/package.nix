@@ -19,15 +19,15 @@ buildGoModule rec {
   vendorHash = "sha256-pBq76HJ+nluOMOs9nqBKp1mr1LuX2NERXo48g8ezE9k=";
 
   subPackages = [ "cmd/container-structure-test" ];
-  ldflags = [ "-X github.com/${src.owner}/${src.repo}/pkg/version.version=${version}" ];
-  preBuild = ''
-    ldflags+=" -X github.com/${src.owner}/${src.repo}/pkg/version.buildDate=$(date +'%Y-%m-%dT%H:%M:%SZ')"
-  '';
+  ldflags = [
+    "-X github.com/${src.owner}/${src.repo}/pkg/version.version=${version}"
+    "-X github.com/${src.owner}/${src.repo}/pkg/version.buildDate=1970-01-01T00:00:00Z"
+  ];
 
   nativeBuildInputs = [ installShellFiles ];
   postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
     for shell in bash fish zsh; do
-      $out/bin/${pname} completion $shell > executor.$shell
+      $out/bin/container-structure-test completion $shell > executor.$shell
       installShellCompletion executor.$shell
     done
   '';
@@ -35,12 +35,12 @@ buildGoModule rec {
   passthru.tests.version = testers.testVersion {
     package = container-structure-test;
     version = version;
-    command = "${container-structure-test}/bin/${pname} version";
+    command = "${lib.getExe container-structure-test} version";
   };
 
   meta = {
     homepage = "https://github.com/GoogleContainerTools/container-structure-test";
-    description = "The Container Structure Tests provide a powerful framework to validate the structure of a container image.";
+    description = "Framework to validate the structure of a container image";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ rubenhoenle ];
     platforms = lib.platforms.darwin ++ lib.platforms.linux;
