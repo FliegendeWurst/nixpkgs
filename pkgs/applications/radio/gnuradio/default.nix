@@ -1,5 +1,6 @@
 { lib, stdenv
 , fetchFromGitHub
+, fetchpatch
 , cmake
 # Remove gcc and python references
 , removeReferencesTo
@@ -293,6 +294,12 @@ stdenv.mkDerivation (finalAttrs: (shared // {
   patches = [
     # Not accepted upstream, see https://github.com/gnuradio/gnuradio/pull/5227
     ./modtool-newmod-permissions.patch
+    # https://github.com/gnuradio/gnuradio/issues/7458
+    (fetchpatch {
+      name = "gnuradio-numpy_2-compatibility.patch";
+      url = "https://github.com/gnuradio/gnuradio/commit/4be7ac7b5095a4c0d394456934102b8666b7c68c.patch";
+      hash = "sha256-xYvjlyZ/Bcn23gT3EOee/GhkXzdpA+q33LgURVWOUQI=";
+    })
   ];
   passthru = shared.passthru // {
     # Deps that are potentially overridden and are used inside GR plugins - the same version must
