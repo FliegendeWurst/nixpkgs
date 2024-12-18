@@ -25,12 +25,6 @@ in
         description = "Address to listen on for the web interface.";
       };
 
-      httpsOnly = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enforce HTTPS redirects for all requests.";
-      };
-
       extraEnv = lib.mkOption {
         type = with lib.types; attrsOf str;
         default = { };
@@ -58,8 +52,7 @@ in
         ExecStart =
           "${lib.getExe pkgs.whoogle-search}"
           + " --host '${cfg.listenAddress}'"
-          + " --port '${builtins.toString cfg.port}'"
-          + lib.optionalString (cfg.httpsOnly) " --https-only";
+          + " --port '${builtins.toString cfg.port}'";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
         StateDirectory = "whoogle-search";
         StateDirectoryMode = "0750";
