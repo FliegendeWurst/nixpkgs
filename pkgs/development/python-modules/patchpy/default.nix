@@ -9,7 +9,7 @@
 
 buildPythonPackage {
   pname = "patchpy";
-  version = "2.0.4-unstable-2024-05-26";
+  version = "2.0.3-unstable-2024-05-26";
   pyproject = true;
 
   src = fetchFromGitHub {
