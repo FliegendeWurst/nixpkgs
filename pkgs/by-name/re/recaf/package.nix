@@ -4,7 +4,7 @@
   fetchFromGitHub,
   jdk11,
   makeBinaryWrapper,
-  libGL,
+  libglvnd,
   glib,
   gtk3,
   libXtst,
@@ -37,7 +37,7 @@ maven.buildMavenPackage {
     let
       # Required by glassgtk3
       libPath = lib.makeLibraryPath [
-        libGL
+        libglvnd
         gtk3
         glib
         libXtst

@@ -60,5 +60,9 @@ stdenv.mkDerivation (finalAttrs: {
     inherit (jdk.meta) platforms;
     maintainers = with lib.maintainers; [ pluiedev ];
     mainProgram = "recaf";
+
+    # FIXME(pluiedev): Seems that the Maven hash is platform-dependent, which is *quite* strange.
+    # Requires further investigation. See https://github.com/NixOS/nixpkgs/pull/354184#discussion_r1855566964
+    broken = stdenv.hostPlatform.isDarwin || stdenv.hostPlatform.isAarch64;
   };
 })
