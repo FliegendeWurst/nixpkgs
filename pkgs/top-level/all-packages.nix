@@ -8810,6 +8810,7 @@ with pkgs;
 
   certbot-full = certbot.withPlugins (cp: with cp; [
     certbot-dns-cloudflare
+    certbot-dns-linode
     certbot-dns-google
     certbot-dns-ovh
     certbot-dns-rfc2136

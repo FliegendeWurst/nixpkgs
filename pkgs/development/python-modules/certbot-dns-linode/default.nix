@@ -27,7 +27,13 @@ buildPythonPackage rec {
 
   nativeCheckInputs = [ pytestCheckHook ];
 
-  pytestFlagsArray = [ "-o cache_dir=$(mktemp -d)" ];
+  pytestFlagsArray = [
+    "-o cache_dir=$(mktemp -d)"
+
+    # Monitor https://github.com/certbot/certbot/issues/9606 for a solution
+    "-W"
+    "ignore::DeprecationWarning"
+  ];
 
   meta = certbot.meta // {
     description = "Linode DNS Authenticator plugin for Certbot";
