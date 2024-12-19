@@ -1,11 +1,9 @@
 {
-  fetchFromGitHub,
   lib,
-  python3,
-  unstableGitUpdater,
+  fetchFromGitHub,
+  python3Packages,
 }:
-
-python3.pkgs.buildPythonApplication rec {
+python3Packages.buildPythonApplication {
   pname = "vmlinux-to-elf";
   version = "0-unstable-2024-07-20";
   pyproject = true;
@@ -17,26 +15,23 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-GVoUIeJeLWCEFzrwiLX2h627ygQ7lX1qMp3hHT5O8O0=";
   };
 
-  build-system = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3Packages; [
+    setuptools
   ];
 
-  dependencies = [
-    python3.pkgs.lz4
-    python3.pkgs.python-lzo
-    python3.pkgs.zstandard
+  dependencies = with python3Packages; [
+    setuptools
+    python-lzo
+    zstandard
+    lz4
   ];
-
-  pythonImportsCheck = [ "vmlinux_to_elf" ];
-
-  passthru.updateScript = unstableGitUpdater { };
 
   meta = {
-    description = "Tool to recover a fully analyzable .ELF from a raw kernel, through extracting the kernel symbol table";
     homepage = "https://github.com/marin-m/vmlinux-to-elf";
-    license = lib.licenses.gpl3Only;
-    maintainers = with lib.maintainers; [ KSJ2000 ];
+    description = "Converts a vmlinux/vmlinuz/bzImage/zImage kernel image to an ELF file";
     mainProgram = "vmlinux-to-elf";
+
+    license = lib.licenses.gpl3;
+    maintainers = [ lib.maintainers.fidgetingbits ];
   };
 }

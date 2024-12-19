@@ -11,7 +11,6 @@ import ./make-test-python.nix (
           enable = true;
           port = 5000;
           listenAddress = "127.0.0.1";
-          httpsOnly = false;
         };
       };
 

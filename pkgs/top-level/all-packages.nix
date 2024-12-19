@@ -912,7 +912,7 @@ with pkgs;
 
   akkoma = callPackage ../servers/akkoma {
     elixir = beam_nox.interpreters.elixir_1_16;
-    beamPackages = beamPackages.extend (self: super: { elixir = beam_nox.interpreters.elixir_1_16; });
+    beamPackages = beam_nox.packages.erlang.extend (self: super: { elixir = beam_nox.interpreters.elixir_1_16; });
   };
   akkoma-frontends = recurseIntoAttrs {
     akkoma-fe = callPackage ../servers/akkoma/akkoma-fe { };
@@ -7073,7 +7073,7 @@ with pkgs;
   babashka-unwrapped = callPackage ../development/interpreters/babashka { };
   babashka = callPackage ../development/interpreters/babashka/wrapped.nix { };
 
-  uiua-unstable = callPackage ../by-name/ui/uiua/package.nix { unstable = true; };
+  uiua-unstable = callPackage ../by-name/ui/uiua/package.nix { uiua_versionType = "unstable"; };
 
   # BQN interpreters and compilers
 
@@ -12707,6 +12707,7 @@ with pkgs;
     ubootRock5ModelB
     ubootRock64
     ubootRock64v2
+    ubootRockPiE
     ubootRockPi4
     ubootRockPro64
     ubootROCPCRK3399

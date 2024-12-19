@@ -19575,6 +19575,12 @@
     githubId = 61306;
     name = "Rene Treffer";
   };
+  RTUnreal = {
+    email = "unreal+nixpkgs@rtinf.net";
+    github = "RTUnreal";
+    githubId = 22859658;
+    name = "RTUnreal";
+  };
   rubenhoenle = {
     email = "git@hoenle.xyz";
     github = "rubenhoenle";
@@ -22124,6 +22130,12 @@
     github = "technobaboo";
     githubId = 4541968;
     name = "Nova King";
+  };
+  teczito = {
+    name = "Ruben";
+    email = "ruben@teczito.com";
+    github = "teczito";
+    githubId = 15378834;
   };
   teh = {
     email = "tehunger@gmail.com";

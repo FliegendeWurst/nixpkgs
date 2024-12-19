@@ -6,7 +6,7 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "apftool-rs";
-  version = "unstable-2024-01-05";
+  version = "0-unstable-2024-01-05";
 
   src = fetchFromGitHub {
     owner = "suyulin";

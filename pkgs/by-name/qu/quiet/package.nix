@@ -20,6 +20,6 @@ appimageTools.wrapType2 rec {
     changelog = "https://github.com/TryQuiet/quiet/releases/tag/@quiet/desktop@${version}";
     license = lib.licenses.gpl3Only;
     maintainers = with lib.maintainers; [ kashw2 ];
-    platforms = lib.platforms.linux;
+    platforms = [ "x86_64-linux" ];
   };
 }
