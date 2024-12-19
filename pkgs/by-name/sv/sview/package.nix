@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "gkv311";
     repo = "sview";
-    rev = version;
+    tag = version;
     hash = "sha256-mbEacdBQchziXoZ5vJUiEpa/iHeXeaozte2aXs50/Fo=";
   };
 
