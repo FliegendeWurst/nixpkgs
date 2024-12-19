@@ -15,13 +15,13 @@
 }:
 buildDotnetModule (finalAttrs: rec {
   pname = "msbuild-structured-log-viewer";
-  version = "2.2.356";
+  version = "2.2.383";
 
   src = fetchFromGitHub {
     owner = "KirillOsenkov";
     repo = "MSBuildStructuredLog";
     rev = "v${version}";
-    hash = "sha256-ZDBQR0TYB2K6zIfExD1nm0A7q77woL0vLfQvliKxvdA=";
+    hash = "sha256-re1owocdiPKwoORCPD+A0eiRi4Nk4i9a1l0XTQJcxqE=";
   };
 
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
@@ -79,7 +79,7 @@ buildDotnetModule (finalAttrs: rec {
   '';
 
   meta = {
-    description = "A rich interactive log viewer app for MSBuild logs";
+    description = "Rich interactive log viewer for MSBuild logs";
     homepage = "https://github.com/KirillOsenkov/MSBuildStructuredLog";
     changelog = "https://github.com/KirillOsenkov/MSBuildStructuredLog/releases/tag/v${finalAttrs.version}";
     sourceProvenance = with lib.sourceTypes; [
