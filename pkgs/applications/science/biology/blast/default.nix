@@ -88,7 +88,10 @@ stdenv.mkDerivation rec {
   '';
 
   depsBuildBuild = [ buildPackages.stdenv.cc ];
-  nativeBuildInputs = [ perl ];
+  nativeBuildInputs = [
+    cpio
+    perl
+  ];
 
   # perl is necessary in buildInputs so that installed perl scripts get patched
   # correctly
