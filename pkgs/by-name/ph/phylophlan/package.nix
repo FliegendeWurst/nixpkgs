@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  python3,
   raxml,
   mafft,
   trimal,
@@ -18,7 +17,7 @@ let
     src = fetchFromGitHub {
       owner = "biobakery";
       repo = "phylophlan";
-      rev = finalAttrs.version;
+      rev = "refs/tags/${finalAttrs.version}";
       hash = "sha256-KlWKt2tH2lQBh/eQ2Hbcu2gXHEFfmFEc6LrybluxINc=";
     };
 
