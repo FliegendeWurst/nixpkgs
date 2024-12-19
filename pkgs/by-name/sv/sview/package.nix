@@ -76,9 +76,10 @@ stdenv.mkDerivation rec {
     license = with licenses; [
       cc-by-40
       gpl3Only
+      asl20
     ];
     maintainers = with maintainers; [ mx2uller ];
     mainProgram = "sView";
-    platforms = platforms.linux;
+    platforms = platforms.unix;
   };
 }
