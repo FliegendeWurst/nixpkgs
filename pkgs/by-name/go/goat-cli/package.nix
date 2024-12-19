@@ -1,7 +1,8 @@
-{ lib,
-fetchFromGitHub,
-buildGoModule,
-fetchpatch
+{
+  lib,
+  fetchFromGitHub,
+  buildGoModule,
+  fetchpatch,
 }:
 
 buildGoModule rec {
@@ -31,11 +32,11 @@ buildGoModule rec {
   # Checks currently fail because of an issue with github.com/studio-b12/goat/mocks
   doCheck = false;
 
-  meta = with lib; {
+  meta = {
     description = "An integration testing tool for HTTP APIs uisng a simple script language.";
     homepage = "https://studio-b12.github.io/goat/";
-    license = licenses.bsd3;
-    maintainers = with maintainers; [ kashw2 ];
+    license = lib.licenses.bsd3;
+    maintainers = with lib.maintainers; [ kashw2 ];
     mainProgram = "goat";
   };
 
