@@ -92,6 +92,8 @@ buildPythonApplication rec {
   postPatch = lib.optionalString stdenv.hostPlatform.isLinux ''
     substituteInPlace xpra/platform/posix/features.py \
       --replace-fail "/usr/bin/xdg-open" "${xdg-utils}/bin/xdg-open"
+
+    patchShebangs fs/bin/build_cuda_kernels.py
   '';
 
   INCLUDE_DIRS = "${pam}/include";
