@@ -4563,9 +4563,7 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) Security;
   };
 
-  onetun = callPackage ../tools/networking/onetun {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
+  onetun = callPackage ../tools/networking/onetun { };
 
   openobserve = darwin.apple_sdk_11_0.callPackage ../servers/monitoring/openobserve {
     apple_sdk = darwin.apple_sdk_11_0;
@@ -14145,8 +14143,6 @@ with pkgs;
     apptainer-overriden-nixos
     singularity-overriden-nixos
     ;
-
-  slack = callPackage ../applications/networking/instant-messengers/slack { };
 
   sosreport = python3Packages.callPackage ../applications/logging/sosreport { };
 
