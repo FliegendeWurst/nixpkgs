@@ -1,15 +1,16 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
 }:
 
 buildGoModule rec {
-  pname = "Hosts-BL";
+  pname = "hosts-bl";
   version = "0-unstable-2024-11-17";
 
   src = fetchFromGitHub {
     owner = "ScriptTiger";
-    repo = pname;
+    repo = "Hosts-BL";
     rev = "b3ac0a50fce8e714e754a17e6a11f8709386782c";
     sha256 = "sha256-w+4dEWwFMjBbeJPOqMrzLBBzPYh/V5SfV2BMrI0p3nw=";
   };
