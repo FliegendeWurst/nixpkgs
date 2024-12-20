@@ -29,7 +29,6 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Per-directory shell environments sourced from .env file";
     homepage = "https://github.com/hyperupcall/autoenv";
     license = lib.licenses.mit;
-    mainProgram = "autoenv";
     platforms = lib.platforms.all;
     maintainers = with lib.maintainers; [ clebs ];
   };
