@@ -82,6 +82,7 @@ buildGoModule rec {
     homepage = "https://github.com/owncloud/web";
     description = "Next generation frontend for ownCloud Infinite Scale";
     license = lib.licenses.asl20;
+    mainProgram = "ocis";
     maintainers = with lib.maintainers; [ xinyangli ];
   };
 }
