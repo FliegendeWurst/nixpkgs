@@ -27,7 +27,7 @@ stdenv.mkDerivation (finalAttrs: {
     # because the final package depends on it
     # https://github.com/emqx/MQTTX/pull/1801
     (fetchpatch {
-      url = "https://github.com/emqx/MQTTX/commit/4df2902e6f2a05f0b54dbc710128c262cb8c3201.patch";
+      url = "https://github.com/emqx/MQTTX/commit/3d89c3a08477e9e2b5d83f2a222ceaa8c08e50ce.patch";
       hash = "sha256-Rd6YpGHsvAYD7/XCJq6dgvGeKfOiLh7IUQFr/AQz0mY=";
     })
   ];
