@@ -19,13 +19,8 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-Glq7iJ1AHy99AGXYg5P3wAd3kAMJnt5P2vZzyn7qBY4=";
   };
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "evdev-0.12.2" = "sha256-OUU7QQnC3sgq0WwlWrm+ymustTtAoNqXhoZ/wixcgeY=";
-      "virtual-usb-0.1.0" = "sha256-1apEKO5C9TjZ9IUJfvPOEvwq+mwsUSa5m0S7YSi2whw=";
-    };
-  };
+  useFetchCargoVendor = true;
+  cargoHash = "sha256-pcbW/Od5f+hFCrVpH2yioq+qCmlZ1m3TbUc6rBkYCEs=";
 
   nativeBuildInputs = [
     pkg-config

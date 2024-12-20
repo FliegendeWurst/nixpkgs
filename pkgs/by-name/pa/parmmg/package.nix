@@ -26,6 +26,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     cmake
     gfortran
+    mpi
     perl
   ];
 
@@ -35,8 +36,10 @@ stdenv.mkDerivation {
     mmg
   ];
 
+  strictDeps = true;
+
   preConfigure = ''
-    patchShebangs ./
+    patchShebangs --build ./
   '';
 
   cmakeFlags = [
