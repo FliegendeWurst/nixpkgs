@@ -7,6 +7,7 @@
   pytestCheckHook,
   setuptools,
   cmake,
+  nix-update-script,
 }:
 buildPythonPackage rec {
   pname = "mozjpeg_lossless_optimization";
@@ -18,7 +19,7 @@ buildPythonPackage rec {
     repo = "mozjpeg-lossless-optimization";
     # https://github.com/NixOS/nixpkgs/issues/26302
     rev = "refs/tags/v${version}";
-    sha256 = "sha256-OKNt9XtfZ6hhRJN1Asn1T2dVjyXKQAsnFvXKYnrRZ98=";
+    hash = "sha256-OKNt9XtfZ6hhRJN1Asn1T2dVjyXKQAsnFvXKYnrRZ98=";
     fetchSubmodules = true;
   };
 
@@ -37,10 +38,14 @@ buildPythonPackage rec {
   build-system = [ setuptools ];
   nativeCheckInputs = [ pytestCheckHook ];
 
-  meta = with lib; {
+  passthru = {
+    updateScript = nix-update-script { };
+  };
+
+  meta = {
     description = "Python library to optimize JPEGs losslessly using MozJPEG";
     homepage = "https://github.com/wanadev/mozjpeg-lossless-optimization";
-    license = licenses.bsd3;
-    maintainers = with maintainers; [ adfaure ];
+    license = lib.licenses.bsd3;
+    maintainers = [ lib.maintainers.adfaure ];
   };
 }
