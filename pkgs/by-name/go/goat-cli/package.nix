@@ -33,7 +33,7 @@ buildGoModule rec {
   doCheck = false;
 
   meta = {
-    description = "An integration testing tool for HTTP APIs uisng a simple script language.";
+    description = "Integration testing tool for HTTP APIs using a simple script language";
     homepage = "https://studio-b12.github.io/goat/";
     license = lib.licenses.bsd3;
     maintainers = with lib.maintainers; [ kashw2 ];
