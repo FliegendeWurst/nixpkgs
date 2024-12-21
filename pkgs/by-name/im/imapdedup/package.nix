@@ -23,6 +23,7 @@ python3Packages.buildPythonApplication rec {
 
   meta = {
     description = "Duplicate email message remover";
+    homepage = "https://github.com/quentinsf/IMAPdedup";
     maintainers = with lib.maintainers; [ sigmanificient ];
     license = with lib.licenses; [ gpl2Only ];
     mainProgram = "imapdedup";
