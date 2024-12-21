@@ -75,7 +75,14 @@ let
 
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
-    outputHash = "sha256-Rz+iKw4JDWtZOrCjs9sbHVw/bErAEY4TfoG+QfGKY94=";
+    outputHash =
+      {
+        x86_64-linux = "sha256-Rz+iKw4JDWtZOrCjs9sbHVw/bErAEY4TfoG+QfGKY94=";
+        aarch64-linux = "sha256-JGpRoIQrEI6crczHD62ZQO08GshBbzJC0dONYD69K/I=";
+        aarch64-darwin = "sha256-v2qzKmtqBdU6igyHat+NyL/XTzWgq/CKlNpai/iFHyQ=";
+        x86_64-darwin = "sha256-0ksWLlF/a58KY/8NgOQ5aPOLoXzqDqO3lhkmFvT17Bk=";
+      }
+      .${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
   };
 in
 stdenv.mkDerivation {

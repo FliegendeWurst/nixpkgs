@@ -1,6 +1,6 @@
 {
-  pkgs,
+  upbound,
 }:
-pkgs.upbound.override {
+upbound.override {
   version-channel = "main";
 }

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  stdenv,
   buildPythonPackage,
   fetchFromGitLab,
 
@@ -65,7 +66,11 @@ buildPythonPackage rec {
     runHook preCheck
 
     python3 -m pytest test
+
+    if [ "${stdenv.buildPlatform.system}" != "aarch64-linux" ] && \
+       [ "${stdenv.buildPlatform.system}" != "x86_64-darwin" ]; then
     ${mpi}/bin/mpiexec -n 2 --bind-to none python3 -m pytest test/test_mpi
+    fi
 
     runHook postCheck
   '';

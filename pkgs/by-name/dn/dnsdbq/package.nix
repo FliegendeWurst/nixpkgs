@@ -38,8 +38,6 @@ stdenv.mkDerivation rec {
     jansson
   ];
 
-  strictDeps = true;
-
   installPhase = ''
     runHook preInstall
     mkdir -p $out/bin

@@ -12872,6 +12872,13 @@
     githubId = 101508537;
     name = "Yuchen He";
   };
+  lilioid = {
+    name = "Lilly";
+    email = "li@lly.sh";
+    matrix = "@17sell:mafiasi.de";
+    github = "lilioid";
+    githubId = 12398140;
+  };
   LilleAila = {
     name = "Olai";
     email = "olai@olai.dev";
@@ -13599,6 +13606,13 @@
     github = "maggesi";
     githubId = 1809783;
     name = "Marco Maggesi";
+  };
+  magneticflux- = {
+    email = "skaggsm333@gmail.com";
+    github = "magneticflux-";
+    githubId = 9124288;
+    name = "Mitchell Skaggs";
+    keys = [ { fingerprint = "CA2A 3324 43A7 BD99 8FCE  DFC4 4EB0 FECB 84AE 8967"; } ];
   };
   magnetophon = {
     email = "bart@magnetophon.nl";
@@ -17094,6 +17108,12 @@
     github = "pandaman64";
     githubId = 1788628;
     name = "pandaman";
+  };
+  pandanz = {
+    email = "gate.rules-5j@icloud.com";
+    github = "pandanz";
+    githubId = 32557789;
+    name = "pandanz";
   };
   pandapip1 = {
     email = "gavinnjohn@gmail.com";
@@ -22443,6 +22463,12 @@
     githubId = 3105057;
     name = "Jan Beinke";
   };
+  thelissimus = {
+    name = "Kei";
+    email = "thelissimus@tuta.io";
+    github = "thelissimus";
+    githubId = 70096720;
+  };
   themaxmur = {
     name = "Maxim Muravev";
     email = "muravjev.mak@yandex.ru";
@@ -24063,6 +24089,12 @@
     github = "Weathercold";
     githubId = 49368953;
     keys = [ { fingerprint = "D20F C904 A145 8B28 53D8  FBA0 0422 0096 01E4 87FC"; } ];
+  };
+  WeetHet = {
+    name = "WeetHet";
+    matrix = "@weethet:catgirl.cloud";
+    github = "WeetHet";
+    githubId = 43210583;
   };
   wegank = {
     name = "Weijia Wang";

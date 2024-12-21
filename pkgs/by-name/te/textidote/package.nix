@@ -64,7 +64,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     ant
-    # jdk
     makeWrapper
     stripJavaArchivesHook
   ];

@@ -34,7 +34,7 @@ in
 
     settings = mkOption {
       default = { };
-      description = "Server settings, refer to (the documentation)[https://actualbudget.org/docs/config/] for available options.";
+      description = "Server settings, refer to [the documentation](https://actualbudget.org/docs/config/) for available options.";
       type = types.submodule {
         freeformType = formatType.type;
 

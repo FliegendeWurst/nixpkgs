@@ -510,6 +510,7 @@
   ./services/desktops/ayatana-indicators.nix
   ./services/desktops/bamf.nix
   ./services/desktops/blueman.nix
+  ./services/desktops/bonsaid.nix
   ./services/desktops/cpupower-gui.nix
   ./services/desktops/deepin/deepin-anything.nix
   ./services/desktops/deepin/dde-api.nix
@@ -1141,6 +1142,7 @@
   ./services/networking/miredo.nix
   ./services/networking/mjpg-streamer.nix
   ./services/networking/mmsd.nix
+  ./services/networking/modemmanager.nix
   ./services/networking/monero.nix
   ./services/networking/morty.nix
   ./services/networking/mosquitto.nix
@@ -1176,6 +1178,7 @@
   ./services/networking/nixops-dns.nix
   ./services/networking/nncp.nix
   ./services/networking/nntp-proxy.nix
+  ./services/networking/nm-file-secret-agent.nix
   ./services/networking/nomad.nix
   ./services/networking/nsd.nix
   ./services/networking/ntopng.nix

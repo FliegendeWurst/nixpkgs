@@ -107,6 +107,7 @@ in {
   aaaaxy = runTest ./aaaaxy.nix;
   acme = runTest ./acme.nix;
   acme-dns = handleTest ./acme-dns.nix {};
+  actual = handleTest ./actual.nix {};
   adguardhome = runTest ./adguardhome.nix;
   aesmd = runTestOn ["x86_64-linux"] ./aesmd.nix;
   agate = runTest ./web-servers/agate.nix;
@@ -465,8 +466,8 @@ in {
   iftop = handleTest ./iftop.nix {};
   immich = handleTest ./web-apps/immich.nix {};
   incron = handleTest ./incron.nix {};
-  incus = pkgs.recurseIntoAttrs (handleTest ./incus { inherit handleTestOn; inherit (pkgs) incus; });
-  incus-lts = pkgs.recurseIntoAttrs (handleTest ./incus { inherit handleTestOn; });
+  incus = pkgs.recurseIntoAttrs (handleTest ./incus { lts = false; });
+  incus-lts = pkgs.recurseIntoAttrs (handleTest ./incus { });
   influxdb = handleTest ./influxdb.nix {};
   influxdb2 = handleTest ./influxdb2.nix {};
   initrd-network-openvpn = handleTestOn [ "x86_64-linux" "i686-linux" ] ./initrd-network-openvpn {};
@@ -1075,6 +1076,7 @@ in {
   tsja = handleTest ./tsja.nix {};
   tsm-client-gui = handleTest ./tsm-client-gui.nix {};
   ttyd = handleTest ./web-servers/ttyd.nix {};
+  tt-rss = handleTest ./web-apps/tt-rss.nix {};
   txredisapi = handleTest ./txredisapi.nix {};
   tun2socks = handleTest ./tun2socks.nix {};
   tuptime = handleTest ./tuptime.nix {};
