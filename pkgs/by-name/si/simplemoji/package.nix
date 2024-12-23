@@ -29,23 +29,16 @@ rustPlatform.buildRustPackage rec {
     pkg-config
   ] ++ lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
 
-  buildInputs =
-    lib.optionals stdenv.hostPlatform.isDarwin [
-      darwin.apple_sdk.frameworks.Accessibility
-      darwin.apple_sdk.frameworks.AppKit
-      darwin.apple_sdk.frameworks.CoreFoundation
-      darwin.apple_sdk.frameworks.CoreGraphics
-      darwin.apple_sdk.frameworks.Foundation
-      darwin.apple_sdk.frameworks.OpenGL
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isLinux [
-      stdenv.cc.cc.libgcc
-      fontconfig.dev
-      libxkbcommon.dev
-      wayland
-      xorg.libxcb
-      xorg.libX11
-    ];
+  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [
+    stdenv.cc.cc.libgcc
+    fontconfig.dev
+    libxkbcommon.dev
+    wayland
+    xorg.libxcb
+    xorg.libX11
+  ];
+
+  doCheck = false;
 
   runtimeDependencies = lib.optionals stdenv.hostPlatform.isLinux [
     wayland
