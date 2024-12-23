@@ -2350,6 +2350,8 @@ self: super: with self; {
 
   clean-fid = callPackage ../development/python-modules/clean-fid { };
 
+  cleanit = callPackage ../development/python-modules/cleanit { };
+
   cleanlab = callPackage ../development/python-modules/cleanlab { };
 
   cleanvision = callPackage ../development/python-modules/cleanvision { };
@@ -6125,8 +6127,6 @@ self: super: with self; {
   hy = callPackage ../development/python-modules/hy { };
 
   hydra-core = callPackage ../development/python-modules/hydra-core { };
-
-  hydra-check = callPackage ../development/python-modules/hydra-check { };
 
   hydrawiser = callPackage ../development/python-modules/hydrawiser { };
 
@@ -16451,6 +16451,8 @@ self: super: with self; {
   traitsui = callPackage ../development/python-modules/traitsui { };
 
   traittypes = callPackage ../development/python-modules/traittypes { };
+
+  trakit = callPackage ../development/python-modules/trakit { };
 
   trampoline = callPackage ../development/python-modules/trampoline { };
 

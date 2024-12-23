@@ -55,6 +55,8 @@ python3Packages.buildPythonApplication rec {
     "fastapi-slim"
   ];
 
+  pythonRelaxDeps = true;
+
   preConfigure = ''
     # copy demo metadata to temporary directory
     mv resources/character_info test_character_info
