@@ -43,10 +43,10 @@ stdenv.mkDerivation rec {
   passthru.updateScript = nix-update-script { };
 
   meta = {
-    description = "A Krunner Plugin which allows you to open your recent JetBrains projects";
+    description = "Krunner Plugin which allows you to open your recent JetBrains projects";
     homepage = "https://github.com/alex1701c/JetBrainsRunner";
     sourceProvenance = with lib.sourceTypes; [ fromSource ];
-    license = lib.licenses.lgpl3;
+    license = lib.licenses.lgpl3Only;
     maintainers = with lib.maintainers; [ js6pak ];
     inherit (kdePackages.krunner.meta) platforms;
   };

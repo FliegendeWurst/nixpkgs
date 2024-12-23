@@ -122,7 +122,6 @@ let
       ];
       native = [
         python.pkgs.pytest
-        gobject-introspection
       ];
       runtime = [
         gtk3
@@ -297,7 +296,7 @@ stdenv.mkDerivation (finalAttrs: (shared // {
     # https://github.com/gnuradio/gnuradio/issues/7458
     (fetchpatch {
       name = "gnuradio-numpy_2-compatibility.patch";
-      url = "https://github.com/gnuradio/gnuradio/commit/4be7ac7b5095a4c0d394456934102b8666b7c68c.patch";
+      url = "https://github.com/gnuradio/gnuradio/commit/8fbc5eb4b7214a4cb029ccae97205a85d49bdd48.patch";
       hash = "sha256-xYvjlyZ/Bcn23gT3EOee/GhkXzdpA+q33LgURVWOUQI=";
     })
   ];

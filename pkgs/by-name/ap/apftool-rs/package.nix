@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-0+eKxaLKZBRLdydXxUbifFfFncAbthUn7AB8QieWaXM=";
   };
 
-  cargoHash = "sha256-tijhuiuJhOirnRdDXRNafh3SxBmX65zPE5HJnHBUj30=";
+  cargoHash = "sha256-6lYokd0jwpBWCQ+AbN6ptZYXGcy41GHPbnTELUjPbyA=";
 
   meta = {
     description = "About Tools for Rockchip image unpack tool";

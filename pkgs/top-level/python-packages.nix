@@ -1070,6 +1070,8 @@ self: super: with self; {
 
   autopep8 = callPackage ../development/python-modules/autopep8 { };
 
+  autopxd2 = callPackage ../development/python-modules/autopxd2 { };
+
   autoslot = callPackage ../development/python-modules/autoslot { };
 
   avahi = toPythonModule (pkgs.avahi.override {
@@ -1505,6 +1507,8 @@ self: super: with self; {
   base58check = callPackage ../development/python-modules/base58check { };
 
   base64io = callPackage ../development/python-modules/base64io { };
+
+  basedtyping = callPackage ../development/python-modules/basedtyping { };
 
   baseline = callPackage ../development/python-modules/baseline { };
 
@@ -7031,7 +7035,6 @@ self: super: with self; {
   kitchen = callPackage ../development/python-modules/kitchen { };
 
   kivy = callPackage ../development/python-modules/kivy {
-    inherit (pkgs) mesa;
     inherit (pkgs.darwin.apple_sdk.frameworks) Accelerate ApplicationServices AVFoundation;
   };
 
@@ -8463,6 +8466,10 @@ self: super: with self; {
   };
 
   monotonic = callPackage ../development/python-modules/monotonic { };
+
+  monotonic-alignment-search =
+    callPackage ../development/python-modules/monotonic-alignment-search
+      { };
 
   monty = callPackage ../development/python-modules/monty { };
 

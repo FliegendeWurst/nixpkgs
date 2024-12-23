@@ -126,7 +126,7 @@ in stdenv.mkDerivation (finalAttrs: {
       bluez giflib glib harfbuzz lcms2 libpthreadstubs
       ffmpeg flatbuffers fstrcmp rapidjson
       lirc
-      mesa # for libEGL
+      mesa # uses eglext_angle.h, which is not provided by glvnd
     ]
     ++ lib.optionals x11Support [
       libX11 xorgproto libXt libXmu libXext.dev libXdmcp
@@ -190,7 +190,7 @@ in stdenv.mkDerivation (finalAttrs: {
       "-DENABLE_OPTICAL=${if opticalSupport then "ON" else "OFF"}"
       "-DENABLE_VDPAU=${if vdpauSupport then "ON" else "OFF"}"
       "-DLIRC_DEVICE=/run/lirc/lircd"
-      "-DSWIG_EXECUTABLE=${buildPackages.swig}/bin/swig"
+      "-DSWIG_EXECUTABLE=${buildPackages.swig3}/bin/swig"
       "-DFLATBUFFERS_FLATC_EXECUTABLE=${buildPackages.flatbuffers}/bin/flatc"
       "-DPYTHON_EXECUTABLE=${buildPackages.python3Packages.python}/bin/python"
       "-DPYTHON_LIB_PATH=${python3Packages.python.sitePackages}"

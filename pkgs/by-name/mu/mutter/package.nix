@@ -49,7 +49,7 @@
   libwacom,
   libSM,
   xwayland,
-  libgbm,
+  mesa,
   meson,
   gnome-settings-daemon,
   xorgserver,
@@ -100,13 +100,13 @@ stdenv.mkDerivation (finalAttrs: {
   propagatedBuildInputs = [
     # required for pkg-config to detect mutter-mtk
     graphene
+    mesa  # actually uses eglmesaext
   ];
 
   nativeBuildInputs = [
     desktop-file-utils
     gettext
     libxcvt
-    libgbm
     meson
     ninja
     xvfb-run
