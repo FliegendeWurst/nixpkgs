@@ -8,13 +8,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "krunner-vscodeprojects";
-  version = "2.0.1";
+  version = "2.0.2";
 
   src = fetchFromGitHub {
     owner = "alex1701c";
     repo = "krunner-vscodeprojects";
     rev = version;
-    hash = "sha256-M2zy9tFd4kk/6uo6xrMTm/Rc6+mIW04YCcl7jXqFEmQ=";
+    hash = "sha256-a24MFSXYFR4VVUVMOAY0n0sKqY0L9lUhnpgSeDFtceI=";
   };
 
   dontWrapQtApps = true;
@@ -38,10 +38,10 @@ stdenv.mkDerivation rec {
   passthru.updateScript = nix-update-script { };
 
   meta = {
-    description = "A Krunner Plugin which allows you to open your VSCode Project Manager projects";
+    description = "Krunner Plugin which allows you to open your VSCode Project Manager projects";
     homepage = "https://github.com/alex1701c/krunner-vscodeprojects";
     sourceProvenance = with lib.sourceTypes; [ fromSource ];
-    license = lib.licenses.lgpl3;
+    license = lib.licenses.lgpl3Only;
     maintainers = with lib.maintainers; [ js6pak ];
     inherit (kdePackages.krunner.meta) platforms;
   };
