@@ -101,20 +101,20 @@ buildPythonPackage rec {
     pyarrow
   ] ++ optional-dependencies.all;
 
-  disabledTestPaths =
-    [
-      "tests/fastapi/test_app.py" # tries to access network
-      "tests/core/test_docs_setting_column_widths.py" # tests doc generation, requires sphinx
-      "tests/modin" # requires modin, not in nixpkgs
-      "tests/mypy/test_static_type_checking.py" # some typing failures
-      "tests/pyspark" # requires spark
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      # OOM error on ofborg:
-      "test_engine_geometry_coerce_crs"
-      # pandera.errors.SchemaError: Error while coercing 'geometry' to type geometry
-      "test_schema_dtype_crs_with_coerce"
-    ];
+  disabledTestPaths = [
+    "tests/fastapi/test_app.py" # tries to access network
+    "tests/core/test_docs_setting_column_widths.py" # tests doc generation, requires sphinx
+    "tests/modin" # requires modin, not in nixpkgs
+    "tests/mypy/test_static_type_checking.py" # some typing failures
+    "tests/pyspark" # requires spark
+  ];
+
+  disabledTests = lib.optionals stdenv.hostPlatform.isDarwin [
+    # OOM error on ofborg:
+    "test_engine_geometry_coerce_crs"
+    # pandera.errors.SchemaError: Error while coercing 'geometry' to type geometry
+    "test_schema_dtype_crs_with_coerce"
+  ];
 
   pythonImportsCheck = [
     "pandera"
