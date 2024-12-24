@@ -35,12 +35,6 @@ let
   };
   bundle =
     {
-      "i686-linux" = fetchzip {
-        name = "${pname}-bundle";
-        url = "https://download3.ebz.epson.net/dsc/f/03/00/16/14/39/587bd2656bd16edb8089ecdcb968df13f2adfde9/epsonscan2-bundle-6.7.70.0.i686.deb.tar.gz";
-        hash = "sha256-EzXXEocS4Wl9qBnAdE6G9zvBmeoHmPkaeGWgaAqJnjs=";
-      };
-
       "x86_64-linux" = fetchzip {
         name = "${pname}-bundle";
         url = "https://download3.ebz.epson.net/dsc/f/03/00/16/14/38/7b1780ace96e2c6033bbb667c7f3ed281e4e9f38/epsonscan2-bundle-6.7.70.0.x86_64.deb.tar.gz";
@@ -57,15 +51,15 @@ stdenv.mkDerivation {
     ./build.patch
     ./gcc14.patch
     (fetchpatch {
-      url = "https://aur.archlinux.org/cgit/aur.git/plain/0002-Fix-crash.patch?h=epsonscan2";
+      url = "https://raw.githubusercontent.com/flathub/net.epson.epsonscan2/a489ac2f8cbd03afeda86673930cc17663c31a53/patches/0002-Fix-crash.patch";
       hash = "sha256-rNsFnHq//CJcIZl0M6RLRkIY3YhnJZbikO8SeeC2ktg=";
     })
     (fetchpatch {
-      url = "https://aur.archlinux.org/cgit/aur.git/plain/0004-Fix-a-crash-on-an-OOB-container-access.patch?h=epsonscan2";
+      url = "https://raw.githubusercontent.com/flathub/net.epson.epsonscan2/a489ac2f8cbd03afeda86673930cc17663c31a53/patches/0004-Fix-a-crash-on-an-OOB-container-access.patch";
       hash = "sha256-WmA8pmPSJ1xUdeBbE8Jzi6w9p96aIOm0erF3T4EQ6VA=";
     })
     (fetchpatch {
-      url = "https://aur.archlinux.org/cgit/aur.git/plain/0003-Use-XDG-open-to-open-the-directory.patch?h=epsonscan2";
+      url = "https://raw.githubusercontent.com/flathub/net.epson.epsonscan2/a489ac2f8cbd03afeda86673930cc17663c31a53/patches/0003-Use-XDG-open-to-open-the-directory.patch";
       hash = "sha256-H3lle1SXkkpbBkozYEwiX0z9oTUubTpB+l91utxH03M=";
     })
   ];
@@ -130,8 +124,8 @@ stdenv.mkDerivation {
     + lib.optionalString withGui ''
       # The icon file extension is .ico but it's actually a png!
       mkdir -p $out/share/icons/hicolor/{48x48,128x128}/apps
-      convert $src/Resources/Icons/escan2_app.ico -resize 48x48 -delete 1,2,3 $out/share/icons/hicolor/48x48/apps/epsonscan2.png
-      convert $src/Resources/Icons/escan2_app.ico -resize 128x128 -delete 1,2,3 $out/share/icons/hicolor/128x128/apps/epsonscan2.png
+      magick $src/Resources/Icons/escan2_app.ico -resize 48x48 -delete 1,2,3 $out/share/icons/hicolor/48x48/apps/epsonscan2.png
+      magick $src/Resources/Icons/escan2_app.ico -resize 128x128 -delete 1,2,3 $out/share/icons/hicolor/128x128/apps/epsonscan2.png
     ''
     + lib.optionalString withNonFreePlugins ''
       ar xf ${bundle}/plugins/epsonscan2-non-free-plugin_*.deb
@@ -173,10 +167,7 @@ stdenv.mkDerivation {
       </literal>
     '';
     homepage = "https://support.epson.net/linux/en/epsonscan2.php";
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = [ "x86_64-linux" ];
     sourceProvenance =
       with lib.sourceTypes;
       [ fromSource ] ++ lib.optionals withNonFreePlugins [ binaryNativeCode ];

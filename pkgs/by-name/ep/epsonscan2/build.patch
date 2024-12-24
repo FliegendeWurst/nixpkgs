@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4be62e3..b217fcd 100755
+index a9daee7..7c6da08 100755
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -17,7 +17,6 @@
@@ -44,11 +44,11 @@ index c884d83..5ddff0c 100644
  add_subdirectory(ScanSDK)
  
 diff --git a/src/Controller/Src/Filter/GetOrientation.cpp b/src/Controller/Src/Filter/GetOrientation.cpp
-index 8147bd4..549bb01 100755
+index 387561e..15448ad 100644
 --- a/src/Controller/Src/Filter/GetOrientation.cpp
 +++ b/src/Controller/Src/Filter/GetOrientation.cpp
-@@ -27,14 +27,7 @@ namespace epsonscan
- {
+@@ -12,14 +12,7 @@ namespace epsonscan
+ 
  static std::string GetExecPath()
  {
 -#ifdef AKBMODE
@@ -62,7 +62,7 @@ index 8147bd4..549bb01 100755
 +    return "@OCR_ENGINE_GETROTATE@";
  }
  static const int kMaxBuf = 256;
- void GetOrientation::DoProcess(ESImageInfo& imageInfo, ES_CMN_FUNCS::BUFFER::CESHeapBuffer& inDataBuf)
+ 
 diff --git a/src/Controller/Src/Scanner/Engine.cpp b/src/Controller/Src/Scanner/Engine.cpp
 index 8bd842e..d011329 100755
 --- a/src/Controller/Src/Scanner/Engine.cpp
