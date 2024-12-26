@@ -12,7 +12,7 @@
   curl,
   glew,
   geos,
-  boost185,
+  boost,
   spdlog,
   stb,
   libcpr_1_10_5,
@@ -132,7 +132,7 @@ stdenv.mkDerivation (finalAttrs: {
     qt6.qtimageformats
     aws-sdk-cpp
     howard-hinnant-date
-    boost185
+    boost
     tbb_2021_11
     glew
     geos
