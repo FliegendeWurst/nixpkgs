@@ -27,6 +27,10 @@ stdenv.mkDerivation rec {
 
   propagatedBuildInputs = [ libusb-compat-0_1 ];
 
+  preConfigure = ''
+    export PATH="${lib.getDev libusb-compat-0_1}/bin:$PATH"
+  '';
+
   configureFlags = lib.optional (!stdenv.hostPlatform.isDarwin) "--with-async-mode";
 
   # allow async mode. from ubuntu. see:
