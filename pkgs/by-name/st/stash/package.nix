@@ -1,11 +1,11 @@
 {
   buildGoModule,
-  darwin,
   fetchFromGitHub,
   fetchYarnDeps,
   lib,
   nixosTests,
   nodejs,
+  stash,
   stdenv,
   testers,
   yarnBuildHook,
@@ -29,7 +29,7 @@ let
     hash = srcHash;
   };
 
-  ui = stdenv.mkDerivation (final: {
+  frontend = stdenv.mkDerivation (final: {
     inherit version;
     pname = "${pname}-ui";
     src = "${src}/ui/v2.5";
@@ -72,7 +72,7 @@ let
     dontFixup = true;
   });
 in
-(buildGoModule {
+buildGoModule {
   inherit
     pname
     src
@@ -95,16 +95,8 @@ in
 
   subPackages = [ "cmd/stash" ];
 
-  buildInputs = lib.optionals stdenv.isDarwin (
-    with darwin.apple_sdk.frameworks;
-    [
-      Cocoa
-      WebKit
-    ]
-  );
-
   preBuild = ''
-    cp -a ${ui} ui/v2.5/build
+    cp -a ${frontend} ui/v2.5/build
     # `go mod tidy` requires internet access and does nothing
     echo "skip_mod_tidy: true" >> gqlgen.yml
     # remove `-trimpath` fron `GOFLAGS` because `gqlgen` does not work with it
@@ -112,6 +104,18 @@ in
   '';
 
   strictDeps = true;
+
+  passthru = {
+    inherit frontend;
+    updateScript = ./update.py;
+    tests = {
+      inherit (nixosTests) stash;
+      version = testers.testVersion {
+        package = stash;
+        version = "v${version} (${gitHash}) - Unofficial Build - 1970-01-01 00:00:00";
+      };
+    };
+  };
 
   meta = {
     mainProgram = "stash";
@@ -130,18 +134,4 @@ in
       "aarch64-darwin"
     ];
   };
-}).overrideAttrs
-  (
-    final: _: {
-      passthru = {
-        updateScript = ./update.py;
-        tests = {
-          inherit (nixosTests) stash;
-          version = testers.testVersion {
-            package = final.finalPackage;
-            version = "v${version} (${gitHash}) - Unofficial Build - 1970-01-01 00:00:00";
-          };
-        };
-      };
-    }
-  )
+}

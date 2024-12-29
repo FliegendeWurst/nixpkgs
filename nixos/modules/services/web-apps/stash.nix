@@ -328,7 +328,7 @@ let
           pkgs.runCommand "stash-${kind}"
             {
               inherit srcs;
-              buildInputs = [ pkgs.yq-go ];
+              nativeBuildInputs = [ pkgs.yq-go ];
               preferLocalBuild = true;
             }
             ''
