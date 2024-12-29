@@ -2,13 +2,14 @@
   lib,
   buildPythonPackage,
   fetchFromGitHub,
+  setuptools,
   unittestCheckHook,
 }:
 
 buildPythonPackage rec {
   pname = "apted";
   version = "1.0.3";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "JoaoFelipe";
@@ -17,12 +18,13 @@ buildPythonPackage rec {
     hash = "sha256-h8vJDC5TPpyhDxm1sHiXPegPB2eorEgyrNqzQOzSge8=";
   };
 
+  build-system = [ setuptools ];
   nativeCheckInputs = [ unittestCheckHook ];
 
-  meta = with lib; {
+  meta = {
     description = "APTED algorithm for the Tree Edit Distance";
     homepage = "https://github.com/JoaoFelipe/apted";
-    license = [ licenses.mit ];
-    maintainers = with maintainers; [ McSinyx ];
+    license = lib.licenses.mit;
+    maintainers = [ lib.maintainers.McSinyx ];
   };
 }
