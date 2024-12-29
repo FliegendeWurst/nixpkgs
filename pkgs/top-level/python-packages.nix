@@ -592,6 +592,12 @@ self: super: with self; {
 
   anonymizeip = callPackage ../development/python-modules/anonymizeip { };
 
+  amulet-core = callPackage ../development/python-modules/amulet-core { };
+
+  amulet-leveldb = callPackage ../development/python-modules/amulet-leveldb { };
+
+  amulet-nbt = callPackage ../development/python-modules/amulet-nbt { };
+
   anchor-kr = callPackage ../development/python-modules/anchor-kr { };
 
   ancp-bids = callPackage ../development/python-modules/ancp-bids { };
@@ -8234,6 +8240,8 @@ self: super: with self; {
 
   mindsdb-evaluator = callPackage ../development/python-modules/mindsdb-evaluator { };
 
+  minecraft-resource-pack = callPackage ../development/python-modules/minecraft-resource-pack { };
+
   minexr = callPackage ../development/python-modules/minexr { };
 
   miniaudio = callPackage ../development/python-modules/miniaudio {
@@ -12134,6 +12142,8 @@ self: super: with self; {
   pymbolic = callPackage ../development/python-modules/pymbolic { };
 
   pymc = callPackage ../development/python-modules/pymc { };
+
+  pymctranslate = callPackage ../development/python-modules/pymctranslate { };
 
   pymdstat = callPackage ../development/python-modules/pymdstat { };
 
