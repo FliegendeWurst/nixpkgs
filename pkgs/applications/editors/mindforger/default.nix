@@ -26,7 +26,7 @@ let
       rev = "4ca8688093228c599432a87d7bd945804c573d51";
       sha256 = "sha256-0WiG8aot8mc0h1BKPgC924UKQrgunZvKKBy9bD7nhoQ=";
     };
-    mindforger-repository = {
+    mindforger-repository = fetchFromGitHub {
       owner = "dvorka";
       repo = "mindforger-repository";
       rev = "ec81a27e5de6408bbcd3f6d7733a7c6f3b52e433";
@@ -93,7 +93,7 @@ in stdenv.mkDerivation {
     '';
     homepage = "https://www.mindforger.com";
     license = licenses.gpl2Plus;
-    platforms = platforms.all;
+    platforms = [ "aarch64-linux" "x86_64-linux" ];
     maintainers = with maintainers; [ cyplo ];
     mainProgram = "mindforger";
   };
