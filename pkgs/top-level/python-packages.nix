@@ -3905,6 +3905,8 @@ self: super: with self; {
 
   drf-nested-routers = callPackage ../development/python-modules/drf-nested-routers { };
 
+  drf-orjson-renderer = callPackage ../development/python-modules/drf-orjson-renderer { };
+
   drf-spectacular = callPackage ../development/python-modules/drf-spectacular { };
 
   drf-spectacular-sidecar = callPackage ../development/python-modules/drf-spectacular-sidecar { };
@@ -7577,6 +7579,8 @@ self: super: with self; {
 
   litemapy = callPackage ../development/python-modules/litemapy { };
 
+  litestar-htmx = callPackage ../development/python-modules/litestar-htmx { };
+
   littleutils = callPackage ../development/python-modules/littleutils { };
 
   livelossplot = callPackage ../development/python-modules/livelossplot { };
@@ -10359,6 +10363,10 @@ self: super: with self; {
 
   pinecone-client = callPackage ../development/python-modules/pinecone-client { };
 
+  pinecone-plugin-interface = callPackage ../development/python-modules/pinecone-plugin-interface { };
+
+  pinecone-plugin-inference = callPackage ../development/python-modules/pinecone-plugin-inference { };
+
   psrpcore = callPackage ../development/python-modules/psrpcore { };
 
   pyaprilaire = callPackage ../development/python-modules/pyaprilaire { };
@@ -10816,6 +10824,8 @@ self: super: with self; {
 
   python-juicenet = callPackage ../development/python-modules/python-juicenet { };
 
+  python-kadmin-rs = callPackage ../development/python-modules/python-kadmin-rs { };
+
   python-kasa = callPackage ../development/python-modules/python-kasa { };
 
   python-keycloak = callPackage ../development/python-modules/python-keycloak { };
@@ -10841,6 +10851,8 @@ self: super: with self; {
   python-openems = callPackage ../development/python-modules/python-openems { };
 
   python-opensky = callPackage ../development/python-modules/python-opensky { };
+
+  python-overseerr = callPackage ../development/python-modules/python-overseerr { };
 
   python-owasp-zap-v2-4 = callPackage ../development/python-modules/python-owasp-zap-v2-4 { };
 
@@ -11816,7 +11828,6 @@ self: super: with self; {
   pygal = callPackage ../development/python-modules/pygal { };
 
   pygame = callPackage ../development/python-modules/pygame {
-    inherit (pkgs.darwin.apple_sdk.frameworks) AppKit;
     SDL2_image = pkgs.SDL2_image_2_0;
   };
 

@@ -16,7 +16,6 @@
   libglvnd,
   webkitgtk_4_0,
   pcre2,
-  darwin,
   libsysprof-capture,
   util-linuxMinimal,
   libselinux,
@@ -34,21 +33,19 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "juce";
-  version = "8.0.3";
+  version = "8.0.4";
 
   src = fetchFromGitHub {
     owner = "juce-framework";
     repo = "juce";
     rev = finalAttrs.version;
-    hash = "sha256-faD1iI9cQ2v3YisbMDtk2lRELR7eDTz3JP0K0p1vmEU=";
+    hash = "sha256-iAueT+yHwUUHOzqfK5zXEZQ0GgOKJ9q9TyRrVfWdewc=";
   };
 
   patches = [
-    (fetchpatch {
-      name = "juce-6.1.2-cmake_install.patch";
-      url = "https://gitlab.archlinux.org/archlinux/packaging/packages/juce/-/raw/4e6d34034b102af3cd762a983cff5dfc09e44e91/juce-6.1.2-cmake_install.patch";
-      hash = "sha256-fr2K/dH0Zam5QKS63zos7eq9QLwdr+bvQL5ZxScagVU=";
-    })
+    # Adapted from https://gitlab.archlinux.org/archlinux/packaging/packages/juce/-/raw/4e6d34034b102af3cd762a983cff5dfc09e44e91/juce-6.1.2-cmake_install.patch
+    # for Juce 8.0.4.
+    ./juce-8.0.4-cmake_install.patch
   ];
 
   nativeBuildInputs = [
@@ -80,11 +77,6 @@ stdenv.mkDerivation (finalAttrs: {
       libXdmcp
       libxkbcommon
       libXtst
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      darwin.apple_sdk.frameworks.Cocoa
-      darwin.apple_sdk.frameworks.MetalKit
-      darwin.apple_sdk.frameworks.WebKit
     ];
 
   propagatedBuildInputs = [ fontconfig ];
@@ -93,7 +85,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Cross-platform C++ application framework";
     mainProgram = "juceaide";
     longDescription = "Open-source cross-platform C++ application framework for creating desktop and mobile applications, including VST, VST3, AU, AUv3, AAX and LV2 audio plug-ins";
-    homepage = "https://github.com/juce-framework/JUCE";
+    homepage = "https://juce.com/";
     changelog = "https://github.com/juce-framework/JUCE/blob/${finalAttrs.version}/CHANGE_LIST.md";
     license = with licenses; [
       agpl3Only # Or alternatively the JUCE license, but that would not be included in nixpkgs then
