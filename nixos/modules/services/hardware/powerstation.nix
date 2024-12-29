@@ -26,7 +26,9 @@ in
       };
 
       serviceConfig = {
-        ExecStart = "${lib.getExe cfg.package}";
+        User = "root";
+        Group = "root";
+        ExecStart = lib.getExe cfg.package;
       };
     };
   };
