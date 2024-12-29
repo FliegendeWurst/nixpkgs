@@ -32,7 +32,7 @@ buildGoModule rec {
     "-X github.com/hashicorp/copywrite/cmd.commit=${shortCommitHash}"
   ];
 
-  CGO_ENABLED = 0;
+  env.CGO_ENABLED = 0;
 
   nativeBuildInputs = [ installShellFiles ];
   postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
