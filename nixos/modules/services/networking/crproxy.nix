@@ -31,7 +31,7 @@ let
 in
 {
   options.services.crproxy = {
-    enable = mkEnableOption "CRProxy (Container Registry Proxy) is a generic image proxy";
+    enable = mkEnableOption "CRProxy, a generic Docker image proxy";
 
     package = mkPackageOption pkgs "crproxy" { };
 
