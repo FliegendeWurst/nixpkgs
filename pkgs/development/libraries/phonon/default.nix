@@ -42,12 +42,12 @@ stdenv.mkDerivation rec {
     libpulseaudio
     qtbase
     qttools
+    extra-cmake-modules
   ];
 
   nativeBuildInputs = [
     cmake
     pkg-config
-    extra-cmake-modules
   ];
 
   outputs = [

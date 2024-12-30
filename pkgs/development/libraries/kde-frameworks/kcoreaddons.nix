@@ -14,4 +14,5 @@ mkDerivation {
     shared-mime-info
   ];
   propagatedBuildInputs = [ qtbase ];
+  # env.NIX_CFLAGS_COMPILE = "-D_GLIBCXX_SYSHDR";
 }

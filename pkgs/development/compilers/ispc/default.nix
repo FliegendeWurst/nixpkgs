@@ -48,6 +48,7 @@ stdenv.mkDerivation rec {
     libclang
     openmp
     ncurses
+    tbb
   ];
 
   postPatch = ''

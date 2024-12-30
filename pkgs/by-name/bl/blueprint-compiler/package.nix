@@ -30,11 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     libadwaita
-    (python3.withPackages (
-      ps: with ps; [
-        pygobject3
-      ]
-    ))
+    python3
   ];
 
   propagatedBuildInputs = [

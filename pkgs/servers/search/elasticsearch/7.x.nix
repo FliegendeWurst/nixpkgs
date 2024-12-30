@@ -54,6 +54,8 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  strictDeps = false;
+
   runtimeDependencies = [ zlib ];
 
   installPhase = ''

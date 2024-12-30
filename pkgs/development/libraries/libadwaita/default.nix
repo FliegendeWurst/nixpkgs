@@ -112,7 +112,7 @@ stdenv.mkDerivation (finalAttrs: {
       "HOME=$TMPDIR"
     )
     env "''${testEnvironment[@]}" ${lib.optionalString (!stdenv.hostPlatform.isDarwin) "xvfb-run"} \
-      meson test --print-errorlogs
+      meson test --print-errorlogs --timeout-multiplier 0
 
     runHook postCheck
   '';

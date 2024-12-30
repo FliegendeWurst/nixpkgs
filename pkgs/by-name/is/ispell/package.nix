@@ -15,10 +15,9 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-F8kWM9TIB1rMUDFjoWRj/FSrHHRTKArTnNPbdceD66Y=";
   };
 
-  buildInputs = [
-    bison
-    ncurses
-  ];
+  nativeBuildInputs = [ bison ];
+  buildInputs = [ ncurses ];
+  strictDeps = true;
 
   postPatch = ''
     cat >> local.h <<EOF

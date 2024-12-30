@@ -1,5 +1,6 @@
 {
   mkDerivation,
+  cmake,
   extra-cmake-modules,
   bzip2,
   xz,
@@ -17,10 +18,12 @@ mkDerivation {
   ];
   buildInputs = [
     bzip2
+    qtbase
     xz
     zlib
     zstd
   ];
+  strictDeps = true;
   propagatedBuildInputs = [ qtbase ];
   outputs = [
     "out"

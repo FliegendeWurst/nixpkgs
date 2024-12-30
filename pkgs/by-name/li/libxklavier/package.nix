@@ -61,6 +61,8 @@ stdenv.mkDerivation rec {
     docbook_xsl
     gobject-introspection
   ];
+  buildInputs = [ gtk-doc ];
+  strictDeps = true;
 
   preAutoreconf = ''
     export NOCONFIGURE=1

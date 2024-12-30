@@ -415,6 +415,8 @@ buildPythonPackage rec {
       (lib.cmakeFeature "CMAKE_CUDA_COMPILER_TOOLKIT_VERSION" cudaPackages.cudaVersion)
     ];
 
+  USE_VULKAN = setBool vulkanSupport;
+
   preBuild = ''
     export MAX_JOBS=$NIX_BUILD_CORES
     ${python.pythonOnBuildForHost.interpreter} setup.py build --cmake-only
@@ -747,4 +749,7 @@ buildPythonPackage rec {
       ++ lib.optionals (!cudaSupport && !rocmSupport) lib.platforms.darwin;
     broken = builtins.any trivial.id (builtins.attrValues brokenConditions);
   };
+}
+// lib.optionalAttrs vulkanSupport {
+  VULKAN_SDK = shaderc.bin;
 }

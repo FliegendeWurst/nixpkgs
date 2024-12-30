@@ -42,6 +42,9 @@ buildDartApplication.override { inherit dart; } rec {
     git
     which
   ];
+  buildInputs = [ bash ];
+  strictDeps = true;
+
   preConfigure = ''
     export HOME=.
     export FLUTTER_ROOT="$NIX_BUILD_TOP/source"

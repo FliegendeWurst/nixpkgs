@@ -48,10 +48,14 @@ stdenv.mkDerivation (finalAttrs: {
     nlohmann_json
   ];
 
+  strictDeps = true;
+
   nativeCheckInputs = [
     cacert
     gtest
+    sqlite
   ];
+  checkInputs = [ gtest ];
 
   cmakeFlags = [
     "-DUSE_EXTERNAL_GTEST=ON"

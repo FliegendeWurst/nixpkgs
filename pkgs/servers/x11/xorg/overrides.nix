@@ -890,6 +890,7 @@ self: super:
         configureFlags = [
           # note: --enable-xquartz is auto
           "CPPFLAGS=-I${./darwin/dri}"
+          "--disable-libunwind" # libunwind on darwin is missing unw_strerror
           "--disable-glamor"
           "--with-default-font-path="
           "--with-apple-application-name=XQuartz"
@@ -1116,15 +1117,6 @@ self: super:
   xsetroot = addMainProgram super.xsetroot { };
   xsm = addMainProgram super.xsm { };
   xstdcmap = addMainProgram super.xstdcmap { };
-  xtrans = super.xtrans.overrideAttrs (attrs: {
-    patches = [
-      # https://gitlab.freedesktop.org/xorg/lib/libxtrans/-/merge_requests/22
-      (fetchpatch {
-        url = "https://gitlab.freedesktop.org/xorg/lib/libxtrans/-/commit/ae99ac32f61e0db92a45179579030a23fe1b5770.patch";
-        hash = "sha256-QnTTcZPd9QaHS5up4Ne7iuNL/OBu+DnzXprovWnW4cw=";
-      })
-    ];
-  });
   xwd = addMainProgram super.xwd { };
   xwininfo = addMainProgram super.xwininfo { };
   xwud = addMainProgram super.xwud { };

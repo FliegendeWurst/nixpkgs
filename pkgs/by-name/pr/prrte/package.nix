@@ -59,6 +59,8 @@ stdenv.mkDerivation rec {
     libtool
     flex
     gitMinimal
+    # TODO: figure out why pmix is needed here (if strictDeps = true)
+    pmix
   ];
 
   buildInputs = [

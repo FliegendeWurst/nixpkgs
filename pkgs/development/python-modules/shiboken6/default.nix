@@ -44,6 +44,8 @@ stdenv'.mkDerivation (finalAttrs: {
       python.pkgs.qt6.darwinVersionInputs
     ];
 
+  strictDeps = false; # TODO
+
   cmakeFlags = [ "-DBUILD_TESTS=OFF" ];
 
   # We intentionally use single quotes around `${BASH}` since it expands from a CMake

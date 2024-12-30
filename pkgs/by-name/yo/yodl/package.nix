@@ -11,9 +11,7 @@ stdenv.mkDerivation rec {
   pname = "yodl";
   version = "4.03.03";
 
-  nativeBuildInputs = [ icmake ];
-
-  buildInputs = [ perl ];
+  nativeBuildInputs = [ icmake perl ];
 
   src = fetchFromGitLab {
     hash = "sha256-MeD/jjhwoiWTb/G8pHrnEEX22h+entPr9MhJ6WHO3DM=";

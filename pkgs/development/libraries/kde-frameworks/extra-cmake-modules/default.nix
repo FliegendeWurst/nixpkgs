@@ -19,6 +19,9 @@ mkDerivation {
 
   outputs = [ "out" ]; # this package has no runtime components
 
+  nativeBuildInputs = [ cmake ];
+
+  # note: these will actually be propagated into nativeBuildInputs
   propagatedBuildInputs = [
     cmake
     pkg-config

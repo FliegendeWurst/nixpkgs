@@ -8,6 +8,7 @@
 , withPython ? true
 , withExtras ? true
 , Carbon, Cocoa
+, gettext
 }:
 
 assert withGTK -> withGUI;
@@ -51,7 +52,7 @@ stdenv.mkDerivation rec {
   # do not use x87's 80-bit arithmetic, rouding errors result in very different font binaries
   env.NIX_CFLAGS_COMPILE = lib.optionalString stdenv.hostPlatform.isi686 "-msse2 -mfpmath=sse";
 
-  nativeBuildInputs = [ pkg-config cmake ];
+  nativeBuildInputs = [ pkg-config cmake gettext python ];
   buildInputs = [
     readline uthash woff2 zeromq
     python freetype zlib glib giflib libpng libjpeg libtiff libxml2
@@ -59,6 +60,7 @@ stdenv.mkDerivation rec {
     ++ lib.optionals withSpiro [ libspiro ]
     ++ lib.optionals withGUI [ gtk3 cairo pango ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ Carbon Cocoa ];
+  strictDeps = true;
 
   cmakeFlags = [ "-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON" ]
     ++ lib.optional (!withSpiro) "-DENABLE_LIBSPIRO=OFF"

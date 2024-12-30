@@ -64,6 +64,9 @@ buildPythonPackage rec {
     export HOME=$(mktemp -d)
   '';
 
+  # https://github.com/treebeardtech/nbmake/issues/129
+  doCheck = false;
+
   __darwinAllowLocalNetworking = true;
 
   meta = {

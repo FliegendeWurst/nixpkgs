@@ -486,6 +486,9 @@ stdenv.mkDerivation rec {
       substituteInPlace tools/build_rules/test_rules.bzl \
         --replace /bin/bash ${bashWithDefaultShellUtils}/bin/bash
 
+      substituteInPlace tools/genrule/genrule-setup.sh \
+        --replace-fail /bin/bash ${bashWithDefaultShellUtils}/bin/bash
+
       for i in $(find tools/cpp/ -type f)
       do
         substituteInPlace $i \
@@ -584,6 +587,9 @@ stdenv.mkDerivation rec {
     zip
     python3.pkgs.absl-py   # Needed to build fish completion
   ] ++ lib.optionals (stdenv.hostPlatform.isDarwin) [ cctools libcxx sigtool CoreFoundation CoreServices Foundation ];
+
+  # TODO: investigate
+  strictDeps = false;
 
   # Bazel makes extensive use of symlinks in the WORKSPACE.
   # This causes problems with infinite symlinks if the build output is in the same location as the

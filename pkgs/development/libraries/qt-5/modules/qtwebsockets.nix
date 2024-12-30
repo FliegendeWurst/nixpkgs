@@ -6,6 +6,7 @@
 
 qtModule {
   pname = "qtwebsockets";
+  nativeBuildInputs = [ qtdeclarative ];
   propagatedBuildInputs = [
     qtbase
     qtdeclarative

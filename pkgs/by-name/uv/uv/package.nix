@@ -1,11 +1,15 @@
 {
   lib,
   stdenv,
-  cmake,
+  rustPlatform,
   fetchFromGitHub,
+
+  # nativeBuildInputs
+  cmake,
   installShellFiles,
   pkg-config,
-  rustPlatform,
+
+  buildPackages,
   versionCheckHook,
   python3Packages,
   nix-update-script,
@@ -13,17 +17,17 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "uv";
-  version = "0.5.11";
+  version = "0.5.13";
 
   src = fetchFromGitHub {
     owner = "astral-sh";
     repo = "uv";
     tag = version;
-    hash = "sha256-0HdMjul925TkJGYQHsmQBYQoEkDYyXFSTEgZ/jg5V0o=";
+    hash = "sha256-W24bw+fQk7DoHPGFtUiIPybxuCa03o1ngAXqVwU/Z7E=";
   };
 
   useFetchCargoVendor = true;
-  cargoHash = "sha256-T1Yk8JNPdkxpLegeFuL2J7mbFOX4yyCPfvHyFfu6YsM=";
+  cargoHash = "sha256-CN4ZqYeZktcQT0Pro8rfnzri6i0xranmYdroKzwkK6A=";
 
   nativeBuildInputs = [
     cmake
@@ -41,13 +45,16 @@ rustPlatform.buildRustPackage rec {
   # Tests require python3
   doCheck = false;
 
-  postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
-    export HOME=$TMPDIR
-    installShellCompletion --cmd uv \
-      --bash <($out/bin/uv --generate-shell-completion bash) \
-      --fish <($out/bin/uv --generate-shell-completion fish) \
-      --zsh <($out/bin/uv --generate-shell-completion zsh)
-  '';
+  postInstall =
+    let
+      emulator = stdenv.hostPlatform.emulator buildPackages;
+    in
+    ''
+      installShellCompletion --cmd uv \
+        --bash <(${emulator} $out/bin/uv generate-shell-completion bash) \
+        --fish <(${emulator} $out/bin/uv generate-shell-completion fish) \
+        --zsh <(${emulator} $out/bin/uv generate-shell-completion zsh)
+    '';
 
   nativeInstallCheckInputs = [
     versionCheckHook

@@ -85,6 +85,7 @@ stdenv.mkDerivation rec {
       xmlstarlet
       unzip
       yq
+      llvm.out
       installShellFiles
     ]
     ++ lib.optionals (lib.versionAtLeast version "9") [

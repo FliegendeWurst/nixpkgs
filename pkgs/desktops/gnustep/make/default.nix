@@ -25,6 +25,8 @@ stdenv.mkDerivation (finalAttrs: {
     "GNUSTEP_INSTALLATION_DOMAIN=SYSTEM"
   ];
 
+  nativeBuildInputs = [ which ];
+
   buildInputs = [ libobjc ];
 
   propagatedBuildInputs = [ which ];

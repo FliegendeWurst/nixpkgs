@@ -38,6 +38,7 @@ stdenv.mkDerivation rec {
     libtool
     pkg-config
     python3
+    glib
   ];
 
   buildInputs = [

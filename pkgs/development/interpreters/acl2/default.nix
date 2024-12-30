@@ -71,26 +71,20 @@ stdenv.mkDerivation rec {
     find . -type f -newer "$src" -execdir touch -r "$src" {} +
   '';
 
-  nativeBuildInputs = lib.optional certifyBooks makeWrapper;
+  # ACL2 itself only needs a Common Lisp compiler/interpreter:
+  nativeBuildInputs = [ sbcl ] ++ lib.optional certifyBooks makeWrapper ++ lib.optionals certifyBooks [
+    # To build community books, we need Perl and a couple of utilities:
+    which perl hostname
+    # Some of the books require one or more of these external tools:
+    glucose minisat abc-verifier libipasir
+    z3 (python3.withPackages (ps: [ ps.z3-solver ]))
+  ];
 
-  buildInputs =
-    [
-      # ACL2 itself only needs a Common Lisp compiler/interpreter:
-      sbcl
-    ]
-    ++ lib.optionals certifyBooks [
-      # To build community books, we need Perl and a couple of utilities:
-      which
-      perl
-      hostname
-      # Some of the books require one or more of these external tools:
-      glucose
-      minisat
-      abc-verifier
-      libipasir
-      z3
-      (python3.withPackages (ps: [ ps.z3-solver ]))
-    ];
+  buildInputs = lib.optionals certifyBooks [
+    perl
+  ];
+
+  strictDeps = true;
 
   # NOTE: Parallel building can be memory-intensive depending on the number of
   # concurrent jobs.  For example, this build has been seen to use >120GB of

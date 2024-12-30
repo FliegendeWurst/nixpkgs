@@ -40,15 +40,13 @@ buildPythonPackage rec {
     hash = "sha256-WXHQVJJCE+7FQJjRgjnmpoGGnF20OQ6/X6Fnrzsp2fA=";
   };
 
-  pythonRelaxDeps = [
-    "numpy" # https://github.com/moderngl/moderngl-window/issues/193
-  ];
+  pythonRelaxDeps = [ "pillow" ];
 
   build-system = [
     setuptools
   ];
 
-  propagatedBuildInputs = [
+  dependencies = [
     moderngl
     numpy
     pillow

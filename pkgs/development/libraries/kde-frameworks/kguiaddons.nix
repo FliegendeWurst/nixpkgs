@@ -21,6 +21,7 @@ mkDerivation {
     plasma-wayland-protocols
   ];
   propagatedBuildInputs = [ qtbase ];
+  strictDeps = false; # TODO
 
   outputs = [
     "out"

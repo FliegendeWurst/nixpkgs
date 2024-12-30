@@ -8,6 +8,7 @@
   bash,
   makeWrapper,
   perlPackages,
+  zlib,
 }:
 
 stdenv.mkDerivation rec {
@@ -28,7 +29,7 @@ stdenv.mkDerivation rec {
       wrapQtAppsHook
     ]);
 
-  buildInputs = [ perlPackages.perl ];
+  buildInputs = [ perlPackages.perl zlib ];
 
   postPatch = ''
     substituteInPlace scripts/scripts.pro \

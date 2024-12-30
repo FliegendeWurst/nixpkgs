@@ -314,6 +314,7 @@ buildStdenv.mkDerivation {
     gnum4
     llvmPackagesBuildBuild.bintools
     makeWrapper
+    nasm
     nodejs
     perl
     python3

@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchCrate,
+  fetchFormGitHub,
   rustPlatform,
 }:
 
@@ -9,14 +9,17 @@ rustPlatform.buildRustPackage rec {
   version = "9.1.3";
   pname = "oxipng";
 
-  src = fetchCrate {
-    inherit version pname;
-    hash = "sha256-kzN4YNsFqv/KUxpHao++oqc90Us6VllyFYkpdVUigD0=";
+  # do not use fetchCrate (only repository includes tests)
+  src = fetchFromGitHub {
+    owner = "shssoichiro";
+    repo = "oxipng";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-0yOdvqleOjlhVADrwnT90bUTa+aLJfsfUvVaS9s3eKK=";
   };
 
-  cargoHash = "sha256-4PCLtBJliK3uteL8EVKLBVR2YZW1gwQOiSLQok+rqug=";
+  cargoHash = "sha256-4PCLtBJliK3uteL8EVKLBVR2YZW1gwQOiSLQok+rrug=";
 
-  doCheck = !stdenv.hostPlatform.isAarch64 && !stdenv.hostPlatform.isDarwin;
+  doCheck = true;
 
   meta = {
     homepage = "https://github.com/shssoichiro/oxipng";

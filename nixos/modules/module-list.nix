@@ -267,6 +267,7 @@
   ./programs/ns-usbloader.nix
   ./programs/oblogout.nix
   ./programs/oddjobd.nix
+  ./programs/opengamepadui.nix
   ./programs/openvpn3.nix
   ./programs/obs-studio.nix
   ./programs/partition-manager.nix
@@ -623,6 +624,7 @@
   ./services/hardware/pcscd.nix
   ./services/hardware/pommed.nix
   ./services/hardware/power-profiles-daemon.nix
+  ./services/hardware/powerstation.nix
   ./services/hardware/rasdaemon.nix
   ./services/hardware/ratbagd.nix
   ./services/hardware/sane.nix
@@ -723,6 +725,7 @@
   ./services/matrix/dendrite.nix
   ./services/matrix/hebbot.nix
   ./services/matrix/hookshot.nix
+  ./services/matrix/draupnir.nix
   ./services/matrix/maubot.nix
   ./services/matrix/mautrix-facebook.nix
   ./services/matrix/mautrix-meta.nix
@@ -763,10 +766,12 @@
   ./services/misc/disnix.nix
   ./services/misc/docker-registry.nix
   ./services/misc/domoticz.nix
+  ./services/misc/duckdns.nix
   ./services/misc/duckling.nix
   ./services/misc/dwm-status.nix
   ./services/misc/dysnomia.nix
   ./services/misc/errbot.nix
+  ./services/misc/ersatztv.nix
   ./services/misc/etebase-server.nix
   ./services/misc/etesync-dav.nix
   ./services/misc/evdevremapkeys.nix
@@ -1023,6 +1028,7 @@
   ./services/networking/bitlbee.nix
   ./services/networking/blockbook-frontend.nix
   ./services/networking/blocky.nix
+  ./services/networking/cato-client.nix
   ./services/networking/centrifugo.nix
   ./services/networking/cgit.nix
   ./services/networking/charybdis.nix
@@ -1111,6 +1117,7 @@
   ./services/networking/iscsi/target.nix
   ./services/networking/ivpn.nix
   ./services/networking/iwd.nix
+  ./services/networking/juicity.nix
   ./services/networking/jibri/default.nix
   ./services/networking/jicofo.nix
   ./services/networking/jigasi.nix
@@ -1282,6 +1289,7 @@
   ./services/networking/tox-node.nix
   ./services/networking/toxvpn.nix
   ./services/networking/trickster.nix
+  ./services/networking/tun2socks.nix
   ./services/networking/twingate.nix
   ./services/networking/ucarp.nix
   ./services/networking/unbound.nix
@@ -1417,6 +1425,7 @@
   ./services/video/mirakurun.nix
   ./services/video/photonvision.nix
   ./services/video/mediamtx.nix
+  ./services/video/ustreamer.nix
   ./services/video/v4l2-relayd.nix
   ./services/video/wivrn.nix
   ./services/wayland/cage.nix
@@ -1464,6 +1473,7 @@
   ./services/web-apps/gancio.nix
   ./services/web-apps/gerrit.nix
   ./services/web-apps/glance.nix
+  ./services/web-apps/glitchtip.nix
   ./services/web-apps/gotify-server.nix
   ./services/web-apps/gotosocial.nix
   ./services/web-apps/grocy.nix
@@ -1495,6 +1505,7 @@
   ./services/web-apps/lanraragi.nix
   ./services/web-apps/lemmy.nix
   ./services/web-apps/limesurvey.nix
+  ./services/web-apps/linkding.nix
   ./services/web-apps/mainsail.nix
   ./services/web-apps/mastodon.nix
   ./services/web-apps/matomo.nix
@@ -1554,6 +1565,7 @@
   ./services/web-apps/snipe-it.nix
   ./services/web-apps/sogo.nix
   ./services/web-apps/stirling-pdf.nix
+  ./services/web-apps/stash.nix
   ./services/web-apps/trilium.nix
   ./services/web-apps/tt-rss.nix
   ./services/web-apps/vikunja.nix
@@ -1590,6 +1602,7 @@
   ./services/web-servers/nginx/tailscale-auth.nix
   ./services/web-servers/phpfpm/default.nix
   ./services/web-servers/pomerium.nix
+  ./services/web-servers/quakejs.nix
   ./services/web-servers/rustus.nix
   ./services/web-servers/send.nix
   ./services/web-servers/stargazer.nix
@@ -1619,6 +1632,7 @@
   ./services/x11/hardware/wacom.nix
   ./services/x11/imwheel.nix
   ./services/x11/picom.nix
+  ./services/x11/quicktile.nix
   ./services/x11/redshift.nix
   ./services/x11/touchegg.nix
   ./services/x11/unclutter-xfixes.nix

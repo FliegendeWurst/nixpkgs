@@ -4,7 +4,7 @@
 , sigtool
 , makeWrapper, removeReferencesTo
 , attr, libcap, libcap_ng, socat, libslirp
-, CoreServices, Cocoa, Hypervisor, Kernel, rez, setfile, vmnet
+, apple-sdk_13, darwinMinVersionHook, rez, setfile
 , guestAgentSupport ? (with stdenv.hostPlatform; isLinux || isNetBSD || isOpenBSD || isSunOS || isWindows) && !minimal
 , numaSupport ? stdenv.hostPlatform.isLinux && !stdenv.hostPlatform.isAarch32 && !minimal, numactl
 , seccompSupport ? stdenv.hostPlatform.isLinux && !minimal, libseccomp
@@ -57,15 +57,10 @@ assert lib.assertMsg (xenSupport -> hostCpuTargets == [ "i386-softmmu" ]) "Xen s
 let
   hexagonSupport = hostCpuTargets == null || lib.elem "hexagon" hostCpuTargets;
 
-  buildPlatformStdenv =
-    if stdenv.buildPlatform.isDarwin then
-      overrideSDK buildPackages.stdenv {
-        # Keep these values in sync with `all-packages.nix`.
-        darwinSdkVersion = "12.3";
-        darwinMinVersion = "12.0";
-      }
-    else
-      buildPackages.stdenv;
+  # needed in buildInputs and depsBuildBuild
+  # check log for warnings eg: `warning: 'hv_vm_config_get_max_ipa_size' is only available on macOS 13.0`
+  # to indicate if min version needs to get bumped.
+  darwinSDK = [ apple-sdk_13 (darwinMinVersionHook "13") ];
 in
 
 stdenv.mkDerivation (finalAttrs: {
@@ -82,7 +77,8 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-+FnwvGXh9TPQQLvoySvP7O5a8skhpmh8ZS+0TQib2JQ=";
   };
 
-  depsBuildBuild = [ buildPlatformStdenv.cc ]
+  depsBuildBuild = [ buildPackages.stdenv.cc ]
+    ++ lib.optionals stdenv.buildPlatform.isDarwin darwinSDK
     ++ lib.optionals hexagonSupport [ pkg-config ];
 
   nativeBuildInputs = [
@@ -102,7 +98,7 @@ stdenv.mkDerivation (finalAttrs: {
     ++ lib.optionals (!minimal) [ dtc pixman vde2 lzo snappy libtasn1 gnutls nettle libslirp ]
     ++ lib.optionals (!userOnly) [ curl ]
     ++ lib.optionals ncursesSupport [ ncurses ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [ CoreServices Cocoa Hypervisor Kernel vmnet ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin darwinSDK
     ++ lib.optionals seccompSupport [ libseccomp ]
     ++ lib.optionals numaSupport [ numactl ]
     ++ lib.optionals alsaSupport [ alsa-lib ]

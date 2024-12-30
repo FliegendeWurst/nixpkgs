@@ -6,7 +6,6 @@
   cached-property,
   cffi,
   fetchPypi,
-  fetchpatch,
   isPyPy,
   libgit2,
   pycparser,
@@ -26,14 +25,6 @@ buildPythonPackage rec {
     inherit pname version;
     hash = "sha256-eymmeWuqFfyJ1EOsjVF3VBHZseWwbcQNRYxWyFdrSKI=";
   };
-
-  patches = [
-    # fix for GCC 14
-    (fetchpatch {
-      url = "https://github.com/libgit2/pygit2/commit/eba710e45bb40e18641c6531394bb46631e7f295.patch";
-      hash = "sha256-GFFzGVd/9+AcwicwOtBghhonijMp08svXTUZ/4/LmtI=";
-    })
-  ];
 
   preConfigure = lib.optionalString stdenv.hostPlatform.isDarwin ''
     export DYLD_LIBRARY_PATH="${libgit2}/lib"

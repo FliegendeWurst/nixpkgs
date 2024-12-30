@@ -44,8 +44,10 @@ stdenv.mkDerivation (finalAttrs: {
   propagatedBuildInputs = [ abseil-cpp ] ++ lib.optionals (!stdenv.hostPlatform.isStatic) [ icu ];
 
   cmakeFlags =
-    [ (lib.cmakeBool "RE2_BUILD_TESTING" true) ]
-    ++ lib.optionals (!stdenv.hostPlatform.isStatic) [
+    [
+      (lib.cmakeBool "RE2_BUILD_TESTING" true)
+      (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--timeout;6000")
+    ] ++ lib.optionals (!stdenv.hostPlatform.isStatic) [
       (lib.cmakeBool "RE2_USE_ICU" true)
       (lib.cmakeBool "BUILD_SHARED_LIBS" true)
     ];

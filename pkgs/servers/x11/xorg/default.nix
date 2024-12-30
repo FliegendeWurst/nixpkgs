@@ -1618,11 +1618,11 @@ self: with self; {
   # THIS IS A GENERATED FILE.  DO NOT EDIT!
   libXv = callPackage ({ stdenv, pkg-config, fetchurl, xorgproto, libX11, libXext, testers }: stdenv.mkDerivation (finalAttrs: {
     pname = "libXv";
-    version = "1.0.12";
+    version = "1.0.13";
     builder = ./builder.sh;
     src = fetchurl {
-      url = "mirror://xorg/individual/lib/libXv-1.0.12.tar.xz";
-      sha256 = "0j1qqrhbhdi3kqz0am5i1lhs31ql9pbc14z41w0a5xw9yq4zmxxa";
+      url = "mirror://xorg/individual/lib/libXv-1.0.13.tar.xz";
+      sha256 = "0m9pl0xh0bv9y1x46d8a52bj46fsnyhzwa6qjg8zihg1b04r2d3x";
     };
     hardeningDisable = [ "bindnow" "relro" ];
     strictDeps = true;
@@ -1698,11 +1698,11 @@ self: with self; {
   # THIS IS A GENERATED FILE.  DO NOT EDIT!
   libXxf86vm = callPackage ({ stdenv, pkg-config, fetchurl, libX11, libXext, xorgproto, testers }: stdenv.mkDerivation (finalAttrs: {
     pname = "libXxf86vm";
-    version = "1.1.5";
+    version = "1.1.6";
     builder = ./builder.sh;
     src = fetchurl {
-      url = "mirror://xorg/individual/lib/libXxf86vm-1.1.5.tar.xz";
-      sha256 = "1rw8z01vgfc4wvf0q75sgnj6n04dkrw1w7z455qydrz0nd4fyzr4";
+      url = "mirror://xorg/individual/lib/libXxf86vm-1.1.6.tar.xz";
+      sha256 = "1qryzfzf3qr2xx1sipdn8kw310zs4ygpzgh4mm4m87fffd643bwn";
     };
     hardeningDisable = [ "bindnow" "relro" ];
     strictDeps = true;
@@ -4378,11 +4378,11 @@ self: with self; {
   # THIS IS A GENERATED FILE.  DO NOT EDIT!
   xtrans = callPackage ({ stdenv, pkg-config, fetchurl, testers }: stdenv.mkDerivation (finalAttrs: {
     pname = "xtrans";
-    version = "1.5.1";
+    version = "1.5.2";
     builder = ./builder.sh;
     src = fetchurl {
-      url = "mirror://xorg/individual/lib/xtrans-1.5.1.tar.xz";
-      sha256 = "0glr2vlhs56ij3px5829d00mv0ajnrf7ilminjai951wijyhza6y";
+      url = "mirror://xorg/individual/lib/xtrans-1.5.2.tar.xz";
+      sha256 = "0v7qvys42md6nvm16xynhb3b8zz534fc60wg0hfi7ab48zivyp2w";
     };
     hardeningDisable = [ "bindnow" "relro" ];
     strictDeps = true;

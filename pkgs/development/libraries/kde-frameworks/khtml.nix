@@ -27,6 +27,7 @@ mkDerivation {
   pname = "khtml";
   nativeBuildInputs = [
     extra-cmake-modules
+    gperf
     perl
   ];
   buildInputs = [
@@ -50,4 +51,5 @@ mkDerivation {
     gperf
   ];
   propagatedBuildInputs = [ kjs ];
+  strictDeps = true;
 }

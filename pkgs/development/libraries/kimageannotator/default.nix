@@ -26,11 +26,13 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     cmake
     qttools
+    qtsvg
   ];
   buildInputs = [
     qtbase
     qtsvg
   ];
+
   propagatedBuildInputs = [ kcolorpicker ];
 
   cmakeFlags = [

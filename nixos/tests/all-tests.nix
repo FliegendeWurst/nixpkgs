@@ -969,6 +969,7 @@ in {
   stalwart-mail = handleTest ./stalwart-mail.nix {};
   stargazer = runTest ./web-servers/stargazer.nix;
   starship = handleTest ./starship.nix {};
+  stash = handleTestOn [ "x86_64-linux" "aarch64-linux" ] ./stash.nix {};
   static-web-server = handleTest ./web-servers/static-web-server.nix {};
   step-ca = handleTestOn ["x86_64-linux"] ./step-ca.nix {};
   stratis = handleTest ./stratis {};
@@ -1086,6 +1087,7 @@ in {
   tmate-ssh-server = handleTest ./tmate-ssh-server.nix { };
   tomcat = handleTest ./tomcat.nix {};
   tor = handleTest ./tor.nix {};
+  tpm-ek = handleTest ./tpm-ek {};
   traefik = handleTestOn ["aarch64-linux" "x86_64-linux"] ./traefik.nix {};
   trafficserver = handleTest ./trafficserver.nix {};
   transfer-sh = handleTest ./transfer-sh.nix {};

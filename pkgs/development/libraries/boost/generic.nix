@@ -313,7 +313,8 @@ stdenv.mkDerivation {
     which
     boost-build
     copyPkgconfigItems
-  ] ++ lib.optional stdenv.hostPlatform.isDarwin fixDarwinDylibNames;
+  ] ++ lib.optional stdenv.hostPlatform.isDarwin fixDarwinDylibNames
+  ++ lib.optionals enablePython [ python ];
   buildInputs =
     [
       expat
@@ -329,7 +330,8 @@ stdenv.mkDerivation {
       python
     ]
     ++ lib.optional enableNumpy python.pkgs.numpy;
-
+  strictDeps = true;
+  
   configureScript = "./bootstrap.sh";
   configurePlatforms = [ ];
   dontDisableStatic = true;

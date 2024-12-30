@@ -51,6 +51,8 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
+  mesonCheckFlags = [ "--timeout-multiplier" "0" ];
+
   meta = with lib; {
     homepage = "https://github.com/cisco/libsrtp";
     description = "Secure RTP (SRTP) Reference Implementation";

@@ -89,5 +89,10 @@ buildPythonPackage rec {
     changelog = "https://github.com/qutip/qutip/releases/tag/v${version}";
     license = licenses.bsd3;
     maintainers = with maintainers; [ fabiangd ];
+    badPlatforms = [
+      # Tests fail at ~80%
+      # ../tests/test_animation.py::test_result_state Fatal Python error: Aborted
+      lib.systems.inspect.patterns.isDarwin
+    ];
   };
 }

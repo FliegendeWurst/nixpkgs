@@ -1,0 +1,82 @@
+{
+  stdenv,
+  lib,
+  fetchurl,
+  appimageTools,
+  makeWrapper,
+  electron_33,
+  electronPackage ? electron_33,
+  asar,
+}:
+
+let
+  electron = electronPackage;
+in
+stdenv.mkDerivation rec {
+  pname = "catalyst";
+  version = "3.9.4";
+
+  src = fetchurl {
+    url = "https://github.com/CatalystDevOrg/Catalyst/releases/download/v${version}/catalyst-${version}.AppImage";
+    hash = "sha256-6t1RAxmRc/1fAQT4Qnd42kh3cxgRZr74k8gwebTb0Ic=";
+    name = "${pname}-${version}.AppImage";
+  };
+
+  appimageContents = appimageTools.extractType2 {
+    name = "${pname}-${version}";
+    inherit src;
+  };
+
+  dontUnpack = true;
+  dontConfigure = true;
+  dontBuild = true;
+
+  nativeBuildInputs = [ makeWrapper asar ];
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/bin $out/share/${pname} $out/share/applications
+    mkdir -p $out/share/${pname}/resources/
+
+    cp -a ${appimageContents}/locales $out/share/${pname}
+    cp -a ${appimageContents}/catalyst.desktop $out/share/applications/${pname}.desktop
+    mkdir -p $out/share/pixmaps
+    cp -r ${appimageContents}/usr/share/icons/hicolor/0x0/apps/catalyst.png $out/share/pixmaps/
+    asar extract ${appimageContents}/resources/app.asar resources/
+    rm -rf resources/.github
+    rm -rf resources/.vscode
+    rm -rf resources/.eslintrc.json
+    rm -rf resources/.gitignore
+    rm -rf resources/.pnpm-debug.log
+    rm -rf resources/contributing.md
+    rm -rf resources/pnpm-lock.yaml
+    rm -rf resources/README.md
+    rm -rf resources/CODE_OF_CONDUCT.md
+    rm -rf *.nix
+    substituteInPlace resources/src/index.html \
+      --replace-fail 'catalyst-default-distrib' 'catalyst-default-nixpkgs'
+
+    substituteInPlace $out/share/applications/${pname}.desktop \
+      --replace-fail 'Exec=AppRun' 'Exec=${meta.mainProgram}'
+
+    asar pack resources/ $out/share/${pname}/resources/app.asar
+
+    runHook postInstall
+  '';
+
+  postFixup = ''
+    makeWrapper ${electron}/bin/electron $out/bin/${meta.mainProgram} \
+      --add-flags $out/share/${pname}/resources/app.asar \
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ stdenv.cc.cc ]}"
+  '';
+
+  meta = {
+    description = "Minimal, functional, and customizable user-focused FOSS web browser based on Chromium";
+    homepage = "https://getcatalyst.eu.org";
+    license = lib.licenses.mit;
+    mainProgram = "catalyst";
+    maintainers = with lib.maintainers; [ jdev082 ];
+    platforms = [ "x86_64-linux" ];
+  };
+}

@@ -52,6 +52,7 @@ stdenv.mkDerivation rec {
     libpthreadstubs
   ];
   nativeCheckInputs = [ gtest ];
+  checkInputs = [ gtest ];
 
   cmakeFlags = [
     "-DBUILD_SAMPLES=OFF"
