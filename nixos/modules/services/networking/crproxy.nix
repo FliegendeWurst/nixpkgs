@@ -50,13 +50,13 @@ in
         true
       '';
       type = types.bool;
-      description = "Behind the reverse proxy";
+      description = "Behind the reverse proxy, such as nginx";
     };
 
     userpass = mkOption {
       default = [ ];
       example = literalExpression ''
-        [ "user:pwd@host" ]
+        [ "user1:password@docker.io" "user2:password@ghcr.io" ]
       '';
       type = types.listOf types.str;
       description = "host and username and password -u user:pwd@host";
@@ -64,8 +64,11 @@ in
 
     allowHostList = mkOption {
       default = [ ];
+      example = literalExpression ''
+        [ "192.168.233.233" "10.233.233.233" "1.1.1.1" ]
+      '';
       type = types.listOf types.str;
-      description = "allow host list";
+      description = "allow host list, specifiy which host(s) can access.";
     };
 
     allowImageList = mkOption {
