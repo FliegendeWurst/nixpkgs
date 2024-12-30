@@ -16,7 +16,7 @@ buildGoModule rec {
 
   vendorHash = "sha256-htxMoIRTeTiC+/zo2EZNtJjwZPTZ5Gy0KP6qqt62bb4=";
 
-  CGO_ENABLED = 0;
+  env.CGO_ENABLED = 0;
 
   doCheck = false;
 
