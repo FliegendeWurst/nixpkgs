@@ -21,7 +21,7 @@ buildGoModule rec {
 
   nativeBuildInputs = [ installShellFiles ];
 
-  ldflags = [ "-X=utils.version=${version}" ];
+  ldflags = [ "-X github.com/conduktor/ctl/utils.version=${version}" ];
 
   postInstall =
     ''
@@ -40,7 +40,9 @@ buildGoModule rec {
     versionCheckHook
   ];
 
-  versionCheckProgram = "conduktor";
+  versionCheckProgram = "${placeholder "out"}/bin/conduktor";
+
+  versionCheckProgramArg = "version";
 
   meta = {
     description = "CLI tool to interact with the Conduktor Console and Gateway";
