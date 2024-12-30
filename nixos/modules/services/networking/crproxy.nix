@@ -41,7 +41,7 @@ in
         ":8080"
       '';
       type = types.str;
-      description = ''listen on the address (default ":8080")'';
+      description = "Address and port to listen on.";
     };
 
     behindProxy = mkOption {
