@@ -147,7 +147,7 @@ in
         RestartSec = 5;
         ExecStart = concatStringsSep " " concatLists [
           [
-            "${cfg.package}/bin/crproxy"
+            (lib.getExe cfg.package)
             "--default-registry=${cfg.defaultRegistry}"
             "--address=${cfg.listenAddress}"
           ]
