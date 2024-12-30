@@ -21,7 +21,7 @@ buildGoModule rec {
   doCheck = false;
 
   meta = with lib; {
-    description = "CRProxy (Container Registry Proxy) is a generic image proxy";
+    description = "Generic Docker image proxy";
     homepage = "https://github.com/DaoCloud/crproxy";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ SenseT ];
