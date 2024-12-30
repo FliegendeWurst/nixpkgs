@@ -1,9 +1,14 @@
 # THIS IS A GENERATED FILE.  DO NOT EDIT!
-{ lib, pixman }:
+{
+  lib,
+  pixman,
+  luit,
+}:
 
 self: with self; {
 
   inherit pixman;
+  inherit luit;
 
   # THIS IS A GENERATED FILE.  DO NOT EDIT!
   appres = callPackage ({ stdenv, pkg-config, fetchurl, libX11, xorgproto, libXt, testers }: stdenv.mkDerivation (finalAttrs: {
@@ -1538,11 +1543,11 @@ self: with self; {
   # THIS IS A GENERATED FILE.  DO NOT EDIT!
   libXrender = callPackage ({ stdenv, pkg-config, fetchurl, xorgproto, libX11, testers }: stdenv.mkDerivation (finalAttrs: {
     pname = "libXrender";
-    version = "0.9.11";
+    version = "0.9.12";
     builder = ./builder.sh;
     src = fetchurl {
-      url = "mirror://xorg/individual/lib/libXrender-0.9.11.tar.xz";
-      sha256 = "096whakny5h16nlwz80z0l2nxigpsarl35mm5xqgzlc37ad7alxw";
+      url = "mirror://xorg/individual/lib/libXrender-0.9.12.tar.xz";
+      sha256 = "15qv3lbxyx61x55lwmafpy8idb836is82i1213bchfcblj6i4cmq";
     };
     hardeningDisable = [ "bindnow" "relro" ];
     strictDeps = true;
@@ -1818,11 +1823,11 @@ self: with self; {
   # THIS IS A GENERATED FILE.  DO NOT EDIT!
   libxcvt = callPackage ({ stdenv, pkg-config, fetchurl, meson, ninja, testers }: stdenv.mkDerivation (finalAttrs: {
     pname = "libxcvt";
-    version = "0.1.2";
+    version = "0.1.3";
     builder = ./builder.sh;
     src = fetchurl {
-      url = "mirror://xorg/individual/lib/libxcvt-0.1.2.tar.xz";
-      sha256 = "0f6vf47lay9y288n8yg9ckjgz5ypn2hnp03ipp7javkr8h2njq85";
+      url = "mirror://xorg/individual/lib/libxcvt-0.1.3.tar.xz";
+      sha256 = "009f8kr53cv7lzsg4507cgnk9vxyrm8lgnnn6vx7vpk7hy59jad9";
     };
     hardeningDisable = [ "bindnow" "relro" ];
     strictDeps = true;
@@ -1858,11 +1863,11 @@ self: with self; {
   # THIS IS A GENERATED FILE.  DO NOT EDIT!
   libxshmfence = callPackage ({ stdenv, pkg-config, fetchurl, xorgproto, testers }: stdenv.mkDerivation (finalAttrs: {
     pname = "libxshmfence";
-    version = "1.3.2";
+    version = "1.3.3";
     builder = ./builder.sh;
     src = fetchurl {
-      url = "mirror://xorg/individual/lib/libxshmfence-1.3.2.tar.xz";
-      sha256 = "0vv0c7rjf6nd1afbal4c4ralallarak1v3ss3gcjdca0pibz43c7";
+      url = "mirror://xorg/individual/lib/libxshmfence-1.3.3.tar.xz";
+      sha256 = "046y7zn8agp8kdr1lg11yyvpx90i9sjf77h25jhgx5msd84xz96l";
     };
     hardeningDisable = [ "bindnow" "relro" ];
     strictDeps = true;
@@ -1908,26 +1913,6 @@ self: with self; {
     strictDeps = true;
     nativeBuildInputs = [ pkg-config ];
     buildInputs = [ xorgproto ];
-    passthru.tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
-    meta = {
-      pkgConfigModules = [ ];
-      platforms = lib.platforms.unix;
-    };
-  })) {};
-
-  # THIS IS A GENERATED FILE.  DO NOT EDIT!
-  luit = callPackage ({ stdenv, pkg-config, fetchurl, testers }: stdenv.mkDerivation (finalAttrs: {
-    pname = "luit";
-    version = "20240910";
-    builder = ./builder.sh;
-    src = fetchurl {
-      url = "https://invisible-mirror.net/archives/luit/luit-20240910.tgz";
-      sha256 = "1ma978xdmkxm3q3v1cxpwzb4ahd0dgzj7v0ssr9i9bi5zk5pypd1";
-    };
-    hardeningDisable = [ "bindnow" "relro" ];
-    strictDeps = true;
-    nativeBuildInputs = [ pkg-config ];
-    buildInputs = [ ];
     passthru.tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
     meta = {
       pkgConfigModules = [ ];
@@ -4158,11 +4143,11 @@ self: with self; {
   # THIS IS A GENERATED FILE.  DO NOT EDIT!
   xorgserver = callPackage ({ stdenv, pkg-config, fetchurl, xorgproto, openssl, libX11, libXau, libxcb, xcbutil, xcbutilwm, xcbutilimage, xcbutilkeysyms, xcbutilrenderutil, libXdmcp, libXfixes, libxkbfile, testers }: stdenv.mkDerivation (finalAttrs: {
     pname = "xorg-server";
-    version = "21.1.14";
+    version = "21.1.15";
     builder = ./builder.sh;
     src = fetchurl {
-      url = "mirror://xorg/individual/xserver/xorg-server-21.1.14.tar.xz";
-      sha256 = "0dgfajrnkr8d61z1fjn249s3q1pm23v9w2f1aqb7sx64pp7048cg";
+      url = "mirror://xorg/individual/xserver/xorg-server-21.1.15.tar.xz";
+      sha256 = "12g0g9ksswzx1kgn23gvrpa570fnpkdkmw1dfqjjg4422a884744";
     };
     hardeningDisable = [ "bindnow" "relro" ];
     strictDeps = true;

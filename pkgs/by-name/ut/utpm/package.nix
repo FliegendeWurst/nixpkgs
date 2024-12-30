@@ -1,3 +1,4 @@
+<<<<<<< Conflict 1 of 1
 {
   lib,
   fetchFromGitHub,
@@ -7,20 +8,16 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "utpm";
-  version = "dev-0363e5";
+  version = "0-unstable-2024-12-17";
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "typst-project-0.1.0" = "sha256-Qys3F6Maq0HpC/50yyAZRpsOQ+ePzaz/TuHdfjtQRwY";
-    };
-  };
+  useFetchCargoVendor = true;
+  cargoHash = "sha256-fqGxor2PgsQemnPNoZkgNUNc7yRg2eqHTLzJAVpt6+8=";
 
   src = fetchFromGitHub {
     owner = "Thumuss";
     repo = pname;
-    rev = version;
-    hash = "sha256-fvdMhSbsknKHQ9GTlzB2keHYkBFV/FULcHAQnhTRoFo=";
+    rev = "6c2cabc8e7e696ea129f55aa7732a6be63bc2319";
+    hash = "sha256-uuET0BG2kBFEEWSSZ35h6+tnqTTjEHOP50GR3IkL+CE=";
   };
 
   env.OPENSSL_NO_VENDOR = 1;
@@ -32,8 +29,10 @@ rustPlatform.buildRustPackage rec {
     pkg-config
   ];
 
+  doCheck = false; # no tests
+
   meta = {
-    description = "A package manager for typst";
+    description = "Package manager for typst";
     longDescription = ''
       UTPM is a package manager for local and remote packages. Create quickly
       new projects and templates from a singular tool, and then publish it directly
@@ -45,3 +44,4 @@ rustPlatform.buildRustPackage rec {
     maintainers = with lib.maintainers; [ louis-thevenet ];
   };
 }
+>>>>>>> Conflict 1 of 1 ends

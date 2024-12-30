@@ -27,13 +27,14 @@ buildGoModule rec {
 
   passthru.updateScript = nix-update-script { };
 
+<<<<<<< Conflict 1 of 1
   postInstall = ''
     installShellCompletion --cmd exercism \
       --bash < shell/exercism_completion.bash \
       --fish < shell/exercism.fish \
       --zsh < shell/exercism_completion.zsh
   '';
-
+>>>>>>> Conflict 1 of 1 ends
   meta = with lib; {
     inherit (src.meta) homepage;
     description = "Go based command line tool for exercism.io";

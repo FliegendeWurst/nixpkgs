@@ -139,8 +139,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   postPatch = optionalString stdenv.hostPlatform.isDarwin (''
     substituteInPlace cmake/modules/AddLLVM.cmake \
-      --replace-fail 'set(_install_name_dir INSTALL_NAME_DIR "@rpath")' "set(_install_name_dir)" \
-      --replace-fail 'set(_install_rpath "@loader_path/../''${CMAKE_INSTALL_LIBDIR}''${LLVM_LIBDIR_SUFFIX}" ''${extra_libdir})' ""
+      --replace-fail 'set(_install_name_dir INSTALL_NAME_DIR "@rpath")' "set(_install_name_dir)"
   '' +
     # As of LLVM 15, marked as XFAIL on arm64 macOS but lit doesn't seem to pick
     # this up: https://github.com/llvm/llvm-project/blob/c344d97a125b18f8fed0a64aace73c49a870e079/llvm/test/MC/ELF/cfi-version.ll#L7
@@ -308,8 +307,8 @@ stdenv.mkDerivation (finalAttrs: {
       ; do
       echo "PATCH: $f"
       substituteInPlace $f \
-        --replace-fail 'Starting llvm::' 'Starting {{.*}}' \
-        --replace-fail 'Finished llvm::' 'Finished {{.*}}'
+        --replace-quiet 'Starting llvm::' 'Starting {{.*}}' \
+        --replace-quiet 'Finished llvm::' 'Finished {{.*}}'
     done
   '' +
     # gcc-13 fix

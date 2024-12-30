@@ -79,9 +79,6 @@ let
       substituteInPlace lib/Driver/ToolChains/Darwin.cpp \
         --replace-fail 'StringRef P = llvm::sys::path::parent_path(D.Dir);' 'StringRef P = "${lib.getLib libllvm}";'
       (cd tools && ln -s ../../clang-tools-extra extra)
-    '' + lib.optionalString (lib.versionOlder release_version "13") ''
-      substituteInPlace tools/extra/clangd/quality/CompletionModel.cmake \
-        --replace-fail ' ''${CMAKE_SOURCE_DIR}/../clang-tools-extra' ' ''${CMAKE_SOURCE_DIR}/tools/extra'
     ''
     + lib.optionalString stdenv.hostPlatform.isMusl ''
       sed -i -e 's/lgcc_s/lgcc_eh/' lib/Driver/ToolChains/*.cpp
@@ -102,16 +99,6 @@ let
       # Move libclang to 'lib' output
       moveToOutput "lib/libclang.*" "$lib"
       moveToOutput "lib/libclang-cpp.*" "$lib"
-    '' + (if lib.versionOlder release_version "15" then ''
-      substituteInPlace $out/lib/cmake/clang/ClangTargets-release.cmake \
-          --replace-fail "\''${_IMPORT_PREFIX}/lib/libclang." "$lib/lib/libclang." \
-          --replace-fail "\''${_IMPORT_PREFIX}/lib/libclang-cpp." "$lib/lib/libclang-cpp."
-    '' else ''
-      substituteInPlace $dev/lib/cmake/clang/ClangTargets-release.cmake \
-          --replace-fail "\''${_IMPORT_PREFIX}/lib/libclang." "$lib/lib/libclang." \
-          --replace-fail "\''${_IMPORT_PREFIX}/lib/libclang-cpp." "$lib/lib/libclang-cpp."
-    '') + ''
-
     '' + (if lib.versionOlder release_version "15" then ''
       mkdir -p $python/bin $python/share/{clang,scan-view}
     '' else ''

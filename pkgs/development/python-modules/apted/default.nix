@@ -1,3 +1,4 @@
+<<<<<<< Conflict 1 of 1
 {
   lib,
   buildPythonPackage,
@@ -19,6 +20,7 @@ buildPythonPackage rec {
   };
 
   build-system = [ setuptools ];
+  pythonImportsCheck = [ "apted" ];
   nativeCheckInputs = [ unittestCheckHook ];
 
   meta = {
@@ -28,3 +30,4 @@ buildPythonPackage rec {
     maintainers = [ lib.maintainers.McSinyx ];
   };
 }
+>>>>>>> Conflict 1 of 1 ends
