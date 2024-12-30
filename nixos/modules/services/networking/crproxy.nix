@@ -56,7 +56,7 @@ in
     userpass = mkOption {
       default = [ ];
       example = literalExpression ''
-        [ "user@pwd@host" ]
+        [ "user:pwd@host" ]
       '';
       type = types.listOf types.str;
       description = "host and username and password -u user:pwd@host";
