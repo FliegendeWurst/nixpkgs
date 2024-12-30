@@ -20,7 +20,7 @@ buildGoModule rec {
 
   doCheck = false;
 
-  meta = with lib; {
+  meta = {
     description = "Generic Docker image proxy";
     homepage = "https://github.com/DaoCloud/crproxy";
     license = lib.licenses.mit;
