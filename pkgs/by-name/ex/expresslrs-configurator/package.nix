@@ -4,7 +4,7 @@
   autoPatchelfHook,
   lib,
   makeWrapper,
-  electron_27,
+  electron_33,
   libgcc,
   libstdcxx5,
   musl,
@@ -33,7 +33,7 @@
 }:
 
 let
-  electron = electron_27;
+  electron = electron_33;
 in
 stdenv.mkDerivation rec {
   pname = "expresslrs-configurator";
