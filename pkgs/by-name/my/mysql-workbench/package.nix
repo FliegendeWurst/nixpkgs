@@ -41,8 +41,8 @@ let
   # for some reason the package doesn't build with swig 4.3.0
   swig_4_2 = swig.overrideAttrs (prevAttrs: {
     version = "4.2.1";
-    src = prevAttrs.src.overrideAttrs {
-      outputHash = "sha256-VlUsiRZLScmbC7hZDzKqUr9481YXVwo0eXT/jy6Fda8=";
+    src = prevAttrs.src.override {
+      hash = "sha256-VlUsiRZLScmbC7hZDzKqUr9481YXVwo0eXT/jy6Fda8=";
     };
   });
 

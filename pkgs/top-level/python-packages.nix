@@ -5792,6 +5792,8 @@ self: super: with self; {
 
   habitipy = callPackage ../development/python-modules/habitipy { };
 
+  habiticalib = callPackage ../development/python-modules/habiticalib { };
+
   hachoir = callPackage ../development/python-modules/hachoir { };
 
   hacking = callPackage ../development/python-modules/hacking { };
@@ -16566,6 +16568,8 @@ self: super: with self; {
   troposphere = callPackage ../development/python-modules/troposphere { };
 
   trove-classifiers = callPackage ../development/python-modules/trove-classifiers { };
+
+  trubar = callPackage ../development/python-modules/trubar { };
 
   trueskill = callPackage ../development/python-modules/trueskill { };
 

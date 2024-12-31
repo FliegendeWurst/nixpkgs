@@ -12,12 +12,12 @@
   withLinuxPatch ? true,
 }:
 let
-  version = "1.0.1m";
+  version = "1.0.1n";
   balatroExe = requireFile {
     name = "Balatro-${version}.exe";
     url = "https://store.steampowered.com/app/2379780/Balatro/";
     # Use `nix hash file --sri --type sha256` to get the correct hash
-    hash = "sha256-LkOpK88DPOSWmK16ROi38maFtH/lHNg8Ysaj+vFcSMM=";
+    hash = "sha256-mJ5pL+Qj3+ldOLFcQc64dM0edTeQSePIYpp5EuwxKXo=";
   };
 in
 stdenv.mkDerivation {

@@ -4,30 +4,24 @@
   lib,
 }:
 let
-  version = "0.5.0-unstable-2024-07-20";
+  version = "0.6.0";
   lovelyInjector = fetchFromGitHub {
-    # Use this fork for the PR in progress (PR #66) (currently pointing 0.5.0.beta-5)
-    # https://github.com/ethangreen-dev/lovely-injector/pull/66
     owner = "vgskye";
     repo = "lovely-injector";
-    rev = "a5ce6c5188ae71b3908fa3188e3a1b29c565fb65";
-    hash = "sha256-UgUgM+HJ0jrRWqIubHcNQNMwDV/ftlpZxyrIn1bs7bI=";
+    rev = "3224915f4d47b557c34b5012797cf92d4cc629af";
+    hash = "sha256-fzkuuu6pmvqeJa7qlX8jhtCLC4oYRLUm1hqHTRiYEX8=";
   };
 in
 rustPlatform.buildRustPackage rec {
   pname = "lovely-injector";
   inherit version;
   src = lovelyInjector;
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "retour-0.4.0-alpha.2" = "sha256-GtLTjErXJIYXQaOFLfMgXb8N+oyHNXGTBD0UeyvbjrA=";
-    };
-  };
+  useFetchCargoVendor = true;
+  cargoHash = "sha256-Mkmj+ENdUge1V1cVAQOV2K01sYKEyhxTse0f5o6H6Xc=";
   # Disable tests, they are broken on my machine
   doCheck = false;
-  # lovely-injector depends on nightly features
-  RUSTC_BOOTSTRAP = 1;
+  # lovely-injector depends on nightly rust features
+  env.RUSTC_BOOTSTRAP = 1;
 
   meta = {
     description = "Runtime lua injector for games built with LÖVE";
