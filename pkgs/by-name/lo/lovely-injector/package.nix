@@ -18,7 +18,7 @@ rustPlatform.buildRustPackage rec {
   src = lovelyInjector;
   useFetchCargoVendor = true;
   cargoHash = "sha256-Mkmj+ENdUge1V1cVAQOV2K01sYKEyhxTse0f5o6H6Xc=";
-  # Disable tests, they are broken on my machine
+  # no tests
   doCheck = false;
   # lovely-injector depends on nightly rust features
   env.RUSTC_BOOTSTRAP = 1;
