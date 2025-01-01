@@ -3,7 +3,6 @@
   stdenv,
   fetchFromGitHub,
   fetchpatch,
-  buildPackages,
   cmake,
   installShellFiles,
   boost,
@@ -57,10 +56,6 @@ stdenv.mkDerivation (finalAttrs: {
     sqlite
     zlib
   ];
-
-  cmakeFlags = lib.optional (stdenv.hostPlatform != stdenv.buildPlatform) (
-    lib.cmakeFeature "PROTOBUF_PROTOC_EXECUTABLE" "${buildPackages.protobuf}/bin/protoc"
-  );
 
   env.NIX_CFLAGS_COMPILE = toString [ "-DTM_VERSION=${finalAttrs.version}" ];
 
