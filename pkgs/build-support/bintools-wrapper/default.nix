@@ -49,17 +49,13 @@
   ] ++ lib.optional (with stdenvNoCC; lib.any (x: x) [
     # OpenBSD static linking requires PIE
     (with targetPlatform; isOpenBSD && isStatic)
-    (lib.all (x: x) [
-      # Musl-based platforms will keep "pie", other platforms will not.
-      # If you change this, make sure to update section `{#sec-hardening-in-nixpkgs}`
-      # in the nixpkgs manual to inform users about the defaults.
-      (targetPlatform.libc == "musl")
-      # Except when:
-      #    - static aarch64, where compilation works, but produces segfaulting dynamically linked binaries.
-      #    - static armv7l, where compilation fails.
-      (!(targetPlatform.isAarch && targetPlatform.isStatic))
-    ])
+    # Always enable PIE except when using musl for:
+    #    - static aarch64, where compilation works, but produces segfaulting dynamically linked binaries.
+    #    - static armv7l, where compilation fails.
+    (!(targetPlatform.libc == "musl" && targetPlatform.isAarch && targetPlatform.isStatic))
   ]) "pie"
+
+, postLinkSignHook ? null, signingUtils ? null
 }:
 
 assert propagateDoc -> bintools ? man;
