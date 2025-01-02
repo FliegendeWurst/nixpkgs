@@ -12,7 +12,7 @@
   curl,
   glew,
   geos,
-  boost185,
+  boost,
   spdlog,
   stb,
   libcpr_1_10_5,
@@ -75,7 +75,7 @@ stdenv.mkDerivation (finalAttrs: {
     maintainers = with lib.maintainers; [ aware70 ];
   };
 
-  env.CXXFLAGS = "-Wno-error=restrict -Wno-error=maybe-uninitialized -Wno-error=deprecated-declarations";
+  env.CXXFLAGS = "-Wno-error=restrict -Wno-error=maybe-uninitialized -Wno-error=deprecated-declarations -Wno-error=stringop-overflow";
   env.GTEST_FILTER = "-${lib.concatStringsSep ":" gtestSkip}";
 
   doCheck = true;
@@ -83,6 +83,7 @@ stdenv.mkDerivation (finalAttrs: {
   # These tests aren't built by 'all', but ctest still tries to run them.
   cmakeFlags = [
     "-DCMAKE_CTEST_ARGUMENTS=-E;'test_mln_core|test_mln_widgets'"
+    "-DSTB_INCLUDE_DIR=${stb}/include/stb"
   ];
 
   patches = [
@@ -106,6 +107,7 @@ stdenv.mkDerivation (finalAttrs: {
       url = "https://github.com/dpaulat/supercell-wx/commit/9dfbac66172b882c5c4ccfa4251a03f8bf607b02.diff";
       sha256 = "sha256-sGw/vwJVNcWD56z/cG0VMZo+daQXb/I0+zbG3Gr18lU=";
     })
+    ./patches/add-missing-algorithm-include-gcc14.patch
     # }}}
   ];
 
@@ -132,7 +134,7 @@ stdenv.mkDerivation (finalAttrs: {
     qt6.qtimageformats
     aws-sdk-cpp
     howard-hinnant-date
-    boost185
+    boost
     tbb_2021_11
     glew
     geos

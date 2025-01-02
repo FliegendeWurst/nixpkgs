@@ -56,6 +56,10 @@ buildDotnetModule rec {
 
     enableParallelBuilding = true;
 
+    strictDeps = true;
+
+    nativeBuildInputs = [ SDL2 ];
+
     buildInputs = [ SDL2 ];
 
     makeFlags = [ "core" ];
