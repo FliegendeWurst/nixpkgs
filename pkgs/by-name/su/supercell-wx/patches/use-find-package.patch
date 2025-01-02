@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 08b5e82..0063794 100644
+index 08b5e823..00637941 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -15,32 +15,6 @@ enable_testing()
@@ -36,7 +36,7 @@ index 08b5e82..0063794 100644
  
  set(SCWX_DIR ${PROJECT_SOURCE_DIR})
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index bbc76c6..e242ee4 100644
+index bbc76c64..e242ee44 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
 @@ -13,8 +13,8 @@ set_property(DIRECTORY
@@ -50,8 +50,19 @@ index bbc76c6..e242ee4 100644
  include(hsluv-c.cmake)
  include(imgui.cmake)
  include(maplibre-native-qt.cmake)
+diff --git a/external/stb.cmake b/external/stb.cmake
+index c26bedaf..cd978e9d 100644
+--- a/external/stb.cmake
++++ b/external/stb.cmake
+@@ -1,4 +1,5 @@
+ cmake_minimum_required(VERSION 3.20)
+ set(PROJECT_NAME scwx-stb)
+ 
+-set(STB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/stb PARENT_SCOPE)
++# Nix: specify with cmakeFlags
++#set(STB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/stb PARENT_SCOPE)
 diff --git a/scwx-qt/scwx-qt.cmake b/scwx-qt/scwx-qt.cmake
-index cda6c7f..008f4c4 100644
+index cda6c7f2..008f4c4a 100644
 --- a/scwx-qt/scwx-qt.cmake
 +++ b/scwx-qt/scwx-qt.cmake
 @@ -11,14 +11,15 @@ set(CMAKE_AUTORCC ON)
@@ -100,7 +111,7 @@ index cda6c7f..008f4c4 100644
  
  target_link_libraries(supercell-wx PRIVATE scwx-qt
 diff --git a/wxdata/wxdata.cmake b/wxdata/wxdata.cmake
-index 0ce08cb..3807810 100644
+index 0ce08cbb..3807810d 100644
 --- a/wxdata/wxdata.cmake
 +++ b/wxdata/wxdata.cmake
 @@ -2,11 +2,14 @@ cmake_minimum_required(VERSION 3.20)
