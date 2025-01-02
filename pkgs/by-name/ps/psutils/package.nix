@@ -2,7 +2,7 @@
   lib,
   stdenv,
   fetchurl,
-  perl,
+  buildPackages,
 }:
 
 stdenv.mkDerivation rec {
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   '';
 
   configurePhase = ''
-    sed -e 's,/usr/local/bin/perl,${perl}/bin/perl,' \
+    sed -e 's,/usr/local/bin/perl,${lib.getExe buildPackages.perl},' \
       -e "s,/usr/local,$out," \
       -e "s,CFLAGS =,CFLAGS = -std=c89," \
       Makefile.unix > Makefile
