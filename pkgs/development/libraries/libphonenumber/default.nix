@@ -29,6 +29,10 @@ stdenv.mkDerivation (finalAttrs: {
     ./build-reproducibility.patch
   ];
 
+  depsBuildBuild = [
+    protobuf # protoc
+  ];
+
   nativeBuildInputs = [
     cmake
     gtest
@@ -38,6 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     boost
+    gtest
     icu
     protobuf
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
@@ -52,7 +57,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   cmakeFlags = lib.optionals (!stdenv.buildPlatform.canExecute stdenv.hostPlatform) [
     (lib.cmakeFeature "CMAKE_CROSSCOMPILING_EMULATOR" (stdenv.hostPlatform.emulator buildPackages))
-    (lib.cmakeFeature "PROTOC_BIN" (lib.getExe buildPackages.protobuf))
   ];
 
   meta = with lib; {
