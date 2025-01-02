@@ -23,7 +23,7 @@ appimageTools.wrapType2 rec {
   '';
 
   meta = {
-    description = "Cross-platform, customizable science fiction terminal emulator with advanced monitoring & touchscreen support.";
+    description = "Customizable science fiction terminal emulator with advanced monitoring & touchscreen support.";
     mainProgram = "edex-ui";
     changelog = "https://github.com/GitSquared/edex-ui/releases/tag${version}";
     homepage = "https://github.com/GitSquared/edex-ui";
