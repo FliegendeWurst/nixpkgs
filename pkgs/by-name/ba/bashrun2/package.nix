@@ -84,7 +84,7 @@ stdenv.mkDerivation rec {
     maintainers = with lib.maintainers; [ dopplerian ];
     mainProgram = "bashrun2";
     homepage = "http://henning-liebenau.de/bashrun2/";
-    license = lib.licenses.gpl2;
+    license = lib.licenses.gpl2Plus;
     description = "Application launcher based on a modified bash session in a small terminal window";
   };
 }

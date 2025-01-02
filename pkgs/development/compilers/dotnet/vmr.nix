@@ -149,6 +149,7 @@ stdenv.mkDerivation rec {
     ]
     ++ lib.optionals (lib.versionOlder version "9") [
       ./fix-aspnetcore-portable-build.patch
+      ./fix-clang19-build.patch
     ];
 
   postPatch =
