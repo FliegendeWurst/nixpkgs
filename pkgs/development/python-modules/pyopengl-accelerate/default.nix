@@ -3,7 +3,7 @@
   buildPythonPackage,
   fetchPypi,
   cython,
-  numpy,
+  numpy_1,
   setuptools,
   wheel,
 }:
@@ -19,9 +19,15 @@ buildPythonPackage rec {
     hash = "sha256-KxI2ISc6k59/0uwidUHjmfm11OgV1prgvbG2xwopNoA=";
   };
 
+  patches = [
+    # fix for GCC 14
+    # https://github.com/mcfletch/pyopengl/pull/112
+    ./gcc14-fix.patch
+  ];
+
   nativeBuildInputs = [
     cython
-    numpy
+    numpy_1
     setuptools
     wheel
   ];
