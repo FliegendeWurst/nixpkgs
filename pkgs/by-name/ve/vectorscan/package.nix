@@ -23,6 +23,13 @@ stdenv.mkDerivation rec {
     hash = "sha256-wz2oIhau/vjnri3LOyPZSCFAWg694FTLVt7+SZYEsL4=";
   };
 
+  postPatch = ''
+    sed -i '/examples/d' CMakeLists.txt
+    substituteInPlace libhs.pc.in \
+      --replace-fail "libdir=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@" "libdir=@CMAKE_INSTALL_LIBDIR@" \
+      --replace-fail "includedir=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_INCLUDEDIR@" "includedir=@CMAKE_INSTALL_INCLUDEDIR@"
+  '';
+
   nativeBuildInputs = [
     cmake
     pkg-config
