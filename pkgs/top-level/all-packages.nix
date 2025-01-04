@@ -768,7 +768,9 @@ with pkgs;
     cutoffPackages = [ newDependency ];
   };
 
-  replaceVars = callPackage ../build-support/replace-vars { };
+  replaceVarsWith = callPackage ../build-support/replace-vars/replace-vars-with.nix { };
+
+  replaceVars = callPackage ../build-support/replace-vars/replace-vars.nix { };
 
   replaceDirectDependencies = callPackage ../build-support/replace-direct-dependencies.nix { };
 
@@ -1571,8 +1573,6 @@ with pkgs;
     termite = termite-unwrapped;
   };
   termite-unwrapped = callPackage ../applications/terminal-emulators/termite { };
-
-  wezterm = callPackage ../applications/terminal-emulators/wezterm { };
 
   twine = with python3Packages; toPythonApplication twine;
 
@@ -3340,19 +3340,6 @@ with pkgs;
   };
 
   fastlane = callPackage ../tools/admin/fastlane { };
-
-  fontforge = lowPrio (callPackage ../tools/misc/fontforge {
-    inherit (darwin.apple_sdk.frameworks) Carbon Cocoa;
-    python = python3;
-  });
-  fontforge-gtk = fontforge.override {
-    withSpiro = true;
-    withGTK = true;
-    gtk3 = gtk3-x11;
-    inherit (darwin.apple_sdk.frameworks) Carbon Cocoa;
-  };
-
-  fontforge-fonttools = callPackage ../tools/misc/fontforge/fontforge-fonttools.nix { };
 
   fontmatrix = libsForQt5.callPackage ../applications/graphics/fontmatrix { };
 
@@ -7301,7 +7288,7 @@ with pkgs;
 
   pypy = pypy2;
   pypy2 = pypy27;
-  pypy3 = pypy39;
+  pypy3 = pypy310;
 
   # Python interpreter that is build with all modules, including tkinter.
   # These are for compatibility and should not be used inside Nixpkgs.
@@ -7369,7 +7356,7 @@ with pkgs;
   };
 
   pythonInterpreters = callPackage ./../development/interpreters/python { };
-  inherit (pythonInterpreters) python27 python39 python310 python311 python312 python313 python314 python3Minimal pypy27 pypy310 pypy39;
+  inherit (pythonInterpreters) python27 python39 python310 python311 python312 python313 python314 python3Minimal pypy27 pypy310;
 
   # List of extensions with overrides to apply to all Python package sets.
   pythonPackagesExtensions = [ ];
