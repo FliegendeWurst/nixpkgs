@@ -15,15 +15,13 @@
   wangle,
   fbthrift,
   gtest,
-  apple-sdk_11,
-  darwinMinVersionHook,
 
   nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "edencommon";
-  version = "2024.12.09.00";
+  version = "2024.11.18.00";
 
   outputs = [
     "out"
@@ -33,8 +31,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "facebookexperimental";
     repo = "edencommon";
-    rev = "refs/tags/v${finalAttrs.version}";
-    hash = "sha256-2kn7RCFNpsfyXFWhV7ikXiCCLMND185JRyxAnNq/1ro=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-pVPkH80vowdpwWv/h6ovEk335OeI6/0k0cAFhhFqSDM=";
   };
 
   patches = lib.optionals (stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isx86_64) [
@@ -48,20 +46,15 @@ stdenv.mkDerivation (finalAttrs: {
     removeReferencesTo
   ];
 
-  buildInputs =
-    [
-      glog
-      gflags
-      folly
-      fb303
-      wangle
-      fbthrift
-      gtest
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      apple-sdk_11
-      (darwinMinVersionHook "11.0")
-    ];
+  buildInputs = [
+    glog
+    gflags
+    folly
+    fb303
+    wangle
+    fbthrift
+    gtest
+  ];
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_SHARED_LIBS" (!stdenv.hostPlatform.isStatic))

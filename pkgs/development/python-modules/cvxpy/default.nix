@@ -2,6 +2,7 @@
   lib,
   stdenv,
   buildPythonPackage,
+  pythonOlder,
   fetchFromGitHub,
 
   # build-system
@@ -12,12 +13,12 @@
   # dependencies
   clarabel,
   cvxopt,
+  ecos,
   osqp,
   scipy,
   scs,
 
   # checks
-  hypothesis,
   pytestCheckHook,
 
   useOpenmp ? (!stdenv.hostPlatform.isDarwin),
@@ -25,14 +26,16 @@
 
 buildPythonPackage rec {
   pname = "cvxpy";
-  version = "1.6.0";
+  version = "1.5.3";
   pyproject = true;
+
+  disabled = pythonOlder "3.9";
 
   src = fetchFromGitHub {
     owner = "cvxpy";
     repo = "cvxpy";
-    rev = "refs/tags/v${version}";
-    hash = "sha256-t2+j0ZrvGvTv6FoNVpD2MVFZKfGgqTaN32OKwBXM3Zw=";
+    tag = "v${version}";
+    hash = "sha256-6RaEyFckvF3WhbfeffysMB/zt+aU1NU6B7Nm06znt9k=";
   };
 
   # we need to patch out numpy version caps from upstream
@@ -50,16 +53,14 @@ buildPythonPackage rec {
   dependencies = [
     clarabel
     cvxopt
+    ecos
     numpy
     osqp
     scipy
     scs
   ];
 
-  nativeCheckInputs = [
-    hypothesis
-    pytestCheckHook
-  ];
+  nativeCheckInputs = [ pytestCheckHook ];
 
   # Required flags from https://github.com/cvxpy/cvxpy/releases/tag/v1.1.11
   preBuild = lib.optionalString useOpenmp ''

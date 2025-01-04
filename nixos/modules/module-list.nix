@@ -1166,6 +1166,7 @@
   ./services/networking/nats.nix
   ./services/networking/nbd.nix
   ./services/networking/ncdns.nix
+  ./services/networking/ncps.nix
   ./services/networking/ndppd.nix
   ./services/networking/nebula.nix
   ./services/networking/netbird.nix
@@ -1494,6 +1495,7 @@
   ./services/web-apps/icingaweb2/module-monitoring.nix
   ./services/web-apps/ifm.nix
   ./services/web-apps/immich.nix
+  ./services/web-apps/immich-public-proxy.nix
   ./services/web-apps/invidious.nix
   ./services/web-apps/invoiceplane.nix
   ./services/web-apps/isso.nix

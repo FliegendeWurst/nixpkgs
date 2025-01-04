@@ -131,6 +131,8 @@ self: super: with self; {
 
   aggdraw = callPackage ../development/python-modules/aggdraw { };
 
+  ahocorapy = callPackage ../development/python-modules/ahocorapy { };
+
   ahocorasick-rs = callPackage ../development/python-modules/ahocorasick-rs { };
 
   aigpy = callPackage ../development/python-modules/aigpy { };
@@ -1125,6 +1127,8 @@ self: super: with self; {
 
   aws-encryption-sdk = callPackage ../development/python-modules/aws-encryption-sdk { };
 
+  aws-error-utils = callPackage ../development/python-modules/aws-error-utils { };
+
   aws-lambda-builders = callPackage ../development/python-modules/aws-lambda-builders { };
 
   aws-request-signer = callPackage ../development/python-modules/aws-request-signer { };
@@ -1132,6 +1136,8 @@ self: super: with self; {
   aws-sam-translator = callPackage ../development/python-modules/aws-sam-translator { };
 
   aws-secretsmanager-caching = callPackage ../development/python-modules/aws-secretsmanager-caching { };
+
+  aws-sso-lib = callPackage ../development/python-modules/aws-sso-lib { };
 
   aws-xray-sdk = callPackage ../development/python-modules/aws-xray-sdk { };
 
@@ -1572,6 +1578,8 @@ self: super: with self; {
     callPackage ../development/python-modules/bcrypt { };
 
   bdffont = callPackage ../development/python-modules/bdffont { };
+
+  beacontools = callPackage ../development/python-modules/beacontools { };
 
   beaker = callPackage ../development/python-modules/beaker { };
 
@@ -5529,6 +5537,8 @@ self: super: with self; {
 
   gorilla = callPackage ../development/python-modules/gorilla { };
 
+  goslide-api = callPackage ../development/python-modules/goslide-api { };
+
   govee-ble = callPackage ../development/python-modules/govee-ble { };
 
   govee-led-wez = callPackage ../development/python-modules/govee-led-wez { };
@@ -6750,6 +6760,8 @@ self: super: with self; {
   jsonfield = callPackage ../development/python-modules/jsonfield { };
 
   jsonlines = callPackage ../development/python-modules/jsonlines { };
+
+  json-api-doc = callPackage ../development/python-modules/json-api-doc { };
 
   json-logging = callPackage ../development/python-modules/json-logging { };
 
@@ -11979,6 +11991,8 @@ self: super: with self; {
   pyjson5 = callPackage ../development/python-modules/pyjson5 { };
 
   pyjsparser = callPackage ../development/python-modules/pyjsparser { };
+
+  pyjvcprojector = callPackage ../development/python-modules/pyjvcprojector { };
 
   pyjwkest = callPackage ../development/python-modules/pyjwkest { };
 
@@ -18478,6 +18492,8 @@ self: super: with self; {
   yosys = toPythonModule (pkgs.yosys.override {
     python3 = python;
   });
+
+  yoto-api = callPackage ../development/python-modules/yoto-api { };
 
   youless-api = callPackage ../development/python-modules/youless-api { };
 

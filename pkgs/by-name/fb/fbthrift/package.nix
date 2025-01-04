@@ -17,8 +17,6 @@
   zlib,
   zstd,
   xxHash,
-  apple-sdk_11,
-  darwinMinVersionHook,
 
   mvfst,
 
@@ -27,7 +25,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "fbthrift";
-  version = "2024.12.09.00";
+  version = "2024.11.18.00";
 
   outputs = [
     # Trying to split this up further into `bin`, `out`, and `dev`
@@ -40,8 +38,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "facebook";
     repo = "fbthrift";
-    rev = "refs/tags/v${finalAttrs.version}";
-    hash = "sha256-u0XsGasHaHKXJoADpszwZ/4LnChYofXBdFNZ6UjFUqg=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-dJf4vaIcat24WiKLFNEqeCnJYiO+c5YkuFu+hrS6cPE=";
   };
 
   patches = [
@@ -56,22 +54,17 @@ stdenv.mkDerivation (finalAttrs: {
     removeReferencesTo
   ];
 
-  buildInputs =
-    [
-      openssl
-      gflags
-      glog
-      folly
-      fizz
-      wangle
-      zlib
-      zstd
-      xxHash
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      apple-sdk_11
-      (darwinMinVersionHook "11.0")
-    ];
+  buildInputs = [
+    openssl
+    gflags
+    glog
+    folly
+    fizz
+    wangle
+    zlib
+    zstd
+    xxHash
+  ];
 
   propagatedBuildInputs = [
     mvfst
