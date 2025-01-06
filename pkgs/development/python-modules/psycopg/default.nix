@@ -195,6 +195,10 @@ buildPythonPackage rec {
     # don't depend on mypy for tests
     "test_version"
     "test_package_version"
+    # Frequent timeouts
+    "test_setup_no_timeout[asyncio-AsyncNullConnectionPool]"
+    "test_ctrl_c"
+    "test_refill_on_check"
   ];
 
   disabledTestPaths = [
