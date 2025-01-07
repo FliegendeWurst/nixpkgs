@@ -107,6 +107,7 @@ stdenv.mkDerivation rec {
     zap-chip
     # gdbus-codegen
     glib
+    pkgconfig
     python
     # dependencies of build scripts
     click
