@@ -10914,14 +10914,6 @@ with pkgs;
   inherit (libsForQt5.callPackage ../development/libraries/wt { })
     wt4;
 
-  wxGTK31 = callPackage ../development/libraries/wxwidgets/wxGTK31.nix {
-    inherit (darwin.stubs) setfile;
-  };
-
-  wxGTK32 = callPackage ../development/libraries/wxwidgets/wxGTK32.nix {
-    inherit (darwin.stubs) setfile;
-  };
-
   wxSVG = callPackage ../development/libraries/wxSVG {
     wxGTK = wxGTK32;
   };
@@ -16190,6 +16182,10 @@ with pkgs;
 
   pmars-x11 = pmars.override { enableXwinGraphics = true; };
 
+  vanillatd = callPackage ../by-name/va/vanillatd/package.nix { appName = "vanillatd"; };
+
+  vanillara = callPackage ../by-name/va/vanillatd/package.nix { appName = "vanillara"; };
+
   ### GAMES/DOOM-PORTS
 
   doomseeker = qt5.callPackage ../games/doom-ports/doomseeker { };
@@ -17930,8 +17926,6 @@ with pkgs;
   nix-index = callPackage ../tools/package-management/nix-index/wrapper.nix { };
 
   nix-linter = haskell.lib.compose.justStaticExecutables (haskellPackages.nix-linter);
-
-  nixos-option = callPackage ../tools/nix/nixos-option { };
 
   nix-pin = callPackage ../tools/package-management/nix-pin { };
 
