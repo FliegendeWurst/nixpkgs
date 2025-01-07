@@ -2592,6 +2592,8 @@ self: super: with self; {
 
   commonmark = callPackage ../development/python-modules/commonmark { };
 
+  commonregex = callPackage ../development/python-modules/commonregex { };
+
   compdb = callPackage ../development/python-modules/compdb { };
 
   complycube = callPackage ../development/python-modules/complycube { };
@@ -8228,6 +8230,8 @@ self: super: with self; {
 
   midea-beautiful-air = callPackage ../development/python-modules/midea-beautiful-air { };
 
+  midea-local = callPackage ../development/python-modules/midea-local { };
+
   midiutil = callPackage ../development/python-modules/midiutil { };
 
   mido = callPackage ../development/python-modules/mido { };
@@ -10421,6 +10425,8 @@ self: super: with self; {
 
   pick = callPackage ../development/python-modules/pick { };
 
+  pickpack = callPackage ../development/python-modules/pickpack { };
+
   pickleshare = callPackage ../development/python-modules/pickleshare { };
 
   picobox = callPackage ../development/python-modules/picobox { };
@@ -11073,6 +11079,8 @@ self: super: with self; {
   power = callPackage ../development/python-modules/power { };
 
   powerapi = callPackage ../development/python-modules/powerapi { };
+
+  powerfox = callPackage ../development/python-modules/powerfox { };
 
   powerline = callPackage ../development/python-modules/powerline { };
 
@@ -16531,6 +16539,8 @@ self: super: with self; {
   tree-sitter-javascript = callPackage ../development/python-modules/tree-sitter-javascript { };
 
   tree-sitter-json = callPackage ../development/python-modules/tree-sitter-json { };
+
+  tree-sitter-make = callPackage ../development/python-modules/tree-sitter-make { };
 
   tree-sitter-languages = callPackage ../development/python-modules/tree-sitter-languages { };
 

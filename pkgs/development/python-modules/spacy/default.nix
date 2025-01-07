@@ -7,11 +7,14 @@
   cymem,
   cython_0,
   fetchPypi,
+  git,
   hypothesis,
   jinja2,
   langcodes,
   mock,
   murmurhash,
+  nix-update,
+  nix,
   numpy,
   packaging,
   preshed,
@@ -22,6 +25,8 @@
   setuptools,
   spacy-legacy,
   spacy-loggers,
+  spacy-lookups-data,
+  spacy-transformers,
   srsly,
   thinc,
   tqdm,
@@ -29,9 +34,6 @@
   wasabi,
   weasel,
   writeScript,
-  nix,
-  git,
-  nix-update,
 }:
 
 buildPythonPackage rec {
@@ -39,7 +41,7 @@ buildPythonPackage rec {
   version = "3.8.3";
   pyproject = true;
 
-  disabled = pythonOlder "3.7";
+  disabled = pythonOlder "3.10";
 
   src = fetchPypi {
     inherit pname version;
@@ -47,8 +49,7 @@ buildPythonPackage rec {
   };
 
   postPatch = ''
-    substituteInPlace pyproject.toml --replace-fail \
-      "numpy>=2.0.0,<2.1.0" "numpy>=2.0.0"
+    sed -i "/numpy/d" pyproject.toml
   '';
 
   build-system = [
@@ -56,12 +57,11 @@ buildPythonPackage rec {
     cython_0
     murmurhash
     numpy
+    preshed
     thinc
   ];
 
-  pythonRelaxDeps = [
-    "thinc"
-  ];
+  pythonRelaxDeps = [ "thinc" ];
 
   dependencies = [
     catalogue
@@ -90,6 +90,11 @@ buildPythonPackage rec {
     hypothesis
     mock
   ];
+
+  optional-dependencies = {
+    transformers = [ spacy-transformers ];
+    lookups = [ spacy-lookups-data ];
+  };
 
   # Fixes ModuleNotFoundError when running tests on Cythonized code. See #255262
   preCheck = ''
@@ -129,10 +134,10 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Industrial-strength Natural Language Processing (NLP)";
-    mainProgram = "spacy";
     homepage = "https://github.com/explosion/spaCy";
     changelog = "https://github.com/explosion/spaCy/releases/tag/release-v${version}";
     license = licenses.mit;
     maintainers = [ ];
+    mainProgram = "spacy";
   };
 }
