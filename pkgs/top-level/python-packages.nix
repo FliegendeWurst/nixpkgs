@@ -5291,8 +5291,6 @@ self: super: with self; {
 
   gipc = callPackage ../development/python-modules/gipc { };
 
-  girder-client = callPackage ../development/python-modules/girder-client { };
-
   gistyc = callPackage ../development/python-modules/gistyc { };
 
   git-annex-adapter =
@@ -8464,8 +8462,6 @@ self: super: with self; {
 
   monai-deploy = callPackage ../development/python-modules/monai-deploy { };
 
-  monai-label = callPackage ../development/python-modules/monai-label { };
-
   monero = callPackage ../development/python-modules/monero { };
 
   mongomock = callPackage ../development/python-modules/mongomock { };
@@ -9479,8 +9475,6 @@ self: super: with self; {
   numpy_1 = callPackage ../development/python-modules/numpy/1.nix { };
   numpy_2 = callPackage ../development/python-modules/numpy/2.nix { };
   numpy = numpy_2;
-
-  numpymaxflow = callPackage ../development/python-modules/numpymaxflow { };
 
   numpy-groupies = callPackage ../development/python-modules/numpy-groupies { };
 
@@ -10643,8 +10637,6 @@ self: super: with self; {
   pyfreedompro = callPackage ../development/python-modules/pyfreedompro { };
 
   pygelf = callPackage ../development/python-modules/pygelf { };
-
-  pygerber = callPackage ../development/python-modules/pygerber { };
 
   pygments-style-github = callPackage ../development/python-modules/pygments-style-github { };
 
@@ -16266,8 +16258,6 @@ self: super: with self; {
   timecop = callPackage ../development/python-modules/timecop { };
 
   timelib = callPackage ../development/python-modules/timelib { };
-
-  timeloop = callPackage ../development/python-modules/timeloop { };
 
   time-machine = callPackage ../development/python-modules/time-machine { };
 

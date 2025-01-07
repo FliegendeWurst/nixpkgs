@@ -28,10 +28,6 @@ buildPythonPackage rec {
 
   pythonImportsCheck = [ "dctorch" ];
 
-  pythonRelaxDeps = [
-    "numpy"
-  ];
-
   doCheck = false; # no tests
 
   meta = with lib; {

@@ -405,8 +405,6 @@ buildPythonPackage rec {
       (lib.cmakeFeature "CMAKE_CUDA_COMPILER_TOOLKIT_VERSION" cudaPackages.cudaVersion)
     ];
 
-  USE_VULKAN = setBool vulkanSupport;
-
   preBuild = ''
     export MAX_JOBS=$NIX_BUILD_CORES
     ${python.pythonOnBuildForHost.interpreter} setup.py build --cmake-only
