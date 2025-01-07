@@ -113,6 +113,10 @@ in
         }
       ];
 
+      hardware.nvidia.package = lib.mkIf (
+          (lib.elem "nvidia" config.services.xserver.videoDrivers) && !config.hardware.nvidia.open
+        ) (lib.mkOverride 999 config.boot.kernelPackages.nvidiaPackages.latest);
+
       environment = {
         systemPackages = lib.optional (cfg.package != null) cfg.package ++ cfg.extraPackages;
 
