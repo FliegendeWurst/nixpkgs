@@ -83,6 +83,8 @@ stdenv.mkDerivation rec {
     [
       autoconf
       automake
+      bison
+      flex
       gfortran
       libtool_2
     ]
@@ -102,7 +104,6 @@ stdenv.mkDerivation rec {
     ];
 
   buildInputs = [
-    bison
     blas
     flex
     fftw
@@ -110,6 +111,8 @@ stdenv.mkDerivation rec {
     suitesparse
     trilinos
   ] ++ lib.optionals withMPI [ mpi ];
+
+  env.NIX_CFLAGS_COMPILE = "-std=c++17";
 
   doCheck = enableTests;
 
@@ -145,6 +148,7 @@ stdenv.mkDerivation rec {
     ];
 
   checkPhase = ''
+    runHook preCheck
     XYCE_BINARY="$(pwd)/src/Xyce"
     EXECSTRING="${lib.optionalString withMPI "mpirun -np 2 "}$XYCE_BINARY"
     TEST_ROOT="$(pwd)/../${regression_src.name}"
@@ -165,6 +169,7 @@ stdenv.mkDerivation rec {
       --resultfile="$(pwd)/test_results" \
       --excludelist="$EXLUDE_TESTS_FILE" \
       "''${EXECSTRING}"
+    runHook postCheck
   '';
 
   outputs = [
