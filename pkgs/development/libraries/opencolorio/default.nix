@@ -8,6 +8,7 @@
   pystring,
   imath,
   minizip-ng,
+  zlib,
   # Only required on Linux
   glew,
   libglut,
@@ -59,6 +60,7 @@ stdenv.mkDerivation rec {
       pystring
       imath
       minizip-ng
+      zlib
     ]
     ++ lib.optionals stdenv.hostPlatform.isLinux [
       glew
