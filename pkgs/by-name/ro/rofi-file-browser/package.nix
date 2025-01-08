@@ -20,10 +20,16 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  prePatch = ''
+  patches = [
+    # fix GCC 14 build errors
+    # https://github.com/marvinkreis/rofi-file-browser-extended/pull/54
+    ./gcc14-fix.patch
+  ];
+
+  postPatch = ''
     substituteInPlace ./CMakeLists.txt \
-      --replace ' ''${ROFI_PLUGINS_DIR}' " $out/lib/rofi" \
-      --replace "/usr/share/" "$out/share/"
+      --replace-fail ' ''${ROFI_PLUGINS_DIR}' " $out/lib/rofi" \
+      --replace-fail "/usr/share/" "$out/share/"
   '';
 
   nativeBuildInputs = [
