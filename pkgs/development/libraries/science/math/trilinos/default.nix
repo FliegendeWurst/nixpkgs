@@ -25,6 +25,7 @@ let
     -DCMAKE_Fortran_FLAGS="-O3 -fPIC"
     -DTrilinos_ENABLE_NOX=ON
     -DNOX_ENABLE_LOCA=ON
+    -DTrilinos_ENABLE_Epetra=ON
     -DTrilinos_ENABLE_EpetraExt=ON
     -DEpetraExt_BUILD_BTF=ON
     -DEpetraExt_BUILD_EXPERIMENTAL=ON
@@ -34,6 +35,8 @@ let
     -DTrilinos_ENABLE_AztecOO=ON
     -DTrilinos_ENABLE_Belos=ON
     -DTrilinos_ENABLE_Teuchos=ON
+    -DTrilinos_Enable_TeuchosNumerics=ON
+    -DTrilinos_Enable_Triutils=ON
     -DTeuchos_ENABLE_COMPLEX=ON
     -DTrilinos_ENABLE_Amesos=ON
     -DAmesos_ENABLE_KLU=ON
@@ -60,21 +63,23 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "trilinos";
-  # Xyce 7.4 requires version 12.12.1
+  # Xyce 7.8 requires version 14.4+
   # nixpkgs-update: no auto update
-  version = "12.12.1";
+  version = "16.0.0";
 
   src = fetchFromGitHub {
     owner = "trilinos";
     repo = "Trilinos";
     rev = "${pname}-release-${lib.replaceStrings [ "." ] [ "-" ] version}";
-    sha256 = "sha256-Nqjr7RAlUHm6vs87a1P84Y7BIZEL0Vs/A1Z6dykfv+o=";
+    sha256 = "sha256-jQxaM1Ov22R2HQBArtwLdJcWLUsEbnXQZOzVSYqF0hs=";
   };
 
   nativeBuildInputs = [
     cmake
     gfortran
     swig
+  ] ++ lib.optionals withMPI [
+    mpi # mpicc
   ];
 
   buildInputs = [
