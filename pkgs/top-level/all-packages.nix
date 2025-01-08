@@ -8445,9 +8445,7 @@ with pkgs;
 
   travis = callPackage ../development/tools/misc/travis { };
 
-  tree-sitter = makeOverridable (callPackage ../development/tools/parsing/tree-sitter) {
-    inherit (darwin.apple_sdk.frameworks) Security CoreServices;
-  };
+  tree-sitter = callPackage ../development/tools/parsing/tree-sitter { };
 
   tree-sitter-grammars = recurseIntoAttrs tree-sitter.builtGrammars;
 
@@ -8725,9 +8723,7 @@ with pkgs;
   clutter-gst = callPackage ../development/libraries/clutter-gst {
   };
 
-  codecserver = callPackage ../applications/audio/codecserver {
-    protobuf = protobuf_21;
-  };
+  codecserver = callPackage ../applications/audio/codecserver { };
 
   cogl = callPackage ../development/libraries/cogl {
     inherit (darwin.apple_sdk.frameworks) OpenGL;
