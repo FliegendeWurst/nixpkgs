@@ -56,19 +56,20 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "orca-slicer";
-  version = "2f55dd7cfe3e3d2c41fdd73dddc31f1c5dcbdf83";
+  version = "v2.2.0-unstable-2025-01-06";
 
   src = fetchFromGitHub {
     owner = "SoftFever";
     repo = "OrcaSlicer";
-    rev = version;
-    hash = "sha256-2JHGNVKLJ5aJlcS0KCdegrTmj80utT5sfKO6XlG9blg=";
+    rev = "99a0facfb3a5c9b4e661e536825c08393053cb53";
+    hash = "sha256-XWM04Vx65q+Vc+s3YLucS63IhGVw8ODhL2m+47nZKs8=";
   };
 
   nativeBuildInputs = [
     cmake
     pkg-config
     wrapGAppsHook3
+    wxGTK'
   ];
 
   buildInputs =
@@ -202,17 +203,18 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  meta = with lib; {
+  meta = {
     description = "G-code generator for 3D printers (Bambu, Prusa, Voron, VzBot, RatRig, Creality, etc.)";
     homepage = "https://github.com/SoftFever/OrcaSlicer";
-    license = licenses.agpl3Only;
-    maintainers = with maintainers; [
+    changelog = "https://github.com/SoftFever/OrcaSlicer/releases/tag/v${version}";
+    license = lib.licenses.agpl3Only;
+    maintainers = with lib.maintainers; [
       zhaofengli
       ovlach
       pinpox
       liberodark
     ];
     mainProgram = "orca-slicer";
-    platforms = platforms.linux;
+    platforms = lib.platforms.linux;
   };
 }

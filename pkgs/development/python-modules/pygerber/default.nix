@@ -3,7 +3,6 @@
   buildPythonPackage,
   fetchFromGitHub,
   pythonOlder,
-
   # build-system
   poetry-core,
 
@@ -14,7 +13,6 @@
   pydantic,
   pyparsing,
   typing-extensions,
-  tzlocal,
 
   # optional dependencies
   pygls,
@@ -23,43 +21,41 @@
   pygments,
   shapely,
 
+  # test
+  filelock,
+  dulwich,
+  tzlocal,
+  pytest-xdist,
+  pytest-cov,
+  pytest-lsp,
+  pytest-asyncio,
+  pytest-mock,
+  pytestCheckHook,
+
 }:
 
-let
-  pillow_10_4 = pillow.overrideAttrs (prev: {
-    version = "10.4.0";
-    src = fetchFromGitHub {
-      owner = "python-pillow";
-      repo = "pillow";
-      rev = "refs/tags/10.4.0";
-      hash = "sha256-Q3yvFyJf4gFaVY9X4PlgCE2rU1l9NEXkHBaNZfoHhvU=";
-    };
-  });
-
-in
 buildPythonPackage rec {
   pname = "pygerber";
   version = "2.4.2";
-  format = "pyproject";
+  pyproject = true;
 
   disabled = pythonOlder "3.8";
 
   src = fetchFromGitHub {
     owner = "Argmaster";
-    repo = pname;
-    rev = "refs/tags/v${version}";
-    hash = "sha256-+s89tHNTNP+0VMilfDczbOBG/e3DuUBu0113US69KKM=";
+    repo = "pygerber";
+    tag = "v${version}";
+    hash = "sha256-N+9I59WiWXSXr7RrPzb7GFSqfjrd0q51AzalNFV4xEQ=";
   };
 
-  nativeBuildInputs = [ poetry-core ];
-  propagatedBuildInputs = [
+  build-system = [ poetry-core ];
+  dependencies = [
     numpy
     click
-    pillow_10_4
+    pillow
     pydantic
     pyparsing
     typing-extensions
-    tzlocal
   ];
 
   passthru.optional-dependencies = {
@@ -79,10 +75,29 @@ buildPythonPackage rec {
     ];
   };
 
+  nativeCheckInputs = [
+    pytest-asyncio
+    pytest-cov
+    pytest-xdist
+    pytest-lsp
+    pytest-mock
+    pytestCheckHook
+    tzlocal
+    drawsvg
+    dulwich
+    filelock
+  ];
+
+  disabledTestPaths = [
+    # require network access
+    "test/gerberx3/test_assets.py"
+    "test/gerberx3/test_language_server/tests.py"
+  ];
+
   pythonImportsCheck = [ "pygerber" ];
 
   meta = {
-    description = "PyGerber is a Python implementation of Gerber X3/X2 format. It is based on Ucamco's The Gerber Layer Format Specification.";
+    description = "Implementation of the Gerber X3/X2 format, based on Ucamco's The Gerber Layer Format Specification";
     homepage = "https://github.com/Argmaster/pygerber";
     changelog = "https://argmaster.github.io/pygerber/stable/Changelog.html";
     license = lib.licenses.mit;
