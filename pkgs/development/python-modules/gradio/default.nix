@@ -3,7 +3,6 @@
   stdenv,
   buildPythonPackage,
   fetchPypi,
-  fetchFromGitHub,
   pythonOlder,
   writeShellScriptBin,
   gradio,
@@ -36,7 +35,6 @@
   python-multipart,
   pydub,
   pyyaml,
-  safehttpx,
   semantic-version,
   typing-extensions,
   uvicorn,
@@ -66,18 +64,15 @@
 
 buildPythonPackage rec {
   pname = "gradio";
-  version = "5.9.1";
+  version = "5.1.0";
   pyproject = true;
 
   disabled = pythonOlder "3.7";
 
   # We use the Pypi release, since it provides prebuilt webui assets
-  # TODO: build them here or get https://github.com/gradio-app/gradio/pull/9778 reverted
-  src = fetchFromGitHub {
-    owner = "gradio-app";
-    repo = "gradio";
-    tag = "gradio@${version}";
-    hash = "sha256-bbD48l4FrYeOe70srTM62fH2vhfrM5GTq0GJL+CJVWw=";
+  src = fetchPypi {
+    inherit pname version;
+    hash = "sha256-0hU2aObeLfegG7M/AaB0/HcW7IY8QPRy2OQ5Q57x4VM=";
   };
 
   # fix packaging.ParserSyntaxError, which can't handle comments
@@ -130,7 +125,6 @@ buildPythonPackage rec {
     python-multipart
     pydub
     pyyaml
-    safehttpx
     semantic-version
     typing-extensions
     uvicorn
@@ -191,9 +185,6 @@ buildPythonPackage rec {
       "test_in_interface_as_output"
       "test_should_warn_url_not_having_version"
 
-      # Numpy 2.x broke this test https://github.com/gradio-app/gradio/issues/10295
-      "test_subclass_conversion"
-
       # Flaky, unknown reason
       "test_in_interface"
 
@@ -202,29 +193,12 @@ buildPythonPackage rec {
 
       # fails without network
       "test_download_if_url_correct_parse"
-      "test_encode_url_to_base64_doesnt_encode_errors"
 
       # flaky: OSError: Cannot find empty port in range: 7860-7959
       "test_docs_url"
       "test_orjson_serialization"
       "test_dataset_is_updated"
       "test_multimodal_api"
-      "test_examples_keep_all_suffixes"
-      "test_progress_bar"
-      "test_progress_bar_track_tqdm"
-      "test_info_and_warning_alerts"
-      "test_info_isolation[True]"
-      "test_info_isolation[False]"
-      "test_examples_no_cache_optional_inputs"
-      "test_start_server[127.0.0.1]"
-      "test_start_server[[::1]]"
-      "test_single_request"
-      "test_all_status_messages"
-      "test_default_concurrency_limits[not_set-statuses0]"
-      "test_default_concurrency_limits[None-statuses1]"
-      "test_default_concurrency_limits[1-statuses2]"
-      "test_default_concurrency_limits[2-statuses3]"
-      "test_concurrency_limits"
 
       # tests if pip and other tools are installed
       "test_get_executable_path"
@@ -282,7 +256,6 @@ buildPythonPackage rec {
   disabledTestPaths = [
     # 100% touches network
     "test/test_networking.py"
-    "client/python/test/test_client.py"
     # makes pytest freeze 50% of the time
     "test/test_interfaces.py"
 
@@ -316,13 +289,6 @@ buildPythonPackage rec {
         doInstallCheck = false;
         doCheck = false;
         preCheck = "";
-        postInstall = ''
-          shopt -s globstar
-          for f in $out/**/*.py; do
-            cp $f "$f"i
-          done
-          shopt -u globstar
-        '';
         pythonImportsCheck = null;
         dontCheckRuntimeDeps = true;
       });
