@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     vulkan-utility-libraries
   ];
 
-  # Help vulkan-loader find the validation layers
+  # Help vulkan-loader find the layer
   setupHook = writeText "setup-hook" ''
     addToSearchPath XDG_DATA_DIRS @out@/share
   '';

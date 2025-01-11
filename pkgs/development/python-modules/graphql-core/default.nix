@@ -25,8 +25,8 @@ buildPythonPackage rec {
 
   postPatch = ''
     substituteInPlace pyproject.toml \
-      --replace-fail ', "setuptools>=59,<70"' "" \
-      --replace-fail 'poetry_core>=1,<2' 'poetry_core'
+      --replace-fail "poetry_core>=1,<2" "poetry-core" \
+      --replace-fail ', "setuptools>=59,<70"' ""
   '';
 
   build-system = [
