@@ -45,6 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     zstd
     pkg-config
+    fontconfig # fc-match
     jq
     cargo
     rustc
@@ -101,6 +102,7 @@ stdenv.mkDerivation (finalAttrs: {
       gentium
     ];
   };
+  env.LUA = "${finalAttrs.finalPackage.passthru.luaEnv}/bin/lua";
 
   enableParallelBuilding = true;
 
