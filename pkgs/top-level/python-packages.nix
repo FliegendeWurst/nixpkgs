@@ -9471,6 +9471,8 @@ self: super: with self; {
   numpy_2 = callPackage ../development/python-modules/numpy/2.nix { };
   numpy = numpy_2;
 
+  numpymaxflow = callPackage ../development/python-modules/numpymaxflow { };
+
   numpy-groupies = callPackage ../development/python-modules/numpy-groupies { };
 
   numpy-stl = callPackage ../development/python-modules/numpy-stl { };
