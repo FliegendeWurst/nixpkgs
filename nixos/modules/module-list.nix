@@ -897,6 +897,7 @@
   ./services/misc/workout-tracker.nix
   ./services/misc/whisparr.nix
   ./services/misc/xmrig.nix
+  ./services/misc/ytdl-sub.nix
   ./services/misc/zoneminder.nix
   ./services/misc/zookeeper.nix
   ./services/monitoring/alerta.nix

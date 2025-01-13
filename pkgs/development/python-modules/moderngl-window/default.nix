@@ -1,6 +1,5 @@
 {
   lib,
-  stdenv,
   buildPythonPackage,
   fetchFromGitHub,
 
@@ -30,14 +29,14 @@
 
 buildPythonPackage rec {
   pname = "moderngl-window";
-  version = "3.0.3";
+  version = "3.1.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "moderngl";
     repo = "moderngl_window";
     tag = version;
-    hash = "sha256-WXHQVJJCE+7FQJjRgjnmpoGGnF20OQ6/X6Fnrzsp2fA=";
+    hash = "sha256-oXUdYTvpvaML1YsqK7HudQV/RvUx6N0K/xYuiNp8uos=";
   };
 
   pythonRelaxDeps = [ "pillow" ];
@@ -80,6 +79,5 @@ buildPythonPackage rec {
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ c0deaddict ];
     inherit (mesa.meta) platforms;
-    broken = stdenv.hostPlatform.isDarwin;
   };
 }
