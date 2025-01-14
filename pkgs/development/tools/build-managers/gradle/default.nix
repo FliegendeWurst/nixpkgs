@@ -41,6 +41,7 @@ rec {
     , runCommand
     , writeText
     , autoPatchelfHook
+    , buildPackages
 
     # The JDK/JRE used for running Gradle.
     , java ? defaultJava
@@ -70,7 +71,6 @@ rec {
       ];
 
       buildInputs = [
-        java
         stdenv.cc.cc
         ncurses5
         ncurses6
@@ -106,6 +106,8 @@ rec {
 
       fixupPhase = let arch = if stdenv.hostPlatform.is64bit then "amd64" else "i386";
       in ''
+        # get the correct jar executable
+        export PATH="${buildPackages.jdk}/bin:$PATH"
         . ${./patching.sh}
 
         nativeVersion="$(extractVersion native-platform $out/lib/gradle/lib/native-platform-*.jar)"
