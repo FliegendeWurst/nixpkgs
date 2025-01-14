@@ -1,22 +1,26 @@
 {
   lib,
-  fetchPypi,
-  python3,
+  fetchFromGitHub,
   python3Packages,
   ripgrep,
+  gitMinimal,
 }:
 
-python3Packages.buildPythonPackage rec {
+python3Packages.buildPythonApplication rec {
   pname = "seagoat";
-  version = "0.48.4";
+  version = "0.50.1";
   pyproject = true;
 
-  pythonRelaxDeps = [
-    "setuptools"
-  ];
+  src = fetchFromGitHub {
+    owner = "kantord";
+    repo = "SeaGOAT";
+    tag = "v${version}";
+    hash = "sha256-tf3elcKXUwBqtSStDksOaSN3Q66d72urrG/Vab2M4f0=";
+  };
 
-  dependencies = with python3.pkgs; [
-    poetry-core
+  build-system = [ python3Packages.poetry-core ];
+
+  dependencies = with python3Packages; [
     appdirs
     blessed
     chardet
@@ -33,21 +37,27 @@ python3Packages.buildPythonPackage rec {
     stop-words
   ];
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-MnRUl6hDfl1NGcV2cXZO+WxVqWUD4TmhP+KkMEYVve8=";
-  };
+  nativeCheckInputs = with python3Packages; [
+    pytestCheckHook
+    freezegun
+    pytest-asyncio
+    pytest-mock
+    pytest-snapshot
+    gitMinimal
+    ripgrep
+  ];
 
-  stop-words = python3Packages.buildPythonApplication rec {
-    pname = "stop-words";
-    version = "2018.7.23";
+  disabledTests = import ./failing_tests.nix;
 
-    src = fetchPypi {
-      inherit pname version;
-      hash = "sha256-bfOtX13ml9qkN+REXIbHNgTmvBON0NwPrFVmSqTmsD4=";
-    };
-    doCheck = false;
-  };
+  # require network access
+  disabledTestPaths = [
+    "tests/test_chroma.py"
+  ];
+
+  preCheck = ''
+    export HOME=$(mktemp -d)
+    git init
+  '';
 
   postInstall = ''
     wrapProgram $out/bin/seagoat-server \

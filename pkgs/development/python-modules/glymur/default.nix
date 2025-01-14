@@ -2,17 +2,18 @@
   lib,
   stdenv,
   buildPythonPackage,
-  substituteAll,
+  fetchFromGitHub,
+  fetchpatch,
   glibc,
   libtiff,
-  openjpeg,
-  fetchFromGitHub,
   lxml,
   numpy,
+  openjpeg,
   pytestCheckHook,
   pythonOlder,
   scikit-image,
   setuptools,
+  substituteAll,
 }:
 
 buildPythonPackage rec {
@@ -20,7 +21,7 @@ buildPythonPackage rec {
   version = "0.13.6";
   pyproject = true;
 
-  disabled = pythonOlder "3.6";
+  disabled = pythonOlder "3.10";
 
   src = fetchFromGitHub {
     owner = "quintusdias";
@@ -30,6 +31,12 @@ buildPythonPackage rec {
   };
 
   patches = [
+    # Numpy 2.x compatibility, https://github.com/quintusdias/glymur/pull/675
+    (fetchpatch {
+      name = "numpy2-compat.patch";
+      url = "https://github.com/quintusdias/glymur/commit/89b159299035ebb05776c3b90278f410ca6dba64.patch";
+      hash = "sha256-C/Q5WZmW5YtN3U8fxKljfqwKHtFLfR2LQ69Tj8SuIWg=";
+    })
     (substituteAll {
       src = ./set-lib-paths.patch;
       openjp2_lib = "${lib.getLib openjpeg}/lib/libopenjp2${stdenv.hostPlatform.extensions.sharedLibrary}";

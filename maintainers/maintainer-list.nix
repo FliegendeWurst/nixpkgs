@@ -16590,6 +16590,18 @@
     githubId = 3521180;
     name = "Tom Sydney Kerckhove";
   };
+  normalcea = {
+    name = "normalcea";
+    email = "normalc@posteo.net";
+    github = "normalcea";
+    githubId = 190049873;
+    keys = [
+      {
+        fingerprint = "6057 1155 7BA4 B922 66D6 2064 3DE3 BCB2 142A 8C71";
+      }
+    ];
+    matrix = "@normalcea:matrix.org";
+  };
   nosewings = {
     name = "Nicholas Coltharp";
     email = "coltharpnicholas@gmail.com";
@@ -16735,10 +16747,16 @@
     githubId = 99221043;
   };
   numinit = {
-    email = "me@numin.it";
+    email = "me+nixpkgs@numin.it";
+    name = "Morgan Jones";
     github = "numinit";
     githubId = 369111;
-    name = "Morgan Jones";
+    keys = [
+      # >=2025
+      { fingerprint = "FD28 F9C9 81C5 D78E 56E8  8311 5C3E B94D 198F 1491"; }
+      # <=2024
+      { fingerprint = "190B DA97 F616 DE35 6899  ED17 F819 F1AF 2FC1 C1FF"; }
+    ];
   };
   numkem = {
     name = "Sebastien Bariteau";

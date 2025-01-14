@@ -619,6 +619,7 @@ mapAliases ({
   retry_decorator = retry-decorator; # added 2024-01-07
   retworkx = rustworkx; # added 2023-05-14
   rig = throw "rig has been removed because it was pinned to python 2.7 and 3.5, failed to build and is otherwise unmaintained"; # added 2022-11-28
+  rising = throw "rising has been removed because it was abandoned and archived by upstream"; # added 2024-11-15
   rl-coach = "rl-coach was removed because the project is discontinued and was archived by upstream"; # added 2023-05-03
   roboschool = throw "roboschool is deprecated in favor of PyBullet and has been removed"; # added 2022-01-15
   ronin = throw "ronin has been removed because it was unmaintained since 2018"; # added 2024-08-21
@@ -741,6 +742,7 @@ mapAliases ({
   xarray-datatree = throw "Datatree has been merged upstream into pydata/xarray, and released as of xarray version 2024.10.0."; # added 2024-11-02
   xenomapper = throw "xenomapper was moved to pkgs.xenomapper"; # added 2021-12-31
   XlsxWriter = xlsxwriter; # added 2023-02-19
+  yahooweather = throw "yahooweather has been removed because it is no longer maintained"; # added 2025-01-13
   xsser = "xsser has been removed because it was unmaintained and relies on a archived project"; # added 2024-07-27
   Yapsy = yapsy; # added 2023-02-19
   yanc  = throw "yanc has been removed because it relies on nose"; # added 2024-07-27
