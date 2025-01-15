@@ -49,13 +49,7 @@ stdenv.mkDerivation rec {
       --replace 'OCIO_ADD_TEST(Config, virtual_display_with_active_displays)' 'static void _skip_virtual_display_with_active_displays()'
   '';
 
-  nativeBuildInputs =
-    [
-      cmake
-    ]
-    ++ lib.optionals pythonBindings [
-      python3Packages.python
-    ];
+  nativeBuildInputs = [ cmake ] ++ lib.optionals pythonBindings [ python3Packages.python ];
   buildInputs =
     [
       expat
