@@ -67,6 +67,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    extra-cmake-modules # required to please CMake
     expat
     fmt
     isocodes
