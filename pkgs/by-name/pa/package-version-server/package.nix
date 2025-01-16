@@ -9,31 +9,29 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "package-version-server";
-  version = "0.0.4";
+  version = "0.0.7";
 
   src = fetchFromGitHub {
     owner = "zed-industries";
     repo = "package-version-server";
     rev = "refs/tags/v${version}";
-    hash = "sha256-Ht5huLugAIj2FTMywdvtxjeM30klwwV8mdq36AxJ2IY=";
+    hash = "sha256-/YyJ8+tKrNKVrN+F/oHgtExBBRatIIOvWr9mAyTHA3E=";
   };
 
-  cargoHash = "sha256-AJldLcUTxenqVFHFPPMaga7QjnjAtyAdbj6OO1DB9IU=";
+  cargoHash = "sha256-aO6d7NcWZtLMH2/2jcsD8vpDO+C2exMwxrLVFH3bsP0=";
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [
-    openssl
-  ];
+  buildInputs = [ openssl ];
 
   passthru = {
     updateScript = nix-update-script { };
   };
 
+  doCheck = lib.versionAtLeast version "0.0.8";
+
   meta = {
-    description = "A language server that handles hover information in package.json files";
+    description = "Language server that handles hover information in package.json files";
     homepage = "https://github.com/zed-industries/package-version-server/";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ felixdorn ];

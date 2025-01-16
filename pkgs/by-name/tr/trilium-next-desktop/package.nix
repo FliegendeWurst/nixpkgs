@@ -16,13 +16,13 @@
 
 let
   pname = "trilium-next-desktop";
-  version = "0.90.8";
+  version = "0.90.12";
 
   linuxSource.url = "https://github.com/TriliumNext/Notes/releases/download/v${version}/TriliumNextNotes-v${version}-linux-x64.zip";
-  linuxSource.sha256 = "0l9a2l79jcbr4522k03bbzli9gv96pr15cyig6fg9qpf71cjvda1";
+  linuxSource.sha256 = "0ji28l60wyzhjbi6g5845dnm763bvg7535zfgzcmfgwjs6zr6nfq";
 
   darwinSource.url = "https://github.com/TriliumNext/Notes/releases/download/v${version}/TriliumNextNotes-v${version}-macos-x64.zip";
-  darwinSource.sha256 = "0wki6a6bpp698r51wvyl7xh8y8csj5yaihaxfplp8q33zp9nw2q8";
+  darwinSource.sha256 = "0jv80k7dk6gpyfj36iin6y7fk7qan4bya72f14jcgfla95wvk6ls";
 
   meta = {
     description = "Hierarchical note taking application with focus on building large personal knowledge bases";
@@ -45,6 +45,11 @@ let
 
     src = fetchurl linuxSource;
 
+    # Remove trilium-portable.sh, so trilium knows it is packaged making it stop auto generating a desktop item on launch
+    postPatch = ''
+      rm ./trilium-portable.sh
+    '';
+
     nativeBuildInputs = [
       unzip
       makeBinaryWrapper
@@ -55,7 +60,7 @@ let
     ];
 
     buildInputs = [
-      stdenv.cc.cc.lib
+      (lib.getLib stdenv.cc.cc)
     ];
 
     desktopItems = [
@@ -66,22 +71,17 @@ let
         comment = meta.description;
         desktopName = "TriliumNext Notes";
         categories = [ "Office" ];
-        startupWMClass = "trilium notes next";
+        startupWMClass = "Trilium Notes Next";
       })
     ];
 
-    # Remove trilium-portable.sh, so trilium knows it is packaged making it stop auto generating a desktop item on launch
-    postPatch = ''
-      rm ./trilium-portable.sh
-    '';
-
     installPhase = ''
       runHook preInstall
-      mkdir -p $out/bin
-      mkdir -p $out/share/trilium
-      mkdir -p $out/share/icons/hicolor/512x512/apps
+      mkdir -p "$out/bin"
+      mkdir -p "$out/share/trilium"
+      mkdir -p "$out/share/icons/hicolor/512x512/apps"
 
-      cp -r ./* $out/share/trilium
+      cp -r ./* "$out/share/trilium/"
       rm $out/share/trilium/{*.so*,trilium,chrome_crashpad_handler,chrome-sandbox}
 
       # Rebuild the ASAR archive, hardcoding the resourcesPath
@@ -89,7 +89,7 @@ let
       asar extract $out/share/trilium/resources/app.asar $tmp
       rm $out/share/trilium/resources/app.asar
 
-      for f in "src/services/i18n.ts" "dist/src/services/i18n.js" "dist/src/build/src/services/i18n.js" "build/src/services/i18n.js"; do
+      for f in "src/services/utils.ts" "dist/src/services/utils.js"; do
         substituteInPlace $tmp/$f \
           --replace-fail "process.resourcesPath" "'$out/share/trilium/resources'"
       done
@@ -107,7 +107,6 @@ let
       runHook postInstall
     '';
 
-    dontStrip = true;
     dontWrapGApps = true;
 
     passthru.updateScript = ./update.sh;

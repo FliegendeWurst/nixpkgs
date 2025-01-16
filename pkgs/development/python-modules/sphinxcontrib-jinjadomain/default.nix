@@ -17,16 +17,16 @@ buildPythonPackage rec {
     hash = "sha256-frzcrUnJna8wmKbsC7wduazLSZ8lzOKOCf75Smk675E=";
   };
 
+  prePatch = ''
+    substituteInPlace sphinxcontrib/jinjadomain.py \
+      --replace-fail "content.sort(key=lambda (k, v): k)" "content.sort(key=lambda kv: kv[0])"
+  '';
+
   build-system = [ setuptools ];
 
   dependencies = [ sphinx ];
 
-  nativeCheckInputs = [ pytestCheckHook ];
-
-  #no test
-  doCheck = false;
-
-  pythonImportsCheck = [ "sphinxcontrib" ];
+  pythonImportsCheck = [ "sphinxcontrib.jinjadomain" ];
 
   meta = {
     description = "Sphinx domain for describing jinja templates";

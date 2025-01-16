@@ -20,7 +20,7 @@ stdenvNoCC.mkDerivation rec {
     mv * $out/lib/powershell-editor-services/
     cat > $out/bin/powershell-editor-services <<EOF
     #! ${runtimeShell} -e
-    exec ${lib.getExe' powershell "pwsh"} -noprofile -nologo -c "$out/lib/PowerShellEditorServices/Start-EditorServices.ps1 \$@"
+    exec ${lib.getExe' powershell "pwsh"} -noprofile -nologo -c "& '$out/lib/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1' \$@"
     EOF
     chmod +x $out/bin/powershell-editor-services
   '';

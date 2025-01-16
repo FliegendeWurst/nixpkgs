@@ -30,8 +30,17 @@ buildPythonPackage rec {
     repo = "pcre2.py";
     rev = "refs/tags/v${version}";
     hash = "sha256-NPpI3IWg58num0MZjlEam37Qz9D3dDMhFjfVXB8ugOg=";
-    fetchSubmodules = true;
+    fetchSubmodules = false;
   };
+
+  postPatch = ''
+    substituteInPlace CMakeLists.txt \
+      --replace-fail "add_subdirectory(src/libpcre2)" "" \
+      --replace-fail "install" "#install"
+    substituteInPlace src/pcre2/CMakeLists.txt \
+      --replace-fail "\''${PCRE2_INCLUDE_DIR}" "${pcre2.dev}/include" \
+      --replace-fail "pcre2-8-static" "pcre2-8"
+  '';
 
   dontUseCmakeConfigure = true;
 
@@ -68,7 +77,7 @@ buildPythonPackage rec {
 
   postCheck = ''
     cd $out
-    rm -rf *.t* *.py requirements Makefile LICENSE *.md cmake
+    rm -rf *.t* *.py requirements Makefile LICENSE *.md
   '';
 
   meta = {
