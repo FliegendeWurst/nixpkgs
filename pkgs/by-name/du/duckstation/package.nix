@@ -44,6 +44,8 @@ llvmPackages.stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     cmake
+    extra-cmake-modules
+    makeWrapper
     ninja
     pkg-config
     qttools
@@ -55,7 +57,6 @@ llvmPackages.stdenv.mkDerivation (finalAttrs: {
     SDL2
     cpuinfo
     curl
-    extra-cmake-modules
     libXrandr
     libbacktrace
     libwebp
@@ -129,7 +130,6 @@ llvmPackages.stdenv.mkDerivation (finalAttrs: {
   # https://github.com/stenzek/duckstation/blob/master/scripts/appimage/apprun-hooks/default-to-x11.sh
   # Can't avoid the double wrapping, the binary wrapper from qtWrapperArgs doesn't support --run
   postFixup = ''
-    source "${makeWrapper}/nix-support/setup-hook"
     wrapProgram $out/bin/duckstation-qt \
       --run 'if [[ -z $I_WANT_A_BROKEN_WAYLAND_UI ]]; then export QT_QPA_PLATFORM=xcb; fi'
   '';

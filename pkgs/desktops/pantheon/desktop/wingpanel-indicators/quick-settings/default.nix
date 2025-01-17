@@ -31,6 +31,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-I5RCMd3lkWOkpoawCXYuGHDa49A+wVlIlM8U2hRfq/o=";
   };
 
+  depsBuildBuild = [
+    pkg-config # so cross build finds wayland-scanner
+  ];
+
   nativeBuildInputs = [
     glib # glib-compile-resources
     meson

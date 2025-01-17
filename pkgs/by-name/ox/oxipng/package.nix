@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchFormGitHub,
+  fetchFromGitHub,
   rustPlatform,
 }:
 
@@ -13,13 +13,11 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "shssoichiro";
     repo = "oxipng";
-    rev = "refs/tags/v${version}";
-    hash = "sha256-0yOdvqleOjlhVADrwnT90bUTa+aLJfsfUvVaS9s3eKK=";
+    tag = "v${version}";
+    hash = "sha256-8EOEcIw10hCyYi9SwDLDZ8J3ezLXa30RUY5I9ksfqTs=";
   };
 
-  cargoHash = "sha256-4PCLtBJliK3uteL8EVKLBVR2YZW1gwQOiSLQok+rrug=";
-
-  doCheck = true;
+  cargoHash = "sha256-4PCLtBJliK3uteL8EVKLBVR2YZW1gwQOiSLQok+rqug=";
 
   meta = {
     homepage = "https://github.com/shssoichiro/oxipng";

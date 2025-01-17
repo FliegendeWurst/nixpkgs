@@ -61,7 +61,10 @@ stdenv.mkDerivation {
   '';
 
   nativeBuildInputs =
-    [ cmake ]
+    [
+      cmake
+      swig
+    ]
     ++ lib.optionals cudaSupport [
       cudaPackages.cuda_nvcc
       autoAddDriverRunpath

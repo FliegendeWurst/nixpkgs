@@ -192,6 +192,8 @@ in
     # If not set to an explicit value, set the buildid empty for reproducibility.
     ldflags = ldflags ++ lib.optional (!lib.any (lib.hasPrefix "-buildid=") ldflags) "-buildid=";
 
+    hardeningDisable = [ "pie" ];
+
     configurePhase = args.configurePhase or (''
       runHook preConfigure
 

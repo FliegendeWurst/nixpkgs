@@ -32,7 +32,7 @@ let
       sha256 = "OhzgDipFhscHtRGlfc33ZewBgHgQLa9Zhjby/r1m49A=";
     };
 
-    buildInputs = [ erlang ];
+    nativeBuildInputs = [ erlang ];
 
     postPatch = ''
       mkdir -p _checkouts _build/default/lib/

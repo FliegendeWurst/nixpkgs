@@ -3,6 +3,7 @@
 , buildPythonPackage
 , fetchFromGitHub
 , libopus
+, setuptools
 , pynacl
 , pythonOlder
 , withVoice ? true
@@ -12,7 +13,7 @@
 buildPythonPackage rec {
   pname = "disnake";
   version = "2.9.2";
-  format = "setuptools";
+  pyproject = true;
 
   disabled = pythonOlder "3.8";
 
@@ -22,6 +23,8 @@ buildPythonPackage rec {
     rev = "refs/tags/v${version}";
     hash = "sha256-J7nNVHhkQ9ekGjioObxaTL0OhjLjHHYlgbPdAG9Vz4o=";
   };
+
+  build-system = [ setuptools ];
 
   propagatedBuildInputs = [
     aiohttp

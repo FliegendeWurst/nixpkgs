@@ -20,10 +20,10 @@ buildPythonPackage rec {
     sha256 = "sha256-HA06ie25ny7AXI7AvZgezvowfZ3ExalY8HDkk7betyo=";
   };
 
-  postPatch = ''
-    substituteInPlace setup.py \
-      --replace-fail 'PROTOC_EXEC = "protoc"' 'PROTOC_EXEC = "${lib.getExe protobuf_27}"'
-  '';
+#  postPatch = ''
+#    substituteInPlace setup.py \
+#      --replace-fail 'PROTOC_EXEC = "protoc"' 'PROTOC_EXEC = "${lib.getExe protobuf_27}"'
+#  '';
 
   build-system = [ setuptools ];
 

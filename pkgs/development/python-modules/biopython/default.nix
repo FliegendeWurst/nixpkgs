@@ -9,21 +9,20 @@
 
 buildPythonPackage rec {
   pname = "biopython";
-  version = "1.83";
+  version = "1.84";
   pyproject = true;
 
   disabled = pythonOlder "3.9";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-eOa/t43mMDQDev01/nfLbgqeW2Jwa+z3in2SKxbtg/c=";
+    hash = "sha256-YPvm+ZbopoZqQmmMF+VSEn2ZqaqzJZ1iSfuqvQ4Mx7Q=";
   };
 
-  patches = [
-    # cherry-picked from https://github.com/biopython/biopython/commit/3f9bda7ef44f533dadbaa0de29ac21929bc0b2f1
-    # fixes SeqXMLIO parser to process all data. remove on next update
-    ./close_parser_on_time.patch
-  ];
+  postPatch = ''
+    substituteInPlace setup.py \
+      --replace-fail 'tuple(int(x) for x in setuptools_version.split("."))' '(100, 0)'
+  '';
 
   build-system = [ setuptools ];
 
@@ -40,6 +39,8 @@ buildPythonPackage rec {
 
     runHook postCheck
   '';
+
+  doCheck = lib.versionAtLeast version "1.85";
 
   meta = {
     description = "Python library for bioinformatics";

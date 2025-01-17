@@ -66,7 +66,16 @@ stdenv.mkDerivation rec {
     sed -i -e "s@env = Environment()@env = Environment( ENV = os.environ )@" SConstruct
   '';
 
-  nativeBuildInputs = [ scons ];
+  # fix sdl-config for cross
+  preBuild = ''
+    substituteInPlace SConstruct \
+      --replace-fail sdl-config "${lib.getExe' (lib.getDev SDL) "sdl-config"}"
+  '';
+
+  nativeBuildInputs = [
+    scons
+    bsdiff # bspatch
+  ];
   buildInputs = [
     libGLU
     libGL
@@ -80,7 +89,6 @@ stdenv.mkDerivation rec {
     libogg
     boost
     fribidi
-    bsdiff
   ];
 
   sconsFlags = [

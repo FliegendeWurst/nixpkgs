@@ -50,7 +50,10 @@ stdenv.mkDerivation rec {
     rev = version;
   };
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [
+    makeWrapper
+    python3
+  ];
   buildInputs = [
     nodejs
     python3
@@ -113,7 +116,7 @@ stdenv.mkDerivation rec {
         --set EM_EXCLUSIVE_CACHE_ACCESS 1 \
         --set PYTHON ${python3}/bin/python
     done
-
+  '' + (lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
     # precompile libc (etc.) in all variants:
     pushd $TMPDIR
     echo 'int __main_argc_argv( int a, int b ) { return 42; }' >test.c
@@ -135,12 +138,12 @@ stdenv.mkDerivation rec {
     done
     popd
 
-    export PYTHON=${python3}/bin/python
+    export PYTHON=${lib.getExe python3}
     export NODE_PATH=${nodeModules}
     pushd $appdir
     python test/runner.py test_hello_world
     popd
-
+  '') + ''
     runHook postInstall
   '';
 

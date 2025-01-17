@@ -790,6 +790,7 @@ rec {
         '';
 
         nativeBuildInputs = [
+          clisp
           pkg-config
           perl
         ];

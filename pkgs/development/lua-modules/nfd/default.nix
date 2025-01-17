@@ -41,7 +41,7 @@ buildLuarocksPackage {
   '';
 
   doInstallCheck = true;
-  installCheckInputs = [ lua.pkgs.busted ];
+  nativeInstallCheckInputs = [ lua.pkgs.busted ];
   installCheckPhase = ''
     busted lua/spec/
   '';

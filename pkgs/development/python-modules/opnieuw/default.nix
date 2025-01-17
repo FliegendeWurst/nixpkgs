@@ -2,19 +2,23 @@
   lib,
   buildPythonPackage,
   fetchPypi,
+  setuptools,
   typing-extensions,
 }:
 
 buildPythonPackage rec {
   pname = "opnieuw";
   version = "3.0.0";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     sha256 = "sha256-BxhSz+AsL7lU3zw9tIL2R+Pxktb8NG2/UKPtEDJT+Qo=";
   };
 
-  propagatedBuildInputs = [ typing-extensions ];
+  build-system = [ setuptools ];
+
+  dependencies = [ typing-extensions ];
 
   meta = with lib; {
     description = "Python retrying library: One weird trick to make your code more reliable";

@@ -5,8 +5,8 @@
   fig2dev,
   texliveSmall,
   ghostscript,
-  colm,
   build-manual ? false,
+  buildPackages,
 }:
 
 let
@@ -36,7 +36,7 @@ let
         sed -i "s/build_manual=no/build_manual=yes/g" DIST
       '';
 
-      configureFlags = [ "--with-colm=${colm}" ];
+      configureFlags = [ "--with-colm=${buildPackages.colm}" ];
 
       env.NIX_CFLAGS_COMPILE = lib.optionalString stdenv.cc.isGNU "-std=gnu++98";
 

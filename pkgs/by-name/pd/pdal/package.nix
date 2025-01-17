@@ -63,6 +63,8 @@ stdenv.mkDerivation (finalAttrs: {
     libe57format
   ];
 
+  strictDeps = true;
+
   cmakeFlags = [
     "-DBUILD_PLUGIN_E57=${if enableE57 then "ON" else "OFF"}"
     "-DBUILD_PLUGIN_HDF=ON"
@@ -108,6 +110,10 @@ stdenv.mkDerivation (finalAttrs: {
 
     # Failure
     "pdal_app_plugin_test"
+  ];
+
+  nativeCheckInputs = [
+    gdal # gdalinfo
   ];
 
   checkPhase = ''

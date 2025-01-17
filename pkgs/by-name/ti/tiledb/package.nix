@@ -79,8 +79,8 @@ stdenv.mkDerivation rec {
   ] ++ lib.optional (!useAVX2) "-DCOMPILER_SUPPORTS_AVX2=FALSE";
 
   nativeBuildInputs = [
-    ep-file-windows
-    catch2_3
+    # ep-file-windows
+    # catch2_3
     clang-tools
     cmake
     python3
@@ -92,6 +92,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    ep-file-windows
+    catch2_3
     zlib
     lz4
     bzip2

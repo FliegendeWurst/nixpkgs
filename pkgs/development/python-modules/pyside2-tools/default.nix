@@ -29,6 +29,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     cmake
     distutils
+    python
     wrapPython
   ];
   propagatedBuildInputs = [
@@ -36,7 +37,6 @@ stdenv.mkDerivation {
     pyside2
   ];
   buildInputs = [
-    python
     qt5.qtbase
   ];
 
@@ -52,7 +52,7 @@ stdenv.mkDerivation {
     rm $out/bin/pyside_tool.py
 
     for tool in uic rcc; do
-      makeWrapper "$(command -v $tool)" $out/bin/pyside2-$tool --add-flags "-g python"
+      makeWrapper "${lib.getDev qt5.qtbase}/bin/$tool" $out/bin/pyside2-$tool --add-flags "-g python"
     done
   '';
 

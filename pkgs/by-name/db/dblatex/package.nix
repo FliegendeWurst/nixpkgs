@@ -62,6 +62,10 @@ stdenv.mkDerivation rec {
     sha256 = "0yd09nypswy3q4scri1dg7dr99d7gd6r2dwx0xm81l9f4y32gs0n";
   };
 
+  nativeBuildInputs = [
+    tex # latex, makeindex, pdflatex, kpsewhich
+  ];
+
   buildInputs =
     [
       python311

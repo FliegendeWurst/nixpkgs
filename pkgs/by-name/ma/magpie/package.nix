@@ -102,6 +102,9 @@ stdenv.mkDerivation (finalAttrs: {
     wrapGAppsHook3
     gi-docgen
     xorgserver
+    # required for gobject-introspection
+    graphene
+    json-glib
   ];
 
   buildInputs = [
@@ -137,7 +140,9 @@ stdenv.mkDerivation (finalAttrs: {
 
     # https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/3187
     substituteInPlace meson.build \
-      --replace "dependency('sysprof-4')" "dependency('sysprof-6')"
+      --replace-fail "dependency('gi-docgen" "find_program('gi-docgen" \
+      --replace-fail "fallback: ['gi-docgen', 'dummy_dep'])" ")" \
+      --replace-fail "dependency('sysprof-4')" "dependency('sysprof-6')"
   '';
 
   postFixup = ''

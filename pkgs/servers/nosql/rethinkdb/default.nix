@@ -58,6 +58,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     which
     m4
+    protobuf
     python3Packages.python
     makeWrapper
   ];

@@ -10,8 +10,6 @@ buildNimPackage (finalAttrs: {
   pname = "mosdepth";
   version = "0.3.10";
 
-  requiredNimVersion = 1;
-
   src = fetchFromGitHub {
     owner = "brentp";
     repo = "mosdepth";

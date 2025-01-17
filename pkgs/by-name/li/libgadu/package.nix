@@ -19,8 +19,7 @@ stdenv.mkDerivation rec {
   };
 
   propagatedBuildInputs = [ zlib ];
-  buildInputs = [ protobufc ];
-  nativeBuildInputs = [ autoreconfHook ];
+  nativeBuildInputs = [ autoreconfHook protobufc ];
 
   meta = {
     description = "Library to deal with gadu-gadu protocol (most popular polish IM protocol)";

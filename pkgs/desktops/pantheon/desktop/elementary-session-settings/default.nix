@@ -46,6 +46,8 @@ stdenv.mkDerivation rec {
     systemd
   ];
 
+  strictDeps = false;
+
   mesonFlags = [
     "-Dmimeapps-list=false"
     "-Dfallback-session=GNOME"

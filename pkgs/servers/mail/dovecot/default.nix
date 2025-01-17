@@ -12,6 +12,7 @@
   inotify-tools,
   pam,
   libcap,
+  libxcrypt,
   coreutils,
   clucene_core_2,
   icu,
@@ -21,6 +22,7 @@
   cyrus_sasl,
   nixosTests,
   fetchpatch,
+  writeShellScriptBin,
   # Auth modules
   withMySQL ? false,
   libmysqlclient,
@@ -36,10 +38,17 @@ stdenv.mkDerivation rec {
   pname = "dovecot";
   version = "2.3.21.1";
 
-  nativeBuildInputs = [
-    perl
-    pkg-config
-  ];
+  nativeBuildInputs =
+    [
+      perl
+      pkg-config
+    ]
+    ++ lib.optionals withMySQL [
+      (writeShellScriptBin "mysql_config" ''
+        echo -I${lib.getDev libmysqlclient}/include -I${lib.getDev libmysqlclient}/include/mariadb \
+          -L${lib.getLib libmysqlclient}/lib/mariadb -lmariadb
+      '')
+    ];
   buildInputs =
     [
       openssl
@@ -48,6 +57,7 @@ stdenv.mkDerivation rec {
       lz4
       clucene_core_2
       icu
+      libxcrypt
       openldap
       libsodium
       libstemmer
@@ -151,7 +161,10 @@ stdenv.mkDerivation rec {
     ++ lib.optional stdenv.hostPlatform.isLinux "--with-systemd"
     ++ lib.optional stdenv.hostPlatform.isDarwin "--enable-static"
     ++ lib.optional withMySQL "--with-mysql"
-    ++ lib.optional withPgSQL "--with-pgsql"
+    ++ lib.optional withPgSQL [
+      "--with-pgsql"
+      "ac_cv_prog_PG_CONFIG=${lib.getExe' (lib.getDev postgresql) "pg_config"}"
+    ]
     ++ lib.optional withSQLite "--with-sqlite"
     ++ lib.optional withLua "--with-lua";
 

@@ -27,11 +27,10 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     pkg-config
     cmake
+    grpc
     ninja
-    qt6.qtbase
-    qt6.qtdeclarative
-    qt6.qtwayland
-    qt6.qtsvg
+    protobuf
+    qt6.qmake
     qt6.wrapQtAppsHook
   ];
 
@@ -42,7 +41,13 @@ stdenv.mkDerivation (finalAttrs: {
     zlib
     gtest
     sentry-native
+    qt6.qtbase
+    qt6.qtdeclarative
+    qt6.qtwayland
+    qt6.qtsvg
   ];
+
+  strictDeps = false; # qmake does not approve
 
   sourceRoot = "${finalAttrs.src.name}/internal/frontend/bridge-gui";
 
@@ -107,5 +112,6 @@ stdenv.mkDerivation (finalAttrs: {
     mainProgram = "protonmail-bridge-gui";
     maintainers = with lib.maintainers; [ daniel-fahey ];
     platforms = lib.platforms.linux;
+    broken = !stdenv.buildPlatform.canExecute stdenv.hostPlatform; # qmake
   };
 })

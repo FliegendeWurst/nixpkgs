@@ -22,6 +22,10 @@ mkXfceDerivation {
 
   sha256 = "sha256-C4dGiMYn51YuASsQeQs3Cbc+KkPqcOrsCMS+dYfP+Ps=";
 
+  nativeBuildInputs = [
+    dbus-glib # dbus-binding-tool
+  ];
+
   buildInputs = with gst_all_1; [
     dbus
     dbus-glib
@@ -37,6 +41,8 @@ mkXfceDerivation {
     taglib
     xfconf
   ];
+
+  strictDeps = true;
 
   meta = with lib; {
     description = "Modern simple media player";

@@ -1,10 +1,12 @@
 {
+  stdenv,
   lib,
   rustPlatform,
   fetchFromGitHub,
   pkg-config,
   udev,
   pciutils,
+  ryzenadj,
   cmake,
 }:
 
@@ -31,7 +33,10 @@ rustPlatform.buildRustPackage rec {
   buildInputs = [
     udev
     pciutils
-  ];
+  ] ++ lib.optionals stdenv.hostPlatform.isx86_64 [ ryzenadj ];
+
+  # use our ryzenadj library
+  #env.DOCS_RS = "1";
 
   postInstall = ''
     cp -r rootfs/usr/* $out/

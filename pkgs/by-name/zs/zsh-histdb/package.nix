@@ -1,4 +1,11 @@
-{ lib, stdenvNoCC, fetchFromGitHub, makeWrapper, zsh, sqlite }:
+{
+  lib,
+  stdenvNoCC,
+  fetchFromGitHub,
+  makeWrapper,
+  zsh,
+  sqlite,
+}:
 
 stdenvNoCC.mkDerivation {
   pname = "zsh-histdb";
@@ -13,20 +20,22 @@ stdenvNoCC.mkDerivation {
     hash = "sha256-PQIFF8kz+baqmZWiSr+wc4EleZ/KD8Y+lxW2NT35/bg=";
   };
 
-  installPhase = let
-    deps_path = lib.makeBinPath [
-      zsh
-      sqlite
-    ];
-  in ''
-    runHook preInstall
+  installPhase =
+    let
+      deps_path = lib.makeBinPath [
+        zsh
+        sqlite
+      ];
+    in
+    ''
+      runHook preInstall
 
-    install -Dt $out/share/zsh-histdb/ sqlite-history.zsh histdb-interactive.zsh
-    wrapProgram $out/share/zsh-histdb/sqlite-history.zsh --set PATH ${deps_path}
-    wrapProgram $out/share/zsh-histdb/histdb-interactive.zsh --set PATH ${deps_path}
+      install -Dt $out/share/zsh-histdb/ sqlite-history.zsh histdb-interactive.zsh
+      wrapProgram $out/share/zsh-histdb/sqlite-history.zsh --set PATH ${deps_path}
+      wrapProgram $out/share/zsh-histdb/histdb-interactive.zsh --set PATH ${deps_path}
 
-    runHook postInstall
-  '';
+      runHook postInstall
+    '';
 
   meta = with lib; {
     description = "A slightly better history for zsh";

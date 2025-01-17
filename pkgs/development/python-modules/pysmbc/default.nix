@@ -1,4 +1,5 @@
 {
+  stdenv,
   lib,
   buildPythonPackage,
   fetchPypi,
@@ -18,6 +19,11 @@ buildPythonPackage rec {
     inherit pname version;
     hash = "sha256-IvFxXfglif2cxCU/6rOQtO8Lq/FPZFE82NB7N4mWMiY=";
   };
+
+  postPatch = ''
+    substituteInPlace setup.py \
+      --replace-fail 'pkg-config' "${stdenv.cc.targetPrefix}pkg-config"
+  '';
 
   nativeBuildInputs = [ pkg-config ];
 

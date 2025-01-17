@@ -14,6 +14,7 @@
   libgbm,
   opencl-clhpp,
   pkg-config,
+  which,
   stdenv,
   SDL2,
 }:

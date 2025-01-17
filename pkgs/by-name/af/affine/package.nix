@@ -14,10 +14,9 @@
   rustc,
   stdenv,
   stdenvNoCC,
-  yarn-berry,
+  buildPackages,
   zip,
   electron_33,
-  nodejs_20,
   buildType ? "stable",
   commandLineArgs ? "",
 }:
@@ -32,8 +31,8 @@ let
     .${hostPlatform.parsed.cpu.name}
       or (throw "affine(${buildType}): unsupported CPU family ${hostPlatform.parsed.cpu.name}");
   electron = electron_33;
-  nodejs = nodejs_20;
-  yarn = yarn-berry.override { inherit nodejs; };
+  nodejs = buildPackages.nodejs_20;
+  yarn = buildPackages.yarn-berry.override { inherit nodejs; };
 in
 stdenv.mkDerivation (
   finalAttrs:
@@ -137,12 +136,8 @@ stdenv.mkDerivation (
           makeWrapper
         ];
 
-      patchPhase = ''
-        runHook prePatchPhase
-
+      postPatch = ''
         sed -i '/packagerConfig/a \    electronZipDir: process.env.ELECTRON_FORGE_ELECTRON_ZIP_DIR,' packages/frontend/apps/electron/forge.config.mjs
-
-        runHook postPatchPhase
       '';
 
       configurePhase =
@@ -151,7 +146,7 @@ stdenv.mkDerivation (
             electron + (if hostPlatform.isLinux then "/libexec/electron/" else "/Applications/");
         in
         ''
-          runHook preConfigurePhase
+          runHook preConfigure
 
           export HOME="$NIX_BUILD_TOP"
           export CI=1
@@ -174,7 +169,7 @@ stdenv.mkDerivation (
           (cd $HOME/.electron-prebuilt-zip-tmp && zip --recurse-paths - .) > $ELECTRON_FORGE_ELECTRON_ZIP_DIR/electron-v$ELECTRON_VERSION_IN_LOCKFILE-${nodePlatform}-${nodeArch}.zip
           export ELECTRON_SKIP_BINARY_DOWNLOAD=1
 
-          runHook postConfigurePhase
+          runHook postConfigure
         '';
       buildPhase = ''
         runHook preBuild

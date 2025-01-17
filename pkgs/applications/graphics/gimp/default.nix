@@ -174,6 +174,9 @@ stdenv.mkDerivation (finalAttrs: {
       "--with-icc-directory=/run/current-system/sw/share/color/icc"
       # fix libdir in pc files (${exec_prefix} needs to be passed verbatim)
       "--libdir=\${exec_prefix}/lib"
+      "ac_ct_CC=${stdenv.cc.targetPrefix}cc"
+      "ac_cv_prog_ac_ct_CC=${stdenv.cc.targetPrefix}cc"
+      #"CC=${stdenv.cc.targetPrefix}cc"
     ]
     ++ lib.optionals (!withPython) [
       "--disable-python" # depends on Python2 which was EOLed on 2020-01-01
@@ -184,6 +187,8 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = true;
 
   env = {
+    # fix compiler detection for cross-compile
+    #CXX = "${stdenv.cc.targetPrefix}c++";
     NIX_CFLAGS_COMPILE = toString (
       [ ]
       ++ lib.optionals stdenv.cc.isGNU [ "-Wno-error=incompatible-pointer-types" ]

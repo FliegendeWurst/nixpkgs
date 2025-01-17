@@ -71,11 +71,8 @@ stdenv.mkDerivation {
   cmakeFlags = [
     (lib.cmakeBool "CPPTRACE_USE_EXTERNAL_LIBDWARF" true)
     (lib.cmakeBool "CPPTRACE_USE_EXTERNAL_ZSTD" true)
-    # provide correct executables for cross
+    # provide correct executable for cross
     (lib.cmakeFeature "Python3_EXECUTABLE" (lib.getExe python3.pythonOnBuildForHost))
-    # TODO: remove these once capnp cross is fixed properly
-    (lib.cmakeFeature "CAPNP_EXECUTABLE" (lib.getExe' buildPackages.capnproto "capnp"))
-    (lib.cmakeFeature "CAPNPC_CXX_EXECUTABLE" (lib.getExe' buildPackages.capnproto "capnpc-c++"))
   ];
 
   doCheck = true;

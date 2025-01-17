@@ -24,17 +24,15 @@
       sha256 = "sha256-rOTVThHOY/Q2IIu2RGiv26UE2V/JFfWWnfKZQfKl5Mg=";
     };
 
-    nativeBuildInputs = previousAttrs.nativeBuildInputs or [ ] ++ [
-      libpam-wrapper
-      python3Packages.python
-      python3Packages.pycairo
-      python3Packages.dbus-python
-      python3Packages.python-dbusmock
-      python3Packages.pygobject3
+    nativeBuildInputs = [
+      (python3Packages.python.withPackages (ps: with ps; [ pycairo dbus-python python-dbusmock pygobject3 pypamtest ]))
       gusb
-      python3Packages.pypamtest
       gobject-introspection
       libxml2 # for xmllint
+    ] ++ previousAttrs.nativeBuildInputs or [ ];
+
+    buildInputs = previousAttrs.buildInputs or [ ] ++ [
+      libpam-wrapper
     ];
 
     patches = previousAttrs.patches or [ ] ++ [

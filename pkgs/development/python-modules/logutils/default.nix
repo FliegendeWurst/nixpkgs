@@ -3,6 +3,7 @@
   stdenv,
   buildPythonPackage,
   fetchPypi,
+  fetchpatch,
   pytestCheckHook,
   pythonAtLeast,
   pythonOlder,
@@ -22,6 +23,13 @@ buildPythonPackage rec {
     inherit pname version;
     hash = "sha256-vAWKJdXCCUYfE04fA8q2N9ZqelzMEuWT21b7snmJmoI=";
   };
+
+  patches = [
+    (fetchpatch {
+      url = "https://bitbucket.org/arnekeller-01/logutils/commits/f33a518fc04bcb4f875b2c741c7bbee8db9e01d8/raw";
+      hash = "sha256-Upf1S/MIutS16y16/v/r1tbATdXxhqqNQVoIorQtBjM=";
+    })
+  ];
 
   postPatch = ''
     substituteInPlace tests/test_dictconfig.py \

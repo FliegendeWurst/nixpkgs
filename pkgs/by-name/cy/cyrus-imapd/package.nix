@@ -4,6 +4,7 @@
   autoreconfHook,
   makeWrapper,
   pkg-config,
+  writeShellScriptBin,
 
   # check hook
   versionCheckHook,
@@ -12,6 +13,7 @@
   fetchFromGitHub,
 
   # build inputs
+  bash,
   bison,
   brotli,
   coreutils,
@@ -29,6 +31,7 @@
   libmysqlclient,
   libsrs2,
   libuuid,
+  libxcrypt,
   libxml2,
   nghttp2,
   openssl,
@@ -42,6 +45,7 @@
   valgrind,
   wslay,
   xapian,
+  xxd,
   zlib,
 
   # feature flags
@@ -55,7 +59,7 @@
   enableNNTP ? false,
   enableReplication ? true,
   enableSrs ? true,
-  enableUnitTests ? true,
+  enableUnitTests ? stdenv.buildPlatform.canExecute stdenv.hostPlatform,
   enableXapian ? true,
   withLibcap ? true,
   withMySQL ? false,
@@ -76,26 +80,32 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   nativeBuildInputs = [
+    bison
+    flex
     makeWrapper
+    perl
     pkg-config
+    xxd
     autoreconfHook
+    (writeShellScriptBin "cc" "exec ${stdenv.cc.targetPrefix}cc $@")
   ];
   buildInputs =
     [
+      bash
       unixtools.xxd
       pcre2
       flex
       valgrind
       fig2dev
-      perl
+      # perl
       cyrus_sasl.dev
       icu
       jansson
       libbsd
       libuuid
+      libxcrypt
       openssl
       zlib
-      bison
       libsrs2
     ]
     ++ lib.optionals stdenv.hostPlatform.isLinux [ libcap ]
@@ -154,7 +164,10 @@ stdenv.mkDerivation (finalAttrs: {
     '';
 
   postFixup = ''
+    patchShebangs --host $out/bin/{cyr_cd.sh,installsieve}
     wrapProgram $out/bin/cyradm --set PERL5LIB $(find $out/lib/perl5 -type d | tr "\\n" ":")
+    substituteInPlace $out/bin/.cyradm-wrapped --replace-fail "${lib.replaceStrings ["/bin/bash"] ["/bin/sh"] stdenv.shell}" "/bin/sh"
+    patchShebangs --host $out/bin/.cyradm-wrapped
   '';
 
   configureFlags = [
@@ -178,6 +191,11 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.withFeature withPgSQL "pgsql")
     (lib.withFeature withSQLite "sqlite")
   ];
+
+  env = lib.optionalAttrs enableXapian {
+    RSYNC_BIN = lib.getExe rsync;
+    XAPIAN_CONFIG = lib.getExe' (lib.getDev xapian) "xapian-config";
+  };
 
   checkInputs = [ cunit ];
   doCheck = true;

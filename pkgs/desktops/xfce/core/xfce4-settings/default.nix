@@ -10,6 +10,7 @@
 , libxfce4ui
 , libxfce4util
 , libxklavier
+, libxml2
 , upower
 # Disabled by default on upstream and actually causes issues:
 # https://gitlab.xfce.org/xfce/xfce4-settings/-/issues/222
@@ -29,6 +30,7 @@ mkXfceDerivation {
   sha256 = "sha256-0fMuAucyxLr2VzQqAB0CL+HgkHNJctiVNZmUmTNzaPc=";
 
   nativeBuildInputs = [
+    libxml2 # xmllint
     wayland-scanner
   ];
 

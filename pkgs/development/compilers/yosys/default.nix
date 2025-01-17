@@ -109,6 +109,12 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     bison
     flex
+    tcl # tclsh
+    (python3.withPackages (
+      pp: with pp; [
+        click
+      ]
+    ))
   ];
   propagatedBuildInputs = [
     tcl

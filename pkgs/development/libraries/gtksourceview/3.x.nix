@@ -54,6 +54,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   nativeCheckInputs = [
+    libxml2 # xmllint
     xvfb-run
     dbus
   ];

@@ -4,6 +4,7 @@
   fetchYarnDeps,
   fetchFromGitHub,
   jq,
+  typescript,
 }:
 
 mkYarnPackage rec {
@@ -41,6 +42,8 @@ mkYarnPackage rec {
   };
 
   distPhase = "true";
+
+  extraNativeBuildInputs = [ typescript ];
 
   buildPhase = ''
     runHook preBuild

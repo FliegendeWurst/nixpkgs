@@ -15,9 +15,12 @@
 , tcl-8_6
 , tk-8_6
 , zlib
+# Python used at build time
+#, python3
 # For the Python package set
 , packageOverrides ? (self: super: {})
 , sourceVersion
+# , source
 , pythonVersion
 , hash
 , passthruFun
@@ -80,6 +83,14 @@ in with passthru; stdenv.mkDerivation {
   ];
 
   nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
+    # ++ [ python3 ];
+
+  #postBuild = ''
+  #  tar -xvf ${source} pypy3.10-v7.3.17-src/pypy/tool/release pypy3.10-v7.3.17-src/{lib_pypy,py,rpython}
+  #  mv pypy3.10-v7.3.17-src/{lib_pypy,py,pypy,rpython} .
+  #  python3 pypy/tool/release/package.py --archive-name=pypy-testing
+  #  exit 1
+  #'';
 
   installPhase = ''
     runHook preInstall

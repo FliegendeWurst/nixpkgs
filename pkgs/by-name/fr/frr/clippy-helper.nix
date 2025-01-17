@@ -27,11 +27,12 @@ stdenv.mkDerivation rec {
     flex
     perl
     pkg-config
+    python3
   ];
 
   buildInputs =
     [
-      python3
+      
     ]
     ++ lib.optionals (lib.meta.availableOn stdenv.hostPlatform elfutils) [
       elfutils

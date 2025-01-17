@@ -36,6 +36,8 @@ stdenv.mkDerivation rec {
     qt5.qtcharts
   ];
 
+  strictDeps = false;
+
   autoreconfFlags = [ "--install" ];
 
   postBuild = ''

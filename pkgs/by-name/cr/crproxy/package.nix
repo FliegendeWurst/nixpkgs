@@ -5,20 +5,20 @@
 }:
 buildGoModule rec {
   pname = "crproxy";
-  version = "0.12.2"; # stable
+  version = "0.12.4"; # stable
 
   src = fetchFromGitHub {
     owner = "DaoCloud";
     repo = "crproxy";
     rev = "v${version}";
-    hash = "sha256-PiM61gVZfrL+F1xPUMefj4UzJk1DipL7d3zkOTt1SUg=";
+    hash = "sha256-jWSp0NzeXQu38fAaZ8eTqVN+uvpn6v5xgoi3N5SCQoc=";
   };
 
-  vendorHash = "sha256-htxMoIRTeTiC+/zo2EZNtJjwZPTZ5Gy0KP6qqt62bb4=";
+  vendorHash = "sha256-R78GbtTWgizvMz3HE83ZYxAbZBvCTbsuKLvPBCB5sx4=";
 
   env.CGO_ENABLED = 0;
 
-  doCheck = false;
+  doCheck = true;
 
   meta = {
     description = "Generic Docker image proxy";

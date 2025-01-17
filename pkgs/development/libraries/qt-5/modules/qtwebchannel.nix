@@ -16,4 +16,5 @@ qtModule {
     "out"
     "dev"
   ] ++ lib.optionals (stdenv.hostPlatform == stdenv.buildPlatform) [ "bin" ];
+  strictDeps = false; # TODO: qmake?
 }

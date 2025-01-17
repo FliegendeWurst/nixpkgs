@@ -88,5 +88,6 @@ buildPythonPackage rec {
     changelog = "https://git.skewed.de/count0/graph-tool/commits/release-${version}";
     license = lib.licenses.lgpl3Plus;
     maintainers = [ lib.maintainers.mjoerg ];
+    broken = true; # too memory intensive to build
   };
 }

@@ -21,12 +21,14 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
+    guile
     pkg-config
     texinfo
   ];
   buildInputs = [
     guile
   ];
+  strictDeps = true;
 
   makeFlags = [ "GUILE_AUTO_COMPILE=0" ];
 

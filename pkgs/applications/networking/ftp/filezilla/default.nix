@@ -52,6 +52,9 @@ stdenv.mkDerivation rec {
     xdg-utils
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ CoreServices Security ];
 
+  env.WX_CONFIG_PATH = lib.getExe' (lib.getDev wxGTK32) "wx-config";
+  env.xdgopen = lib.getExe' xdg-utils "xdg-open";
+
   enableParallelBuilding = true;
 
   meta = with lib; {

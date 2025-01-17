@@ -37,16 +37,21 @@ stdenv.mkDerivation rec {
       ]
     ))
   ];
-  buildInputs = [
-    zimg
-    libass
-    (python3.withPackages (
-      ps: with ps; [
-        sphinx
-        cython
-      ]
-    ))
-  ];
+  buildInputs =
+    [
+      zimg
+      libass
+      (python3.withPackages (
+        ps: with ps; [
+          sphinx
+          cython
+        ]
+      ))
+    ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [
+      libiconv
+      ApplicationServices
+    ];
 
   enableParallelBuilding = true;
   doInstallCheck = !stdenv.hostPlatform.isDarwin;

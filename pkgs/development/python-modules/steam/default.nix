@@ -21,6 +21,7 @@
 buildPythonPackage rec {
   pname = "steam";
   version = "1.4.4";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "ValvePython";

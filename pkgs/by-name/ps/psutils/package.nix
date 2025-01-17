@@ -2,7 +2,9 @@
   lib,
   stdenv,
   fetchurl,
+  bash,
   buildPackages,
+  perl,
 }:
 
 stdenv.mkDerivation rec {
@@ -18,6 +20,11 @@ stdenv.mkDerivation rec {
     sed -i 's/void main/int main/' *.c
   '';
 
+  buildInputs = [
+    bash
+    perl
+  ];
+
   configurePhase = ''
     sed -e 's,/usr/local/bin/perl,${lib.getExe buildPackages.perl},' \
       -e "s,/usr/local,$out," \
@@ -29,6 +36,10 @@ stdenv.mkDerivation rec {
 
   preInstall = ''
     mkdir -p $out/bin $out/share/man/man1
+  '';
+
+  preFixup = ''
+    patchShebangs --host $out/bin/*
   '';
 
   meta = {

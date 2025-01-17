@@ -38,7 +38,7 @@ perlPackages.buildPerlPackage rec {
   ];
 
   buildInputs =
-    [ curl ]
+    [ ]
     # provide some "cups-*" commands to `foomatic-{configure,printjob}`
     # so that they can manage a local cups server (add queues, add jobs...)
     ++ lib.optionals withCupsAccess [
@@ -56,6 +56,7 @@ perlPackages.buildPerlPackage rec {
   nativeBuildInputs = [
     autoconf
     automake
+    curl
     file
     makeWrapper
   ];

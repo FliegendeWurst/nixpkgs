@@ -33,6 +33,7 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
   buildInputs = [
+    flex # FlexLexer.h
     perl
     python3
     systemc
@@ -45,6 +46,8 @@ stdenv.mkDerivation rec {
     autoconf
     help2man
     git
+    perl
+    python3
   ];
   nativeCheckInputs = [
     which
@@ -59,14 +62,18 @@ stdenv.mkDerivation rec {
   preConfigure = "autoconf";
 
   postPatch = ''
-    patchShebangs bin/* src/* nodist/* docs/bin/* examples/xml_py/* \
+    patchShebangs --build src/* nodist/* docs/bin/* examples/xml_py/* \
     test_regress/{driver.pl,t/*.{pl,pf}} \
     ci/* ci/docker/run/* ci/docker/run/hooks/* ci/docker/buildenv/build.sh
+    patchShebangs --host bin/*
     # verilator --gdbbt uses /bin/echo to test if gdb works.
     sed -i 's|/bin/echo|${coreutils}\/bin\/echo|' bin/verilator
   '';
   # grep '^#!/' -R . | grep -v /nix/store | less
   # (in nix-shell after patchPhase)
+
+  # to ensure FlexLexer.h is found
+  # NIX_CFLAGS_COMPILE = "-I${flex}/include";
 
   env = {
     SYSTEMC_INCLUDE = "${lib.getDev systemc}/include";

@@ -43,7 +43,6 @@ rustPlatform.buildRustPackage {
 
   nativeBuildInputs = [
     pkg-config
-    protobuf
     rustPlatform.bindgenHook
   ];
 
@@ -51,6 +50,7 @@ rustPlatform.buildRustPackage {
     [
       bzip2
       openssl
+      protobuf
       sqlite
       zstd
     ]

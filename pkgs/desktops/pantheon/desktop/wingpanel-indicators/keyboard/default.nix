@@ -8,6 +8,7 @@
   ninja,
   substituteAll,
   vala,
+  gettext,
   gtk3,
   granite,
   libxml2,
@@ -37,9 +38,9 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
+    gettext # msgfmt
     meson
     ninja
-    libxml2
     pkg-config
     vala
   ];
@@ -49,6 +50,7 @@ stdenv.mkDerivation rec {
     gtk3
     ibus
     libgee
+    libxml2
     wingpanel
     xorg.xkeyboardconfig
   ];

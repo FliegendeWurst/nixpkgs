@@ -3,6 +3,7 @@
   buildPythonPackage,
   fetchFromGitHub,
   python,
+  pythonAtLeast,
   poetry-core,
   pytest,
   pytest-xdist,
@@ -41,6 +42,10 @@ buildPythonPackage rec {
   '';
 
   pythonImportsCheck = [ "syrupy" ];
+
+  disabledTests = lib.optionals (pythonAtLeast "3.13") [
+    "test_update_failure_shows_snapshot_diff[xdist_two]"
+  ];
 
   meta = {
     changelog = "https://github.com/syrupy-project/syrupy/blob/${src.rev}/CHANGELOG.md";

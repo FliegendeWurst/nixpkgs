@@ -34,23 +34,22 @@ stdenv.mkDerivation (finalAttrs: {
     python3.pkgs.distutils
     python3.pkgs.pybind11
   ];
-  configurePhase = ''
-    patchShebangs  uhal/config/install.sh
-    patchShebangs uhal/tests/setup.sh
-    patchShebangs scripts/doxygen/api_uhal.sh
-    patchShebangs config/progress.sh
-    patchShebangs config/Makefile.macros
+  postPatch = ''
+    patchShebangs --build uhal/config/install.sh
+    patchShebangs --build uhal/tests/setup.sh
+    patchShebangs --build scripts/doxygen/api_uhal.sh
+    patchShebangs --build config/progress.sh
+    patchShebangs --build config/Makefile.macros
   '';
 
   enableParallelBuilding = true;
 
-  makeFlags = [ "Set=uhal" ];
-
-  installPhase = ''
-    mkdir -p $out/bin
-    mkdir -p $out/include
-    make Set=uhal install prefix=$out/bin includedir=$out/include
-  '';
+  makeFlags = [
+    "Set=uhal"
+    "CXX=${stdenv.cc.targetPrefix}c++"
+    "prefix=$out/bin"
+    "includedir=$out/include"
+  ];
 
   meta = {
     description = "Software which pairs with ipbus-firmware";

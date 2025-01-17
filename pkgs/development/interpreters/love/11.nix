@@ -37,6 +37,9 @@ stdenv.mkDerivation rec {
     pkg-config
     autoconf
     automake
+    libtool
+    SDL2
+    which
   ];
   buildInputs = [
     SDL2
@@ -52,8 +55,6 @@ stdenv.mkDerivation rec {
     libvorbis
     libogg
     libtheora
-    which
-    libtool
   ];
 
   preConfigure = "$shell ./platform/unix/automagic";

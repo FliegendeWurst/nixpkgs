@@ -52,7 +52,6 @@
 , hasTlpkg ? false
 , hasCatalogue ? true
 , catalogue ? pname
-, extraNativeBuildInputs ? [ ]
 , ...
 }@args:
 
@@ -184,7 +183,7 @@ let
           ]
           ++ (args.extraBuildInputs or [ ]) ++ [ bash perl ]
           ++ (lib.attrVals (args.scriptExts or [ ]) extToInput);
-        nativeBuildInputs = extraNativeBuildInputs;
+        nativeBuildInputs = args.extraNativeBuildInputs or [ ];
         # absolute scripts folder
         scriptsFolder = lib.optionals (hasRunfiles && tex ? outPath) (map (f: tex.outPath + "/scripts/" + f) (lib.toList args.scriptsFolder or pname));
         # binaries info

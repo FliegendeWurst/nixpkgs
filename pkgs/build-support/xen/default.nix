@@ -133,17 +133,19 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   nativeBuildInputs = [
+    acpica-tools
     autoPatchelfHook
     bison
     cmake
     flex
     pandoc
+    perl
     pkg-config
     python3Packages.setuptools
   ];
   buildInputs = [
     # Xen
-    acpica-tools
+    # acpica-tools
     bzip2
     dev86
     e2fsprogs.dev
@@ -151,7 +153,7 @@ stdenv.mkDerivation (finalAttrs: {
     libuuid
     lzo
     ncurses
-    perl
+    # perl
     python3Packages.python
     xz
     yajl

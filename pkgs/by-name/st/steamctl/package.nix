@@ -6,6 +6,7 @@
 python3.pkgs.buildPythonApplication rec {
   pname = "steamctl";
   version = "0.9.5";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "ValvePython";

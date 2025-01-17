@@ -19,6 +19,9 @@ buildDunePackage rec {
   propagatedBuildInputs = [
     astring fmt logs csexp ocaml-version camlp-streams re findlib
   ];
+  nativeCheckInputs = [
+    fmt
+  ];
   checkInputs = [ alcotest lwt ];
 
   doCheck = true;

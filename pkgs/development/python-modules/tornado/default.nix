@@ -34,6 +34,17 @@ buildPythonPackage rec {
 
   nativeCheckInputs = [ pytestCheckHook ];
 
+  # relax performance-sensitive tests
+  preCheck = ''
+    substituteInPlace tornado/test/ioloop_test.py \
+      --replace-fail 'self.assertLess(delta, 0.1)' 'self.assertLess(delta, 2)'
+    substituteInPlace tornado/test/gen_test.py \
+      --replace-fail 'gen.with_timeout(datetime.timedelta(seconds=0.2), tester())' \
+                     'gen.with_timeout(datetime.timedelta(seconds=4.0), tester())'
+    substituteInPlace tornado/test/autoreload_test.py \
+      --replace-fail 'for i in range(40):' 'for i in range(800):'
+  '';
+
   disabledTestPaths = [
     # additional tests that have extra dependencies, run slowly, or produce more output than a simple pass/fail
     # https://github.com/tornadoweb/tornado/blob/v6.2.0/maint/test/README

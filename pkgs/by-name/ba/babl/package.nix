@@ -31,6 +31,12 @@ stdenv.mkDerivation (finalAttrs: {
     ./dev-prefix.patch
   ];
 
+  # Use proper vapigen for cross-compile.
+  postPatch = ''
+    substituteInPlace meson.build --replace-fail \
+      "vapigen   = dependency('vapigen', version:'>=0.20.0'" "vapigen = find_program('vapigen', native: true"
+  '';
+
   nativeBuildInputs = [
     meson
     ninja
@@ -57,6 +63,9 @@ stdenv.mkDerivation (finalAttrs: {
   postFixup = ''
     # Cannot be in postInstall, otherwise _multioutDocs hook in preFixup will move right back.
     moveToOutput "share/doc" "$devdoc"
+    # Check the proper files got generated
+    cat $dev/lib/pkgconfig/babl-${lib.versions.majorMinor finalAttrs.version}.pc \
+      $dev/share/vala/vapi/babl-${lib.versions.majorMinor finalAttrs.version}.{deps,vapi} > /dev/null
   '';
 
   meta = with lib; {

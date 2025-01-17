@@ -3,6 +3,7 @@
   stdenv,
   fetchFromGitHub,
   gitUpdater,
+  bash,
   buildPackages,
   cmake,
   pkg-config,
@@ -44,6 +45,10 @@ stdenv.mkDerivation rec {
   postPatch = ''
     substituteInPlace configure \
       --replace '$PYTHON scons/scons.py' ${buildPackages.scons}/bin/scons
+    # Provide correct *-config for cross.
+    substituteInPlace SConstruct \
+      --replace-fail "'gdal-config')," "'${(lib.getExe' (lib.getDev gdal) "gdal-config")}')," \
+      --replace-fail "'pg_config')," "'${(lib.getExe' (lib.getDev postgresql) "pg_config")}'),"
     rm -r scons
     # Remove bundled 'sparsehash' directory in favor of 'sparsehash' package
     rm -r deps/mapnik/sparsehash
@@ -66,6 +71,7 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
+    bash
     cmake
     pkg-config
   ];
@@ -120,6 +126,10 @@ stdenv.mkDerivation rec {
   preInstall = ''
     mkdir -p $out/bin
     cp ../utils/mapnik-config/mapnik-config $out/bin/mapnik-config
+  '';
+
+  preFixup = ''
+    patchShebangs --build "$out/bin/mapnik-config"
   '';
 
   meta = with lib; {

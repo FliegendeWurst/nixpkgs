@@ -69,6 +69,8 @@ let
             (lib.optionalString useClang    "-DUSE_LD=LLD")
             (lib.optionalString (!useClang) "-DUSE_LD=GOLD")
 
+            (lib.cmakeFeature "_jemalloc_CONFIG_PATH" (lib.getExe' (lib.getDev jemalloc) "jemalloc-config"))
+
             # FIXME: why can't openssl be found automatically?
             "-DOPENSSL_USE_STATIC_LIBS=FALSE"
             "-DOPENSSL_CRYPTO_LIBRARY=${ssl.out}/lib/libcrypto.so"

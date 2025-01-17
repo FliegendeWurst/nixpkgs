@@ -15,7 +15,7 @@
   libSM,
   libXxf86vm,
   libX11,
-  openssl_1_1,
+  openssl,
   pango,
   SDL2,
   wrapGAppsHook3,
@@ -52,7 +52,7 @@ let
       libSM
       libXxf86vm
       libX11
-      openssl_1_1
+      openssl
       pango
       zlib
     ];
@@ -61,7 +61,7 @@ let
       libGL
       libpulseaudio
       SDL2
-      openssl_1_1
+      openssl
       xdg-utils # The launcher uses `xdg-open` to open HTTP URLs in the user's browser
       xorg_sys_opengl
       zlib
@@ -92,6 +92,10 @@ let
       cp -r $out/usr/share $out/
 
       rm -r $out/usr
+
+      patchelf --replace-needed libcrypto.so.1.1 libcrypto.so \
+        --replace-needed libssl.so.1.1 libssl.so \
+        $out/share/games/runescape-launcher/runescape
     '';
 
     meta = with lib; {
@@ -127,7 +131,7 @@ buildFHSEnv {
     libSM
     libXxf86vm
     libX11
-    openssl_1_1
+    openssl
     pango
     SDL2
     xdg-utils

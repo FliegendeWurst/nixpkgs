@@ -76,9 +76,10 @@
       ];
 
       configureFlags = [
-        "--with-mutool-path=${mupdf}/bin/mutool"
-        "--with-gs-path=${ghostscript}/bin/gs"
-        "--with-ippfind-path=${cups}/bin/ippfind"
+        "--with-cups-config=${lib.getExe' (lib.getDev cups) "cups-config"}"
+        "--with-mutool-path=${lib.getExe mupdf "mutool"}"
+        "--with-gs-path=${lib.getExe ghostscript}"
+        "--with-ippfind-path=${lib.getExe' cups "ippfind"}"
         "--with-shell=${stdenv.shell}"
         "--localstatedir=/var"
         "--sysconfdir=/etc"

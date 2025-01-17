@@ -4,6 +4,7 @@
   fetchFromGitHub,
   autoconf,
   automake,
+  autoreconfHook,
   libtool,
   pkg-config,
   gnome-common,
@@ -24,15 +25,27 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-elL6DZtzCwAtoyGZYP0jAma6tHPks2KAtrziWtBENGU=";
   };
 
+  postPatch = ''
+    substituteInPlace configure.ac \
+      --replace-fail "pkg-config" "${stdenv.cc.targetPrefix}pkg-config"
+    substituteInPlace m4/ax_lua.m4 \
+      --replace-fail \
+      "lua_text_version=" \
+      'lua_text_version="${lua.version}" #'
+  '';
+
   nativeBuildInputs = [
     pkg-config
     autoconf
     automake
+    gnome-common # gnome-autogen.sh
+    gtk-doc # gtkdocize
     gobject-introspection
+    libtool
   ];
 
   buildInputs = [
-    libtool
+    # libtool
     gnome-common
     gtk-doc
     gtk2

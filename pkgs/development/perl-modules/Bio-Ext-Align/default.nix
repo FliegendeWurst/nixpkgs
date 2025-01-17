@@ -29,6 +29,8 @@ buildPerlPackage rec {
 
   # Disable tests as it requires Bio::Tools::Align which is in a different directory
   buildPhase = ''
+    substituteInPlace Makefile \
+      --replace-fail 'CCFLAGS =' 'CCFLAGS = -Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration'
     make
   '';
 

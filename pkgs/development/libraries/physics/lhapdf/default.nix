@@ -2,7 +2,9 @@
   lib,
   stdenv,
   fetchurl,
+  autoconf,
   bash,
+  buildPackages,
   python,
   makeWrapper,
 }:
@@ -18,25 +20,39 @@ stdenv.mkDerivation rec {
 
   # The Apple SDK only exports locale_t from xlocale.h whereas glibc
   # had decided that xlocale.h should be a part of locale.h
-  postPatch = lib.optionalString (stdenv.hostPlatform.isDarwin && stdenv.cc.isGNU) ''
-    substituteInPlace src/GridPDF.cc --replace '#include <locale>' '#include <xlocale.h>'
-  '';
+  postPatch =
+    ''
+      substituteInPlace configure --replace-fail '$PYTHON' "${lib.getExe python.pythonOnBuildForHost}"
+      patchShebangs --build wrappers/python/build.py.in
+    ''
+    + lib.optionalString (stdenv.hostPlatform.isDarwin && stdenv.cc.isGNU) ''
+      substituteInPlace src/GridPDF.cc --replace '#include <locale>' '#include <xlocale.h>'
+    '';
 
   nativeBuildInputs =
     [
+      autoconf
       bash
       makeWrapper
+      python
     ]
     ++ lib.optionals (python != null && lib.versionAtLeast python.version "3.10") [
       python.pkgs.cython
     ];
   buildInputs = [ python ];
 
-  configureFlags = lib.optionals (python == null) [ "--disable-python" ];
+  configureFlags = [
+    "ACLOCAL=${lib.getExe' buildPackages.automake "aclocal"}"
+    "AUTOMAKE=${lib.getExe' buildPackages.automake "automake"}"
+  ] ++ lib.optionals (python == null) [ "--disable-python" ];
 
   preBuild = lib.optionalString (python != null && lib.versionAtLeast python.version "3.10") ''
     rm wrappers/python/lhapdf.cpp
   '';
+
+  makeFlags = [
+    "PYTHON=${lib.getExe python.pythonOnBuildForHost}"
+  ];
 
   strictDeps = true;
 

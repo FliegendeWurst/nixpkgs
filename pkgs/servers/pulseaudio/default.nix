@@ -114,7 +114,10 @@ stdenv.mkDerivation rec {
     # gstreamer plugin discovery requires wrapping
     ++ lib.optional (bluetoothSupport && advancedBluetoothCodecs) wrapGAppsHook3;
 
-  propagatedBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ libcap ];
+  propagatedBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [
+    glib
+    libcap
+  ];
 
   buildInputs =
     [
@@ -125,10 +128,7 @@ stdenv.mkDerivation rec {
       fftwFloat
       check
     ]
-    ++ lib.optionals stdenv.hostPlatform.isLinux [
-      glib
-      dbus
-    ]
+    ++ lib.optionals stdenv.hostPlatform.isLinux [ dbus ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
       AudioUnit
       Cocoa

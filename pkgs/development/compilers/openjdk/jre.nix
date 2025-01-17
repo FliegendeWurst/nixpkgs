@@ -11,6 +11,7 @@ let
     pname = "${jdk.pname}-minimal-jre";
     version = jdk.version;
 
+    nativeBuildInputs = [ jdk ]; # jlink
     buildInputs = [ jdk ];
 
     dontUnpack = true;

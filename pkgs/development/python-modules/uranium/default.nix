@@ -4,19 +4,20 @@
   fetchFromGitHub,
   python,
   cmake,
-  pyqt5,
+  pyqt6,
   numpy,
+  numpy-stl,
   scipy,
   shapely,
-  libarcus,
   cryptography,
   doxygen,
   gettext,
-  pythonOlder,
+  colorlog,
+  pyclipper,
 }:
 
 buildPythonPackage rec {
-  version = "4.12.0";
+  version = "5.9.0";
   pname = "uranium";
   format = "other";
 
@@ -24,27 +25,28 @@ buildPythonPackage rec {
     owner = "Ultimaker";
     repo = "Uranium";
     rev = version;
-    hash = "sha256-SE9xqrloPXIRTJiiqUdRKFmb4c0OjmJK5CMn6VXMFmk=";
+    hash = "sha256-sjrDR7f5TETy5jkX8O3NQOGUqEAlQX43rFdfWUlwkZY=";
   };
-
-  disabled = pythonOlder "3.5.0";
 
   buildInputs = [
     python
     gettext
   ];
-  propagatedBuildInputs = [
-    pyqt5
+  dependencies = [
+    pyqt6
     numpy
+    numpy-stl
     scipy
     shapely
-    libarcus
     cryptography
+    colorlog
+    pyclipper
   ];
   nativeBuildInputs = [
     cmake
     doxygen
   ];
+  dontUseCmakeConfigure = true;
 
   postPatch = ''
     sed -i 's,/python''${PYTHON_VERSION_MAJOR}/dist-packages,/python''${PYTHON_VERSION_MAJOR}.''${PYTHON_VERSION_MINOR}/site-packages,g' CMakeLists.txt

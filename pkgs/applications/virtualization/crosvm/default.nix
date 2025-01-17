@@ -43,7 +43,6 @@ rustPlatform.buildRustPackage rec {
 
   nativeBuildInputs = [
     pkg-config
-    protobuf
     python3
     rustPlatform.bindgenHook
     wayland-scanner
@@ -54,6 +53,7 @@ rustPlatform.buildRustPackage rec {
     libdrm
     libepoxy
     minijail
+    protobuf
     virglrenderer
     wayland
     wayland-protocols

@@ -11,14 +11,14 @@
 
 buildPythonPackage rec {
   pname = "vstools";
-  version = "3.0.0";
+  version = "3.3.3";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "Jaded-Encoding-Thaumaturgy";
     repo = "vs-tools";
     rev = "refs/tags/v${version}";
-    hash = "sha256-XqPIh2iTxcIU3o8XIrsE1o4B8D/YkP7nlJB40woG+so=";
+    hash = "sha256-YqRUBGCJcEXeYzlHq4zSEpVAXZhuxV9xA1Exfs6RLAI=";
   };
 
   build-system = [ setuptools ];

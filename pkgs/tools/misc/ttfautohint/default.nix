@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     pkg-config
     autoreconfHook
-  ];
+  ] ++ lib.optional enableGUI qtbase;
 
   buildInputs = [
     freetype

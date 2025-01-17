@@ -11,6 +11,7 @@
   libpcap,
   re2,
   gcc,
+  python3,
   python3Packages,
   perl,
   perlPackages,
@@ -86,6 +87,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gcc
     python3Packages.wrapPython
+    python3
     perl
     makeWrapper
   ];

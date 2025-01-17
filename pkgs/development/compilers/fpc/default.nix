@@ -77,6 +77,8 @@ stdenv.mkDerivation rec {
     "FPC=${startFPC}/bin/fpc"
   ];
 
+  hardeningDisable = [ "pie" ];
+
   installFlags = [ "INSTALL_PREFIX=\${out}" ];
 
   postInstall = ''

@@ -75,6 +75,8 @@ stdenv'.mkDerivation {
     libsForQt5.kguiaddons
   ];
 
+  strictDeps = false; # for qmake
+
   postPatch = lib.optionalString stdenv.hostPlatform.isDarwin ''
     # Fix icns generation running concurrently with png generation
     sed -E -i '/"iconutil -o/i\

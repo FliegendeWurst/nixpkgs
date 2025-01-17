@@ -186,6 +186,7 @@ buildPythonPackage rec {
   preCheck =
     ''
       cd ..
+      echo 025
     ''
     + lib.optionalString (stdenv.hostPlatform.isLinux) ''
       export PSYCOPG_TEST_DSN="host=/build/run/postgresql user=$PGUSER"
@@ -196,9 +197,9 @@ buildPythonPackage rec {
     "test_version"
     "test_package_version"
     # Frequent timeouts
-    "test_setup_no_timeout[asyncio-AsyncNullConnectionPool]"
-    "test_ctrl_c"
-    "test_refill_on_check"
+    #"test_setup_no_timeout[asyncio-AsyncNullConnectionPool]"
+    #"test_ctrl_c"
+    #"test_refill_on_check"
   ];
 
   disabledTestPaths = [

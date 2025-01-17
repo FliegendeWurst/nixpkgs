@@ -6,6 +6,7 @@
   numpy,
   packaging,
   setuptools,
+  swig,
   pip,
 }:
 
@@ -24,6 +25,10 @@ buildPythonPackage {
     setuptools
     pip
   ];
+
+  #nativeBuildInputs = [
+  #  swig
+  #];
 
   dependencies = [
     numpy

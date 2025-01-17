@@ -20,6 +20,7 @@ in
   ncurses,
   binutils,
   buildEnv,
+  buildPackages,
   libunwind,
   fetchpatch,
   libX11,
@@ -214,9 +215,9 @@ stdenv.mkDerivation (
       '';
 
       platforms = with platforms; linux ++ darwin;
-      broken =
+      broken = (stdenv.hostPlatform != stdenv.buildPlatform) || (
         stdenv.hostPlatform.isAarch64
-        && lib.versionOlder version (if stdenv.hostPlatform.isDarwin then "4.10" else "4.02");
+        && lib.versionOlder version (if stdenv.hostPlatform.isDarwin then "4.10" else "4.02"));
     };
 
   }

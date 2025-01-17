@@ -30,18 +30,17 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     pkg-config
     cmake
+    (python3.withPackages (ps: [ ps.toml ]))
+    antlr3_4
   ];
   buildInputs = [
     gmp
     git
-    python3.pkgs.toml
     readline
     swig
     libantlr3c
-    antlr3_4
     boost
     jdk
-    python3
   ] ++ lib.optionals (!stdenv.hostPlatform.isDarwin) [ cln ];
   configureFlags = [
     "--enable-language-bindings=c,c++,java"

@@ -12,9 +12,9 @@ let
   version = "3";
   canonicalExtension =
     if stdenv.hostPlatform.isLinux then
-      "${stdenv.hostPlatform.extensions.sharedLibrary}.${version}"
+      "${stdenv.hostPlatform.extensions.sharedLibrary or ".a"}.${version}"
     else
-      stdenv.hostPlatform.extensions.sharedLibrary;
+      stdenv.hostPlatform.extensions.sharedLibrary or ".a";
 
   lapackImplementation = lib.getName lapackProvider;
   lapackProvider' =
@@ -77,8 +77,8 @@ stdenv.mkDerivation {
     '')
     + ''
 
-        if [ "$out/lib/liblapack${canonicalExtension}" != "$out/lib/liblapack${stdenv.hostPlatform.extensions.sharedLibrary}" ]; then
-          ln -s $out/lib/liblapack${canonicalExtension} "$out/lib/liblapack${stdenv.hostPlatform.extensions.sharedLibrary}"
+        if [ "$out/lib/liblapack${canonicalExtension}" != "$out/lib/liblapack${stdenv.hostPlatform.extensions.sharedLibrary or ".a"}" ]; then
+          ln -s $out/lib/liblapack${canonicalExtension} "$out/lib/liblapack${stdenv.hostPlatform.extensions.sharedLibrary or ".a"}"
         fi
 
         install -D ${lib.getDev lapack-reference}/include/lapack.h $dev/include/lapack.h
@@ -125,7 +125,7 @@ stdenv.mkDerivation {
     + lib.optionalString (lapackImplementation == "mkl") ''
       mkdir -p $out/nix-support
       echo 'export MKL_INTERFACE_LAYER=${lib.optionalString isILP64 "I"}LP64,GNU' > $out/nix-support/setup-hook
-      ln -s $out/lib/liblapack${canonicalExtension} $out/lib/libmkl_rt${stdenv.hostPlatform.extensions.sharedLibrary}
+      ln -s $out/lib/liblapack${canonicalExtension} $out/lib/libmkl_rt${stdenv.hostPlatform.extensions.sharedLibrary or ".a"}
       ln -sf ${lapackProvider'}/include/* $dev/include
     ''
   );

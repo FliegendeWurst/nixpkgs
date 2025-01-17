@@ -5,7 +5,8 @@
   cmake,
   pkg-config,
   udev,
-  protobuf,
+  protobuf_21,
+  buildPackages,
 }:
 
 stdenv.mkDerivation rec {
@@ -22,13 +23,17 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     cmake
     pkg-config
+    buildPackages.protobuf_21 # protoc
   ];
 
   buildInputs = [
+    protobuf_21
     udev
   ];
 
-  propagatedBuildInputs = [ protobuf ];
+  strictDeps = true;
+
+  propagatedBuildInputs = [ protobuf_21 ];
 
   postFixup = ''
     substituteInPlace "$out"/lib/pkgconfig/codecserver.pc \

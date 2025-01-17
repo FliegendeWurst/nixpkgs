@@ -59,7 +59,7 @@ let
     ;
 
   pname = "jaxlib";
-  version = "0.4.28";
+  version = "0.4.38";
 
   # It's necessary to consistently use backendStdenv when building with CUDA
   # support, otherwise we get libstdc++ errors downstream
@@ -228,8 +228,8 @@ let
       owner = "google";
       repo = "jax";
       # google/jax contains tags for jax and jaxlib. Only use jaxlib tags!
-      rev = "refs/tags/${pname}-v${version}";
-      hash = "sha256-qSHPwi3is6Ts7pz5s4KzQHBMbcjGp+vAOsejW3o36Ek=";
+      tag = "jax-v${version}";
+      hash = "sha256-H8I9Mkz6Ia1RxJmnuJOSevLGHN2J8ey59ZTlFx8YfnA=";
     };
 
     nativeBuildInputs = [

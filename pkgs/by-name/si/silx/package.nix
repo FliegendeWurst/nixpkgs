@@ -7,7 +7,6 @@
 python3Packages.buildPythonApplication rec {
   pname = "silx";
   version = "2.1.2";
-
   pyproject = true;
 
   src = fetchPypi {

@@ -41,6 +41,8 @@ buildPythonPackage rec {
     ./numpy-sequence.patch
   ];
 
+  env.PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION = "python";
+
   propagatedBuildInputs = [
     gdal
     h5py

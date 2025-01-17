@@ -51,7 +51,6 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   nativeBuildInputs = [
-    libadwaita
     meson
     ninja
     pkg-config
@@ -63,6 +62,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     evince
     phoc
+    libadwaita
     libhandy
     libsecret
     libxkbcommon

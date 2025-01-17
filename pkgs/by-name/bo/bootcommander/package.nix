@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "feaser";
     repo = "openblt";
-    rev = "openblt_v${lib.replaceStrings [ "." ] [ "" ] version}"; # will break at version 10.x.x
+    rev = "openblt_v0${lib.replaceStrings [ "." ] [ "" ] version}"; # will break at version 10.x.x
     sparseCheckout = [ "Host/Source/" ];
     hash = "sha256-eO72zVZFFQPoo75pfeqawwYKimoLqUeqnzz/E2YvSYc=";
   };

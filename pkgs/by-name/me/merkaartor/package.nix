@@ -5,6 +5,7 @@
   cmake,
   pkg-config,
   gdal,
+  lerc,
   proj,
   protobuf,
   qt5,
@@ -39,6 +40,7 @@ stdenv.mkDerivation rec {
   buildInputs =
     [
       gdal
+      lerc
       proj
       protobuf
       qt5.qtnetworkauth

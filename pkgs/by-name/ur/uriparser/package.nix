@@ -23,6 +23,7 @@ stdenv.mkDerivation rec {
   ] ++ lib.optional (!doCheck) "-DURIPARSER_BUILD_TESTS=OFF";
 
   nativeCheckInputs = [ gtest ];
+  checkInputs = [ gtest ];
   doCheck = stdenv.buildPlatform.canExecute stdenv.hostPlatform;
 
   meta = with lib; {

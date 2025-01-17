@@ -57,9 +57,13 @@ let
         name = "${name}-${version}";
         inherit version;
 
-        buildInputs = buildInputs ++ [
+        nativeBuildInputs = [
           erlang
           rebar3
+        ];
+        buildInputs = buildInputs ++ [
+          # erlang
+          # rebar3
           openssl
           libyaml
         ];

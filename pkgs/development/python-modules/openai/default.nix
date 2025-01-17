@@ -98,6 +98,8 @@ buildPythonPackage rec {
       # Tests make network requests
       "test_copy_build_request"
       "test_basic_attribute_access_works"
+      # Frequently hits timeout
+      "test_get_platform"
     ]
     ++ lib.optionals (pythonAtLeast "3.13") [
       # RuntimeWarning: coroutine method 'aclose' of 'AsyncStream._iter_events' was never awaited

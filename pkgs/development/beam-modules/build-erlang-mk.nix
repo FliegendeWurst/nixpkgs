@@ -58,10 +58,13 @@ let
           else
             setupHook;
 
-        buildInputs = buildInputs ++ [
+        nativeBuildInputs = [
           erlang
-          perl
           which
+        ];
+
+        buildInputs = buildInputs ++ [
+          perl
           gitMinimal
           wget
         ];

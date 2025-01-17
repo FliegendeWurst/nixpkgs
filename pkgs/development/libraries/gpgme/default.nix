@@ -52,9 +52,6 @@ stdenv.mkDerivation rec {
     texinfo
   ];
 
-  # TODO: figure out why libkleo does not build if this is true
-  strictDeps = false;
-
   propagatedBuildInputs = [
     glib
     libassuan

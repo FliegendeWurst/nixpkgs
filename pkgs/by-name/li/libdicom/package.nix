@@ -30,6 +30,8 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
+  strictDeps = !finalAttrs.finalPackage.doCheck; # TODO
+
   buildInputs = [ uthash ];
 
   nativeBuildInputs = [

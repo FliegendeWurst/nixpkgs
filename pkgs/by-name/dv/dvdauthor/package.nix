@@ -1,8 +1,9 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchFromGitHub,
   autoreconfHook,
+  gettext,
   libdvdread,
   libxml2,
   freetype,
@@ -12,16 +13,32 @@
   pkg-config,
   flex,
   bison,
+  docbook2x,
 }:
 
 stdenv.mkDerivation rec {
   pname = "dvdauthor";
-  version = "0.7.2";
+  version = "0.7.2-unstable-2021-11-05";
 
-  src = fetchurl {
-    url = "mirror://sourceforge/dvdauthor/dvdauthor-${version}.tar.gz";
-    hash = "sha256-MCCpLen3jrNvSLbyLVoAHEcQeCZjSnhaYt/NCA9hLrc=";
+  src = fetchFromGitHub {
+    owner = "ldo";
+    repo = "dvdauthor";
+    rev = "fe8fe3578f95f34889e7ed17591d02dceb4f42ed";
+    hash = "sha256-sb6i2pVm2PVMX+SA+n9Lng5jej2fI1HB7SF7HvnKe6Q=";
   };
+
+  postPatch = ''
+    for f in doc/*; do
+      substituteInPlace $f --replace-quiet \
+        '<!doctype book PUBLIC' '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE book PUBLIC'
+    done
+    rm doc/root.sgml
+  '';
+
+  preAutoreconf = ''
+    mkdir autotools
+    cp ${gettext}/share/gettext/config.rpath autotools/
+  '';
 
   buildInputs = [
     libpng
@@ -37,13 +54,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     pkg-config
     autoreconfHook
-    libxml2 # xml2-config (only checked for, not used)
-  ];
-
-  # set *-config for cross builds
-  configureFlags = [
-    "FREETYPECONFIG=${lib.getExe' (lib.getDev freetype) "freetype-config"}"
-    "XML2_CONFIG=${lib.getExe' (lib.getDev libxml2) "xml2-config"}"
+    docbook2x
   ];
 
   meta = with lib; {

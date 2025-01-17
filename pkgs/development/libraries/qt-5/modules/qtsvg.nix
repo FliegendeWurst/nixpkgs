@@ -1,4 +1,4 @@
-{ qtModule, qtbase }:
+{ qtModule, qtbase, stdenv }:
 
 qtModule {
   pname = "qtsvg";
@@ -8,4 +8,5 @@ qtModule {
     "dev"
     "bin"
   ];
+  meta.broken = stdenv.buildPlatform != stdenv.hostPlatform;
 }

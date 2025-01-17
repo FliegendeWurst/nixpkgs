@@ -30,7 +30,6 @@ buildPythonPackage rec {
   };
 
   nativeBuildInputs = [
-    protobuf
     pybind11
   ];
 

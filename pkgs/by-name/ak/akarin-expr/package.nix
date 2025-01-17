@@ -25,6 +25,7 @@ stdenv.mkDerivation {
     meson
     pkg-config
     ninja
+    llvm_18
   ];
 
   buildInputs = [

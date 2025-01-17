@@ -365,6 +365,8 @@ qtModule (
       '')
     ];
 
+    strictDeps = false; # TODO /nix/store/svwgyah0mmrq338shr2hhfhpkkcdmr16-qtwebengine-5.15.18.drv
+
     dontUseNinjaBuild = true;
     dontUseNinjaInstall = true;
 

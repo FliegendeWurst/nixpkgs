@@ -22,11 +22,13 @@ stdenv.mkDerivation rec {
 
   postPatch = "patchShebangs tests/regress/check.sh";
 
-  nativeBuildInputs = [ autoreconfHook ];
+  nativeBuildInputs = [
+    autoreconfHook
+    gperf
+  ];
   buildInputs = [
     cudd
     gmp-static
-    gperf
     libpoly
   ];
   configureFlags = [

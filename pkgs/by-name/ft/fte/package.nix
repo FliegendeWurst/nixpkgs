@@ -30,9 +30,11 @@ stdenv.mkDerivation (finalAttrs: {
     finalAttrs.ftecommon
   ];
 
-  nativeBuildInputs = [ unzip ];
-  buildInputs = [
+  nativeBuildInputs = [
     perl
+    unzip
+  ];
+  buildInputs = [
     libX11
     libXpm
     gpm

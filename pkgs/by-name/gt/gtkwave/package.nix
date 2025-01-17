@@ -29,6 +29,7 @@ stdenv.mkDerivation rec {
     [
       pkg-config
       wrapGAppsHook3
+      gperf
     ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
       desktopToDarwinBundle
@@ -36,7 +37,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     bzip2
     glib
-    gperf
     gtk3
     judy
     tcl

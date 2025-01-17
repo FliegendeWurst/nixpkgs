@@ -84,6 +84,9 @@ let
             ));
         };
 
+      nativeBuildInputs = [
+        postgresql # pg_config
+      ] ++ prevAttrs.nativeBuildInputs or [ ];
       buildInputs = [ postgresql ] ++ prevAttrs.buildInputs or [ ];
 
       installFlags = [

@@ -9,6 +9,7 @@
 buildPythonPackage rec {
   pname = "gevent-eventemitter";
   version = "2.1";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "rossengeorgiev";

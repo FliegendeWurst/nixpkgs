@@ -39,6 +39,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     pkg-config
     cmake
+    nasm
   ];
 
   buildInputs = [
@@ -54,10 +55,11 @@ stdenv.mkDerivation rec {
     libjpeg
     pango
     xz
-    nasm
     llvm
     glibmm
   ];
+
+  strictDeps = true;
 
   meta = with lib; {
     description = "Open source Flash Player implementation";

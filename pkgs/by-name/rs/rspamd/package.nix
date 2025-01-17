@@ -56,7 +56,6 @@ stdenv.mkDerivation rec {
       openssl
       pcre
       sqlite
-      ragel
       icu
       jemalloc
       libsodium
@@ -86,6 +85,9 @@ stdenv.mkDerivation rec {
     "-DSYSTEM_XXHASH=ON"
     "-DSYSTEM_ZSTD=ON"
     "-DENABLE_HYPERSCAN=ON"
+    (lib.cmakeBool "HAVE_ATOMIC_BUILTINS_EXITCODE" true)
+    (lib.cmakeBool "_CAN_RUN" false)
+    (lib.cmakeBool "HAVE_PTHREAD_PROCESS_SHARED" true)
   ] ++ lib.optional (!withLuaJIT) "-DENABLE_LUAJIT=OFF";
 
   passthru.tests.rspamd = nixosTests.rspamd;

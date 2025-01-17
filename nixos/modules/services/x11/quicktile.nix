@@ -31,7 +31,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackage = [ pkgs.quicktile ];
+    environment.systemPackages = [ pkgs.quicktile ];
 
     systemd.user.services.quicktile = {
       description = "QuickTile - window tiling add-on for X11 window managers";

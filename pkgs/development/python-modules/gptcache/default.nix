@@ -13,9 +13,9 @@
 buildPythonPackage rec {
   pname = "gptcache";
   version = "0.1.44";
-  format = "setuptools";
+  pyproject = true;
 
-  disabled = pythonOlder "3.8.1";
+  disabled = pythonOlder "3.8";
 
   src = fetchFromGitHub {
     owner = "zilliztech";
@@ -24,7 +24,7 @@ buildPythonPackage rec {
     hash = "sha256-FRqngDyGO0ReTRtm9617TFLHVXWY9/NQlZHlBP8ukg0=";
   };
 
-  propagatedBuildInputs = [
+  dependencies = [
     cachetools
     numpy
     redis

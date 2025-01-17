@@ -21,6 +21,10 @@ mkXfceDerivation {
 
   sha256 = "sha256-mn3ky1NzrpQZRkhc605mj+GFhbFq26eW59YKUfnX9X8=";
 
+  nativeBuildInputs = [
+    iceauth # TODO: does this leak into the build closure?
+  ];
+
   buildInputs = [
     exo
     gtk3

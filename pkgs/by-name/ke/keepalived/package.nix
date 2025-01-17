@@ -44,6 +44,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     pkg-config
     autoreconfHook
+  ] ++ lib.optionals withNetSnmp [
+    net-snmp
   ];
 
   configureFlags =

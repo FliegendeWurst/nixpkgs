@@ -167,6 +167,8 @@ stdenv.mkDerivation (finalAttrs: {
     libXau
   ];
 
+  strictDeps = false;
+
   postPatch = ''
     patchShebangs src/backends/native/gen-default-modes.py
 

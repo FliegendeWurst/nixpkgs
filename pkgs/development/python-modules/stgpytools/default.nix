@@ -7,14 +7,14 @@
 
 buildPythonPackage rec {
   pname = "stgpytools";
-  version = "1.0.0";
+  version = "1.2.2";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "Setsugennoao";
     repo = "stgpytools";
-    rev = "refs/tags/v${version}";
-    hash = "sha256-YxDQmtyJgYDUcvMxQ4KqA4yYLO8N4fzCyayyBnuZjf0=";
+    rev = "1cfcf8b26315db706ad1947b4ab3ef938a857061"; # upstream did not tag release
+    hash = "sha256-tJTq4xPxuFAZLzhworjjixFNWDb0FfBKLBLnttFYvH4=";
   };
 
   build-system = [ setuptools ];

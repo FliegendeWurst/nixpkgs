@@ -40,8 +40,11 @@ stdenv.mkDerivation (finalAttrs: {
     pango
   ];
 
+  # pass in correct sdl-config for cross builds
+  env.SDL_CONFIG = lib.getExe' SDL.dev "sdl-config";
+
   configureFlags = [
-    (lib.enableFeature enableSdltest "sdltest")
+    (lib.enableFeature false "sdltest")
   ];
 
   strictDeps = true;

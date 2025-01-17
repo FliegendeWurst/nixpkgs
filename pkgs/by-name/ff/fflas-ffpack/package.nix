@@ -45,6 +45,7 @@ stdenv.mkDerivation rec {
       "--with-blas-libs=-lcblas"
       "--with-lapack-libs=-llapacke"
       "--without-archnative"
+      "CCNAM=${stdenv.cc.cc.pname}"
     ]
     ++ lib.optionals stdenv.hostPlatform.isx86_64 [
       # disable SIMD instructions (which are enabled *when available* by default)

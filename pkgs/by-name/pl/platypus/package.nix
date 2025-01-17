@@ -23,10 +23,12 @@ stdenv.mkDerivation {
     sha256 = "0nah6r54b8xm778gqyb8b7rsd76z8ji4g73sm6rvpw5s96iib1vw";
   };
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [
+    makeWrapper
+    python
+  ];
   buildInputs = [
     htslib
-    python
     zlib
   ];
 

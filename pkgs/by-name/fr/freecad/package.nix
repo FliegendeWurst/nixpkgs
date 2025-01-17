@@ -79,6 +79,7 @@ freecad-utils.makeCustomizable (stdenv.mkDerivation (finalAttrs: {
     pkg-config
     pyside2-tools
     gfortran
+    python
     wrapQtAppsHook
     wrapGAppsHook3
   ];

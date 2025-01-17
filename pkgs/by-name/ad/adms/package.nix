@@ -23,17 +23,23 @@ stdenv.mkDerivation rec {
     sha256 = "0i37c9k6q1iglmzp9736rrgsnx7sw8xn3djqbbjw29zsyl3pf62c";
   };
 
-  nativeBuildInputs = [ autoreconfHook ];
-  buildInputs = [
+  nativeBuildInputs = [
+    autoreconfHook
     flex
     bison
+  ];
+  buildInputs = [
     gperf
     libxml2
     perl
     gd
     perlPackages.XMLLibXML
   ];
-  configureFlags = [ "--enable-maintainer-mode" ];
+  strictDeps = true;
+  configureFlags = [
+    "--enable-maintainer-mode"
+    "PERL=${lib.getExe perl}"
+  ];
 
   meta = {
     description = "automatic device model synthesizer";

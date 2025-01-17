@@ -1,0 +1,4 @@
+b2s pkgsCross.aarch64-multiplatform.pantheon.wingpanel-indicator-{a11y,bluetooth,datetime,keyboard,network,nightlight,notifications,power,sound} pkgsCross.aarch64-multiplatform.pantheon.wingpanel-{applications-menu,quick-settings}
+b2s pkgsCross.aarch64-multiplatform.phosh
+b2s pkgsCross.aarch64-multiplatform.python313Packages.python-mapnik
+b2 protonmail-bridge-gui

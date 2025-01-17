@@ -21,9 +21,12 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
-    atf
     pkg-config
     kyua
+  ];
+
+  buildInputs = [
+    atf
   ];
 
   configureFlags = lib.optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
@@ -31,6 +34,8 @@ stdenv.mkDerivation rec {
     "ac_cv_func_malloc_0_nonnull=yes"
     "ac_cv_func_realloc_0_nonnull=yes"
   ];
+
+  env.ATFSH = lib.getExe' atf "atf-sh";
 
   postInstall = ''
     # grab all documentation files

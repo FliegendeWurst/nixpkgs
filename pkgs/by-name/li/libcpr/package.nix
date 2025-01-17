@@ -5,6 +5,7 @@
   cmake,
   curl,
   staticOnly ? stdenv.hostPlatform.isStatic,
+  pkg-config,
 }:
 
 let
@@ -27,7 +28,9 @@ stdenv.mkDerivation {
   };
 
   # TODO: remove curl (test with strictDeps = true)
-  nativeBuildInputs = [ cmake curl ];
+  nativeBuildInputs = [ cmake pkg-config ];
+
+  buildInputs = [ curl ];
 
   propagatedBuildInputs = [ curl ];
 

@@ -25,6 +25,7 @@
   makeWrapper,
   writeShellScript,
   wrapGAppsHook3,
+  bash,
   git,
   which,
   pkg-config,
@@ -147,6 +148,8 @@ in
         glib
         wrapGAppsHook3
       ];
+
+    buildInputs = [ bash ];
 
     passthru = flutter.passthru // {
       inherit (flutter) version;

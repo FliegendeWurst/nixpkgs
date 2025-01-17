@@ -1,6 +1,6 @@
 {
   bc-ur,
-  boost,
+  boost186,
   cmake,
   fetchFromGitHub,
   hidapi,
@@ -43,7 +43,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs =
     [
       bc-ur
-      boost
+      boost186
       hidapi
       libsodium
       libusb1
@@ -64,7 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   cmakeFlags = [
     "-DProtobuf_INCLUDE_DIR=${lib.getDev protobuf}/include"
-    "-DProtobuf_PROTOC_EXECUTABLE=${lib.getExe protobuf}"
+#    "-DProtobuf_PROTOC_EXECUTABLE=${lib.getExe protobuf}"
     "-DReadline_INCLUDE_DIR=${lib.getDev readline}/include/readline"
     "-DReadline_LIBRARY=${lib.getLib readline}/lib/libreadline.so"
     "-DReadline_ROOT_DIR=${lib.getDev readline}"

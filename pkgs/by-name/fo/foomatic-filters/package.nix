@@ -19,12 +19,16 @@ stdenv.mkDerivation rec {
     sha256 = "1qrkgbm5jay2r7sh9qbyf0aiyrsl1mdc844hxf7fhw95a0zfbqm2";
   };
 
-  nativeBuildInputs = [ pkg-config ];
-  buildInputs = [
+  nativeBuildInputs = [
+    #cups # cups-config
+    enscript
     perl
+    pkg-config
+  ];
+  buildInputs = [
     cups
     dbus
-    enscript
+    #enscript
   ];
 
   patches = [

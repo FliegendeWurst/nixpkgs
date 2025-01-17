@@ -136,6 +136,7 @@ stdenv.mkDerivation {
     ]
     ++ lib.optionals enablePython [
       castxml
+      python
       swig
       which
     ];

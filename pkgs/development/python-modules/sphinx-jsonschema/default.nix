@@ -4,6 +4,7 @@
   fetchPypi,
   docutils,
   requests,
+  setuptools,
   jsonpointer,
   pyyaml,
 }:
@@ -11,7 +12,7 @@
 buildPythonPackage rec {
   pname = "sphinx-jsonschema";
   version = "1.19.1";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
     inherit version;
@@ -19,7 +20,11 @@ buildPythonPackage rec {
     sha256 = "sha256-sjhf4ces8udZFSrv7QyxfJIGRbKnXJk0AAycUo59U8E=";
   };
 
-  propagatedBuildInputs = [
+  build-system = [
+    setuptools
+  ];
+
+  dependencies = [
     docutils
     requests
     jsonpointer

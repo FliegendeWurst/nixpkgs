@@ -30,6 +30,7 @@ buildPythonPackage rec {
   postPatch = ''
     substituteInPlace pyproject.toml \
       --replace-fail "Cython>=0.29.32,<3.0.0" "Cython"
+    exit 1
   '';
 
   build-system = [

@@ -9,7 +9,7 @@
   lvtk,
   pkg-config,
   wafHook,
-  python3,
+  python311,
 }:
 
 stdenv.mkDerivation rec {
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     pkg-config
     wafHook
-    python3
+    python311
   ];
   buildInputs = [
     cairo
@@ -39,7 +39,11 @@ stdenv.mkDerivation rec {
   postPatch = ''
     # U was removed in python 3.11 because it had no effect
     substituteInPlace waflib/*.py \
-      --replace "m='rU" "m='r"
+      --replace-quiet "m='rU" "m='r"
+    substituteInPlace wscript \
+      --replace-fail "autowaf.check_pkg(conf, 'lvtk-plugin-1', uselib_store='LVTK_PLUGIN', atleast_version='1.2.0')" "" \
+      --replace-fail "autowaf.check_pkg(conf, 'lvtk-ui-1', uselib_store='LVTK_UI', atleast_version='1.2.0')" "" \
+      --replace-fail "autowaf.check_pkg(conf, 'lvtk-gtkui-1', uselib_store='LVTK_GTKGUI', atleast_version='1.2.0')" ""
   '';
 
   meta = with lib; {
@@ -50,7 +54,5 @@ stdenv.mkDerivation rec {
     platforms = platforms.linux;
     # Build uses `-msse` and `-mfpmath=sse`
     badPlatforms = [ "aarch64-linux" ];
-    # `ModuleNotFoundError: No module named 'imp'`
-    broken = true;
   };
 }

@@ -6,10 +6,12 @@
   lv2,
   lvtk,
   pkg-config,
+  ttl2c,
 }:
 stdenv.mkDerivation {
-  pname = "fmsynth-unstable";
-  version = "2015-02-07";
+  pname = "fmsynth";
+  version = "0-unstable-2015-02-07";
+
   src = fetchFromGitHub {
     owner = "Themaister";
     repo = "libfmsynth";
@@ -17,7 +19,15 @@ stdenv.mkDerivation {
     sha256 = "1bk0bpr069hzx2508rgfbwpxiqgr7dmdkhqdywmd2i4rmibgrm1q";
   };
 
-  nativeBuildInputs = [ pkg-config ];
+  postPatch = ''
+    substituteInPlace lv2/fmsynth_lv2.cpp \
+      --replace-fail ", lvtk::URID<true>" ""
+  '';
+
+  nativeBuildInputs = [
+    pkg-config
+    ttl2c
+  ];
   buildInputs = [
     gtkmm2
     lv2
@@ -25,10 +35,14 @@ stdenv.mkDerivation {
   ];
 
   buildPhase = ''
+    runHook preBuild
     cd lv2
     substituteInPlace GNUmakefile --replace "/usr/lib/lv2" "$out/lib/lv2"
     make  SIMD=0
+    runHook postBuild
   '';
+
+  NIX_CFLAGS_COMPILE = "-std=c++14";
 
   preInstall = "mkdir -p $out/lib/lv2";
 

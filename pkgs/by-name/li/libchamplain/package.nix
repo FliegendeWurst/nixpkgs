@@ -35,6 +35,17 @@ stdenv.mkDerivation rec {
     sha256 = "qRXNFyoMUpRMVXn8tGg/ioeMVxv16SglS12v78cn5ac=";
   };
 
+  postPatch = ''
+    substituteInPlace meson.build \
+      --replace-fail "gtk_doc_dep = dependency('gtk-doc', version: gtk_doc_req, required: false)" \
+      "gtk_doc_dep = dependency('gtk-doc', version: gtk_doc_req, required: false,native:true)" \
+      --replace-fail 'vapigen_dep = dependency' 'vapigen_dep = find_program'
+  '';
+
+  depsBuildBuild = [
+    pkg-config # gtk-doc
+  ];
+
   nativeBuildInputs =
     [
       meson

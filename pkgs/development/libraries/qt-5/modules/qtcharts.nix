@@ -10,6 +10,7 @@ qtModule {
     qtbase
     qtdeclarative
   ];
+  strictDeps = false;
   outputs = [
     "out"
     "dev"

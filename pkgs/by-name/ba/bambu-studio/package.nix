@@ -70,6 +70,7 @@ stdenv.mkDerivation rec {
     ninja
     pkg-config
     wrapGAppsHook3
+    wxGTK'
   ];
 
   buildInputs = [

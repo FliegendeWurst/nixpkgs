@@ -30,7 +30,10 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [
+    cmake
+    wxGTK32
+  ];
 
   buildInputs = [
     wxGTK32

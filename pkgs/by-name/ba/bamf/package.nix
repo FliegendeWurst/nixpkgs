@@ -54,6 +54,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
+    gtk-doc
+    (python3.withPackages (ps: with ps; [ lxml ])) # Tests
     libgtop
     libstartup_notification
     libwnck
@@ -97,5 +99,6 @@ stdenv.mkDerivation rec {
     license = licenses.lgpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ davidak ] ++ teams.pantheon.members;
+    broken = stdenv.buildPlatform != stdenv.hostPlatform;
   };
 }

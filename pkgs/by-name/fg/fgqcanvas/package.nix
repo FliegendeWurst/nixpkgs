@@ -27,6 +27,8 @@ stdenv.mkDerivation rec {
     qt5.qtwebsockets
   ];
 
+  strictDeps = false; # for qmake
+
   configurePhase = ''
     runHook preConfigure
     cd utils/fgqcanvas/

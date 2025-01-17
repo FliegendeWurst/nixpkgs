@@ -7,6 +7,7 @@
   meson,
   ninja,
   vala,
+  gettext,
   gnome-settings-daemon,
   gtk3,
   granite,
@@ -30,6 +31,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    gettext # msgfmt
     libxml2
     meson
     ninja

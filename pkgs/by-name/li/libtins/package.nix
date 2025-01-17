@@ -37,6 +37,7 @@ stdenv.mkDerivation rec {
     gtest
   ];
   buildInputs = [
+    gtest
     openssl
     libpcap
     boost

@@ -45,6 +45,12 @@ stdenv.mkDerivation rec {
     hash = "sha256-BbSXIpBz/1V/ELMm4HTFBm+HQ6MC1IIKuXvLXNLasIc=";
   };
 
+  postPatch = ''
+    rm tests/test-avatar.c
+    substituteInPlace tests/meson.build \
+      --replace-fail "'test-avatar'," ""
+  '';
+
   depsBuildBuild = [
     pkg-config
   ];

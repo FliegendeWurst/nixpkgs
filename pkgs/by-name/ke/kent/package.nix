@@ -24,6 +24,11 @@ stdenv.mkDerivation rec {
     hash = "sha256-OM/noraW2X8WV5wqWEFiI5/JPOBmsp0fTeDdcZoXxAA=";
   };
 
+  nativeBuildInputs = [
+    libpng # libpng-config
+    libmysqlclient # mysql_config
+  ];
+
   buildInputs = [
     libpng
     libuuid

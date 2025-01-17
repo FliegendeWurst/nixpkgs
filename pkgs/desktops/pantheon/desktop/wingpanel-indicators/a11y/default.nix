@@ -8,6 +8,8 @@
   pkg-config,
   python3,
   vala,
+  gettext,
+  glib,
   granite,
   gtk3,
   libgee,
@@ -26,6 +28,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    gettext # msgfmt
+    glib # glib-compile-schemas
     meson
     ninja
     pkg-config

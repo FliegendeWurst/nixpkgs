@@ -180,6 +180,8 @@ stdenv.mkDerivation (finalAttrs: {
     pythonEnv
   ];
 
+  strictDeps = false;
+
   mesonFlags = [
     "-Dgtk_doc=true"
     "-Dtests=false"

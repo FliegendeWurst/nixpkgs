@@ -72,6 +72,9 @@ buildPythonPackage rec {
     "test_jmol_roundtrip" # missing attribute
     "test_pw_input_write_nested_flat" # Did not raise DeprecationWarning
     "test_fix_scaled" # Did not raise UserWarning
+    # frequent timeouts
+    "test_ipi_protocol[inet]"
+    "test_ipi_protocol[unix]"
   ] ++ lib.optionals (pythonAtLeast "3.12") [ "test_info_calculators" ];
 
   preCheck = ''

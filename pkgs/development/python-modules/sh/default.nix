@@ -42,6 +42,8 @@ buildPythonPackage rec {
       # timing sensitive through usage of sleep(1) and signal handling
       # https://github.com/amoffat/sh/issues/684
       "test_general_signal"
+      # performance sensitive, assumes temp. Python launch takes < 1s
+      "test_done_callback_no_deadlock"
     ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
       # Disable tests that fail on Darwin sandbox

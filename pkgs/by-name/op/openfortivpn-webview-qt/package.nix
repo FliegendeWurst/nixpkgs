@@ -19,6 +19,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     qt6Packages.wrapQtAppsHook
     qt6Packages.qmake
+    qt6Packages.qtwebengine # required here by qmake
   ];
   buildInputs = [ qt6Packages.qtwebengine ];
   installPhase = ''

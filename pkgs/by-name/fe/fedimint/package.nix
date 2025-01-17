@@ -22,13 +22,13 @@ rustPlatform.buildRustPackage rec {
   cargoHash = "sha256-y0vD4LrFv9bclCuA1xiFciO+lNY/MFw4aMk4/0USibA=";
 
   nativeBuildInputs = [
-    protobuf
     pkg-config
     rustPlatform.bindgenHook
   ];
 
   buildInputs = [
     openssl
+    protobuf
   ];
 
   outputs = [
@@ -63,7 +63,7 @@ rustPlatform.buildRustPackage rec {
     cp -a $releaseDir/devimint $devimint/bin/
   '';
 
-  PROTOC = "${buildPackages.protobuf}/bin/protoc";
+  PROTOC = lib.getExe buildPackages.protobuf;
   PROTOC_INCLUDE = "${protobuf}/include";
   OPENSSL_DIR = openssl.dev;
 

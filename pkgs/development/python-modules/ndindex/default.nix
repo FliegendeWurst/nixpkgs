@@ -54,6 +54,9 @@ buildPythonPackage rec {
     sympy
   ] ++ optional-dependencies.arrays;
 
+  # Disable test timouts.
+  pytestFlagsArray = [ "--disable-deadline" ];
+
   meta = with lib; {
     description = "";
     homepage = "https://github.com/Quansight-Labs/ndindex";

@@ -4,6 +4,7 @@
   fetchFromGitHub,
   cmake,
   curl,
+  pkg-config,
 }:
 
 let
@@ -25,7 +26,10 @@ stdenv.mkDerivation {
     hash = "sha256-mAuU2uF8d+aHvCmotgIrBi/pUp1jkP6G0f98M76zjOw=";
   };
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [
+    cmake
+    pkg-config
+  ];
 
   propagatedBuildInputs = [ curl ];
 

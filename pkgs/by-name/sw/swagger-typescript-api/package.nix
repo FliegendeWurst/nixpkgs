@@ -5,6 +5,7 @@
   fetchYarnDeps,
   srcOnly,
   stdenvNoCC,
+  typescript,
 }:
 let
   pname = "swagger-typescript-api";
@@ -38,6 +39,10 @@ mkYarnPackage rec {
   };
 
   doDist = false;
+
+  extraNativeBuildInputs = [
+    typescript
+  ];
 
   buildPhase = ''
     runHook preBuild

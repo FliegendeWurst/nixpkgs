@@ -9,6 +9,7 @@
   makeWrapper,
   zlib,
   withRootSupport ? false,
+  writeShellScriptBin,
 }:
 
 stdenv.mkDerivation rec {
@@ -44,6 +45,9 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [
     zlib
   ];
+
+  env.PYTHON_NOVERSIONCHECK = "1"; # fails when cross-compiling
+  env.PYTHON_VERSION = builtins.replaceStrings [ "." ] [ "" ] (lib.versions.majorMinor python.version);
 
   strictDeps = true;
 

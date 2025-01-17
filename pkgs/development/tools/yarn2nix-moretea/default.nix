@@ -259,6 +259,7 @@ in rec {
     yarnPreBuild ? "",
     yarnPostBuild ? "",
     pkgConfig ? {},
+    extraNativeBuildInputs ? [],
     extraBuildInputs ? [],
     publishBinsFor ? null,
     workspaceDependencies ? [], # List of yarnPackages
@@ -322,7 +323,8 @@ in rec {
 
       name = baseName;
 
-      buildInputs = [ yarn nodejs rsync ] ++ extraBuildInputs;
+      nativeBuildInputs = [ yarn nodejs rsync ] ++ extraNativeBuildInputs;
+      buildInputs = [ nodejs ] ++ extraBuildInputs;
 
       node_modules = deps + "/node_modules";
 

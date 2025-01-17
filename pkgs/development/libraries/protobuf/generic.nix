@@ -10,9 +10,11 @@
   fetchFromGitHub,
   fetchpatch,
   gtest,
+  makeSetupHook,
   zlib,
   version,
   hash,
+  replaceVars,
   versionCheckHook,
 
   # downstream dependencies
@@ -40,15 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
     lib.optionalString (stdenv.hostPlatform.isDarwin && lib.versionOlder version "29") ''
       substituteInPlace src/google/protobuf/testing/googletest.cc \
         --replace-fail 'tmpnam(b)' '"'$TMPDIR'/foo"'
-    ''
-    + (lib.optionalString (stdenv.buildPlatform != stdenv.hostPlatform) ''
-      for f in cmake/protobuf-config.cmake.in cmake/protobuf-generate.cmake; do
-        [ ! -f $f ] && continue
-        substituteInPlace $f \
-          --replace-quiet 'COMMAND protobuf::protoc' \
-          'COMMAND ${lib.getExe buildPackages."protobuf_${lib.versions.major version}"}'
-      done
-    '');
+    '';
 
   patches = lib.optionals (lib.versionOlder version "22") [
     # fix protobuf-targets.cmake installation paths, and allow for CMAKE_INSTALL_LIBDIR to be absolute
@@ -59,15 +53,24 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
+  propagatedNativeBuildInputs = lib.optionals (!stdenv.buildPlatform.canExecute stdenv.hostPlatform) [
+    (makeSetupHook {
+      name = "protobuf-${finalAttrs.version}-setup-hook";
+      substitutions = {
+        build_protobuf = buildPackages."protobuf_${lib.versions.major version}";
+      };
+    } ./setup-hook.sh)
+  ];
+
   nativeBuildInputs =
     [
       cmake
-    ]
-    ++ lib.optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
-      # protoc of the same version must be available for build. For non-cross builds, it's able to
-      # re-use the executable generated as part of the build
-      buildPackages."protobuf_${lib.versions.major version}"
     ];
+    #++ lib.optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
+    #  # protoc of the same version must be available for build. For non-cross builds, it's able to
+    #  # re-use the executable generated as part of the build
+    #  buildPackages."protobuf_${lib.versions.major version}"
+    #];
 
   buildInputs = [
     gtest

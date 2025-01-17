@@ -34,6 +34,7 @@ stdenv.mkDerivation rec {
     pkg-config
     python3
     wrapGAppsHook3
+    wxGTK32 # wx-config
   ];
 
   buildInputs =
@@ -56,6 +57,8 @@ stdenv.mkDerivation rec {
       libICE
       libX11
     ];
+
+  strictDeps = true;
 
   postPatch = ''
     patchShebangs .

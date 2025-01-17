@@ -84,7 +84,6 @@ stdenv.mkDerivation (finalAttrs: {
       JAVA_HOME="${jdk}"
       RANLIB=$(type -p ranlib)
       CURL_CONFIG="${lib.getExe' (lib.getDev curl) "curl-config"}"
-      r_cv_have_curl728=yes
       R_SHELL="${stdenv.shell}"
   '' + lib.optionalString stdenv.hostPlatform.isDarwin ''
       --disable-R-framework

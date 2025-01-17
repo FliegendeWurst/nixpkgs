@@ -47,6 +47,8 @@
 , libngspice
 , valgrind
 , protobuf
+, nng
+, mbedtls
 
 , stable
 , testing
@@ -188,6 +190,8 @@ stdenv.mkDerivation rec {
     unixODBC
     libdeflate
     opencascade-occt
+    nng
+    mbedtls
   ]
   ++ optional needsProtobuf protobuf
   ++ optional (withScripting) wxPython

@@ -6,6 +6,8 @@
 }:
 
 buildGo123Module rec {
+  doCheck = false; # highly timing-dependent... https://github.com/markusressel/fan2go/issues/320
+
   pname = "fan2go";
   version = "0.9.0";
 

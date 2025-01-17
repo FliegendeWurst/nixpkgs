@@ -42,6 +42,10 @@ buildPythonPackage rec {
       --replace-fail "-p pytest_cov" "" \
       --replace-fail "--no-cov-on-fail" ""
     sed -i "/--cov/d" pytest.ini
+    # Use a port not used for outgoing TCP connections.
+    substituteInPlace cherrypy/test/benchmark.py \
+      --replace-fail "'server.socket_port': 54583" "'server.socket_port': 24583" \
+      --replace-fail 'port=54583' 'port=24583'
   '';
 
   build-system = [ setuptools-scm ];

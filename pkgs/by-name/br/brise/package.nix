@@ -16,6 +16,10 @@ stdenv.mkDerivation {
     sha256 = "1l13j3cfwida0ycl874fizz2jwjvlxid589a1iciqa9y25k21ql7";
   };
 
+  nativeBuildInputs = [
+    librime # rime_deployer
+  ];
+
   buildInputs = [ librime ];
 
   postPatch = ''

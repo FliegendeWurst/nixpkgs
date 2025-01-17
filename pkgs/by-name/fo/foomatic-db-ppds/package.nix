@@ -5,6 +5,7 @@
   buildEnv,
   foomatic-db-engine,
   stdenv,
+  coreutils,
   cups-filters,
   ghostscript,
   netpbm,
@@ -52,6 +53,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    coreutils
     cups-filters
     ghostscript
     netpbm
@@ -63,6 +65,7 @@ stdenv.mkDerivation {
     foomatic-db-combined
     foomatic-db-engine
     patchPpdFilesHook
+    psutils
   ];
 
   dontUnpack = true;

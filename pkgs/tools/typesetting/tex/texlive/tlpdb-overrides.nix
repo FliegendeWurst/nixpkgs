@@ -215,7 +215,11 @@ lib.recursiveUpdate orig rec {
     coreutils
     gnugrep
   ];
+  #xindy.extraNativeBuildInputs = [ clisp ];
   xindy.extraBuildInputs = [ gzip ];
+  #xindy.extraConfigureFlags = [
+  #  "ac_cv_prog_CLISP=yes"
+  #];
 
   #### adjustments to binaries
   # TODO patch the scripts from bin.* directly in bin.* instead of here
@@ -505,7 +509,10 @@ lib.recursiveUpdate orig rec {
     extraRevision = "-tlpdb${toString tlpdbVersion.revision}";
     extraVersion = "-tlpdb-${toString tlpdbVersion.revision}";
 
-    extraNativeBuildInputs = [ installShellFiles ];
+    extraNativeBuildInputs = [
+      bin.luatex
+      installShellFiles
+    ];
 
     # build Data.tlpdb.lua (part of the 'tlType == "run"' package)
     postUnpack = ''

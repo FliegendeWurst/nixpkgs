@@ -78,6 +78,8 @@ stdenv.mkDerivation rec {
     libsForQt5.wrapQtAppsHook
   ];
 
+  strictDeps = false;
+
   meta = {
     description = "Companion app for the BitBox02 hardware wallet";
     homepage = "https://bitbox.swiss/app/";

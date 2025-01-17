@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-okvG7X2uHtZ1p+HUoFOmslrWvYjk0QWBAvAMAW2E40c=";
   };
 
-  buildInputs = [ erlang ];
+  nativeBuildInputs = [ erlang ];
 
   buildPhase = "escript bootstrap";
   installPhase = ''

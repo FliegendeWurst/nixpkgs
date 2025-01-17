@@ -10,6 +10,7 @@
   python3,
   freetype,
   zlib,
+  gettext,
   glib,
   giflib,
   libpng,
@@ -94,7 +95,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     pkg-config
     cmake
-  ];
+    gettext
+  ] ++ lib.optionals withPython [ py ];
 
   buildInputs =
     [
@@ -112,7 +114,6 @@ stdenv.mkDerivation rec {
       libtiff
       libxml2
     ]
-    ++ lib.optionals withPython [ py ]
     ++ lib.optionals withSpiro [ libspiro ]
     ++ lib.optionals withGUI [
       gtk3

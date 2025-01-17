@@ -2,11 +2,13 @@
   lib,
   buildPythonPackage,
   fetchFromGitHub,
+  setuptools,
 }:
 
 buildPythonPackage rec {
   pname = "cfv";
   version = "3.1.0";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "cfv-project";
@@ -14,6 +16,10 @@ buildPythonPackage rec {
     rev = "refs/tags/v${version}";
     sha256 = "1wxf30gsijsdvhv5scgkq0bqi8qi4dgs9dwppdrca5wxgy7a8sn5";
   };
+
+  build-system = [
+    setuptools
+  ];
 
   meta = {
     description = "Utility to verify and create a wide range of checksums";

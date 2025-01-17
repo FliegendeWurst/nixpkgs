@@ -1,9 +1,9 @@
 { stdenv, lib, R, libcxx, xvfb-run, util-linux, Cocoa, Foundation, gettext, gfortran, libiconv }:
 
-{ name, buildInputs ? [], requireX ? false, ... } @ attrs:
+{ name, nativeBuildInputs ? [], buildInputs ? [], requireX ? false, ... } @ attrs:
 
 stdenv.mkDerivation ({
-  buildInputs = buildInputs ++ [R gettext] ++
+  buildInputs = buildInputs ++
                 lib.optionals requireX [util-linux xvfb-run] ++
                 lib.optionals stdenv.hostPlatform.isDarwin [Cocoa Foundation gfortran libiconv];
 
@@ -54,4 +54,5 @@ stdenv.mkDerivation ({
   '';
 } // attrs // {
   name = "r-" + name;
+  nativeBuildInputs = nativeBuildInputs ++ [ R gettext ];
 })

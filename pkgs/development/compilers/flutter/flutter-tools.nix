@@ -2,6 +2,7 @@
   lib,
   stdenv,
   systemPlatform,
+  bash,
   buildDartApplication,
   runCommand,
   git,

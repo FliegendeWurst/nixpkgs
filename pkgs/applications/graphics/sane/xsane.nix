@@ -5,6 +5,7 @@
   sane-backends,
   sane-frontends,
   libX11,
+  gettext,
   gtk2,
   pkg-config,
   libpng,
@@ -107,7 +108,7 @@ stdenv.mkDerivation rec {
         name = "xsane-configure-c99.patch";
         hash = "sha256-ukaNGgzCGiQwbOzSguAqBIKOUzXofSC3lct812U/8gY=";
       }
-    ];
+    ] ++ [ ./xsane-include.patch ];
 
   preConfigure = ''
     sed -e '/SANE_CAP_ALWAYS_SETTABLE/d' -i src/xsane-back-gtk.c
@@ -117,6 +118,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ pkg-config ];
 
   buildInputs = [
+    gettext # bind_textdomain_codeset
     libpng
     libusb-compat-0_1
     sane-backends
@@ -124,6 +126,9 @@ stdenv.mkDerivation rec {
     libX11
     gtk2
   ] ++ lib.optional gimpSupport gimp;
+
+  env.NIX_CFLAGS_COMPILE = "-I${lib.getDev gettext}/share/gettext";
+  env.SANE_CONFIG = lib.getExe' sane-backends "sane-config";
 
   passthru.updateScript = nix-update-script { };
 

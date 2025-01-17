@@ -54,9 +54,11 @@ stdenv.mkDerivation rec {
     automake
     installShellFiles
     libtool
+    openssl
     pkg-config
     sphinxHook
     makeWrapper
+    which
   ];
 
   sphinxBuilders = [ "man" ];
@@ -71,7 +73,6 @@ stdenv.mkDerivation rec {
       procps
       python3
       util-linux
-      which
     ]
     ++ (lib.optionals withDPDK [
       dpdk

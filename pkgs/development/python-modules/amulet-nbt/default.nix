@@ -5,6 +5,8 @@
   pythonOlder,
 
   # build-system
+  cmake,
+  pybind11,
   setuptools,
   wheel,
   versioneer,
@@ -23,7 +25,7 @@
   nix-update-script,
 }:
 let
-  version = "2.1.3";
+  version = "4.0.0a10";
 in
 buildPythonPackage {
   pname = "amulet-nbt";
@@ -34,21 +36,28 @@ buildPythonPackage {
     owner = "Amulet-Team";
     repo = "Amulet-NBT";
     tag = version;
-    hash = "sha256-ucN/CFPYWEPPiqrK9v2VZ1l5s2jf0N0tNuxpYoTZQ4s=";
+    hash = "sha256-xTlgfSNTfU4zhqJwKJW226OSWOgVKwMAEgrL8VBUu68=";
   };
 
-  disabled = pythonOlder "3.9";
+  disabled = pythonOlder "3.11";
 
   postPatch = ''
-    # FIXME: Drop for 4.x
     substituteInPlace pyproject.toml \
-      --replace-fail 'versioneer-518' 'versioneer'
-
+      --replace-fail "pybind11[global]" "pybind11" \
+      --replace-fail '"amulet-compiler-target == 1.0",' ""
+    # FIXME: Drop for 4.x
     substituteInPlace setup.py \
       --replace-fail "versioneer.get_version()" "'${version}'"
   '';
 
+  dontUseCmakeConfigure = true;
+
+  nativeBuildInputs = [
+    cmake
+  ];
+
   build-system = [
+    pybind11
     setuptools
     wheel
     cython
@@ -76,14 +85,6 @@ buildPythonPackage {
   pythonImportsCheck = [ "amulet_nbt" ];
 
   nativeCheckInputs = [ pytestCheckHook ];
-
-  # Source files interfere with tests :(
-  preCheck = ''
-    rm -r amulet_nbt
-  '';
-
-  # FIXME: Drop for 4.x, somehow it's just not implemented at all
-  disabledTestPaths = [ "tests/base_type_test.py" ];
 
   passthru.updateScript = nix-update-script { };
 

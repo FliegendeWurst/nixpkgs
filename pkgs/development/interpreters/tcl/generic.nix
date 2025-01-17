@@ -65,10 +65,6 @@ let
         # Don't install tzdata because NixOS already has a more up-to-date copy.
         "--with-tzdata=no"
       ]
-      ++ lib.optionals (lib.versionOlder version "8.6") [
-        # configure check broke due to GCC 14
-        "ac_cv_header_stdc=yes"
-      ]
       ++ lib.optionals (lib.versionAtLeast version "9.0") [
         # By default, tcl libraries get zipped and embedded into libtcl*.so,
         # which gets `zipfs mount`ed at runtime. This is fragile (for example
@@ -81,6 +77,8 @@ let
       ]
       ++ [
         "tcl_cv_strtod_unbroken=ok"
+        # configure check broke due to GCC 14
+        "ac_cv_header_stdc=yes"
       ]
       ++ lib.optional stdenv.hostPlatform.is64bit "--enable-64bit";
 

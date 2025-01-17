@@ -26,11 +26,12 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     meson
     ninja
+    (python3.withPackages (ps: [ ps.pygobject3 ]))
   ];
 
   buildInputs = [
     libadwaita
-    python3
+    (python3.withPackages (ps: [ ps.pygobject3 ]))
   ];
 
   propagatedBuildInputs = [

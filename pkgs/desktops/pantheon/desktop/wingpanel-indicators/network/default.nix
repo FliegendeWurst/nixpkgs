@@ -7,6 +7,7 @@
   meson,
   ninja,
   vala,
+  gettext,
   gtk3,
   granite,
   networkmanager,
@@ -28,6 +29,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    gettext # msgfmt
     meson
     ninja
     pkg-config
