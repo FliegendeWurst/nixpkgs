@@ -102,6 +102,7 @@ stdenv.mkDerivation (finalAttrs: {
       gentium
     ];
   };
+  strictDeps = true;
   env.LUA = "${finalAttrs.finalPackage.passthru.luaEnv}/bin/lua";
 
   enableParallelBuilding = true;

@@ -1595,6 +1595,8 @@ self: super: with self; {
 
   beartype = callPackage ../development/python-modules/beartype { };
 
+  beaupy = callPackage ../development/python-modules/beaupy { };
+
   beautiful-date = callPackage ../development/python-modules/beautiful-date { };
 
   beautifulsoup4 = callPackage ../development/python-modules/beautifulsoup4 { };
@@ -8479,6 +8481,8 @@ self: super: with self; {
 
   mpldatacursor = callPackage ../development/python-modules/mpldatacursor { };
 
+  mplcursors = callPackage ../development/python-modules/mplcursors { };
+
   mplfinance = callPackage ../development/python-modules/mplfinance { };
 
   mplhep = callPackage ../development/python-modules/mplhep { };
@@ -10823,6 +10827,8 @@ self: super: with self; {
 
   python-idzip = callPackage ../development/python-modules/python-idzip { };
 
+  python-yakh = callPackage ../development/python-modules/python-yakh { };
+
   pythonfinder = callPackage ../development/python-modules/pythonfinder { };
 
   pytomorrowio = callPackage ../development/python-modules/pytomorrowio { };
@@ -11793,6 +11799,8 @@ self: super: with self; {
   pygccxml = callPackage ../development/python-modules/pygccxml { };
 
   pygdbmi = callPackage ../development/python-modules/pygdbmi { };
+
+  pygeocodio = callPackage ../development/python-modules/pygeocodio { };
 
   pygetwindow = callPackage ../development/python-modules/pygetwindow { };
 
@@ -13769,6 +13777,8 @@ self: super: with self; {
 
   querystring-parser = callPackage ../development/python-modules/querystring-parser { };
 
+  questo = callPackage ../development/python-modules/questo { };
+
   questionary = callPackage ../development/python-modules/questionary { };
 
   queuelib = callPackage ../development/python-modules/queuelib { };
@@ -14349,6 +14359,8 @@ self: super: with self; {
   rules = callPackage ../development/python-modules/rules { };
 
   runs = callPackage ../development/python-modules/runs { };
+
+  runstats = callPackage ../development/python-modules/runstats { };
 
   ruuvitag-ble = callPackage ../development/python-modules/ruuvitag-ble { };
 
