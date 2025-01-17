@@ -10,7 +10,7 @@
   nodejs,
   pnpm_9,
   python3,
-  git,
+  gitMinimal,
   jq,
   zip,
 }:
@@ -49,7 +49,7 @@ stdenv.mkDerivation (finalAttrs: {
     customPython
     nodejs
     pnpm_9.configHook
-    git
+    gitMinimal
     jq
     zip
   ];

@@ -8914,10 +8914,6 @@ with pkgs;
 
   gettext = callPackage ../development/libraries/gettext { };
 
-  gd = callPackage ../development/libraries/gd {
-    automake = automake115x;
-  };
-
   gdal = callPackage ../development/libraries/gdal { };
 
   gdalMinimal = callPackage ../development/libraries/gdal {
@@ -11101,17 +11097,22 @@ with pkgs;
     faslExt = "fasl";
     flags = [ "--dynamic-space-size" "3000" ];
   };
-  sbcl_2_4_9 = wrapLisp {
-    pkg = callPackage ../development/compilers/sbcl { version = "2.4.9"; };
-    faslExt = "fasl";
-    flags = [ "--dynamic-space-size" "3000" ];
-  };
   sbcl_2_4_10 = wrapLisp {
     pkg = callPackage ../development/compilers/sbcl { version = "2.4.10"; };
     faslExt = "fasl";
     flags = [ "--dynamic-space-size" "3000" ];
   };
-  sbcl = sbcl_2_4_10;
+  sbcl_2_4_11 = wrapLisp {
+    pkg = callPackage ../development/compilers/sbcl { version = "2.4.11"; };
+    faslExt = "fasl";
+    flags = [ "--dynamic-space-size" "3000" ];
+  };
+  sbcl_2_5_0 = wrapLisp {
+    pkg = callPackage ../development/compilers/sbcl { version = "2.5.0"; };
+    faslExt = "fasl";
+    flags = [ "--dynamic-space-size" "3000" ];
+  };
+  sbcl = sbcl_2_5_0;
 
   sbclPackages = recurseIntoAttrs sbcl.pkgs;
 
