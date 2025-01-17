@@ -1199,20 +1199,6 @@ self: super: {
     '';
   }) super.cryptol;
 
-  inherit (
-    let
-      fixZ3 = z3: overrideCabal (drv: {
-        preBuild = drv.preBuild or "" + ''
-          # These constants were removed in z3 4.11.
-          export NIX_CFLAGS_COMPILE="-DZ3_bool=bool -DZ3_TRUE=true -DZ3_FALSE=false"
-        '';
-      }) z3;
-    in {
-      hz3 = fixZ3 super.hz3;
-      z3 = fixZ3 super.z3;
-    }
-  ) hz3 z3;
-
   # Tests try to invoke external process and process == 1.4
   grakn = dontCheck (doJailbreak super.grakn);
 
@@ -2564,9 +2550,6 @@ self: super: {
 
   # Bounds too strict on base and ghc-prim: https://github.com/tibbe/ekg-core/pull/43 (merged); waiting on hackage release
   hasura-ekg-core = doJailbreak super.hasura-ekg-core;
-
-  # This package can't be cross-compiled. See https://github.com/NixOS/nixpkgs/issues/248979
-  vty = overrideCabal (drv: { broken = pkgs.stdenv.hostPlatform != pkgs.stdenv.buildPlatform; }) super.vty;
 
   # Test suite doesn't support hspec 2.8
   # https://github.com/zellige/hs-geojson/issues/29

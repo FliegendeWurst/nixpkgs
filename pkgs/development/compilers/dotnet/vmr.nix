@@ -149,7 +149,6 @@ stdenv.mkDerivation rec {
     ]
     ++ lib.optionals (lib.versionOlder version "9") [
       ./fix-aspnetcore-portable-build.patch
-      ./fix-clang19-build.patch
     ];
 
   postPatch =
@@ -367,11 +366,6 @@ stdenv.mkDerivation rec {
   postConfigure = lib.optionalString (lib.versionAtLeast version "9") ''
     # see patch-npm-packages.proj
     typeset -f isScript patchShebangs > src/aspnetcore/patch-shebangs.sh
-
-    # fix nuget-to-nix failure on package sources which return 401
-    for source in dotnet{7,8,9}-internal{,-transport}; do
-      ./.dotnet/dotnet nuget disable source --configfile src/aspnetcore/NuGet.config $source
-    done
   '';
 
   dontConfigureNuget = true; # NUGET_PACKAGES breaks the build
