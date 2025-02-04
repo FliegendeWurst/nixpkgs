@@ -44,7 +44,13 @@ let
     pname = "wxwidgets-prusa3d-patched";
     version = "3.2.0";
     configureFlags = old.configureFlags ++ [ "--disable-glcanvasegl" ];
-    patches = [ ./wxWidgets-Makefile.in-fix.patch ];
+    patches = [
+      ./wxWidgets-Makefile.in-fix.patch 
+      (fetchpatch {
+        url = "https://github.com/FliegendeWurst/wxWidgets/commit/50f7d5db40be3f3b5791f12d5cf09f320d8a8641.patch";
+        hash = "sha256-i/nBf2gKvbqYJbLUVGa2zAt8lY8Ot8EuyuNilpybQtU=";
+      })
+    ];
     src = fetchFromGitHub {
       owner = "prusa3d";
       repo = "wxWidgets";
