@@ -53,6 +53,12 @@ buildPythonPackage rec {
     hash = "sha256-9tcukZIJMheVNBfpppjUcuhvRal7J59iQWgBqkEgJDk=";
   };
 
+  # fix outdated ifdef, PyPy now defines this symbol
+  postPatch = ''
+    substituteInPlace src/thirdparty/pythoncapi_compat.h \
+      --replace-fail 'PY_VERSION_HEX < 0x030900A5 || defined(PYPY_VERSION)' 'PY_VERSION_HEX < 0x030900A5'
+  '';
+
   build-system = [ setuptools ];
 
   nativeBuildInputs = [ pkg-config ];
