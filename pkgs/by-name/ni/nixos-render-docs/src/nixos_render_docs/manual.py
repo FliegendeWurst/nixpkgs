@@ -18,6 +18,14 @@ from .manual_structure import check_structure, FragmentType, is_include, make_xm
 from .md import Converter, Renderer
 from .redirects import Redirects
 
+def is_store_name(prefix):
+    for c in prefix:
+        if (c >= "0" and c <= "9") or (c >= "a" and c <= "z"):
+            continue
+        else:
+            return False
+    return True
+
 class BaseConverter(Converter[md.TR], Generic[md.TR]):
     # per-converter configuration for ns:arg=value arguments to include blocks, following
     # the include type. html converters need something like this to support chunking, or
@@ -493,6 +501,8 @@ class ManualHTMLRenderer(RendererMixin, HTMLRenderer):
                     # The path is not relative, likely it is absolute:
                     # We arbitrary take the basename and write it next to the outfile.
                     sub_file = Path(path).with_suffix(".html").name
+                    if len(sub_file) > 33 and is_store_name(sub_file[0:32]):
+                        sub_file = sub_file[1:]
 
                 file_path = (self._base_path / sub_file).with_suffix(".html")
 
@@ -557,6 +567,8 @@ class ManualHTMLRenderer(RendererMixin, HTMLRenderer):
                 # The path is not relative, likely it is absolute:
                 # We arbitrary take the basename and write it next to the outfile.
                 sub_file = Path(path).with_suffix(".html").name
+                if len(sub_file) > 33 and is_store_name(sub_file[0:32]):
+                    sub_file = sub_file[1:]
 
             file_path = (self._base_path / sub_file).with_suffix(".html")
 
@@ -710,6 +722,8 @@ class HTMLConverter(BaseConverter[ManualHTMLRenderer]):
                             sub_file = Path(_path).relative_to(Path(in_file).parent).with_suffix(".html").as_posix()
                         else:
                             sub_file = Path(_path).with_suffix(".html").name
+                            if len(sub_file) > 33 and is_store_name(sub_file[0:32]):
+                                sub_file = sub_file[1:]
                     else:
                         sub_file = target_file
 
@@ -773,7 +787,7 @@ class HTMLConverter(BaseConverter[ManualHTMLRenderer]):
             for item in xref_queue:
                 try:
                     target = item if isinstance(item, XrefTarget) else self._render_xref(*item)
-                    print(target)
+                    #print(target)
                 except UnresolvedXrefError:
                     if failed:
                         raise

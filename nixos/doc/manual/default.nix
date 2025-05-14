@@ -144,9 +144,9 @@ rec {
 
         ${prepareManualFromMD}
 
+        set -x
         nixos-render-docs -j $NIX_BUILD_CORES manual html \
           --manpage-urls ${manpageUrls} \
-          --redirects ${./redirects.json} \
           --revision ${escapeShellArg revision} \
           --generator "nixos-render-docs ${pkgs.lib.version}" \
           --stylesheet style.css \
@@ -157,8 +157,10 @@ rec {
           --script ./anchor-use.js \
           --toc-depth 1 \
           --chunk-toc-depth 1 \
+          --into-pages \
           ./manual.md \
           $dst/${common.indexPath}
+        set +x
 
         cp ${pkgs.roboto.src}/web/Roboto\[ital\,wdth\,wght\].ttf "$dst/Roboto.ttf"
 
