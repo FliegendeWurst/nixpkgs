@@ -73,7 +73,15 @@ stdenv.mkDerivation (
     patches =
       [
         ./CVE-2024-56406.patch
+      ]
+      ++ lib.optional (!crossCompiling) [
         ./CVE-2025-40909.patch
+      ]
+      ++ lib.optional crossCompiling [
+        # Identical to ./CVE-2025-40909.patch, except for replacing:
+        # `=undef` by `='undef'` (the undef variable would be an empty string)
+        # (Added like this to avoid modifying the native build.)
+        ./CVE-2025-40909-2.patch
       ]
       # Do not look in /usr etc. for dependencies.
       ++ lib.optional ((lib.versions.majorMinor version) == "5.38") ./no-sys-dirs-5.38.0.patch
